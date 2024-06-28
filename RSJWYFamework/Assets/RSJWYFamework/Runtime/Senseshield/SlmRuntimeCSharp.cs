@@ -104,7 +104,7 @@ namespace RSJWYFamework.Runtime.Senseshield
         public static extern UInt32 slm_logout(SLM_HANDLE_INDEX slm_handle);
 
         /// <summary>
-        /// 
+        /// 保持登录会话心跳，避免变为“僵尸句柄”。 
         /// </summary>
         /// <param name="slm_handle"></param>
         /// <returns></returns>
@@ -205,7 +205,7 @@ namespace RSJWYFamework.Runtime.Senseshield
 
 
         /// <summary>
-        /// 
+        /// 获取已登录许可的状态信息，例如许可信息、硬件锁信息等 
         /// </summary>
         /// <param name="slm_handle"></param>
         /// <param name="info_type"></param>
@@ -456,7 +456,7 @@ namespace RSJWYFamework.Runtime.Senseshield
         public static extern void slm_free(IntPtr buffer);
 
         /// <summary>
-        ///   获取API对应的开发商ID
+        ///   获取 Runtime 库对应的开发商ID 
         /// </summary>
         /// <param name="buffer"></param>
         /// <returns></returns>

@@ -13,7 +13,6 @@ namespace RSJWYFamework.Runtime.Main
         public Main()
         {
             AddModule<DefaultEvenManager>();
-            AddModule<DefaultExceptionLogManager>();
             RSJWYLogger.Log(RSJWYFameworkEnum.Main,"初始化完成");
         }
         

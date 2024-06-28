@@ -34,7 +34,7 @@ namespace RSJWYFamework.Runtime.Senseshield
     /// </summary>
     public enum INFO_TYPE
     {
-        LOCK_INFO = 1,       //锁信息
+        LOCK_INFO = 1,       //硬件锁锁信息 
         SESSION_INFO = 2,    //会话信息
         LICENSE_INFO = 3,    //许可信息
         FILE_LIST = 4,       //文件列表

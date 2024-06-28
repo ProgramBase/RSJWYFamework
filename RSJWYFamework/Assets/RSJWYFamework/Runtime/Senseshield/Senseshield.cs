@@ -35,118 +35,13 @@ namespace RSJWYFamework.Runtime.Senseshield
             
             string StrMsg = string.Empty;
             IntPtr a = IntPtr.Zero;
-            const string developerPW = "";
-
-            // slm_get_developer_id
-            byte[] developer_id = new byte[DEVELOPER_ID_LENGTH];
-            ret = SlmRuntime.slm_get_developer_id(developer_id);
-            if (ret != SSErrCode.SS_OK)
-            {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,"SLM 获取开发人员 ID 失败:0x{ret:X8}");
-            }
-            else
-            {
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"SLM 获取开发人员 ID 成功!");
-                // 将开发商ID转化为字符串
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,
-                    BitConverter.ToString(developer_id).Replace("-", ""));
-            }
-
-            //01. init
-            ST_INIT_PARAM initPram = new ST_INIT_PARAM();
-            initPram.version =SSDefine.SLM_CALLBACK_VERSION02;
-            initPram.flag = SSDefine.SLM_INIT_FLAG_NOTIFY;
-            pfn = new callback(handle_service_msg);     // 响应回调通知只有在 slm_init 后 slm_cleanup 之前有效。
-            initPram.pfn = pfn;
-
-            // 指定开发者 API 密码，示例代码指定 Demo 开发者的 API 密码。
-            // 注意：正式开发者运行测试前需要修改此值，可以从 Virbox 开发者网站获取 API 密码。
-
-            initPram.password = Utility.Utility.ConvertHexStringToByteArray(developerPW);
-            ret = SlmRuntime.slm_init(ref initPram);
-            if (ret == SSErrCode.SS_OK)
-            {
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"Slm_Init初始化成功!");
-            }
-            else if (ret == SSErrCode.SS_ERROR_DEVELOPER_PASSWORD)
-            {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"Slm_Init 失败:0x{ret:X8}(错误开发人员密码). 请登录 Virbox 开发者中心(https://developer.lm.virbox.com), 获取 API 密码，并替换 'initPram.password' 变量内容。");
-            }
-            else
-            {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"Slm_Init 失败:0x{ret:X8}");
-            }
-            
+            const string developerPW = "自行获取SDK对应的开发者密钥";
             IntPtr desc = IntPtr.Zero;
-
-            //04. KEEP ALIVE
-            ret = SlmRuntime.slm_keep_alive(Handle);
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("SlmKeepAliveEasy Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
-                System.Diagnostics.Debug.Assert(true);
-            }
-            else
-            {
-                WriteLineGreen("SlmKeepAliveEasy Success!");
-            } 
+            
+            SenseshieldServerHelp.Init(developerPW);
+            var _loginHandle =SenseshieldServerHelp.LoginSS();
+            SenseshieldServerHelp.KeepAlive(_loginHandle.Handle);
             return;
-            //05. get_info
-            //lock_info
-            ret = SlmRuntime.slm_get_info(Handle,INFO_TYPE.LOCK_INFO,INFO_FORMAT_TYPE.JSON,ref desc);
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("slm_get_info(local_info) Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
-            }
-            else
-            {
-                string StrPrint = Marshal.PtrToStringAnsi(desc);
-                WriteLineYellow(StrPrint);
-                WriteLineGreen("slm_get_info(local_info) Success!");
-                if (ret != SSErrCode.SS_OK)
-                {
-                    StrMsg = string.Format("slm_free Failure:0x{0:X8}", ret);
-                    WriteLineRed(StrMsg);
-                }
-            }
-            //session_info
-            ret = SlmRuntime.slm_get_info(Handle, INFO_TYPE.SESSION_INFO, INFO_FORMAT_TYPE.JSON, ref desc);
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("slm_get_info(session_info) Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
-            }
-            else
-            {
-                string StrPrint = Marshal.PtrToStringAnsi(desc);
-                WriteLineYellow(StrPrint);
-                WriteLineGreen("slm_get_info(session_info) Success!");
-                if (ret != SSErrCode.SS_OK)
-                {
-                    StrMsg = string.Format("slm_free Failure:0x{0:X8}", ret);
-                    WriteLineRed(StrMsg);
-                }
-            }
-            //license_info
-            ret = SlmRuntime.slm_get_info(Handle, INFO_TYPE.LICENSE_INFO, INFO_FORMAT_TYPE.JSON, ref desc);
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("slm_get_info(license_info) Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
-            }
-            else
-            {
-                string StrPrint = Marshal.PtrToStringAnsi(desc);
-                WriteLineYellow(StrPrint);
-                WriteLineGreen("slm_get_info(license_info) Success!");
-                if (ret != SSErrCode.SS_OK)
-                {
-                    StrMsg = string.Format("slm_free Failure:0x{0:X8}", ret);
-                    WriteLineRed(StrMsg);
-                }
-            }
 
             //07 08. slm_encrypt  slm_decrypt
             //slm_encrypt
@@ -455,108 +350,11 @@ namespace RSJWYFamework.Runtime.Senseshield
             return returnBytes;
         }
 
-        /// <summary>
-        /// 回调函数信息提示
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="wparam"></param>
-        /// <param name="lparam"></param>
-        /// <returns></returns>
-        public static uint handle_service_msg(uint message, UIntPtr wparam, UIntPtr lparam)
-        {
-            uint ret = SSErrCode.SS_OK;
-            string StrMsg = string.Empty;
-            char[] szmsg = new char[1024];
-            byte[] lock_sn_bytes = new byte[DEVICE_SN_LENGTH];
-            string lock_sn = "";
-
-            switch (message)
-            {
-                case SSDefine.SS_ANTI_INFORMATION:   // 信息提示
-                    StrMsg = string.Format("SS_ANTI_INFORMATION is:0x{0:X8} wparam is %p", message, wparam);
-                    WriteLineRed(StrMsg);
-                    break;
-                case SSDefine.SS_ANTI_WARNING:       // 警告
-                    // 反调试检查。一旦发现如下消息，建议立即停止程序正常业务，防止程序被黑客调试。
-
-                    switch ((uint)(wparam))
-                    {
-                        case SSDefine.SS_ANTI_PATCH_INJECT:
-                            StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "注入", message, wparam);
-                             WriteLineRed(StrMsg);
-                            break;
-                        case SSDefine.SS_ANTI_MODULE_INVALID:
-                            StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "非法模块DLL", message, wparam);
-                             WriteLineRed(StrMsg);
-                            break;
-                        case SSDefine.SS_ANTI_ATTACH_FOUND:
-                            StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "附加调试", message, wparam);
-                             WriteLineRed(StrMsg);
-                            break;
-                        case SSDefine.SS_ANTI_THREAD_INVALID:
-                             StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "线程非法", message, wparam);
-                             WriteLineRed(StrMsg);
-                            break;
-                        case SSDefine.SS_ANTI_THREAD_ERROR:
-                             StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "线程错误", message, wparam);
-                             WriteLineRed(StrMsg);
-                            break;
-                        case SSDefine.SS_ANTI_CRC_ERROR:
-                             StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "内存模块 CRC 校验", message, wparam);
-                             WriteLineRed(StrMsg); 
-                            break;
-                        case SSDefine.SS_ANTI_DEBUGGER_FOUND:
-                             StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "发现调试器", message, wparam);
-                             WriteLineRed(StrMsg); 
-                            break;
-                        default:
-                             StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "其他未知错误", message, wparam);
-                             WriteLineRed(StrMsg);
-                            break;
-                    }
-                    break;
-                case SSDefine.SS_ANTI_EXCEPTION:         // 异常
-                    StrMsg = string.Format("SS_ANTI_EXCEPTION is :0x{0:X8} wparam is %p", message, wparam);
-                      WriteLineRed(StrMsg);;
-                    break;
-                case SSDefine.SS_ANTI_IDLE:              // 暂保留
-                    StrMsg = string.Format("SS_ANTI_IDLE is :0x{0:X8} wparam is %p", message, wparam);
-                      WriteLineRed(StrMsg); 
-                    break;
-                case SSDefine.SS_MSG_SERVICE_START:      // 服务启动
-                    StrMsg = string.Format("SS_MSG_SERVICE_START is :0x{0:X8} wparam is %p", message, wparam);
-                      WriteLineRed(StrMsg);
-                    break;
-                case SSDefine.SS_MSG_SERVICE_STOP:       // 服务停止
-                    StrMsg = string.Format("SS_MSG_SERVICE_STOP is :0x{0:X8} wparam is %p", message, wparam);
-                      WriteLineRed(StrMsg);
-                    break;
-                case SSDefine.SS_MSG_LOCK_AVAILABLE:     // 锁可用（插入锁或SS启动时锁已初始化完成），wparam 代表锁号
-                    // 锁插入消息，可以根据锁号查询锁内许可信息，实现自动登录软件等功能。
-                    Marshal.Copy((IntPtr)(long)wparam, lock_sn_bytes, 0, DEVICE_SN_LENGTH);
-                    lock_sn = BitConverter.ToString(lock_sn_bytes).Replace("-", "");
-
-                    StrMsg = string.Format("{0},{1:x8}锁插入", DateTime.Now.ToString(), lock_sn);
-                    WriteLineGreen(StrMsg);
-                    break;
-                case SSDefine.SS_MSG_LOCK_UNAVAILABLE:   // 锁无效（锁已拔出），wparam 代表锁号
-                    // 锁拔出消息，对于只使用锁的应用程序，一旦加密锁拔出软件将无法继续使用，建议发现此消息提示用户保存数据，程序功能锁定等操作。
-                    Marshal.Copy((IntPtr)(long)wparam, lock_sn_bytes, 0, DEVICE_SN_LENGTH);
-                    lock_sn = BitConverter.ToString(lock_sn_bytes).Replace("-", "");
-
-                    StrMsg = string.Format("{0},{1:x8}锁拔出", DateTime.Now.ToString(), lock_sn);
-                    WriteLineRed(StrMsg);
-                    break;
-            }
-            // 输出格式化后的消息内容
-            //printf("%s\n", szmsg);
-            return ret;
-        }
-        //device_cert_verify证书验证签名函数，实现签名和验证签名
-        /*设备证书签名*/
+       
 
      
-
+        //device_cert_verify证书验证签名函数，实现签名和验证签名
+        /*设备证书签名*/
         static bool verifyDevice(byte[] signdata, byte[] signature, byte[] certs_byte)
         {
             bool result = false;
