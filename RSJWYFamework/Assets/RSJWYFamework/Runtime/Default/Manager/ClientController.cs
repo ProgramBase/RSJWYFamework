@@ -1,0 +1,90 @@
+using System;
+using RSJWYFamework.Runtime.Default.EventsLibrary;
+using RSJWYFamework.Runtime.Event;
+using RSJWYFamework.Runtime.Module;
+using RSJWYFamework.Runtime.Net.Public;
+using RSJWYFamework.Runtime.NetWork.TCP.Client;
+using RSJWYFamework.Runtime.Socket.Base;
+using RSJWYFamework.Runtime.NetWork.TCP.Server;
+using RSJWYFamework.Runtime.Utility;
+
+namespace RSJWYFamework.Runtime.Default.Manager
+{
+    /// <summary>
+    /// 客户端的控制器
+    /// </summary>
+    public class ClientController : ISocketClientController,IModule
+    {
+        private TcpClientService tcpsocket;
+        
+        public void Init()
+        {
+            Main.Main.Instance.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgEventArgs>(ClientSendToServerMsg);
+        }
+
+        public void Close()
+        {
+            Main.Main.Instance.GetModule<DefaultEvenManager>().UnBindEvent<ServerToClientMsgEventArgs>(ClientSendToServerMsg);
+            tcpsocket?.Quit();
+        }
+
+        public void InitClient(string ip = "127.0.0.1", int port = 6000)
+        {
+            //客户端的
+            if (ip != "127.0.0.1")
+            {
+                //指定目标IP
+                //检查IP和Port是否合法
+                if (Utility.Utility.SocketTool.MatchIP(ip) && Utility.Utility.SocketTool.MatchPort(port))
+                {
+                    tcpsocket.Connect(ip, port);
+                    tcpsocket.AsyncCheckNetThread().Forget();
+                    return;
+                }
+            }
+            else
+            {
+                //使用默认IP
+                //检查Port是否合法
+                if (Utility.Utility.SocketTool.MatchPort(port))
+                {
+                    tcpsocket.Connect("127.0.0.1", port);
+                    tcpsocket.AsyncCheckNetThread().Forget();
+                    return;
+                }
+            }
+
+            //全部匹配失败，使用默认
+            tcpsocket.Connect("127.0.0.1", 6000); //开启链接服务器
+            tcpsocket.AsyncCheckNetThread().Forget();
+        }
+
+        public void ClientSendToServerMsg(MsgBase msg)
+        {
+            tcpsocket?.SendMessage(msg);
+        }
+
+       
+        public void ClientStatus(NetClientStatus eventEnum)
+        {
+            Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this, new ClientStatusEventArgs
+            {
+                netClientStatus = eventEnum
+            });
+        }
+
+        public void ReceiveMsgCallBack(MsgBase msgBase)
+        {
+            Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this, new ClientReceivesMSGFromServer
+            {
+                msg = msgBase
+            });
+        }
+        public void ClientSendToServerMsg(object sender, EventArgsBase eventArgsBase)
+        {
+            if (eventArgsBase is ServerToClientMsgEventArgs args)
+                ClientSendToServerMsg(args.msgBase);
+        }
+    }
+}
+

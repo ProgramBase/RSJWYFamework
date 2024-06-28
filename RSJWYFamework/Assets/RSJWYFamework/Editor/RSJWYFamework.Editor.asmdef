@@ -1,0 +1,16 @@
+{
+    "name": "RSJWYFamework.Editor",
+    "rootNamespace": "",
+    "references": ["GUID:42175401e9cd1e04fb597954c71771cd"],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

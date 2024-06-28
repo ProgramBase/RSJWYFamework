@@ -1,0 +1,30 @@
+syntax = "v1"
+
+info (
+	title:   "RSJWYFamework日志回传服务API"
+	author:  "若时间无垠"
+	date:    "2024.02.03"
+	version: "v0.1-2024-06-23-1"
+)
+
+type (
+	LogReq {
+		ProjectName   string `form:"ProjectName"`
+		AppName       string `form:"AppName"`
+		AppVersion    string `form:"AppVersion"`
+		ResourceInfo  string `form:"ResourceInfo"`
+		ERRTime       int64  `form:"ERRTime"`
+		ERRType       string `form:"ERRType"`
+		ERRLog        string `form:"ERRLog"`
+		ERRStackTrace string `form:"ERRStackTrace"`
+	}
+	LogResp {
+		Status string `json:"ProjectName"`
+	}
+)
+
+service RSJWYFameworkLogUp {
+	@handler LogUpApiHandler
+	post /rsjwyfamework/logup (LogReq) returns (LogResp)
+}
+

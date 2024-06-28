@@ -1,0 +1,11 @@
+Name: RSJWYYFameworkLogUp
+Host: 0.0.0.0
+Port: 8888
+#数据库
+Mysql:
+  DataSource: 用户名:密码@tcp(IP:端口)/表名?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+#Redis
+CacheRedis:
+  - Host: IP:端口
+    Pass: 用户名
+    Type: node
