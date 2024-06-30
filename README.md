@@ -1,8 +1,7 @@
 # RSJWYYFamework
 
 #### 介绍
-根据工作时用到的功能做一个整合，整体偏向于展厅方向，有较多依赖
-参考了[HTFamework](https://gitee.com/SaiTingHu/HTFramework)、[GameFamewoork](http://https://gitee.com/jiangyin/GameFramework)
+根据工作时用到的功能做一个整合，整体偏向于展厅方向，有较多依赖。参考了[HTFamework](https://gitee.com/SaiTingHu/HTFramework)、[GameFamewoork](http://https://gitee.com/jiangyin/GameFramework)，参考深思数盾（Virbox）SDK官方示例代码，融入到unity中（移除了x86的支持，仅保留了x64）。
 
 #### 软件架构
 目前已完成以下内容;
@@ -19,3 +18,8 @@
 - [HbridCLR](https://github.com/focus-creative-games/hybridclr_unity)
 - [R3](https://github.com/Cysharp/R3.git)
 - [NuGetForUnity](https://github.com/GlitchEnzo/NuGetForUnity)
+
+#### 下载安装使用
+- 下载[RSJWYFamework](https://gitee.com/RSJWY/rsjwyfamework/tree/master/RSJWYFamework)文件夹
+- 深思数盾（Virbox）SDK每位开发者的SDK都不一样，请下载各自的SDK并拷贝到Assets/Plugins/senseshield/*下
+
