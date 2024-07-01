@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using SenseShield;
@@ -13,9 +14,93 @@ namespace RSJWYFamework.Runtime.Senseshield
     /// </summary>
     internal static class SenseshieldServerHelp
     {
+        /// <summary>
+        /// 开发者ID长度数组限制
+        /// </summary>
         public const int DEVELOPER_ID_LENGTH = 8;
+        /// <summary>
+        /// 设备SN长度数组限制
+        /// </summary>
         public const int DEVICE_SN_LENGTH = 16;
+        /// <summary>
+        /// 事件回调函数
+        /// </summary>
         private static callback pfn;
+        /// <summary>
+        /// 加解密最大数组大小
+        /// </summary>
+        private const int MaxBlockSize = 1520;
+        /// <summary>
+        /// 缓冲区大小限制
+        /// </summary>
+        private const int Alignment = 16;
+
+
+        /// <summary>
+        /// 通过许可内的AES密钥进行加密
+        /// 加密方式采用 AES对称加密，密钥在加密锁内（指硬件锁、云锁、软锁，下同）生成，
+        /// 且没有任何机会能出锁，在保证效率的同时，也最大化的加强了安全性。
+        /// </summary>
+        /// <param name="Handle">login许可登录后的句柄</param>
+        /// <param name="data">要加密的数据</param>
+        /// <returns></returns>
+        public static byte[] Encrypt(SLM_HANDLE_INDEX Handle,byte[] data)
+        {
+            if (data == null || data.Length == 0)
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"传入的要加密的数据无效");
+            if (Handle == default(SLM_HANDLE_INDEX))
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"许可登录后的内存句柄无效");
+            //计算最近的16字节对齐大小
+            int aligningLength = (data.Length + Alignment) & ~Alignment;
+            aligningLength += Alignment; //最前面两位数组存储加密前大小
+            //存储原数据长度
+            byte[] encryptData = new byte[aligningLength];
+            byte[] uint32Bytes = BitConverter.GetBytes((uint)data.Length);
+            // 将uint32字节复制到16字节数组的开始位置
+            Array.Copy(uint32Bytes, 0, encryptData, 0, uint32Bytes.Length);
+            //复制原数据到整个数组
+            Array.Copy(data, 0, encryptData, 16, data.Length);
+            //二次确认是否已对齐，后续所有操作都是在对齐的情况下进行
+            if (encryptData.Length <= 0 || encryptData.Length % 16 != 0) 
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"没有正确对齐");
+            //分割数据为二维数组，并开始加密
+            int totalBlocks = (encryptData.Length + MaxBlockSize - 1) / MaxBlockSize;
+            //取出数据并分割后存储数组
+            byte[][] encryptArr = new byte[totalBlocks][]; 
+            //加密后数组
+            byte[][] afterEncryptArr = new byte[totalBlocks][]; 
+            //最后整合好的加密后的数组
+            byte[] returnEncryptArr = new byte[encryptData.Length];
+            uint ret = 0;
+            
+            for (int i = 0; i < totalBlocks; i++)
+            {
+                // 计算当前块的大小，可能是小于最大块大小的最后一个块
+                int blockSize = Math.Min(MaxBlockSize, encryptData.Length - (i * MaxBlockSize));
+                // 创建一个新的数组来存储当前块的数据
+                encryptArr[i] = new byte[blockSize];
+                afterEncryptArr[i] = new byte[blockSize];
+                // 从原始数组中复制数据到当前块
+                Array.Copy(encryptData, i * MaxBlockSize, encryptArr[i], 0, blockSize);
+                //加密
+                ret = SlmRuntime.slm_encrypt(Handle,encryptArr[i],afterEncryptArr[i],(uint)encryptArr[i].Length);
+                if (ret != SSErrCode.SS_OK)
+                {
+                    //只要有一轮次加密失败，即返回异常
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_encrypt失败:0x{ret:X8}");
+                    return null;
+                }
+                /*else
+                {
+                    RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield, "slm_encrypt成功！");
+                }*/
+            }
+            
+            return null;
+        }
+        
+        
+        
         /// <summary>
         /// 获取开发商ID（每一个sdk都是独有的）
         /// </summary>
@@ -275,9 +360,6 @@ namespace RSJWYFamework.Runtime.Senseshield
             }
         }
         
-        
-        
-        
          /// <summary>
         /// 回调函数信息提示
         /// </summary>
@@ -296,79 +378,61 @@ namespace RSJWYFamework.Runtime.Senseshield
             switch (message)
             {
                 case SSDefine.SS_ANTI_INFORMATION:   // 信息提示
-                    StrMsg = string.Format("SS_ANTI_INFORMATION is:0x{0:X8} wparam is %p", message, wparam);
-                    WriteLineRed(StrMsg);
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SS_ANTI_INFORMATION is:0x{0:message} wparam is {wparam}");
                     break;
                 case SSDefine.SS_ANTI_WARNING:       // 警告
                     // 反调试检查。一旦发现如下消息，建议立即停止程序正常业务，防止程序被黑客调试。
-
                     switch ((uint)(wparam))
                     {
                         case SSDefine.SS_ANTI_PATCH_INJECT:
-                            StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "注入", message, wparam);
-                             WriteLineRed(StrMsg);
+                            RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"信息类型=:0x{message:X8} 具体错误码= 0x{wparam:X8}，攻击行为：注入");
                             break;
                         case SSDefine.SS_ANTI_MODULE_INVALID:
-                            StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "非法模块DLL", message, wparam);
-                             WriteLineRed(StrMsg);
+                            RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"信息类型=:0x{message:X8} 具体错误码= 0x{wparam:X8}，攻击行为：非法模块DLL");
                             break;
                         case SSDefine.SS_ANTI_ATTACH_FOUND:
-                            StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "附加调试", message, wparam);
-                             WriteLineRed(StrMsg);
+                            RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"信息类型=:0x{message:X8} 具体错误码= 0x{wparam:X8}，攻击行为：附加调试");                            
                             break;
                         case SSDefine.SS_ANTI_THREAD_INVALID:
-                             StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "线程非法", message, wparam);
-                             WriteLineRed(StrMsg);
+                             RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"信息类型=:0x{message:X8} 具体错误码= 0x{wparam:X8}，攻击行为：线程非法");                      
                             break;
                         case SSDefine.SS_ANTI_THREAD_ERROR:
-                             StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "线程错误", message, wparam);
-                             WriteLineRed(StrMsg);
+                             RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"信息类型=:0x{message:X8} 具体错误码= 0x{wparam:X8}，攻击行为：线程错误"); 
                             break;
                         case SSDefine.SS_ANTI_CRC_ERROR:
-                             StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "内存模块 CRC 校验", message, wparam);
-                             WriteLineRed(StrMsg); 
+                             RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"信息类型=:0x{message:X8} 具体错误码= 0x{wparam:X8}，攻击行为：内存模块 CRC 校验");
                             break;
                         case SSDefine.SS_ANTI_DEBUGGER_FOUND:
-                             StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "发现调试器", message, wparam);
-                             WriteLineRed(StrMsg); 
+                             RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"信息类型=:0x{message:X8} 具体错误码= 0x{wparam:X8}，攻击行为：发现调试器");
                             break;
                         default:
-                             StrMsg = string.Format("信息类型=:0x{0:X8} 具体错误码= 0x{0:X8}", "其他未知错误", message, wparam);
-                             WriteLineRed(StrMsg);
+                             RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"信息类型=:0x{message:X8} 具体错误码= 0x{wparam:X8}，攻击行为：其他未知错误");
                             break;
                     }
                     break;
                 case SSDefine.SS_ANTI_EXCEPTION:         // 异常
-                    StrMsg = string.Format("SS_ANTI_EXCEPTION is :0x{0:X8} wparam is %p", message, wparam);
-                      WriteLineRed(StrMsg);;
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SS_ANTI_EXCEPTION is:0x{0:message} wparam is {wparam}");
                     break;
                 case SSDefine.SS_ANTI_IDLE:              // 暂保留
-                    StrMsg = string.Format("SS_ANTI_IDLE is :0x{0:X8} wparam is %p", message, wparam);
-                      WriteLineRed(StrMsg); 
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SS_ANTI_IDLE is:0x{0:message} wparam is {wparam}");
                     break;
                 case SSDefine.SS_MSG_SERVICE_START:      // 服务启动
-                    StrMsg = string.Format("SS_MSG_SERVICE_START is :0x{0:X8} wparam is %p", message, wparam);
-                      WriteLineRed(StrMsg);
+                    RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"SS_MSG_SERVICE_START is:0x{0:message} wparam is {wparam}");
                     break;
                 case SSDefine.SS_MSG_SERVICE_STOP:       // 服务停止
-                    StrMsg = string.Format("SS_MSG_SERVICE_STOP is :0x{0:X8} wparam is %p", message, wparam);
-                      WriteLineRed(StrMsg);
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SS_MSG_SERVICE_STOP is:0x{0:message} wparam is {wparam}");
                     break;
                 case SSDefine.SS_MSG_LOCK_AVAILABLE:     // 锁可用（插入锁或SS启动时锁已初始化完成），wparam 代表锁号
                     // 锁插入消息，可以根据锁号查询锁内许可信息，实现自动登录软件等功能。
                     Marshal.Copy((IntPtr)(long)wparam, lock_sn_bytes, 0, DEVICE_SN_LENGTH);
                     lock_sn = BitConverter.ToString(lock_sn_bytes).Replace("-", "");
-
-                    StrMsg = string.Format("{0},{1:x8}锁插入", DateTime.Now.ToString(), lock_sn);
-                    WriteLineGreen(StrMsg);
+                    RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"{DateTime.Now:yyyy-MM-dd HH:mm:ss},{lock_sn:x8}锁插入");
                     break;
                 case SSDefine.SS_MSG_LOCK_UNAVAILABLE:   // 锁无效（锁已拔出），wparam 代表锁号
                     // 锁拔出消息，对于只使用锁的应用程序，一旦加密锁拔出软件将无法继续使用，建议发现此消息提示用户保存数据，程序功能锁定等操作。
                     Marshal.Copy((IntPtr)(long)wparam, lock_sn_bytes, 0, DEVICE_SN_LENGTH);
                     lock_sn = BitConverter.ToString(lock_sn_bytes).Replace("-", "");
-
-                    StrMsg = string.Format("{0},{1:x8}锁拔出", DateTime.Now.ToString(), lock_sn);
-                    WriteLineRed(StrMsg);
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"{DateTime.Now:yyyy-MM-dd HH:mm:ss},{lock_sn:x8}锁拔出");
                     break;
             }
             // 输出格式化后的消息内容
@@ -377,48 +441,11 @@ namespace RSJWYFamework.Runtime.Senseshield
         }
      
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-      
-        public static void WriteLineGreen(string s)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(s);
-            Console.ResetColor();
-        }
-        public static void WriteLineRed(string s)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(s);
-            Console.ResetColor();
-        }
-        public static void WriteLineYellow(string s)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(s);
-            Console.ResetColor();
-        }
-        public static void WriteLineBlue(string s)
-        {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine(s);
-            Console.ResetColor();
-        }
+        /// <summary>
+        /// 密钥转16进值
+        /// </summary>
+        /// <param name="HexString"></param>
+        /// <returns></returns>
         public static byte[] StringToHex(string HexString)
         {
             byte[] returnBytes = new byte[HexString.Length / 2];
@@ -427,6 +454,10 @@ namespace RSJWYFamework.Runtime.Senseshield
 
             return returnBytes;
         }
+        /// <summary>
+        /// 16进值
+        /// </summary>
+        /// <param name="buf"></param>
         public static void hexWriteLine(byte[] buf)
         {
             int i =0;

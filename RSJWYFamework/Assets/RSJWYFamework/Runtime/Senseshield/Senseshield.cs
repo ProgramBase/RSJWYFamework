@@ -35,13 +35,13 @@ namespace RSJWYFamework.Runtime.Senseshield
             
             string StrMsg = string.Empty;
             IntPtr a = IntPtr.Zero;
-            const string developerPW = "自行获取SDK对应的开发者密钥";
+            const string developerPW = "输入自己的加密密钥";
             IntPtr desc = IntPtr.Zero;
             
             SenseshieldServerHelp.Init(developerPW);
             var _loginHandle =SenseshieldServerHelp.LoginSS();
             SenseshieldServerHelp.KeepAlive(_loginHandle.Handle);
-            return;
+            
 
             //07 08. slm_encrypt  slm_decrypt
             //slm_encrypt
@@ -49,31 +49,31 @@ namespace RSJWYFamework.Runtime.Senseshield
             byte[] Data = System.Text.ASCIIEncoding.Default.GetBytes(StrData);
             byte[] Enc = new byte[StrData.Length];
             byte[] Dec = new byte[StrData.Length];
+            SenseshieldServerHelp.Encrypt(_loginHandle.Handle, Data);
 
-            WriteLineYellow(string.Format("[Before the encryption DATA]:{0}", StrData));
-            ret = SlmRuntime.slm_encrypt(Handle,Data,Enc,(uint)StrData.Length);
+            RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"[加密前 DATA]:{StrData}");
+            ret = SlmRuntime.slm_encrypt(_loginHandle.Handle,Data,Enc,(uint)StrData.Length);
             if (ret != SSErrCode.SS_OK)
             {
-                StrMsg = string.Format("slm_encrypt Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"slm_encrypt失败:0x{ret:X8}");
             }
             else
             {
-                WriteLineYellow(string.Format("[encrypted DATA]:{0}",System.Text.ASCIIEncoding.Default.GetString(Enc) ));
-                WriteLineGreen("slm_encrypt Success!"); 
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"[加密数据]:{System.Text.ASCIIEncoding.Default.GetString(Enc)}");
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"slm_encrypt成功！"); 
             }
             //slm_decrypt
-            ret = SlmRuntime.slm_decrypt(Handle,Enc,Dec,(uint)StrData.Length);
+            ret = SlmRuntime.slm_decrypt(_loginHandle.Handle,Enc,Dec,(uint)StrData.Length);
             if (ret != SSErrCode.SS_OK)
             {
-                StrMsg = string.Format("slm_decrypt Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"slm_decrypt失败:0x{ret:X8}");
             }
             else
             {
-                WriteLineYellow(string.Format("[decrypted DATA]:{0}", System.Text.ASCIIEncoding.Default.GetString(Dec)));
-                WriteLineGreen("slm_decrypt Success!");
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"[解密数据]:{System.Text.ASCIIEncoding.Default.GetString(Dec)}");
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"slm_decrypt成功！"); 
             }
+            return;
 
             //09. 10. 11.  slm_user_data_getsize slm_user_data_read  slm_user_data_write
             //slm_user_data_getsize
