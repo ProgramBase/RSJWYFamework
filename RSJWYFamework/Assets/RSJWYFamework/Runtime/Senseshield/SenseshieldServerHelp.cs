@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using RSJWYFamework.Runtime.ExceptionLogManager;
@@ -31,7 +33,8 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// </summary>
         private const int MaxBlockSize = 1520;
         /// <summary>
-        /// 缓冲区大小限制
+        /// 缓冲区大小限制，实际要-1
+        /// 因为我们需要确保长度增加到最近的16的倍数，而不是超过它。
         /// </summary>
         private const int Alignment = 16;
 
@@ -43,15 +46,16 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// </summary>
         /// <param name="Handle">login许可登录后的句柄</param>
         /// <param name="data">要加密的数据</param>
-        /// <returns></returns>
+        /// <returns>加密后的数组，前面会增加16位字节，记录原始数据长度，后面会增加到16位对齐</returns>
         public static byte[] Encrypt(SLM_HANDLE_INDEX Handle,byte[] data)
         {
             if (data == null || data.Length == 0)
                 throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"传入的要加密的数据无效");
             if (Handle == default(SLM_HANDLE_INDEX))
                 throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"许可登录后的内存句柄无效");
+       
             //计算最近的16字节对齐大小
-            int aligningLength = (data.Length + Alignment) & ~Alignment;
+            int aligningLength = (((data.Length + Alignment-1)/16)+1)*16;
             aligningLength += Alignment; //最前面两位数组存储加密前大小
             //存储原数据长度
             byte[] encryptData = new byte[aligningLength];
@@ -64,13 +68,13 @@ namespace RSJWYFamework.Runtime.Senseshield
             if (encryptData.Length <= 0 || encryptData.Length % 16 != 0) 
                 throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"没有正确对齐");
             //分割数据为二维数组，并开始加密
+            //记录要分割的份数
             int totalBlocks = (encryptData.Length + MaxBlockSize - 1) / MaxBlockSize;
+            
             //取出数据并分割后存储数组
             byte[][] encryptArr = new byte[totalBlocks][]; 
             //加密后数组
             byte[][] afterEncryptArr = new byte[totalBlocks][]; 
-            //最后整合好的加密后的数组
-            byte[] returnEncryptArr = new byte[encryptData.Length];
             uint ret = 0;
             
             for (int i = 0; i < totalBlocks; i++)
@@ -79,6 +83,7 @@ namespace RSJWYFamework.Runtime.Senseshield
                 int blockSize = Math.Min(MaxBlockSize, encryptData.Length - (i * MaxBlockSize));
                 // 创建一个新的数组来存储当前块的数据
                 encryptArr[i] = new byte[blockSize];
+                //加密后的数组
                 afterEncryptArr[i] = new byte[blockSize];
                 // 从原始数组中复制数据到当前块
                 Array.Copy(encryptData, i * MaxBlockSize, encryptArr[i], 0, blockSize);
@@ -95,8 +100,60 @@ namespace RSJWYFamework.Runtime.Senseshield
                     RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield, "slm_encrypt成功！");
                 }*/
             }
+            //完成整体加密，组合
             
-            return null;
+            return Utility.Utility.ConvertJaggedArrayToOneDimensional(afterEncryptArr);
+        }
+        /// <summary>
+        /// 通过许可内的AES密钥进行解密
+        /// 加密方式采用 AES对称解密，密钥在加密锁内（指硬件锁、云锁、软锁，下同）生成，
+        /// 且没有任何机会能出锁，在保证效率的同时，也最大化的加强了安全性。
+        /// </summary>
+        /// <param name="Handle">login许可登录后的句柄</param>
+        /// <param name="data">要加密的数据</param>
+        /// <returns>解密后的数组，会将前面的16位记录原始数据长度的字节移除以及对齐的内容也将会移除</returns>
+        public static byte[] Decrypt(SLM_HANDLE_INDEX Handle,byte[] data)
+        {
+            if (data == null || data.Length == 0)
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"传入的要解密的数据无效");
+            if (Handle == default(SLM_HANDLE_INDEX))
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"许可登录后的内存句柄无效");
+            
+            //拆分数组，提交解密流程
+            int totalBlocks = (data.Length + MaxBlockSize - 1) / MaxBlockSize;
+            //取出数据并分割后存储数组
+            byte[][] decryptArr = new byte[totalBlocks][]; 
+            //解密后数组
+            byte[][] afterdecryptArr = new byte[totalBlocks][]; 
+            uint ret = 0;
+            
+            for (int i = 0; i < totalBlocks; i++)
+            {
+                // 计算当前块的大小，可能是小于最大块大小的最后一个块
+                int blockSize = Math.Min(MaxBlockSize, data.Length - (i * MaxBlockSize));
+                // 创建一个新的数组来存储当前块的数据
+                decryptArr[i] = new byte[blockSize];
+                //加密后的数组
+                afterdecryptArr[i] = new byte[blockSize];
+                // 从原始数组中复制数据到当前块
+                Array.Copy(data, i * MaxBlockSize, decryptArr[i], 0, blockSize);
+                //加密
+                ret = SlmRuntime.slm_decrypt(Handle,decryptArr[i],afterdecryptArr[i],(uint)decryptArr[i].Length);
+                if (ret != SSErrCode.SS_OK)
+                {
+                    //只要有一轮次解密失败，即返回异常
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_decrypt失败:0x{ret:X8}");
+                    return null;
+                }
+                //完成整体加密，组合
+            }
+            //处理数组，把记录原始长度的和位数的移除
+            var decrypData= Utility.Utility.ConvertJaggedArrayToOneDimensional(afterdecryptArr);
+            var Originallength = BitConverter.ToUInt32(decrypData, 0);
+            byte[] decryp = new byte[Originallength];
+            Array.Copy(decrypData,16,decryp,0,Originallength);
+            return decryp;
+
         }
         
         
@@ -439,6 +496,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             //printf("%s\n", szmsg);
             return ret;
         }
+        
      
         
         /// <summary>

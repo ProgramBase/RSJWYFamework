@@ -35,7 +35,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             
             string StrMsg = string.Empty;
             IntPtr a = IntPtr.Zero;
-            const string developerPW = "输入自己的加密密钥";
+            const string developerPW = "输入个人开发者密钥";
             IntPtr desc = IntPtr.Zero;
             
             SenseshieldServerHelp.Init(developerPW);
@@ -44,35 +44,15 @@ namespace RSJWYFamework.Runtime.Senseshield
             
 
             //07 08. slm_encrypt  slm_decrypt
-            //slm_encrypt
-             string StrData = "test data.......";
+            //slm_encryptFDWAE
+            string StrData = "test data......";
             byte[] Data = System.Text.ASCIIEncoding.Default.GetBytes(StrData);
             byte[] Enc = new byte[StrData.Length];
             byte[] Dec = new byte[StrData.Length];
-            SenseshieldServerHelp.Encrypt(_loginHandle.Handle, Data);
-
-            RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"[加密前 DATA]:{StrData}");
-            ret = SlmRuntime.slm_encrypt(_loginHandle.Handle,Data,Enc,(uint)StrData.Length);
-            if (ret != SSErrCode.SS_OK)
-            {
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"slm_encrypt失败:0x{ret:X8}");
-            }
-            else
-            {
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"[加密数据]:{System.Text.ASCIIEncoding.Default.GetString(Enc)}");
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"slm_encrypt成功！"); 
-            }
-            //slm_decrypt
-            ret = SlmRuntime.slm_decrypt(_loginHandle.Handle,Enc,Dec,(uint)StrData.Length);
-            if (ret != SSErrCode.SS_OK)
-            {
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"slm_decrypt失败:0x{ret:X8}");
-            }
-            else
-            {
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"[解密数据]:{System.Text.ASCIIEncoding.Default.GetString(Dec)}");
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"slm_decrypt成功！"); 
-            }
+            var data= SenseshieldServerHelp.Encrypt(_loginHandle.Handle, Data);
+            Dec= SenseshieldServerHelp.Decrypt(_loginHandle.Handle, data);
+            
+            RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"[解密数据]:{System.Text.ASCIIEncoding.Default.GetString(Dec)}");
             return;
 
             //09. 10. 11.  slm_user_data_getsize slm_user_data_read  slm_user_data_write

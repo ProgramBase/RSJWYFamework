@@ -1,3 +1,5 @@
+using System;
+
 namespace RSJWYFamework.Runtime.Senseshield
 {
     #region SenseShieldLicenseJson
@@ -202,5 +204,6 @@ namespace RSJWYFamework.Runtime.Senseshield
         public SenseShieldFileListJson[] Files { get; set; }
     }
     #endregion
+
 
 }

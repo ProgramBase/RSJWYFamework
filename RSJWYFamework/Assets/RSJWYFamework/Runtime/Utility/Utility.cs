@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace RSJWYFamework.Runtime.Utility
@@ -66,6 +67,23 @@ namespace RSJWYFamework.Runtime.Utility
         public static T LoadJson<T>(string JsonTxT)
         {
             return JsonConvert.DeserializeObject<T>(JsonTxT);
+        }
+        /// <summary>
+        /// 二维数组转一维
+        /// </summary>
+        /// <param name="jaggedArray"></param>
+        /// <returns></returns>
+        public static byte[] ConvertJaggedArrayToOneDimensional(byte[][] jaggedArray)
+        {
+            List<byte> flatList = new List<byte>();
+            for (int i = 0; i < jaggedArray.Length; i++)
+            {
+                for (int j = 0; j < jaggedArray[i].Length; j++)
+                {
+                    flatList.Add(jaggedArray[i][j]);
+                }
+            }
+            return flatList.ToArray();
         }
     }
 }
