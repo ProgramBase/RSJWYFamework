@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RSJWYFamework.Runtime.ExceptionLogManager;
@@ -12,6 +14,7 @@ using RSJWYFamework.Runtime.Module;
 using SenseShield;
 using SLM_HANDLE_INDEX = System.UInt32;
 using RSJWYFamework.Runtime.Utility;
+using Random = System.Random;
 
 namespace RSJWYFamework.Runtime.Senseshield
 {
@@ -20,18 +23,24 @@ namespace RSJWYFamework.Runtime.Senseshield
     /// </summary>
     public class SenseshieldServer:IModule
     {
-        
-        public const int DEVELOPER_ID_LENGTH = 8;
-        public const int DEVICE_SN_LENGTH = 16;
-
+        /// <summary>
+        /// 登录的会话ID
+        /// </summary>
+        private SLM_HANDLE_INDEX Handle=0;
         // 回调事件需要定义为类成员变量，若定义在函数中，当函数执行完毕时对象被回收，当收到服务回调通知时程序会异常终止。
         // 回调通知生效的时间周期：slm_init - slm_cleanup 期间，当执行清理操作后回调函数将无法收到任何服务通知消息。
         private static callback pfn;
 
+        private Thread _keepAlive;
+        
+        /// <summary>
+        /// 通知多线程自己跳出
+        /// </summary>
+        static bool isThreadOver = false;
+
         public void Init()
         {
             uint ret = 0;
-            SLM_HANDLE_INDEX Handle = 0;
             
             string StrMsg = string.Empty;
             IntPtr a = IntPtr.Zero;
@@ -39,205 +48,27 @@ namespace RSJWYFamework.Runtime.Senseshield
             IntPtr desc = IntPtr.Zero;
             
             SenseshieldServerHelp.Init(developerPW);
-            var _loginHandle =SenseshieldServerHelp.LoginSS();
-            SenseshieldServerHelp.KeepAlive(_loginHandle.Handle);
+            var json = SenseshieldServerHelp.FindLicense(10);
+            var _loginHandle =SenseshieldServerHelp.LoginSS(10);
+             _keepAlive = new Thread(keepAliveThread);
+             _keepAlive.IsBackground = true;
+             _keepAlive.Start();
+            Handle = _loginHandle.Handle;
             
-
-            //07 08. slm_encrypt  slm_decrypt
-            //slm_encryptFDWAE
-            string StrData = "test data......";
-            byte[] Data = System.Text.ASCIIEncoding.Default.GetBytes(StrData);
-            byte[] Enc = new byte[StrData.Length];
-            byte[] Dec = new byte[StrData.Length];
-            var data= SenseshieldServerHelp.Encrypt(_loginHandle.Handle, Data);
-            Dec= SenseshieldServerHelp.Decrypt(_loginHandle.Handle, data);
+           
             
-            RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"[解密数据]:{System.Text.ASCIIEncoding.Default.GetString(Dec)}");
-            return;
-
-            //09. 10. 11.  slm_user_data_getsize slm_user_data_read  slm_user_data_write
-            //slm_user_data_getsize
-            UInt32 dataSize=0;
-            ret = SlmRuntime.slm_user_data_getsize(Handle, LIC_USER_DATA_TYPE.RAW, ref dataSize);
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("slm_user_data_getsize Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
-            }
-            else
-            {
-                WriteLineGreen("slm_user_data_getsize Success!");
-                if (dataSize > 0)
-                {
-                    //slm_user_data_read
-                    byte[] readbuf = new byte [dataSize];
-                    ret = SlmRuntime.slm_user_data_read(Handle, LIC_USER_DATA_TYPE.RAW, readbuf, 0, dataSize);
-                    if (ret != SSErrCode.SS_OK)
-                    {
-                        StrMsg = string.Format("slm_user_data_read Failure:0x{0:X8}", ret);
-                        WriteLineRed(StrMsg);
-                    }
-                    else
-                    {
-                        // 读写区需要在用开发者管理工具写许可的时候，设置读写区大小，此处做判断，如果读写区未初始化（数据全为0）则写入数据，否则输出内容
-                        // 判断数据是否为空，空写入数据，否则输出内容
-                        UInt32 flag = 0;
-                        for (int i = 0; i < readbuf.Length; i++)
-                        {
-                            if (readbuf[i] == 0)
-                                flag = 1;
-                            else
-                            {
-                                flag = 2;
-                                break;
-                            }
-                        }
-                        if (flag == 1)
-                        {
-                            //slm_user_data_write
-                            string buf = "";//输入要写入数据区内容
-                            byte[] writebuf = System.Text.ASCIIEncoding.Default.GetBytes(buf);
-                            ret = SlmRuntime.slm_user_data_write(Handle, writebuf, 0, (UInt32)buf.Length);
-                            if (ret != SSErrCode.SS_OK)
-                            {
-                                StrMsg = string.Format("slm_user_data_write Failure:0x{0:X8}", ret);
-                                WriteLineRed(StrMsg);
-                            }
-                            else
-                            {
-                                WriteLineYellow(string.Format("[Write RAW DATA]:{0}", writebuf));
-                                WriteLineGreen("slm_user_data_write Success!");
-                            }
-                        }
-                        else if(flag ==2)
-                        {
-                            WriteLineYellow(string.Format("[Read RAW DATA]:{0}", System.Text.ASCIIEncoding.Default.GetString(readbuf)));
-                        }
-                        WriteLineGreen("slm_user_data_read Success!");
-                    }
-                }
-                else 
-                {
-                    WriteLineYellow(string.Format("[No data area]:{0}", dataSize));
-                }
-            }
-
-            ////12. 13. 14. 15. 16 slm_mem_alloc - slm_mem_write -slm_mem_read - slm_mem_free
-            //slm_mem_alloc
-            UInt32 mem_index = 0;
-            ret = SlmRuntime.slm_mem_alloc(Handle,1024,ref mem_index);
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("slm_mem_alloc Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
-            }
-            else
-            {
-                WriteLineYellow(string.Format("[mem_index ]:{0}", mem_index));
-                WriteLineGreen("slm_mem_alloc Success!");
-            }
-            //slm_mem_write
-            string mem_buff = "test memory data...";
-            UInt32 mem_size = (UInt32)mem_buff.Length;
-            UInt32 mem_len = 0;
-            byte[] mem_write_buf = System.Text.ASCIIEncoding.Default.GetBytes(mem_buff);
-            byte[] mem_read_buf = new byte[mem_size];
-
-
-            ret = SlmRuntime.slm_mem_write(Handle, mem_index, 0, mem_size, mem_write_buf, ref mem_len);
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("slm_mem_write Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
-                System.Diagnostics.Debug.Assert(true);
-            }
-            else
-            {
-                WriteLineYellow(string.Format("[Mem Write]:{0}", mem_buff));
-                WriteLineGreen("slm_mem_write Success!");
-            }
-            //slm_mem_read
-            ret = SlmRuntime.slm_mem_read(Handle,mem_index,0,mem_size,mem_read_buf,ref mem_len);
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("slm_mem_write Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
-                System.Diagnostics.Debug.Assert(true);
-            }
-            else
-            {
-                string StrPrint = string.Format("[Mem Read]:{0}", System.Text.ASCIIEncoding.Default.GetString(mem_read_buf));
-                WriteLineYellow(StrPrint);
-                WriteLineGreen("slm_mem_write Success!");
-            }
-            //slm_mem_free
-            ret  = SlmRuntime.slm_mem_free(Handle,mem_index);
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("slm_mem_write Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
-                System.Diagnostics.Debug.Assert(true);
-            }
-            else
-            {
-                WriteLineGreen("slm_mem_write Success!");
-            }
-            
-            //17 slm_logout
-            ret = SlmRuntime.slm_logout(Handle);
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("slm_logout Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg); 
-            }
-            else
-            {
-                WriteLineGreen("slm_logout Success!");
-            }
-
-            //18. slm_error_format
-            IntPtr  result;
-            result  = SlmRuntime.slm_error_format(2,SSDefine.LANGUAGE_ENGLISH_ASCII);
-            if (result != IntPtr.Zero)
-            {
-                string error = Marshal.PtrToStringAnsi(result);
-                StrMsg = string.Format("slm_error_format success, code = 0x{0:X8}, message = {1}", ret, error);
-                WriteLineGreen(StrMsg);
-            }
-            else
-            {
-                WriteLineRed("slm_error_format Failure!");
-            }
-
-            //19. slm_get_version
-            UInt32 api_version = 0;
-            UInt32 ss_version = 0;
-            ret = SlmRuntime.slm_get_version(ref api_version, ref ss_version);
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("slm_get_version Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
-            }
-            else
-            {
-                StrMsg = string.Format("api_version :0x{0:X8},ss_version:0X{0:X8}", api_version, ss_version);
-                WriteLineYellow(StrMsg);
-                WriteLineGreen("slm_get_version Success!");
-            }
-
             //20. slm_enum_device
+            
             IntPtr device_info = IntPtr.Zero;
             ret = SlmRuntime.slm_enum_device(ref device_info);
             if (ret != SSErrCode.SS_OK)
             {
-                StrMsg = string.Format("slm_enum_device Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_enum_device Failure:0x{ret:X8}");
             }
             else
             {
                 string StrPrint = Marshal.PtrToStringAnsi(device_info);
-                WriteLineYellow(StrPrint);
-                WriteLineGreen("slm_enum_device Success!");
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield, $"slm_enum_device {StrPrint}");
             }
 
             //21. slm_enum_license_id
@@ -256,8 +87,7 @@ namespace RSJWYFamework.Runtime.Senseshield
                 else
                 {
                     string StrPrint = Marshal.PtrToStringAnsi(license_ids);
-                    WriteLineYellow(StrPrint);
-                    WriteLineGreen("slm_enum_license_id Success!");
+                    RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield, $"slm_enum_license_id {StrPrint}");
                 }
 
                 //23. slm_get_license_info,举例0号许可
@@ -276,6 +106,7 @@ namespace RSJWYFamework.Runtime.Senseshield
                 }
             }
 
+            return;
             // 暂停程序，演示响应拔插锁消息回调通知功能，点击任意键继续。
             WriteLineYellow("Program pause, demonstrate the response to unplug dongle callback message notification function, press any key to continue.");
            
@@ -299,7 +130,23 @@ namespace RSJWYFamework.Runtime.Senseshield
 
         public void Close()
         {
-            throw new NotImplementedException();
+            isThreadOver = true;
+            if (Handle>0)
+            {
+                SenseshieldServerHelp.LoginOutSS(Handle);
+            }
+        }
+
+        /// <summary>
+        /// 心跳维持线程
+        /// </summary>
+        void keepAliveThread()
+        {
+            while (!isThreadOver)
+            {
+                if (!SenseshieldServerHelp.KeepAlive(Handle)) break;
+                Thread.Sleep(1000);
+            }
         }
         
         //打印方式定义

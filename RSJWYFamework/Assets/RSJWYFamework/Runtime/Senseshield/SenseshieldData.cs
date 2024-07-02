@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace RSJWYFamework.Runtime.Senseshield
 {
@@ -7,11 +8,11 @@ namespace RSJWYFamework.Runtime.Senseshield
     /// <summary>
     /// 许可信息
     /// </summary>
-    public class SenseShieldLicenseJson
+    public class SenseShieldLicenseJsonItem
     {
         /// <summary>
         /// 
-        /// </summary>
+        /// </summary>+
         public string developer_id { get; set; }
         /// <summary>
         /// 
@@ -166,10 +167,10 @@ namespace RSJWYFamework.Runtime.Senseshield
     {
         
     }
-    /// <summary>
+    /// <summary> 
     /// 锁内文件列表
     /// </summary>
-    public class SenseShieldFileListJson
+    public class SenseShieldFileJsonItem
     {
         /// <summary>
         /// 标志哪些域有效，不必关心
@@ -195,13 +196,6 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// (文件名称)
         /// </summary>
         public string name { get; set; }
-    }
-    /// <summary>
-    /// 锁内文件列表
-    /// </summary>
-    public class SenseShieldFileListArrJson
-    {
-        public SenseShieldFileListJson[] Files { get; set; }
     }
     #endregion
 

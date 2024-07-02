@@ -38,6 +38,221 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// </summary>
         private const int Alignment = 16;
 
+        /// <summary>
+        /// 可申请的Virbox托管内存总大小为 256kb。
+        /// </summary>
+        private const UInt32 MemoryMax = 262144;
+
+        
+        /// <summary>
+        /// 把错误代码转为string
+        /// </summary>
+        /// <param name="err">错误信息</param>
+        /// <returns></returns>
+        public static string GetErrFormat(uint err)
+        {
+            IntPtr  result;
+            result = SlmRuntime.slm_error_format(err, SSDefine.LANGUAGE_CHINESE_ASCII);
+            if (result != IntPtr.Zero)
+            {
+                string error = Marshal.PtrToStringAnsi(result);
+                return $"slm_error_format success, code = 0x{err:X8}, message = {error}";
+            }
+            RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_error_format Failure! 0x{err:X8}");
+            return $"slm_error_format Failure! 0x{err:X8}";
+        }
+        
+
+
+
+        #region virbox代托管内存
+
+        /*
+         Virbox许可服务 的托管内存原理是 APP 利用有效的许可作为凭证，在 Virbox许可服务 模块内数据加密且数据校验，其内存二进制数据没有明文， 并且无法非法修改,黑客极难查看与篡改使用。
+         用户可以把自己 APP 的一些敏感数据保存到 Virbox许可服务 的托管内存，比如帐号口令，数据库的帐号与密码，涉及到操作权限的临时数据放到 Virbox许可服务 内存托管里面。
+         另外一方面 APP 跟 Virbox许可服务 耦合度极大的提高，防止黑客脱离 Virbox许可服务 调试与运行。
+         内存托管的好处：
+         1.敏感数据内存不泄密、无法篡改。
+         2.可以跨线程安全交互数据。
+         3.APP软件、许可、Virbox许可服务 三者强耦合，软件防止被破解能力极高。（黑客需要手工剥离和重建才能使用软件）
+         说明：托管内存每次申请的最大内存为 SLM_MEM_MAX_SIZE ，每个内存通过一个 mem_id 标识。可申请的内存总大小为 256kb。
+        */
+        
+        /// <summary>
+        /// 申请Virbox托管内存
+        /// </summary>
+        /// <param name="handle">登录的许可句柄</param>
+        /// <param name="size">申请的内存大小，不得超过256KB，262144b</param>
+        /// <returns>virbox返回的托管ID</returns>
+        public static UInt32 ApplyForMemoryAlloc(SLM_HANDLE_INDEX handle, UInt32 size)
+        {
+            if (size > MemoryMax)
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"申请{size}超过最大{MemoryMax}限制大小");
+            uint ret = 0;
+            UInt32 mem_index = 0;
+            ret = SlmRuntime.slm_mem_alloc(handle, 1024, ref mem_index);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_mem_alloc Failure:0x{ret:X8}");
+            }
+
+            return mem_index;
+        }
+
+        /// <summary>
+        /// 向Virbox托管内存写入数据
+        /// </summary>
+        /// <param name="handle">登录的许可句柄</param>
+        /// <param name="mem_id">托管内存ID</param>
+        /// <param name="offset">托管数据偏移（从内存哪一位置开始写入）</param>
+        /// <param name="writebuff"></param>
+        /// <returns>写入长度、是否成功</returns>
+        public static (UInt32 writelen, bool success) MemoryWrite(SLM_HANDLE_INDEX handle, UInt32 mem_id, UInt32 offset,
+            byte[] writebuff)
+        {
+            var writeLen = (UInt32)writebuff.Length;
+            if (writeLen > MemoryMax)
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield,
+                    $"要写入的长度{(UInt32)writebuff.Length}超过托管内存最大大小{MemoryMax}，禁止写入");
+            if (offset >= MemoryMax)
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"偏移{offset}超过托管内存最大大小{MemoryMax}，咋地，你要疯啊！！");
+
+
+            uint ret = 0;
+            UInt32 numberofbyteswritten = 0;
+            ret = SlmRuntime.slm_mem_write(handle, mem_id, offset, writeLen, writebuff, ref numberofbyteswritten);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_mem_write Failure:0x{ret:X8}");
+
+                return (default, false);
+            }
+
+            return (numberofbyteswritten, true);
+        }
+
+        /// <summary>
+        /// 从Virbox托管内中获取数据
+        /// </summary>
+        /// <param name="handle">登录的许可句柄</param>
+        /// <param name="mem_id">托管内存ID</param>
+        /// <param name="offset">读取托管数据偏移 </param>
+        /// <param name="len">读取托管数据长度 </param>
+        /// <returns>读取长度、读取的数组、读取成功？</returns>
+        /// <exception cref="RSJWYException"></exception>
+        public static (UInt32 readlen, byte[] readbuff, bool success) MemoryRead(SLM_HANDLE_INDEX handle, UInt32 mem_id,
+            UInt32 offset, UInt32 len)
+        {
+            if (offset >= MemoryMax)
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"读取的位置{offset}超过托管内存最大大小{MemoryMax}，这，，读不到啊");
+
+            uint ret = 0;
+            UInt32 readlen = 0;
+            byte[] mem_read_buf = new byte[len];
+
+            ret = SlmRuntime.slm_mem_read(handle, mem_id, offset, len, mem_read_buf, ref readlen);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_mem_write Failure:0x{ret:X8}");
+                return (default, default, false);
+            }
+
+            return (readlen, mem_read_buf, true);
+        }
+        /// <summary>
+        /// 释放Virbox托管内存
+        /// </summary>
+        /// <param name="handle">登录的许可句柄</param>
+        /// <param name="mem_id">托管内存ID</param>
+        /// <returns></returns>
+        public static bool  MemoryFree(SLM_HANDLE_INDEX handle, UInt32 mem_id)
+        {
+            uint ret = 0;
+            ret  = SlmRuntime.slm_mem_free(handle,mem_id);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_mem_free Failure:0x{ret:X8}");
+                return false;
+            }
+            return true;
+        }
+        
+        #endregion
+        
+        #region 数据区操作
+
+        /// <summary>
+        /// 读取数据
+        /// </summary>
+        /// <param name="handle">登录的许可句柄</param>
+        /// <param name="type">操作区域</param>
+        /// <param name="dataSize">数据区大小</param>
+        /// <returns></returns>
+        public static byte[] ReadUserData(SLM_HANDLE_INDEX handle,LIC_USER_DATA_TYPE type,UInt32 dataSize)
+        {
+            if (dataSize>65535 )
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"设置的数据区大小：{dataSize}b，超出最大可读64K规定限制");
+            uint ret = 0;
+            byte[] readbuf = new byte [dataSize];
+            
+            ret = SlmRuntime.slm_user_data_read(handle, type, readbuf, 0, dataSize);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_user_data_read Failure:0x{ret:X8}");
+            }
+            //ret = SlmRuntime.slm_user_data_read(Handle, LIC_USER_DATA_TYPE.RAW, readbuf, 0, datasize);
+            return readbuf;
+        }
+        /// <summary>
+        /// 写许可的读写数据区
+        /// 仅读写区可以通过应用程序写入数据 
+        /// </summary>
+        /// <param name="handle">登录句柄</param>
+        /// <param name="writeData">要写入的数据，数据长度不得大于读写区长度</param>
+        /// <param name="offset">加密锁内数据区的偏移，即锁内数据区的写入位置 ，默认从0位写</param>
+        /// <returns></returns>
+        public static bool WriteUserDataRaw(SLM_HANDLE_INDEX handle,byte[] writeData,UInt32 offset=0)
+        {
+            var writeLen = (UInt32)writeData.Length;
+            var rawLen = GetUserDtatSize(handle, LIC_USER_DATA_TYPE.RAW).size;
+            if (writeLen >rawLen )
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield,$"要写入的长度{(UInt32)writeData.Length}超过读写区最大长度{rawLen}，禁止写入");
+            if (offset >=rawLen )
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield,$"偏移{offset}超过读写区最大长度{rawLen}，咋地，你要疯啊！！");
+            uint ret = 0;
+            ret = SlmRuntime.slm_user_data_write(handle, writeData, offset, writeLen);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_user_data_write Failure:0x{ret:X8}");
+                return false;
+            }
+            //ret = SlmRuntime.slm_user_data_read(Handle, LIC_USER_DATA_TYPE.RAW, readbuf, 0, datasize);
+            return true;
+        }
+     
+        /// <summary>
+        /// 获得许可的用户数据区大小 
+        /// </summary>
+        /// <param name="handle">许可句柄值</param>
+        /// <param name="type">用户数据区类型</param>
+        /// <returns></returns>
+        public static (UInt32 size,bool success) GetUserDtatSize(SLM_HANDLE_INDEX handle,LIC_USER_DATA_TYPE type)
+        {
+            uint ret = 0;
+            UInt32 dataSize=0;
+            ret = SlmRuntime.slm_user_data_getsize(handle, type, ref dataSize);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_user_data_getsize Failure:0x{ret:X8}");
+                return (default(UInt32),false);
+            }
+            return (dataSize,true);
+        }
+        
+
+        #endregion
+
+        #region 通过许可加密解密
 
         /// <summary>
         /// 通过许可内的AES密钥进行加密
@@ -155,9 +370,53 @@ namespace RSJWYFamework.Runtime.Senseshield
             return decryp;
 
         }
+
+        #endregion
+
+        #region 信息获取
         
         
         
+        
+        /// <summary>
+        /// 获取所有许可信息
+        /// </summary>
+        /// <returns></returns>
+        public static List<SenseShieldLicenseJsonItem> GetAllDevice()
+        {
+            IntPtr device_info = IntPtr.Zero;
+            uint ret = 0;
+
+            ret = SlmRuntime.slm_enum_device(ref device_info);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_enum_device Failure:0x{ret:X8}");
+                return null;
+            }
+            string StrPrint = Marshal.PtrToStringAnsi(device_info);
+            var _lis = Utility.Utility.LoadJson<List<SenseShieldLicenseJsonItem>>(StrPrint);
+            SlmRuntime.slm_free(device_info);
+            return _lis;
+        }
+
+        /// <summary>
+        /// 获得 Runtime 库 和 Virbox许可服务 的版本信息
+        /// </summary>
+        /// <returns></returns>
+        public static (UInt32 api_version, UInt32 ss_version) GetVersion()
+        {
+            uint ret = 0;
+            UInt32 api_version = 0;
+            UInt32 ss_version = 0;
+            ret = SlmRuntime.slm_get_version(ref api_version, ref ss_version);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_get_version Failure:0x{ret:X8}");
+                return (default, default);
+            }
+            return (api_version, ss_version);
+        }
+
         /// <summary>
         /// 获取开发商ID（每一个sdk都是独有的）
         /// </summary>
@@ -170,58 +429,24 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_get_developer_id(developer_id);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,"SLM 获取开发人员 ID 失败:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, "SLM 获取开发人员 ID 失败:0x{ret:X8}");
                 return string.Empty;
             }
             else
             {
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"SLM 获取开发人员 ID 成功!");
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield, "SLM 获取开发人员 ID 成功!");
                 // 将开发商ID转化为字符串
                 return BitConverter.ToString(developer_id).Replace("-", "");
             }
         }
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        /// <param name="apikey">开发者API密码</param>
-        /// <returns></returns>
-        public static bool Init(string apikey)
-        {
-            uint ret = 0;
-            ST_INIT_PARAM initPram = new ST_INIT_PARAM();
-            initPram.version =SSDefine.SLM_CALLBACK_VERSION02;
-            initPram.flag = SSDefine.SLM_INIT_FLAG_NOTIFY;
-            pfn = new callback(handle_service_msg);     // 响应回调通知只有在 slm_init 后 slm_cleanup 之前有效。
-            initPram.pfn = pfn;
-
-            // 指定开发者 API 密码，示例代码指定 Demo 开发者的 API 密码。
-            // 注意：正式开发者运行测试前需要修改此值，可以从 Virbox 开发者网站获取 API 密码。
-
-            initPram.password = Utility.Utility.ConvertHexStringToByteArray(apikey);
-            ret = SlmRuntime.slm_init(ref initPram);
-            if (ret == SSErrCode.SS_OK)
-            {
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"Slm_Init初始化成功!");
-                return true;
-            }
-            else if (ret == SSErrCode.SS_ERROR_DEVELOPER_PASSWORD)
-            {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"Slm_Init 失败:0x{ret:X8}(错误开发人员密码). 请登录 Virbox 开发者中心(https://developer.lm.virbox.com), 获取 API 密码，并替换 'initPram.password' 变量内容。");
-                return false;
-            }
-            else
-            {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"Slm_Init 失败:0x{ret:X8}");
-                return false;
-            }
-        }
+        
         /// <summary>
         /// 查找许可信息(仅对硬件锁有效？？)
         /// 仅对硬件锁有效似乎没有这个限制了
         /// </summary>
         /// <param name="license_id">许可ID</param>
         /// <returns>许可信息json</returns>
-        public static SenseShieldLicenseJson FindLicense(UInt32 license_id=1)
+        public static List<SenseShieldLicenseJsonItem> FindLicense(UInt32 license_id=1)
         {
             uint ret = 0;
             IntPtr desc = IntPtr.Zero;
@@ -236,9 +461,9 @@ namespace RSJWYFamework.Runtime.Senseshield
             {
                 string StrPrint = Marshal.PtrToStringAnsi(desc);
                 // 去掉前后的方括号
-                StrPrint = StrPrint.Substring(1);
-                StrPrint = StrPrint.Substring(0, StrPrint.Length - 1);
-                var _json = Utility.Utility.LoadJson<SenseShieldLicenseJson>(StrPrint);
+                //StrPrint = StrPrint.Substring(1);
+                //StrPrint = StrPrint.Substring(0, StrPrint.Length - 1);
+                var _json = Utility.Utility.LoadJson<List<SenseShieldLicenseJsonItem>>(StrPrint);
                 RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"SlmFindLicenseEasy Success!");
                 SlmRuntime.slm_free(desc);
                 if (ret != SSErrCode.SS_OK)
@@ -249,6 +474,12 @@ namespace RSJWYFamework.Runtime.Senseshield
                 return _json;
             }
         }
+
+        #endregion
+        
+        
+        #region 登录登出维持许可
+
         /// <summary>
         /// 安全登录许可
         /// ,并且检查时间（是否到期或者是否早于开始时间）、次数、并发数是否归零，
@@ -264,7 +495,6 @@ namespace RSJWYFamework.Runtime.Senseshield
             //03. LOGIN
             ST_LOGIN_PARAM stLogin = new ST_LOGIN_PARAM();
             stLogin.size = (UInt32)Marshal.SizeOf(stLogin);
-
             // 指定登录的许可ID，Demo 设置登录0号许可，开发者正式使用时可根据需要调整此参数。
             stLogin.license_id = license_id;
 
@@ -280,7 +510,6 @@ namespace RSJWYFamework.Runtime.Senseshield
             else
             {
                 RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield, $"Slmlogin 成功!:0x{ret:X8}");
-                
                 return (true,Handle);
             }
         }
@@ -306,8 +535,21 @@ namespace RSJWYFamework.Runtime.Senseshield
                 return true;
             } 
         }
-
         /// <summary>
+        /// 许可登出，并且释放许可句柄等资源 
+        /// </summary>
+        /// <param name="Handle">许可句柄值</param>
+        public static void  LoginOutSS(SLM_HANDLE_INDEX Handle)
+        {
+            if (Handle <= 0) return;
+            uint ret = 0;
+            ret = SlmRuntime.slm_logout(Handle);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_logout Failure0x{ret:X8}");
+            }
+        }
+          /// <summary>
         /// 获取会话信息
         /// </summary>
         /// <param name="Handle">许可句柄，通过登录获得</param>
@@ -393,7 +635,7 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// </summary>
         /// <param name="Handle">许可句柄，通过登录获得</param>
         /// <returns></returns>
-        public static SenseShieldFileListArrJson GetInfoFileList(SLM_HANDLE_INDEX Handle)
+        public static List<SenseShieldFileJsonItem> GetInfoFileList(SLM_HANDLE_INDEX Handle)
         {
             uint ret = 0;
             IntPtr desc = IntPtr.Zero;
@@ -406,7 +648,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             else
             {
                 string _a = Marshal.PtrToStringAnsi(desc);
-                var _json = Utility.Utility.LoadJson<SenseShieldFileListArrJson>(Marshal.PtrToStringAnsi(desc));
+                var _json = Utility.Utility.LoadJson<List<SenseShieldFileJsonItem>>(Marshal.PtrToStringAnsi(desc));
                 RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"SLM 获取信息(local_info) Success!");
                 SlmRuntime.slm_free(desc);
                 if (ret != SSErrCode.SS_OK)
@@ -417,6 +659,54 @@ namespace RSJWYFamework.Runtime.Senseshield
             }
         }
         
+
+        #endregion
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="apikey">开发者API密码</param>
+        /// <returns></returns>
+        public static bool Init(string apikey)
+        {
+            uint ret = 0;
+            ST_INIT_PARAM initPram = new ST_INIT_PARAM();
+            initPram.version =SSDefine.SLM_CALLBACK_VERSION02;
+            initPram.flag = SSDefine.SLM_INIT_FLAG_NOTIFY;
+            pfn = new callback(handle_service_msg);     // 响应回调通知只有在 slm_init 后 slm_cleanup 之前有效。
+            initPram.pfn = pfn;
+
+            // 指定开发者 API 密码，示例代码指定 Demo 开发者的 API 密码。
+            // 注意：正式开发者运行测试前需要修改此值，可以从 Virbox 开发者网站获取 API 密码。
+
+            initPram.password = Utility.Utility.ConvertHexStringToByteArray(apikey);
+            ret = SlmRuntime.slm_init(ref initPram);
+            if (ret == SSErrCode.SS_OK)
+            {
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"Slm_Init初始化成功!");
+                return true;
+            }
+            else if (ret == SSErrCode.SS_ERROR_DEVELOPER_PASSWORD)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"Slm_Init 失败:0x{ret:X8}(错误开发人员密码). 请登录 Virbox 开发者中心(https://developer.lm.virbox.com), 获取 API 密码，并替换 'initPram.password' 变量内容。");
+                return false;
+            }
+            else
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"Slm_Init 失败:0x{ret:X8}");
+                return false;
+            }
+        }
+        /// <summary>
+        /// 释放API内分配堆区域  
+        /// </summary>
+        /// <param name="buffer"></param>
+        public static void SLMFree(IntPtr buffer)
+        {
+            uint ret = 0;
+            SlmRuntime.slm_free(buffer);
+        }
+
+      
          /// <summary>
         /// 回调函数信息提示
         /// </summary>
