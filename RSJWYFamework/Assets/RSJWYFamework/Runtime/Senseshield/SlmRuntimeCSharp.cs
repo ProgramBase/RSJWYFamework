@@ -6,13 +6,9 @@ using SLM_HANDLE_INDEX = System.UInt32;
 namespace RSJWYFamework.Runtime.Senseshield
 {
     public delegate uint callback(uint message, UIntPtr wparam, UIntPtr lparam);
-
-   
-
-
-  
-
-
+    /// <summary>
+    /// 深思数盾运行时RuntimeAPI
+    /// </summary>
     internal class SlmRuntime
     {
 #if DEBUG

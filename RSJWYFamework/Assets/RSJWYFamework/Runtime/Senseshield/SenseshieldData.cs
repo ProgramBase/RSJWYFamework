@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace RSJWYFamework.Runtime.Senseshield
 {
-    #region SenseShieldLicenseJson
-    
     /// <summary>
     /// 许可信息
     /// </summary>
@@ -160,13 +160,6 @@ namespace RSJWYFamework.Runtime.Senseshield
         public string user_guid { get; set; }
     }
     
-    /// <summary>
-    /// 本地锁信息
-    /// </summary>
-    public class SenseShieldLockInfoJson
-    {
-        
-    }
     /// <summary> 
     /// 锁内文件列表
     /// </summary>
@@ -197,7 +190,145 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// </summary>
         public string name { get; set; }
     }
-    #endregion
+    
+    /// <summary>
+    /// 所有拥有的锁的信息基类，（云、软、硬）锁
+    /// </summary>
+    public class SenseShieldAllLockInfoBase
+    {
+        [JsonProperty("developer_id")]
+        public string DeveloperId { get; set; }
+        [JsonProperty("host_name")]
+        public string HostName { get; set; }
+        [JsonProperty("lm")]
+        public string Lm { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
+    }
+ 
+    
+    /// <summary>
+    /// 所有锁信息-本地锁
+    /// </summary>
+    public class SenseShieldLocalLockInfo : SenseShieldAllLockInfoBase
+    {
+        [JsonProperty("sn")]
+        public string Sn { get; set; }
+        [JsonProperty("lock_info")]
+        public SenseShieldLocalLockInfoDetails LockInfo { get; set; }
+    }
 
+    /// <summary>
+    /// 所有锁信息-本地锁详细信息
+    /// </summary>
+    public class SenseShieldLocalLockInfoDetails
+    {
+        [JsonProperty("clock")]
+        public long Clock { get; set; }
+        [JsonProperty("available_space")]
+        public int AvailableSpace { get; set; }
+        [JsonProperty("total_space")]
+        public int TotalSpace { get; set; }
+        [JsonProperty("communication_protocol")]
+        public int CommunicationProtocol { get; set; }
+        [JsonProperty("lock_firmware_version")]
+        public string LockFirmwareVersion { get; set; }
+        [JsonProperty("lm_firmware_version")]
+        public string LmFirmwareVersion { get; set; }
+        [JsonProperty("h5_device_type")]
+        public int H5DeviceType { get; set; }
+        [JsonProperty("clock_type")]
+        public int ClockType { get; set; }
+        [JsonProperty("shared_enabled")]
+        public int SharedEnabled { get; set; }
+        [JsonProperty("owner_developer_id")]
+        public string OwnerDeveloperId { get; set; }
+        [JsonProperty("device_model")]
+        public string DeviceModel { get; set; }
+        [JsonProperty("hardware_version")]
+        public string HardwareVersion { get; set; }
+        [JsonProperty("manufacture_date")]
+        public DateTime ManufactureDate { get; set; }
+        [JsonProperty("lock_sn")]
+        public string LockSn { get; set; }
+        [JsonProperty("slave_addr")]
+        public int SlaveAddr { get; set; }
+        [JsonProperty("shell_num")]
+        public string ShellNum { get; set; }
+        [JsonProperty("user_info")]
+        public string UserInfo { get; set; }
+        [JsonProperty("inner_info")]
+        public string InnerInfo { get; set; }
+    }
+    /// <summary>
+    /// 所有锁信息-软锁
+    /// </summary>
+    public class SenseShieldSLockLockInfo : SenseShieldAllLockInfoBase
+    {
+        [JsonProperty("account_name")]
+        public string AccountName { get; set; }
+        [JsonProperty("user_guid")]
+        public string UserGuid { get; set; }
+        [JsonProperty("ip")]
+        public string Ip { get; set; }
+        [JsonProperty("port")]
+        public int Port { get; set; }
+    }
+   
+    /// <summary>
+    /// 处理获取到的本地所有锁信息时
+    /// </summary>
+    public class MixedSenseShieldAllLockInfoConverter : JsonConverter
+    {
+        /// <summary>
+        /// 检查类型
+        /// </summary>
+        /// <param name="objectType"></param>
+        /// <returns></returns>
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(SenseShieldAllLockInfoBase[]);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            var tokens = JArray.Load(reader);
+            var list = new List<SenseShieldAllLockInfoBase>();
+
+            foreach (JObject item in tokens)
+            {
+                if (item["type"].Value<string>()=="local")
+                {
+                    list.Add(serializer.Deserialize<SenseShieldLocalLockInfo>(item.CreateReader()));
+                }
+                else if(item["type"].Value<string>()=="slock")
+                {
+                    list.Add(serializer.Deserialize<SenseShieldSLockLockInfo>(item.CreateReader()));
+                }
+            }
+
+            SenseShieldAllLockInfoBase[] arr = list.ToArray();
+            return arr;
+            
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            if (value is SenseShieldSLockLockInfo withDetails)
+            {
+                // 序列化带有详细信息的对象
+                serializer.Serialize(writer, withDetails);
+            }
+            else if (value is SenseShieldLocalLockInfo simpleInfo)
+            {
+                // 序列化简单信息的对象
+                serializer.Serialize(writer, simpleInfo);
+            }
+            else
+            {
+                throw new JsonSerializationException("未知的锁信息类型。");
+            }
+        }
+    }
 
 }
