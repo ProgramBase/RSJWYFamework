@@ -13,7 +13,6 @@ namespace RSJWYFamework.Runtime.Main
         public Main()
         {
             AddModule<DefaultEvenManager>();
-            AddModule<DefaultExceptionLogManager>();
             RSJWYLogger.Log(RSJWYFameworkEnum.Main,"初始化完成");
         }
         
@@ -64,7 +63,19 @@ namespace RSJWYFamework.Runtime.Main
             }
             return _t;
         }
+        /// <summary>
+        /// 关闭所有模块
+        /// </summary>
+        public void CloseAllModule()
+        {
+            foreach (var VARIABLE in _modules)
+            {
+                VARIABLE.Value.Close();
+            }
+        }
     }
+    
+    
 
     public enum RSJWYFameworkEnum
     {

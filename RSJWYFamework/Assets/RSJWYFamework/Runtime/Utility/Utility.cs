@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace RSJWYFamework.Runtime.Utility
@@ -33,6 +34,21 @@ namespace RSJWYFamework.Runtime.Utility
             long timestamp = nowUtc.ToUnixTimeSeconds();
             return Convert.ToInt64(timestamp);
         }
+        /*
+        /// <summary>
+        /// 16进制的字符串转为字节数组
+        /// </summary>
+        /// <param name="HexString"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static byte[] StringToHex(string HexString)
+        {
+            byte[] returnBytes = new byte[HexString.Length / 2];
+            for (int i = 0; i < returnBytes.Length; i++)
+                returnBytes[i] = Convert.ToByte(HexString.Substring(i * 2, 2), 16);
+
+            return returnBytes;
+        }*/
         /// <summary>
         /// 16进制的字符串转为字节数组
         /// </summary>
@@ -66,6 +82,24 @@ namespace RSJWYFamework.Runtime.Utility
         public static T LoadJson<T>(string JsonTxT)
         {
             return JsonConvert.DeserializeObject<T>(JsonTxT);
+        }
+        
+        /// <summary>
+        /// 二维数组转一维
+        /// </summary>
+        /// <param name="jaggedArray"></param>
+        /// <returns></returns>
+        public static byte[] ConvertJaggedArrayToOneDimensional(byte[][] jaggedArray)
+        {
+            List<byte> flatList = new List<byte>();
+            for (int i = 0; i < jaggedArray.Length; i++)
+            {
+                for (int j = 0; j < jaggedArray[i].Length; j++)
+                {
+                    flatList.Add(jaggedArray[i][j]);
+                }
+            }
+            return flatList.ToArray();
         }
     }
 }
