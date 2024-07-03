@@ -108,6 +108,28 @@ namespace RSJWYFamework.Runtime.Senseshield
             RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_error_format Failure! 0x{err:X8}");
             return $"slm_error_format Failure! 0x{err:X8}";
         }
+
+        #region 控制
+
+        /// <summary>
+        /// 控制LED，仅针对硬件锁
+        /// </summary>
+        /// <param name="Handle">登录的许可句柄</param>
+        /// <param name="control">控制结构</param>
+        /// <returns></returns>
+        public static bool LedControl(SLM_HANDLE_INDEX Handle,ST_LED_CONTROL control)
+        {
+            uint ret = 0;
+            ret = SlmRuntime.slm_led_control(Handle,ref control);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_led_control Failure! 0x{ret:X8}");
+                return default;
+            }
+            return true;
+        }
+
+        #endregion
         
         #region 信息获取
 
@@ -763,6 +785,7 @@ namespace RSJWYFamework.Runtime.Senseshield
         public static void CleanUp()
         {
             uint ret = 0;
+            ret = SlmRuntime.slm_cleanup();
             if (ret != SSErrCode.SS_OK)
             {
                 RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_cleanup Failure0x{ret:X8}");

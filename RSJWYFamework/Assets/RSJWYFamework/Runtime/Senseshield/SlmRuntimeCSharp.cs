@@ -7,42 +7,10 @@ namespace RSJWYFamework.Runtime.Senseshield
 {
     public delegate uint callback(uint message, UIntPtr wparam, UIntPtr lparam);
 
-    //init struct
-    public struct ST_INIT_PARAM
-    {
-        /** 版本－用来兼容，当前使用 SLM_CALLBACK_VERSION02 */
-        public UInt32 version;
-
-        /** 如果需要接收SenseShield服务通知，填 SLM_INIT_FLAG_NOTIFY */
-        public UInt32 flag;
-
-        /** 回调函数指针*/
-        [MarshalAs(UnmanagedType.FunctionPtr)] public callback pfn;
-
-        /** 通信连接超时时间（毫秒），如果填0，则使用默认超时时间（7秒）*/
-        public UInt32 timeout;
-
-        /** API密码，可从深思云开发者中心（https://developer.senseyun.com），通过“查看开发商信息”获取*/
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = (int)SSDefine.SLM_DEV_PASSWORD_LENGTH)]
-        public byte[] password;
-    }
+   
 
 
-    /** 设备证书类型*/
-    public enum CERT_TYPE : uint
-    {
-        /** 证书类型：根证书  */
-        CERT_TYPE_ROOT_CA = 0,
-
-        /** 证书类型：设备子CA  */
-        CERT_TYPE_DEVICE_CA = 1,
-
-        /** 证书类型：设备证书  */
-        CERT_TYPE_DEVICE_CERT = 2,
-
-        /** 证书类型：深思设备证书  */
-        CERT_TYPE_SENSE_DEVICE_CERT = 3,
-    }
+  
 
 
     internal class SlmRuntime
