@@ -132,7 +132,37 @@ namespace RSJWYFamework.Runtime.Senseshield
         #endregion
         
         #region 信息获取
-
+        
+        /// <summary>
+        /// 检查模块是否存在
+        /// 软件按功能模块销售，控制不同功能模块是否有使用权；
+        /// 在Virbox LM的体系中（参考许可体系），一个许可最多能设置64个模块，模块ID从1~64，每个模块的属性只能是允许或者不允许；
+        /// https://h.virbox.com/docs/virboxlm-intro/Integrate_api/#64%E6%A8%A1%E5%9D%97%E5%BA%94%E7%94%A8
+        /// </summary>
+        /// <param name="handle">登录的许可</param>
+        /// <param name="modleID">模块id</param>
+        /// <returns></returns>
+        public static bool CheckModule(SLM_HANDLE_INDEX handle,UInt32 modleID)
+        {
+            if (modleID is < 1 or > 64)
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"模块ID：{modleID}超出范围1~64");
+            uint ret = 0;
+            ret = SlmRuntime.slm_check_module(handle,modleID);
+            if (ret==SSErrCode.SS_OK)
+            {
+                return true;
+            }
+            else if (ret==SSErrCode.SS_ERROR_LICENSE_MODULE_NOT_EXISTS)
+            {
+                return false;
+            }
+            else
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_check_module Failure! 0x{ret:X8}");
+                return false;
+            }
+        }
+        
         /// <summary>
         /// 获取指定设备下指定许可的全部信息 
         /// 获取到指定设备的 许可ID 列表，方便统计锁内许可总数 
