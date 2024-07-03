@@ -38,16 +38,19 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// </summary>
         static bool isThreadOver = false;
 
+        private bool isInit = false;
+        
+        const string developerPW = "";
+
         public void Init()
         {
             uint ret = 0;
             
             string StrMsg = string.Empty;
             IntPtr a = IntPtr.Zero;
-            const string developerPW = "输入个人开发者密钥";
             IntPtr desc = IntPtr.Zero;
             
-            SenseshieldServerHelp.Init(developerPW);
+            isInit=SenseshieldServerHelp.Init(developerPW);
             var json = SenseshieldServerHelp.FindLicense(10);
             var _loginHandle =SenseshieldServerHelp.LoginSS(10);
              _keepAlive = new Thread(keepAliveThread);
@@ -55,86 +58,19 @@ namespace RSJWYFamework.Runtime.Senseshield
              _keepAlive.Start();
             Handle = _loginHandle.Handle;
             
-           
-            
-            //20. slm_enum_device
-            
-            IntPtr device_info = IntPtr.Zero;
-            ret = SlmRuntime.slm_enum_device(ref device_info);
-            if (ret != SSErrCode.SS_OK)
-            {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_enum_device Failure:0x{ret:X8}");
-            }
-            else
-            {
-                string StrPrint = Marshal.PtrToStringAnsi(device_info);
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield, $"slm_enum_device {StrPrint}");
-            }
-
-            //21. slm_enum_license_id
-            IntPtr license_ids= IntPtr.Zero;
-            string dev_info=Marshal.PtrToStringAnsi(device_info);
-            JArray arrDeviceInfo = (JArray)JsonConvert.DeserializeObject(dev_info);
-            for (int i = 0; i < arrDeviceInfo.Count; i++)
-            {
-                string Info = arrDeviceInfo[i].ToString();
-                ret = SlmRuntime.slm_enum_license_id(Info, ref license_ids);
-                if (ret != SSErrCode.SS_OK)
-                {
-                    StrMsg = string.Format("slm_enum_license_id Failure:0x{0:X8}", ret);
-                    WriteLineRed(StrMsg);
-                }
-                else
-                {
-                    string StrPrint = Marshal.PtrToStringAnsi(license_ids);
-                    RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield, $"slm_enum_license_id {StrPrint}");
-                }
-
-                //23. slm_get_license_info,举例0号许可
-                IntPtr license_info = IntPtr.Zero;
-                ret = SlmRuntime.slm_get_license_info(Info, 0, ref license_info);
-                if (ret != SSErrCode.SS_OK)
-                {
-                    StrMsg = string.Format("slm_get_license_info Failure:0x{0:X8}", ret);
-                    WriteLineRed(StrMsg);
-                }
-                else
-                {
-                    string StrPrint = Marshal.PtrToStringAnsi(license_info);
-                    WriteLineYellow(StrPrint);
-                    WriteLineGreen("slm_get_license_info Success!");
-                }
-            }
-
-            return;
-            // 暂停程序，演示响应拔插锁消息回调通知功能，点击任意键继续。
-            WriteLineYellow("Program pause, demonstrate the response to unplug dongle callback message notification function, press any key to continue.");
-           
-
-            ret = SlmRuntime.slm_logout(Handle);
-
-            //22. slm_cleanup
-            ret = SlmRuntime.slm_cleanup();
-            if (ret != SSErrCode.SS_OK)
-            {
-                StrMsg = string.Format("slm_cleanup Failure:0x{0:X8}", ret);
-                WriteLineRed(StrMsg);
-            }
-            else
-            {
-                WriteLineGreen("slm_cleanup Success!");
-            }
-
-            RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"完成初始化啊");
         }
-
         public void Close()
         {
-            isThreadOver = true;
-            if (Handle>0)
+            if (isInit)
             {
-                SenseshieldServerHelp.LoginOutSS(Handle);
+                isThreadOver = true;
+                if (Handle>0)
+                {
+                    SenseshieldServerHelp.LoginOutSS(Handle);
+                }
+                SenseshieldServerHelp.CleanUp();
             }
+            
         }
 
         /// <summary>
@@ -156,174 +92,6 @@ namespace RSJWYFamework.Runtime.Senseshield
             Console.WriteLine(s);
             Console.ResetColor();
         }
-        public static void WriteLineRed(string s)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(s);
-            Console.ResetColor();
-        }
-        public static void WriteLineYellow(string s)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(s);
-            Console.ResetColor();
-        }
-        public static byte[] StringToHex(string HexString)
-        {
-            byte[] returnBytes = new byte[HexString.Length / 2];
-            for (int i = 0; i < returnBytes.Length; i++)
-                returnBytes[i] = Convert.ToByte(HexString.Substring(i * 2, 2), 16);
-
-            return returnBytes;
-        }
-
-       
-
-     
-        //device_cert_verify证书验证签名函数，实现签名和验证签名
-        /*设备证书签名*/
-        static bool verifyDevice(byte[] signdata, byte[] signature, byte[] certs_byte)
-        {
-            bool result = false;
-            //byte[] certs_byte = cert;
-            X509Certificate2Collection Collection = new X509Certificate2Collection();
-            Collection.Import(certs_byte);
-            RSACryptoServiceProvider rsa;
-
-            for (int i = 0; i < Collection.Count; i++)
-            {
-                if (Collection[i].Subject.StartsWith("CN=DEVICEID"))
-                {
-                    rsa = (RSACryptoServiceProvider)Collection[i].PublicKey.Key;
-                    result = rsa.VerifyData(signdata, SHA1.Create(), signature);
-                    break;
-                }
-            }
-
-            return result;
-        }
-        static UInt32 device_cert_verify(SLM_HANDLE_INDEX slm_handle)
-        {
-            UInt32 sts = SSErrCode.SS_OK;
-            UInt32 retsize = 0;
-            byte[] device_cert = new byte[2048];   //设备证书
-
-            UInt32 i = 0;
-            byte[] cert_pub_key = new byte[512];
-            byte[] S5_pub_key = new byte[512];
-            byte[] cert_sn = new byte[256];
-            byte[] Subject = new byte[256];
-            int subject_len = Subject.Length;
-            const int SIGN_SIZE = 32 + 9;
-            byte[] sign_buffer = new byte[SIGN_SIZE];
-            byte[] signature_buff = new byte[256];
-            //===========证书验证签名
-            //读取设备证书
-            sts = SlmRuntime.slm_get_device_cert(slm_handle,device_cert, (uint)device_cert.Length, ref retsize);
-            if (SSErrCode.SS_OK == sts)
-            {
-                WriteLineGreen("[OK],slm_get_device_cert,cert dump:\n");
-                //hexdump(device_cert,retsize);
-            }
-            else
-            {
-                Console.WriteLine("[ERROR],slm_get_device_cert,ret=0x{0:8X},description: {1}\n", 
-                    sts, SlmRuntime.slm_error_format(sts,SSDefine.LANGUAGE_CHINESE_ASCII));
-                return 0xffff;
-            }
-
-            //签名格式 SENSELOCK+32字节随机数
-            byte[] signdata = Encoding.UTF8.GetBytes("SENSELOCK");
-            //strcpy((char*)sign_buffer, "SENSELOCK");
-            //sp_rands(&(sign_buffer[9]),sizeof(sign_buffer)-9);
-            for (i = 0; i < 9; i++)
-            {
-                sign_buffer[i] = signdata[i];
-            }
-            Random rand_byte = new Random();
-            byte n;
-            for (i = 0; i < 32; i++)
-            {
-                n = (byte)rand_byte.Next(255);
-                sign_buffer[9 + i] = (byte)(n % 256);
-            }
-
-            sts = SlmRuntime.slm_sign_by_device(slm_handle, sign_buffer, (uint)sign_buffer.Length, 
-                signature_buff, (uint)signature_buff.Length,ref retsize);
-            bool bresult = verifyDevice(sign_buffer, signature_buff, device_cert);
-            if (bresult)
-            {
-                Console.WriteLine("RSA verifyDevice OK");
-            }
-            else
-            {
-                Console.WriteLine("RSA verifyDevice failed");
-            }
-            return sts;
-        }
-        static  uint calc_integerHash(uint input)
-        {
-            uint h = input;
-            h ^= h >> 16;
-            h *= 0x85ebca6b;
-            h ^= h >> 13;
-            h *= 0xc2b2ae35;
-            h ^= h >> 16;
-
-            return h;
-        }
-
-        static uint execute_hash_code(SLM_HANDLE_INDEX slm_handle)
-        {
-            const int MAX_BUFFER_SIZE = 1702;
-            UInt32 ret = SSErrCode.SS_OK;
-            UInt32 retlen = 0;
-
-            uint input;
-            uint [] output= new uint[1];
-            uint[] a = new uint[4];
-            const uint salt = 0x12345678;
-            byte[] inbuff = new byte[MAX_BUFFER_SIZE];
-            byte[] outbuff = new byte[MAX_BUFFER_SIZE];
-            input = output[0] = 0;
-            a[0] = a[1] = a[2] = a[3] = 0;
-            Random rand_data = new Random();
-
-            a[0] = (uint)rand_data.Next(2147483647);
-            a[1] = (uint)rand_data.Next(2147483647);
-            a[2] = (uint)rand_data.Next(2147483647);
-            a[3] = (uint)rand_data.Next(2147483647);
-            //
-            //memcpy(&inbuff[0], &a, sizeof(a));
-            Buffer.BlockCopy(a, 0, inbuff, 0, 1 * sizeof(uint));
-            //memcpy(&inbuff[4], &b, sizeof(a));
-            Buffer.BlockCopy(a, 4, inbuff, 4, 1 * sizeof(uint));
-            //memcpy(&inbuff[8], &c, sizeof(a));
-            Buffer.BlockCopy(a, 8, inbuff, 8, 1 * sizeof(uint));
-            //memcpy(&inbuff[12], &d, sizeof(a));
-            Buffer.BlockCopy(a, 12, inbuff, 12, 1 * sizeof(uint));
-
-            ret = SlmRuntime.slm_execute_static(slm_handle, "h5safe.evx",
-                inbuff, 4 * 4, outbuff, MAX_BUFFER_SIZE, ref retlen);
-
-            //memcpy(&output, outbuff, sizeof(output));
-            Buffer.BlockCopy(outbuff, 0, output, 0, 4);
-            // input = ( ((a % b) & c) | d ) ^ salt;
-            input = (((a[0] % a[1]) & a[2]) | a[3]) ^ salt;
-            input = calc_integerHash(input);
-
-            if (input != output[0])
-            {
-                Console.WriteLine("锁内代码校验失败！{0},{1}", input,output[0]);
-                ret = 0xffff;
-            }
-            else
-            {
-                Console.WriteLine("锁内代码校验成功！{0}",input);
-            }
-            return ret;
-        }
-
     }
        /*
         //main方法，测试主程序

@@ -34,6 +34,21 @@ namespace RSJWYFamework.Runtime.Utility
             long timestamp = nowUtc.ToUnixTimeSeconds();
             return Convert.ToInt64(timestamp);
         }
+        /*
+        /// <summary>
+        /// 16进制的字符串转为字节数组
+        /// </summary>
+        /// <param name="HexString"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static byte[] StringToHex(string HexString)
+        {
+            byte[] returnBytes = new byte[HexString.Length / 2];
+            for (int i = 0; i < returnBytes.Length; i++)
+                returnBytes[i] = Convert.ToByte(HexString.Substring(i * 2, 2), 16);
+
+            return returnBytes;
+        }*/
         /// <summary>
         /// 16进制的字符串转为字节数组
         /// </summary>
