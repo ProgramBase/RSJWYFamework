@@ -57,13 +57,9 @@ namespace RSJWYFamework.Runtime.Senseshield
                 _keepAlive.IsBackground = true;
                 _keepAlive.Start();
                 Handle = _loginHandle.Handle;
-                var asaa= SenseshieldServerHelp.DeviceCertVerify(Handle);
-                SenseshieldServerHelp.LedControl(Handle, new ST_LED_CONTROL
-                {
-                    index = 1,
-                    state = 2,
-                    interval = 500
-                });
+                //var asaa= SenseshieldServerHelp.DeviceCertVerify(Handle);
+                var test = SenseshieldServerHelp.GetInfoLicenseInfo(Handle);
+
             }
            
 
