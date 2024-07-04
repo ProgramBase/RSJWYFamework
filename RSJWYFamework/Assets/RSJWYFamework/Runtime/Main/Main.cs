@@ -15,6 +15,11 @@ namespace RSJWYFamework.Runtime.Main
             AddModule<DefaultEvenManager>();
             RSJWYLogger.Log(RSJWYFameworkEnum.Main,"初始化完成");
         }
+
+        public void Init()
+        {
+            
+        }
         
         private ConcurrentDictionary<Type, IModule> _modules = new();
 
@@ -81,7 +86,7 @@ namespace RSJWYFamework.Runtime.Main
     {
         NetworkTcpServer,
         NetworkTcpClient,
-        NetworkTcpUDP,
+        NetworkUDP,
         NetworkTool,
         Main,
         ExceptionLogManager,

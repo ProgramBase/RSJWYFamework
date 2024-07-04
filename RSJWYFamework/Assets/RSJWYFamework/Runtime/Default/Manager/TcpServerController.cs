@@ -10,7 +10,9 @@ using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.Base;
+using RSJWYFamework.Runtime.NetWork.Event;
 using RSJWYFamework.Runtime.NetWork.TCP.Server;
+using RSJWYFamework.Runtime.NetWork.UDP;
 using RSJWYFamework.Runtime.Utility;
 
 namespace RSJWYFamework.Runtime.Default.Manager
@@ -18,15 +20,19 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 服务器模块管理器，用于和Unity之间交互
     /// </summary>
-    public class ServerController : ISocketServerController, IModule
+    public class TcpServerController : ISocketTCPServerController, IModule
     {
         private TcpServerService tcpsocket;
+
 
         public void Init()
         {
             Main.Main.Instance.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgEventArgs>(SendMsgToClient);
             Main.Main.Instance.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgAllEventArgs>(SendMsgToClientAll);
             
+            //检查是不是监听全部IP
+            tcpsocket = new();
+            tcpsocket.SocketTcpClientController = this;
         }
 
         public void Close()
@@ -45,10 +51,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void InitServer(string ip = "any", int port = 6000)
         {
-            
-            //检查是不是监听全部IP
-            tcpsocket = new();
-            tcpsocket.SocketClientController = this;
             if (ip != "any")
             {
                 //指定IP

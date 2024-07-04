@@ -48,7 +48,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         
         #region 字段
 
-        internal ISocketClientController SocketClientController;
+        internal ISocketTCPClientController SocketTcpClientController;
         /// <summary>
         /// 本机连接的socket
         /// </summary>
@@ -189,7 +189,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         /// </summary>
         void ConnectEvent(NetClientStatus netClientStatus)
         {
-            SocketClientController.ClientStatus(netClientStatus);
+            SocketTcpClientController.ClientStatus(netClientStatus);
         }
         #endregion
 
@@ -590,7 +590,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                     //取出并移除数据
                     if (unityMsgQueue.TryDequeue(out msgBase))
                     {
-                        SocketClientController.ReceiveMsgCallBack(msgBase);
+                        SocketTcpClientController.ReceiveMsgCallBack(msgBase);
                     }
                     else
                     {

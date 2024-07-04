@@ -1,10 +1,9 @@
-﻿using System;
-using RSJWYFamework.Runtime.Event;
+﻿using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.TCP.Client;
 using RSJWYFamework.Runtime.NetWork.TCP.Server;
 
-namespace RSJWYFamework.Runtime.Default.EventsLibrary
+namespace RSJWYFamework.Runtime.NetWork.Event
 {
     /// <summary>
     /// TCP服务端事件
