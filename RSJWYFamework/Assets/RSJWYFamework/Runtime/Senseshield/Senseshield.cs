@@ -1,20 +1,7 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
-using Cysharp.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using RSJWYFamework.Runtime.ExceptionLogManager;
-using RSJWYFamework.Runtime.Logger;
-using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Module;
-using SenseShield;
 using SLM_HANDLE_INDEX = System.UInt32;
-using RSJWYFamework.Runtime.Utility;
-using Random = System.Random;
 
 namespace RSJWYFamework.Runtime.Senseshield
 {
@@ -31,15 +18,24 @@ namespace RSJWYFamework.Runtime.Senseshield
         // 回调通知生效的时间周期：slm_init - slm_cleanup 期间，当执行清理操作后回调函数将无法收到任何服务通知消息。
         private static callback pfn;
 
+        /// <summary>
+        /// 维持句柄
+        /// </summary>
         private Thread _keepAlive;
         
         /// <summary>
         /// 通知多线程自己跳出
         /// </summary>
         static bool isThreadOver = false;
-
-        private bool isInit = false;
-        
+        /// <summary>
+        /// 是否初始化
+        /// </summary>
+        public bool isInit { get; private set; }
+        public bool isLogin { get; private set; }
+        /// <summary>
+        /// 开发者密钥
+        /// 注意，每个开发者SDK和密钥一一绑定
+        /// </summary>
         const string developerPW = "";
 
         public void Init()
@@ -51,13 +47,22 @@ namespace RSJWYFamework.Runtime.Senseshield
             IntPtr desc = IntPtr.Zero;
             
             isInit=SenseshieldServerHelp.Init(developerPW);
-            var json = SenseshieldServerHelp.FindLicense(10);
-            var _loginHandle =SenseshieldServerHelp.LoginSS(10);
-             _keepAlive = new Thread(keepAliveThread);
-             _keepAlive.IsBackground = true;
-             _keepAlive.Start();
-            Handle = _loginHandle.Handle;
-            
+            var json = SenseshieldServerHelp.GetAllDevice();
+            var id = SenseshieldServerHelp.GetLicenseId(json[0]);
+            var _loginHandle =SenseshieldServerHelp.LoginSS(id[1]);
+            isLogin = _loginHandle.loginSuccess;
+            if (_loginHandle.loginSuccess)
+            {
+                _keepAlive = new Thread(keepAliveThread);
+                _keepAlive.IsBackground = true;
+                _keepAlive.Start();
+                Handle = _loginHandle.Handle;
+                //var asaa= SenseshieldServerHelp.DeviceCertVerify(Handle);
+                var test = SenseshieldServerHelp.GetInfoLicenseInfo(Handle);
+
+            }
+           
+
         }
         public void Close()
         {
@@ -69,6 +74,7 @@ namespace RSJWYFamework.Runtime.Senseshield
                     SenseshieldServerHelp.LoginOutSS(Handle);
                 }
                 SenseshieldServerHelp.CleanUp();
+                isLogin = false;
             }
             
         }
@@ -84,17 +90,10 @@ namespace RSJWYFamework.Runtime.Senseshield
                 Thread.Sleep(1000);
             }
         }
-        
-        //打印方式定义
-        public static void WriteLineGreen(string s)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(s);
-            Console.ResetColor();
-        }
     }
        /*
         //main方法，测试主程序
+        //官方示例代码流程
         static void Main(string[] args)
         {
             uint ret = 0;

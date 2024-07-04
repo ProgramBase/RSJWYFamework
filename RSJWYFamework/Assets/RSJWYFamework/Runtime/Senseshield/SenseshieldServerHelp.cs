@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -72,12 +71,12 @@ namespace RSJWYFamework.Runtime.Senseshield
             }
             else if (ret == SSErrCode.SS_ERROR_DEVELOPER_PASSWORD)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"Slm_Init 失败:0x{ret:X8}(错误开发人员密码). 请登录 Virbox 开发者中心(https://developer.lm.virbox.com), 获取 API 密码，并替换 'initPram.password' 变量内容。");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"Slm_Init 失败:{ret:X8}(错误开发人员密码). 请登录 Virbox 开发者中心(https://developer.lm.virbox.com), 获取 API 密码，并替换 'initPram.password' 变量内容。");
                 return false;
             }
             else
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"Slm_Init 失败:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"Slm_Init 失败:{ret:X8}");
                 return false;
             }
         }
@@ -103,14 +102,68 @@ namespace RSJWYFamework.Runtime.Senseshield
             if (result != IntPtr.Zero)
             {
                 string error = Marshal.PtrToStringAnsi(result);
-                return $"slm_error_format success, code = 0x{err:X8}, message = {error}";
+                //return $"slm_error_format success, code = 0x{err:X8}, message = {error}";
+                return  $"ErrorMessage:{error}";
             }
-            RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_error_format Failure! 0x{err:X8}");
-            return $"slm_error_format Failure! 0x{err:X8}";
+            RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_error_format Failure! {err:X8}");
+            //return $"slm_error_format Failure! 0x{err:X8}";
+            return $"0x{err:X8}";
         }
+
+        #region 控制
+
+        /// <summary>
+        /// 控制LED，仅针对硬件锁
+        /// </summary>
+        /// <param name="Handle">登录的许可句柄</param>
+        /// <param name="control">控制结构</param>
+        /// <returns></returns>
+        public static bool LedControl(SLM_HANDLE_INDEX Handle,ST_LED_CONTROL control)
+        {
+            uint ret = 0;
+            ret = SlmRuntime.slm_led_control(Handle,ref control);
+            if (ret != SSErrCode.SS_OK)
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_led_control Failure! {GetErrFormat(ret)}");
+                return default;
+            }
+            return true;
+        }
+
+        #endregion
         
         #region 信息获取
-
+        
+        /// <summary>
+        /// 检查模块是否存在
+        /// 软件按功能模块销售，控制不同功能模块是否有使用权；
+        /// 在Virbox LM的体系中（参考许可体系），一个许可最多能设置64个模块，模块ID从1~64，每个模块的属性只能是允许或者不允许；
+        /// https://h.virbox.com/docs/virboxlm-intro/Integrate_api/#64%E6%A8%A1%E5%9D%97%E5%BA%94%E7%94%A8
+        /// </summary>
+        /// <param name="handle">登录的许可</param>
+        /// <param name="modleID">模块id</param>
+        /// <returns></returns>
+        public static bool CheckModule(SLM_HANDLE_INDEX handle,UInt32 modleID)
+        {
+            if (modleID is < 1 or > 64)
+                throw new RSJWYException(RSJWYFameworkEnum.SenseShield, $"模块ID：{modleID}超出范围1~64");
+            uint ret = 0;
+            ret = SlmRuntime.slm_check_module(handle,modleID);
+            if (ret==SSErrCode.SS_OK)
+            {
+                return true;
+            }
+            else if (ret==SSErrCode.SS_ERROR_LICENSE_MODULE_NOT_EXISTS)
+            {
+                return false;
+            }
+            else
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_check_module Failure! {GetErrFormat(ret)}");
+                return false;
+            }
+        }
+        
         /// <summary>
         /// 获取指定设备下指定许可的全部信息 
         /// 获取到指定设备的 许可ID 列表，方便统计锁内许可总数 
@@ -129,7 +182,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_get_license_info(Info, id, ref license_info);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_get_license_info Failure! 0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_get_license_info Failure! {GetErrFormat(ret)}");
                 return default;
             }
             string StrPrint = Marshal.PtrToStringAnsi(license_info);
@@ -147,7 +200,7 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// </summary>
         /// <param name="device">锁信息</param>
         /// <returns>包含的许可id，第一个是0号许可</returns>
-        public static UInt32[] GetLicenseId(SenseShieldLicenseJsonItem device)
+        public static UInt32[] GetLicenseId(SenseShieldAllLockInfoBase device)
         {
             if (device == null)
                 RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"未传入许可信息");
@@ -157,7 +210,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_enum_license_id(Info, ref license_ids);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_enum_license_id Failure! 0x{ret:X8}"); 
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_enum_license_id Failure! {GetErrFormat(ret)}"); 
                 return default;
             }
             string StrPrint = Marshal.PtrToStringAnsi(license_ids);
@@ -168,10 +221,11 @@ namespace RSJWYFamework.Runtime.Senseshield
         }
         
         /// <summary>
-        /// 获取所有本地锁信息 （云、软、硬）锁
+        /// 获取所有本地锁信息 （软、硬）锁
+        /// 暂不支持获取云锁
         /// </summary>
         /// <returns></returns>
-        public static SenseShieldLicenseJsonItem[] GetAllDevice()
+        public static SenseShieldAllLockInfoBase[] GetAllDevice()
         {
             IntPtr device_info = IntPtr.Zero;
             uint ret = 0;
@@ -179,11 +233,14 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_enum_device(ref device_info);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_enum_device Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_enum_device Failure:{ret:X8}");
                 return null;
             }
             string StrPrint = Marshal.PtrToStringAnsi(device_info);
-            var _lis = Utility.Utility.LoadJson<SenseShieldLicenseJsonItem[]>(StrPrint);
+            //返回的内容存在组合的复杂情况
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new MixedSenseShieldAllLockInfoConverter());
+            var _lis = JsonConvert.DeserializeObject<SenseShieldAllLockInfoBase[]>(StrPrint,settings);
             SlmRuntime.slm_free(device_info);
             return _lis;
         }
@@ -200,7 +257,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_get_version(ref api_version, ref ss_version);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_get_version Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_get_version Failure:{GetErrFormat(ret)}");
                 return (default, default);
             }
             return (api_version, ss_version);
@@ -218,7 +275,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_get_developer_id(developer_id);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, "SLM 获取开发人员 ID 失败:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"SLM 获取开发人员 ID 失败:{GetErrFormat(ret)}");
                 return string.Empty;
             }
             else
@@ -243,7 +300,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SLM 查找许可证 失败:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SLM 查找许可证 失败:{GetErrFormat(ret)}");
                 return null;
             }
             else
@@ -257,14 +314,14 @@ namespace RSJWYFamework.Runtime.Senseshield
                 SlmRuntime.slm_free(desc);
                 if (ret != SSErrCode.SS_OK)
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm查找许可证后释放API堆区域失败 失败:0x{ret:X8}");
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm查找许可证后释放API堆区域失败 失败:0x{GetErrFormat(ret)}");
                 }
 
                 return _json;
             }
         }
         
-          /// <summary>
+        /// <summary>
         /// 获取会话信息
         /// </summary>
         /// <param name="Handle">许可句柄，通过登录获得</param>
@@ -276,19 +333,20 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_get_info(Handle,INFO_TYPE.SESSION_INFO,INFO_FORMAT_TYPE.JSON,ref desc);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SLM 获取信息(local_info) Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SLM 获取信息(local_info) Failure:{GetErrFormat(ret)}");
                 return null;
             }
             else
             {
-                var _json = Utility.Utility.LoadJson<SenseShieldSessionInfoJson>(Marshal.PtrToStringAnsi(desc));
+                var _json = Marshal.PtrToStringAnsi(desc);
+                var _SessionInfo = Utility.Utility.LoadJson<SenseShieldSessionInfoJson>(_json);
                 RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"SLM 获取信息(local_info) Success!");
                 SlmRuntime.slm_free(desc);
                 if (ret != SSErrCode.SS_OK)
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm获取信息(local_info)释放API堆区域失败 失败:0x{ret:X8}");
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm获取信息(local_info)释放API堆区域失败 失败:0x{GetErrFormat(ret)}");
                 }
-                return _json;
+                return _SessionInfo;
             }
         }
         /// <summary>
@@ -303,7 +361,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_get_info(Handle,INFO_TYPE.LICENSE_INFO,INFO_FORMAT_TYPE.JSON,ref desc);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SLM 获取信息(local_info) Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SLM 获取信息(local_info) Failure:{GetErrFormat(ret)}");
                 return null;
             }
             else
@@ -313,7 +371,7 @@ namespace RSJWYFamework.Runtime.Senseshield
                 SlmRuntime.slm_free(desc);
                 if (ret != SSErrCode.SS_OK)
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm获取信息(local_info)释放API堆区域失败 失败:0x{ret:X8}");
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm获取信息(local_info)释放API堆区域失败 失败:{GetErrFormat(ret)}");
                 }
                 return _json;
             }
@@ -323,24 +381,24 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// </summary>
         /// <param name="Handle">许可句柄，通过登录获得</param>
         /// <returns></returns>
-        public static SenseShieldLockInfoJson GetInfoLockInfo(SLM_HANDLE_INDEX Handle)
+        public static SenseShieldLocalLockInfo GetInfoLockInfo(SLM_HANDLE_INDEX Handle)
         {
             uint ret = 0;
             IntPtr desc = IntPtr.Zero;
             ret = SlmRuntime.slm_get_info(Handle,INFO_TYPE.LOCK_INFO,INFO_FORMAT_TYPE.JSON,ref desc);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SLM 获取信息(local_info) Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SLM 获取信息(local_info) Failure:{GetErrFormat(ret)}");
                 return null;
             }
             else
             {
-                var _json = Utility.Utility.LoadJson<SenseShieldLockInfoJson>(Marshal.PtrToStringAnsi(desc));
+                var _json = Utility.Utility.LoadJson<SenseShieldLocalLockInfo>(Marshal.PtrToStringAnsi(desc));
                 RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,"SLM 获取信息(local_info) Success!");
                 SlmRuntime.slm_free(desc);
                 if (ret != SSErrCode.SS_OK)
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm获取信息(local_info)释放API堆区域失败 失败:0x{ret:X8}");
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm获取信息(local_info)释放API堆区域失败 失败:{GetErrFormat(ret)}");
                 }
                 return _json;
             }
@@ -357,7 +415,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_get_info(Handle,INFO_TYPE.FILE_LIST,INFO_FORMAT_TYPE.JSON,ref desc);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SLM 获取信息(local_info) Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SLM 获取信息(local_info) Failure:{GetErrFormat(ret)}");
                 return null;
             }
             else
@@ -368,7 +426,7 @@ namespace RSJWYFamework.Runtime.Senseshield
                 SlmRuntime.slm_free(desc);
                 if (ret != SSErrCode.SS_OK)
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm获取信息(local_info)释放API堆区域失败 失败:0x{ret:X8}");
+                    RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm获取信息(local_info)释放API堆区域失败 失败:{GetErrFormat(ret)}");
                 }
                 return _json;
             }
@@ -404,7 +462,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_mem_alloc(handle, 1024, ref mem_index);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_mem_alloc Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_mem_alloc Failure:{GetErrFormat(ret)}");
             }
 
             return mem_index;
@@ -434,7 +492,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_mem_write(handle, mem_id, offset, writeLen, writebuff, ref numberofbyteswritten);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_mem_write Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_mem_write Failure:{GetErrFormat(ret)}");
 
                 return (default, false);
             }
@@ -464,7 +522,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_mem_read(handle, mem_id, offset, len, mem_read_buf, ref readlen);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_mem_write Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"slm_mem_write Failure:{GetErrFormat(ret)}");
                 return (default, default, false);
             }
 
@@ -482,7 +540,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret  = SlmRuntime.slm_mem_free(handle,mem_id);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_mem_free Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_mem_free Failure {GetErrFormat(ret)}");
                 return false;
             }
             return true;
@@ -509,7 +567,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_user_data_read(handle, type, readbuf, 0, dataSize);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_user_data_read Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_user_data_read Failure:{GetErrFormat(ret)}");
             }
             //ret = SlmRuntime.slm_user_data_read(Handle, LIC_USER_DATA_TYPE.RAW, readbuf, 0, datasize);
             return readbuf;
@@ -534,7 +592,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_user_data_write(handle, writeData, offset, writeLen);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_user_data_write Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_user_data_write Failure:{GetErrFormat(ret)}");
                 return false;
             }
             //ret = SlmRuntime.slm_user_data_read(Handle, LIC_USER_DATA_TYPE.RAW, readbuf, 0, datasize);
@@ -554,7 +612,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_user_data_getsize(handle, type, ref dataSize);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_user_data_getsize Failure:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_user_data_getsize Failure:{GetErrFormat(ret)}");
                 return (default(UInt32),false);
             }
             return (dataSize,true);
@@ -704,17 +762,17 @@ namespace RSJWYFamework.Runtime.Senseshield
             stLogin.license_id = license_id;
 
             // 指定登录许可ID的容器，Demo 设置为本地加密锁，开发者可根据需要调整此参数。
-            stLogin.login_mode = SSDefine.SLM_LOGIN_MODE_SLOCK;
+            stLogin.login_mode = SSDefine.SLM_LOGIN_MODE_AUTO;
 
             ret = SlmRuntime.slm_login(ref stLogin, INFO_FORMAT_TYPE.STRUCT, ref Handle, a);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"SLM 登录 失败:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield, $"SLM 登录 失败:{GetErrFormat(ret)}");
                 return (false,Handle);
             }
             else
             {
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield, $"Slmlogin 成功!:0x{ret:X8}");
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield, $"Slmlogin 成功!:{GetErrFormat(ret)}");
                 return (true,Handle);
             }
         }
@@ -730,7 +788,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_keep_alive(Handle);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SlmKeepAliveEasy 失败:0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"SlmKeepAliveEasy 失败:{GetErrFormat(ret)}");
                 //System.Diagnostics.Debug.Assert(true);
                 return false;
             }
@@ -751,7 +809,7 @@ namespace RSJWYFamework.Runtime.Senseshield
             ret = SlmRuntime.slm_logout(Handle);
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_logout Failure0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_logout Failure {GetErrFormat(ret)}");
             }
         }
         /// <summary>
@@ -763,9 +821,10 @@ namespace RSJWYFamework.Runtime.Senseshield
         public static void CleanUp()
         {
             uint ret = 0;
+            ret = SlmRuntime.slm_cleanup();
             if (ret != SSErrCode.SS_OK)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_cleanup Failure0x{ret:X8}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"slm_cleanup Failure {GetErrFormat(ret)}");
             }
             else
             {
@@ -776,36 +835,28 @@ namespace RSJWYFamework.Runtime.Senseshield
         #endregion
 
         #region 证书工具
-        
-        
-        static UInt32 device_cert_verify(SLM_HANDLE_INDEX slm_handle)
+
+        /// <summary>
+        /// 设备正版验证，只针对于硬件锁
+        /// </summary>
+        /// <param name="slm_handle"></param>
+        /// <returns></returns>
+        public static UInt32 DeviceCertVerify(SLM_HANDLE_INDEX slm_handle)
         {
             UInt32 sts = SSErrCode.SS_OK;
             UInt32 retsize = 0;
-            byte[] device_cert = new byte[2048];   //设备证书
 
             UInt32 i = 0;
-            byte[] cert_pub_key = new byte[512];
-            byte[] S5_pub_key = new byte[512];
-            byte[] cert_sn = new byte[256];
+            // byte[] cert_pub_key = new byte[512];
+            // byte[] S5_pub_key = new byte[512];
+            //byte[] cert_sn = new byte[256];
             byte[] Subject = new byte[256];
-            int subject_len = Subject.Length;
+            // int subject_len = Subject.Length;
             const int SIGN_SIZE = 32 + 9;
             byte[] sign_buffer = new byte[SIGN_SIZE];
             byte[] signature_buff = new byte[256];
-            //===========证书验证签名
-            //读取设备证书
-            sts = SlmRuntime.slm_get_device_cert(slm_handle,device_cert, (uint)device_cert.Length, ref retsize);
-            if (SSErrCode.SS_OK == sts)
-            {
-                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"[OK],slm_get_device_cert,cert dump:\n");
-                //hexdump(device_cert,retsize);
-            }
-            else
-            {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"[ERROR],slm_get_device_cert,ret=0x{sts:8X},description: {SSDefine.LANGUAGE_CHINESE_ASCII}\n");
-                return 0xffff;
-            }
+
+            var device_cert = GetDeviceCert(slm_handle);
 
             //签名格式 SENSELOCK+32字节随机数
             byte[] signdata = Encoding.UTF8.GetBytes("SENSELOCK");
@@ -825,7 +876,7 @@ namespace RSJWYFamework.Runtime.Senseshield
 
             sts = SlmRuntime.slm_sign_by_device(slm_handle, sign_buffer, (uint)sign_buffer.Length, 
                 signature_buff, (uint)signature_buff.Length,ref retsize);
-            bool bresult = verifyDevice(sign_buffer, signature_buff, device_cert);
+            bool bresult =Utility.Utility.RSA.verifyDevice(sign_buffer, signature_buff, device_cert);
             if (bresult)
             {
                 RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"RSA verifyDevice OK");
@@ -837,28 +888,35 @@ namespace RSJWYFamework.Runtime.Senseshield
             return sts;
         }
 
-        //device_cert_verify证书验证签名函数，实现签名和验证签名
-        /*设备证书签名*/
-        static bool verifyDevice(byte[] signdata, byte[] signature, byte[] certs_byte)
+        
+        
+        /// <summary>
+        /// 获取已登录的加密锁证书-仅支持硬件锁
+        /// </summary>
+        /// <param name="slm_handle">登录句柄</param>
+        /// <returns>证书数组</returns>
+        public static byte[] GetDeviceCert(SLM_HANDLE_INDEX slm_handle)
         {
-            bool result = false;
-            //byte[] certs_byte = cert;
-            X509Certificate2Collection Collection = new X509Certificate2Collection();
-            Collection.Import(certs_byte);
-            RSACryptoServiceProvider rsa;
-
-            for (int i = 0; i < Collection.Count; i++)
+            UInt32 retsize = 0;
+            byte[] device_cert = new byte[2048];   //设备证书
+            UInt32 sts = SSErrCode.SS_OK;
+            sts = SlmRuntime.slm_get_device_cert(slm_handle,device_cert, (uint)device_cert.Length, ref retsize);
+            if (SSErrCode.SS_OK == sts)
             {
-                if (Collection[i].Subject.StartsWith("CN=DEVICEID"))
-                {
-                    rsa = (RSACryptoServiceProvider)Collection[i].PublicKey.Key;
-                    result = rsa.VerifyData(signdata, SHA1.Create(), signature);
-                    break;
-                }
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"slm_get_device_cert,cert dump:\n");
+                //hexdump(device_cert,retsize);
             }
-
-            return result;
+            else
+            {
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"{GetErrFormat(sts)}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.SenseShield,$"[ERROR],slm_get_device_cert,ret={GetErrFormat(sts)},description: {SSDefine.LANGUAGE_CHINESE_ASCII}\n");
+                return default;
+            }
+            var _cert = new byte[retsize];
+            Array.Copy(device_cert,0,_cert,0,retsize);
+            return _cert;
         }
+        
         static  uint calc_integerHash(uint input)
         {
             uint h = input;

@@ -14,7 +14,6 @@ namespace RSJWYFamework.Runtime.Mono
         {
             base.Awake();
             DontDestroyOnLoad(this);
-            Main.Main.Instance.AddModule<SenseshieldServer>();
         }
 
         protected void OnApplicationQuit()
