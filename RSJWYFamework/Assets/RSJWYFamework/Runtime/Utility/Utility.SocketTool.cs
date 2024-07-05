@@ -13,8 +13,15 @@ namespace RSJWYFamework.Runtime.Utility
 {
     public static partial class Utility
     {
-        public static partial  class SocketTool
+        public static  class SocketTool
         {
+            
+            public static bool IsHex(string input)
+            {
+                // 正则表达式匹配16进制值  
+                string hexPattern = @"^[0-9A-Fa-f]+$";
+                return Regex.IsMatch(input, hexPattern);
+            }
             /// <summary>
             /// 时间误差检测，仅用作提示
             /// </summary>
@@ -129,6 +136,8 @@ namespace RSJWYFamework.Runtime.Utility
 
                 return CheckIPIsPing(strIP);
             }
+            
+            
         }
     }
    
