@@ -2,11 +2,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.NetWork.Base;
+using RSJWYFamework.Runtime.NetWork.Public;
 using UnityEngine;
 
 namespace RSJWYFamework.Runtime.NetWork.UDP
@@ -43,11 +43,11 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         /// <summary>
         /// 处理完毕的待执行的消息队列
         /// </summary>
-        ConcurrentQueue<string> MsgQueue = new();
+        ///ConcurrentQueue<string> MsgQueue = new();
         /// <summary>
         /// 消息发送队列
         /// </summary>
-        ConcurrentQueue<byte[]> SendMsgQueue = new ConcurrentQueue<byte[]>();
+        ConcurrentQueue<UDPSend> SendMsgQueue = new ();
         /// <summary>
         /// 通知多线程自己跳出
         /// </summary>
@@ -64,6 +64,11 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         /// 消息发送线程
         /// </summary>
         Thread sendMsgThread;
+        /// <summary>
+        ///  消息队列发送锁
+        /// </summary>
+        object msgSendThreadLock = new object();
+        
 
         /// <summary>
         /// 传入指定IP
@@ -112,12 +117,12 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
                 udpClient.BeginReceiveFrom(ReceiveData, 0, ReceiveData.Length,
                     SocketFlags.None, ref clientEndPoint, ReceiveMessageToQueue, clientEndPoint);
 
-                MsgThread = new Thread(Msghandle);
-                MsgThread.IsBackground = true;//后台运行
-                MsgThread.Start();
-                //sendMsgThread = new Thread(SendMsgHandle);
-                //sendMsgThread.IsBackground = true;//后台运行
-                //sendMsgThread.Start();
+                //MsgThread = new Thread(Msghandle);
+                //MsgThread.IsBackground = true;//后台运行
+                //MsgThread.Start();
+                sendMsgThread = new Thread(SendMsgHandle);
+                sendMsgThread.IsBackground = true;//后台运行
+                sendMsgThread.Start();
 
                 isInit = true;
                 Debug.Log($"UDP启动监听{udpClient.LocalEndPoint.ToString()}成功");
@@ -191,50 +196,31 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
                     reciveByteMsgQueue.TryDequeue(out _data);
                     //处理数据，分别尝试不同协议
                     //string _strASCII = Encoding.ASCII.GetString(_data);
-                    string _strUTF8 = Encoding.UTF8.GetString(_data);
-                    string _strHex = BitConverter.ToString(_data);
-
-                    string _utf8 = _strUTF8.Replace(" ", "");
-                    string _hex = _strHex.Replace("-", " ");
-                    //Debug.Log($"UTF8:{IsHex(_utf8)}，HEX:{IsHex(_hex)}");
-                    //优先检查UTF8
-                    if (Utility.Utility.SocketTool.IsHex(_utf8))
-                    {
-                        //UTF8是正确的指令
-                        MsgQueue.Enqueue(_strUTF8);
-                    }
-                    else
-                    {
-                        //Hex任何时刻都是16进值，则传出，交给使用者判断
-                        MsgQueue.Enqueue(_hex);
-                    }
+                    SocketUDPController.ReceiveMsgCallBack(_data);
                 }
             }
         }
 
         public void UnityUpdate()
         {
-            //线程是否出错
-            if (MsgThread != null)
+            /*//线程是否出错
+            if (sendMsgThread != null)
             {
-                if (MsgThread.IsAlive == false && isInit == true)
+                if (sendMsgThread.IsAlive == false && isInit == true)
                 {
                     //重新创建本线程
-                    MsgThread = new Thread(Msghandle);
-                    MsgThread.IsBackground = true;//后台运行
-                    MsgThread.Start();
+                    sendMsgThread = new Thread(Msghandle);
+                    sendMsgThread.IsBackground = true;//后台运行
+                    sendMsgThread.Start();
                 }
-            }
-            if (MsgQueue.Count <= 0)
-            {
-                return;//没有消息
-            }
+            }*/
+            
             //取出消息
-            if (MsgQueue.Count > 0)
+            if (!reciveByteMsgQueue.IsEmpty)
             {
-                string msgBase = null;
+                byte[] msgBase = null;
                 //取出并移除数据
-                if (MsgQueue.TryDequeue(out msgBase))
+                if (reciveByteMsgQueue.TryDequeue(out msgBase))
                 {
                     SocketUDPController.ReceiveMsgCallBack(msgBase);//交给执行回调
                 }
@@ -250,8 +236,93 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
             {
                 return;
             }
+            try
+            {
+                if (!SendMsgQueue.IsEmpty)
+                {
+                    //取出数据
+                    UDPSend _data;
+                    SendMsgQueue.TryDequeue(out _data);
+                    //处理数据，分别尝试不同协议
+                    //string _strASCII = Encoding.ASCII.GetString(_data);
+                    //SocketUDPController.ReceiveMsgCallBack(_data);
+                    lock (msgSendThreadLock)
+                    {
+                        if (udpClient != null && udpClient.Connected)
+                        {
+                            udpClient.BeginSendTo(_data.Bytes, 0, _data.length, SocketFlags.None, _data.remoteEndPoint, new AsyncCallback(SendCallback), udpClient);
+                        }
+                        bool istimeout = Monitor.Wait(msgSendThreadLock, 10000);
+                        if (!istimeout)
+                        {
+                            RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,$"客户端消息：消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
+                            Close();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // 重启线程
+                Thread.Sleep(1000); // 等待一段时间再重启，避免立即重启可能导致的问题
+                sendMsgThread.Interrupt(); // 打断当前线程
+                sendMsgThread = new Thread(SendMsgHandle);
+                sendMsgThread.Start();
+            }
         }
-   
-
+        private void SendCallback(IAsyncResult ar)
+        {
+            // 从异步操作中获取Socket
+            UDPSend msg;
+            System.Net.Sockets.Socket socket = (System.Net.Sockets.Socket)ar.AsyncState;
+            if (socket == null || !socket.Connected)
+            {
+                return;
+            }
+            // 完成异步发送操作
+            int bytesSent = socket.EndSendTo(ar);
+            
+            SendMsgQueue.TryPeek(out msg);
+            msg.ReadIndex += bytesSent;
+            if (msg.length == 0)//代表发送完整
+            {
+                SendMsgQueue.TryDequeue(out var _);//取出但不使用，只为了从队列中移除
+                msg = null;//发送完成，置空
+            }
+            if (msg != null)
+            {
+                socket.BeginSend(msg.Bytes, msg.ReadIndex, msg.length, 0, SendCallback, socket);
+            }
+            else
+            {
+                //本条消息发送完成，激活线程
+                lock (msgSendThreadLock)
+                {
+                    Monitor.Pulse(msgSendThreadLock);
+                }
+            }
+        }
+        /// <summary>
+        /// 发送UDP消息
+        /// 调用者必须确保消息的
+        /// </summary>
+        /// <param name="ipAddress">目标IP地址</param>
+        /// <param name="port">目标端口</param>
+        /// <param name="message">要发送的消息内容</param>
+        public void SendUdpMessage(string ipAddress, int port, byte[] message)
+        {
+            if (isThreadOver || udpClient == null)
+            {
+               RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkUDP,"UDP服务未初始化或已关闭，无法发送消息。");
+               return;
+            }
+            // 创建目标端点
+            IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
+            var sendMsg = new UDPSend(message);
+            
+            // 发送数据
+            SendMsgQueue.Enqueue(sendMsg);
+        }
+        
     }
 }

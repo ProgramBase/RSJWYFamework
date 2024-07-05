@@ -1,4 +1,5 @@
-﻿using RSJWYFamework.Runtime.Event;
+﻿using System.Text;
+using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.TCP.Client;
 using RSJWYFamework.Runtime.NetWork.TCP.Server;
@@ -128,6 +129,40 @@ namespace RSJWYFamework.Runtime.NetWork.Event
             msg = null;
         }
     }
+
+    #endregion
+
+    #region UDP服务
+
+    /// <summary>
+    /// UDP事件基类
+    /// </summary>
+    public abstract class UDPSoketEventArgs:EventArgsBase
+    {
+        public StringBuilder command { get; internal set; }
+        public virtual void Reset()
+        {
+            command.Clear();
+        }
+    }
+
+    /// <summary>
+    /// UDP接收到消息
+    /// </summary>
+    public sealed class UDPReceiveMsgCallBack : UDPSoketEventArgs
+    {
+        
+    }
+    /// <summary>
+    /// UDP发送消息
+    /// </summary>
+    public sealed class UDPSendMsg : UDPSoketEventArgs
+    {
+        public string ip;
+        public int port;
+    }
+
+
 
     #endregion
 }
