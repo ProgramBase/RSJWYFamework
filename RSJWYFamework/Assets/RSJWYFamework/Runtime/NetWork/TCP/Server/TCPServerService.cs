@@ -38,7 +38,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
     {
         #region 字段
         
-        internal ISocketServerController SocketClientController;
+        internal ISocketTCPServerController SocketTcpClientController;
         /// <summary>
         /// 监听端口
         /// </summary>
@@ -225,7 +225,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 //     clientList.Add(client);
                 // }
                 //广播客户端已上线
-                SocketClientController.ClientConnectedCallBack(_ServerClient);
+                SocketTcpClientController.ClientConnectedCallBack(_ServerClient);
                 //开启异步接收消息
                 client.BeginReceive(
                     _ServerClient.ReadBuff.Bytes, _ServerClient.ReadBuff.WriteIndex, _ServerClient.ReadBuff.Remain, 0, ReceiveCallBack, client);
@@ -534,7 +534,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     //取出并移除数据
                     if (UnityMsgQueue.TryDequeue(out msgBase))
                     {
-                        SocketClientController.FromClientReceiveMsgCallBack( ClientDic[msgBase.targetSocket], msgBase);//交给执行回调
+                        SocketTcpClientController.FromClientReceiveMsgCallBack( ClientDic[msgBase.targetSocket], msgBase);//交给执行回调
                     }
                     else
                     {
@@ -596,7 +596,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// </summary>
         public void CloseClient(ClientSocket client)
         {
-            SocketClientController.ClientReConnectedCallBack(client);
+            SocketTcpClientController.ClientReConnectedCallBack(client);
             //清除客户端
             client.socket.Close();//关闭链接
             //移除已连接客户端

@@ -3,6 +3,7 @@ using RSJWYFamework.Runtime.Default.EventsLibrary;
 using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.Net.Public;
+using RSJWYFamework.Runtime.NetWork.Event;
 using RSJWYFamework.Runtime.NetWork.TCP.Client;
 using RSJWYFamework.Runtime.Socket.Base;
 using RSJWYFamework.Runtime.NetWork.TCP.Server;
@@ -13,13 +14,15 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 客户端的控制器
     /// </summary>
-    public class ClientController : ISocketClientController,IModule
+    public class TcpClientController : ISocketTCPClientController,IModule
     {
         private TcpClientService tcpsocket;
         
         public void Init()
         {
             Main.Main.Instance.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgEventArgs>(ClientSendToServerMsg);
+            tcpsocket = new();
+            tcpsocket.SocketTcpClientController = this;
         }
 
         public void Close()
@@ -28,7 +31,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
             tcpsocket?.Quit();
         }
 
-        public void InitClient(string ip = "127.0.0.1", int port = 6000)
+        public void InitTCPClient(string ip = "127.0.0.1", int port = 6000)
         {
             //客户端的
             if (ip != "127.0.0.1")

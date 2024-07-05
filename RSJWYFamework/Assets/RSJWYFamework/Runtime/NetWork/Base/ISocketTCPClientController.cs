@@ -7,7 +7,7 @@ namespace RSJWYFamework.Runtime.Socket.Base
     /// <summary>
     /// socket客户端控制器接口
     /// </summary>
-    public interface ISocketClientController
+    public interface ISocketTCPClientController
     {
         /// <summary>
         /// 连接事件回调
@@ -34,6 +34,7 @@ namespace RSJWYFamework.Runtime.Socket.Base
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="port"></param>
-        void InitClient(string ip = "127.0.0.1", int port = 6000);
+        void InitTCPClient(string ip = "127.0.0.1", int port = 6000);
+        
     }
 }

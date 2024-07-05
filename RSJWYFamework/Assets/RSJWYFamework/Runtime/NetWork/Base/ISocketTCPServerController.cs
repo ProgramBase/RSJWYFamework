@@ -9,7 +9,7 @@ namespace RSJWYFamework.Runtime.NetWork.Base
     /// <summary>
     /// socket服务端控制器接口
     /// </summary>
-    public interface ISocketServerController
+    public interface ISocketTCPServerController
     {
         /// <summary>
         /// 客户端链接上来事件回调

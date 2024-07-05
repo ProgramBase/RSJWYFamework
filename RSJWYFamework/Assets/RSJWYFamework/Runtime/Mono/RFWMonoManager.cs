@@ -14,6 +14,7 @@ namespace RSJWYFamework.Runtime.Mono
         {
             base.Awake();
             DontDestroyOnLoad(this);
+            Main.Main.Instance.Init();
         }
 
         protected void OnApplicationQuit()
