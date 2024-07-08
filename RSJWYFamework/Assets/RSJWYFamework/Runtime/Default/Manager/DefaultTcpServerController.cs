@@ -20,7 +20,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 服务器模块管理器，用于和Unity之间交互
     /// </summary>
-    public class TcpServerController : ISocketTCPServerController, IModule
+    public class DefaultTcpServerController : ISocketTCPServerController, IModule
     {
         private TcpServerService tcpsocket;
 

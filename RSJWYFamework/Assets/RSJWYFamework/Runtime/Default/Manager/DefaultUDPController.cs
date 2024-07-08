@@ -15,7 +15,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// UDP控制器
     /// </summary>
-    public class UDPController:ISocketUDPController,IModule
+    public class DefaultUDPController:ISocketUDPController,IModule
     {
         UDPService _udpService;
         
