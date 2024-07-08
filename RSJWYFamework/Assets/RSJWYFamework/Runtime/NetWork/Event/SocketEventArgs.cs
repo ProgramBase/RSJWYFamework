@@ -139,7 +139,10 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     /// </summary>
     public abstract class UDPSoketEventArgs:EventArgsBase
     {
-        public StringBuilder command { get; internal set; }
+        public StringBuilder command;
+        
+        public string ip;
+        public int port;
         public virtual void Reset()
         {
             command.Clear();
@@ -158,8 +161,6 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     /// </summary>
     public sealed class UDPSendMsg : UDPSoketEventArgs
     {
-        public string ip;
-        public int port;
     }
 
 

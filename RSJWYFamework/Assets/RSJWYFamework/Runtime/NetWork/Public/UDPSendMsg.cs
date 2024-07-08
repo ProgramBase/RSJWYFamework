@@ -2,7 +2,10 @@ using System.Net;
 
 namespace RSJWYFamework.Runtime.NetWork.Public
 {
-    public class UDPSend
+    /// <summary>
+    /// UDP发送消息
+    /// </summary>
+    public class UDPSendMsg
     {
         /// <summary>
         /// 发送目标
@@ -53,7 +56,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// <summary>
         /// 发送信息构造函数
         /// </summary>
-        public UDPSend(byte[] defalutBytes)
+        public UDPSendMsg(byte[] defalutBytes)
         {
             Bytes = defalutBytes;
             Capacity = defalutBytes.Length;
@@ -62,18 +65,24 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             WriteIndex = defalutBytes.Length;
         }
     }
+    /// <summary>
+    /// UDP接收消息
+    /// </summary>
+    public class UDPReciveMsg
+    {
+        /// <summary>
+        /// 缓冲区，存储数据的位置
+        /// </summary>
+        public byte[] Bytes { get; internal set; }
+        
+        /// <summary>
+        /// 消息来源目标
+        /// </summary>
+        public IPEndPoint remoteEndPoint { get; internal set; }
+    }
     
 }
 
-
-/*一次接收数据，ReadIndex在0位，WriteIndex移动到整个数据长度的位，确认是不是一个完整消息
- * 是，进行读取，不是WriteIndex不变，跳过，等待下一次数据。
- *
- * 解析是否完整，每处里一条消息，ReadIndex进一步
- * WriteIndex-ReadIndex得结果就是这次读的长度length
- *
- *
- */
 /***
  *          .,:,,,                                        .::,,,::.
  *        .::::,,;;,                                  .,;;:,,....:i:
