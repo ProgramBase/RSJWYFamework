@@ -1,3 +1,4 @@
+using RSJWYFamework.Runtime.NetWork.Public;
 using RSJWYFamework.Runtime.NetWork.UDP;
 
 namespace RSJWYFamework.Runtime.NetWork.Base
@@ -15,6 +16,6 @@ namespace RSJWYFamework.Runtime.NetWork.Base
         /// 接收到的数组指令
         /// </summary>
         /// <param name="bytes">指令</param>
-        public void ReceiveMsgCallBack(byte[] bytes);
+        public void ReceiveMsgCallBack(UDPReciveMsg bytes);
     }
 }

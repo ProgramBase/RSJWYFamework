@@ -91,6 +91,7 @@ namespace RSJWYFamework.Runtime.Main
         Main,
         ExceptionLogManager,
         Utility,
-        SenseShield
+        SenseShield,
+        Procedure,
     }
 }

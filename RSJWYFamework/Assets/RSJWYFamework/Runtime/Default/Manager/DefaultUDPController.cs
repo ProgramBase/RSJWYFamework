@@ -5,12 +5,17 @@ using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.NetWork.Base;
 using RSJWYFamework.Runtime.NetWork.Event;
+using RSJWYFamework.Runtime.NetWork.Public;
 using RSJWYFamework.Runtime.NetWork.UDP;
 using RSJWYFamework.Runtime.Utility;
+using UDPSendMsg = RSJWYFamework.Runtime.NetWork.Event.UDPSendMsg;
 
 namespace RSJWYFamework.Runtime.Default.Manager
 {
-    public class UDPController:ISocketUDPController,IModule
+    /// <summary>
+    /// UDP控制器
+    /// </summary>
+    public class DefaultUDPController:ISocketUDPController,IModule
     {
         UDPService _udpService;
         
@@ -65,26 +70,27 @@ namespace RSJWYFamework.Runtime.Default.Manager
             _udpService.Init(IPAddress.Any, 5000);
         }
 
-        public void ReceiveMsgCallBack(byte[] bytes)
+        public void ReceiveMsgCallBack(UDPReciveMsg ReciveMsg)
         {
-            string _strUTF8 = Encoding.UTF8.GetString(bytes);
-            string _strHex = BitConverter.ToString(bytes);
+            string _strUTF8 = Encoding.UTF8.GetString(ReciveMsg.Bytes);
+            string _strHex = BitConverter.ToString(ReciveMsg.Bytes);
 
             string _utf8 = _strUTF8.Replace(" ", "");
             string _hex = _strHex.Replace("-", " ");
             //Debug.Log($"UTF8:{IsHex(_utf8)}，HEX:{IsHex(_hex)}");
             //优先检查UTF8
+            var msg = new UDPReceiveMsgCallBack();
+            msg.port = ReciveMsg.remoteEndPoint.Port;
+            msg.ip = ReciveMsg.remoteEndPoint.Address.ToString();
             if (Utility.Utility.SocketTool.IsHex(_utf8))
             {
                 //UTF8是正确的指令
-                var msg = new UDPReceiveMsgCallBack();
                 msg.command.Append(_utf8);
                 Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this,msg);
             }
             else
             {
                 //Hex任何时刻都是16进值，则传出，交给使用者判断
-                var msg = new UDPReceiveMsgCallBack();
                 msg.command.Append(_hex);
                 Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this,msg);
             }

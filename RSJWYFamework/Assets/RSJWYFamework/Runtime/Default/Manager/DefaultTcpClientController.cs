@@ -14,7 +14,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 客户端的控制器
     /// </summary>
-    public class TcpClientController : ISocketTCPClientController,IModule
+    public class DefaultTcpClientController : ISocketTCPClientController,IModule
     {
         private TcpClientService tcpsocket;
         

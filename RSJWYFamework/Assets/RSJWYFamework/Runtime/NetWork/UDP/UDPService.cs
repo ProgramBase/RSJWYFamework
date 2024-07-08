@@ -28,7 +28,7 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         /// </summary>
         System.Net.Sockets.Socket udpClient;
         /// <summary>
-        /// 存储消息来源客户端信息
+        /// 监听配置
         /// </summary>
         EndPoint clientEndPoint;
         /// <summary>
@@ -38,7 +38,7 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         /// <summary>
         /// 接收到的消息数组队列
         /// </summary>
-        ConcurrentQueue<byte[]> reciveByteMsgQueue = new ConcurrentQueue<byte[]>();
+        ConcurrentQueue<UDPReciveMsg> reciveByteMsgQueue = new ();
 
         /// <summary>
         /// 处理完毕的待执行的消息队列
@@ -47,7 +47,7 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         /// <summary>
         /// 消息发送队列
         /// </summary>
-        ConcurrentQueue<UDPSend> SendMsgQueue = new ();
+        ConcurrentQueue<UDPSendMsg> SendMsgQueue = new ();
         /// <summary>
         /// 通知多线程自己跳出
         /// </summary>
@@ -146,13 +146,21 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
             }
             try
             {
-                int receiveDataLength = udpClient.EndReceiveFrom(iar, ref clientEndPoint);
+                var receiveDataLength = udpClient.EndReceiveFrom(iar, ref clientEndPoint);
                 //如果有数据
                 if (receiveDataLength > 0)
                 {
+                    
                     byte[] data = new byte[receiveDataLength];
                     Buffer.BlockCopy(ReceiveData, 0, data, 0, receiveDataLength);
-                    reciveByteMsgQueue.Enqueue(data);
+                    var ipend = clientEndPoint as IPEndPoint;
+                    var REP=new IPEndPoint(ipend.Address, ipend.Port);
+                    var msg = new UDPReciveMsg
+                    {
+                        Bytes =data,
+                        remoteEndPoint = REP
+                    };
+                    reciveByteMsgQueue.Enqueue(msg);
                 }
             }
             catch (Exception e)
@@ -178,29 +186,6 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
             }
             isInit = false;
         }
-        /// <summary>
-        /// 数据处理
-        /// </summary>
-        internal void Msghandle()
-        {
-            while (true)
-            {
-                if (isThreadOver)
-                {
-                    return;
-                }
-                if (!reciveByteMsgQueue.IsEmpty)
-                {
-                    //取出数据
-                    byte[] _data;
-                    reciveByteMsgQueue.TryDequeue(out _data);
-                    //处理数据，分别尝试不同协议
-                    //string _strASCII = Encoding.ASCII.GetString(_data);
-                    SocketUDPController.ReceiveMsgCallBack(_data);
-                }
-            }
-        }
-
         public void UnityUpdate()
         {
             /*//线程是否出错
@@ -218,9 +203,8 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
             //取出消息
             if (!reciveByteMsgQueue.IsEmpty)
             {
-                byte[] msgBase = null;
                 //取出并移除数据
-                if (reciveByteMsgQueue.TryDequeue(out msgBase))
+                if (reciveByteMsgQueue.TryDequeue(out var msgBase))
                 {
                     SocketUDPController.ReceiveMsgCallBack(msgBase);//交给执行回调
                 }
@@ -241,7 +225,7 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
                 if (!SendMsgQueue.IsEmpty)
                 {
                     //取出数据
-                    UDPSend _data;
+                    UDPSendMsg _data;
                     SendMsgQueue.TryDequeue(out _data);
                     //处理数据，分别尝试不同协议
                     //string _strASCII = Encoding.ASCII.GetString(_data);
@@ -273,7 +257,7 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         private void SendCallback(IAsyncResult ar)
         {
             // 从异步操作中获取Socket
-            UDPSend msg;
+            UDPSendMsg sendMsg;
             System.Net.Sockets.Socket socket = (System.Net.Sockets.Socket)ar.AsyncState;
             if (socket == null || !socket.Connected)
             {
@@ -282,16 +266,16 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
             // 完成异步发送操作
             int bytesSent = socket.EndSendTo(ar);
             
-            SendMsgQueue.TryPeek(out msg);
-            msg.ReadIndex += bytesSent;
-            if (msg.length == 0)//代表发送完整
+            SendMsgQueue.TryPeek(out sendMsg);
+            sendMsg.ReadIndex += bytesSent;
+            if (sendMsg.length == 0)//代表发送完整
             {
                 SendMsgQueue.TryDequeue(out var _);//取出但不使用，只为了从队列中移除
-                msg = null;//发送完成，置空
+                sendMsg = null;//发送完成，置空
             }
-            if (msg != null)
+            if (sendMsg != null)
             {
-                socket.BeginSend(msg.Bytes, msg.ReadIndex, msg.length, 0, SendCallback, socket);
+                socket.BeginSend(sendMsg.Bytes, sendMsg.ReadIndex, sendMsg.length, 0, SendCallback, socket);
             }
             else
             {
@@ -318,7 +302,7 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
             }
             // 创建目标端点
             IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
-            var sendMsg = new UDPSend(message);
+            var sendMsg = new UDPSendMsg(message);
             
             // 发送数据
             SendMsgQueue.Enqueue(sendMsg);
