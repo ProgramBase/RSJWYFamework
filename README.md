@@ -9,7 +9,7 @@
 - [HbridCLR](https://github.com/focus-creative-games/hybridclr_unity)
 - [R3](https://github.com/Cysharp/R3.git)
 - [NuGetForUnity](https://github.com/GlitchEnzo/NuGetForUnity)
-- [Odin Inspector and Serializer](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)
+- [Odin Inspector and Serializer](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)（不是强依赖目前，后续涉及到编辑器的情况下会使用）
 
 #### 目前已完成以下内容
 - Network（TCP服务客户端，UDP正在开发）
