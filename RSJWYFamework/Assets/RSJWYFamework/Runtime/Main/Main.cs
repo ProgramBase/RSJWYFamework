@@ -93,5 +93,7 @@ namespace RSJWYFamework.Runtime.Main
         Utility,
         SenseShield,
         Procedure,
+        EditorTool,
+        Data
     }
 }
