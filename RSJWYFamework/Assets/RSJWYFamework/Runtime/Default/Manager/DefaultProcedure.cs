@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Module;
-using RSJWYFamework.Runtime.Procedure.Base;
+using RSJWYFamework.Runtime.Procedure;
 using UnityEngine;
 
 namespace RSJWYFamework.Runtime.Default.Manager
@@ -11,33 +11,43 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 默认的流程控制
     /// </summary>
-    public class DefaultProcedureController:IProcedureController,IModule
+    public class DefaultProcedureController:IProcedureController
     {
-        public object parent;
+        /// <summary>
+        /// 所属模块
+        /// </summary>
+        public IModule modle;
         
         /// <summary>
         /// 当前流程
         /// </summary>
-        private ProcedureBase CurrentProcedure;
+        private IProcedure CurrentProcedure;
 
         /// <summary>
         /// 流程表
         /// </summary>
-        private Dictionary<Type, ProcedureBase> Procedures = new();
+        private Dictionary<Type, IProcedure> Procedures = new();
 
         /// <summary>
         /// 所有流程的类型
         /// </summary>
         public List<Type> ProcedureTypes = new();
-        
+
         /// <summary>
         /// 任意流程切换事件（上一个离开的流程、下一个进入的流程）
         /// </summary>
-        private event Action<ProcedureBase, ProcedureBase> ProcedureSwitchEvent;
+        public event Action<IProcedure, IProcedure> ProcedureSwitchEvent;
         
         
         private float _timer = 0;
+        private IProcedureController _procedureControllerImplementation;
 
+        public DefaultProcedureController(IModule module)
+        {
+            this.modle = module;
+        }
+        
+        
 
         public void Init()
         {
@@ -70,17 +80,18 @@ namespace RSJWYFamework.Runtime.Default.Manager
             }
         }
 
+
         public void SwitchProcedure(Type type)
         {
-            if (type.IsSubclassOf(typeof(ProcedureBase)))
+            if (type.IsAssignableFrom(typeof(IProcedure)))
                 throw new RSJWYException(RSJWYFameworkEnum.Procedure, $"切换流程失败：流程 {type.Name} 并非继承自流程基类！");
             if (Procedures.ContainsKey(type))
             {
                 if (CurrentProcedure == Procedures[type])
                     return;
 
-                ProcedureBase lastProcedure = CurrentProcedure;
-                ProcedureBase nextProcedure = Procedures[type];
+                var lastProcedure = CurrentProcedure;
+                var nextProcedure = Procedures[type];
                 if (lastProcedure != null)
                 {
                     lastProcedure.OnLeave(nextProcedure);
@@ -111,16 +122,16 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public bool IsExistProcedur(Type type)
         {
-            if (type.IsSubclassOf(typeof(ProcedureBase)))
+            if (type.IsAssignableFrom(typeof(IProcedure)))
                 throw new RSJWYException(RSJWYFameworkEnum.Procedure, $"流程 {type.Name} 并非继承自流程基类！");
             return Procedures.ContainsKey(type.GetType());
         }
 
-        public void AddProcedure(ProcedureBase procedure)
+        public void AddProcedure(IProcedure procedure)
         {
             Type _t = procedure.GetType();
             
-            if (_t.IsSubclassOf(typeof(ProcedureBase)))
+            if (_t.IsAssignableFrom(typeof(IProcedure)))
                 throw new RSJWYException(RSJWYFameworkEnum.Procedure, $"增加流程失败：流程 {_t.Name} 并非继承自流程基类！");
             
             if (!Procedures.ContainsKey(_t))
