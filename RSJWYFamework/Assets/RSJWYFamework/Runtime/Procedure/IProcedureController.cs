@@ -67,6 +67,11 @@ namespace RSJWYFamework.Runtime.Procedure
         /// 获取黑板数据
         /// </summary>
         public System.Object GetBlackboardValue(string key);
+        
+        /// <summary>
+        /// 清空黑板数据
+        /// </summary>
+        public void ClearBlackboard();
 
     }
 }

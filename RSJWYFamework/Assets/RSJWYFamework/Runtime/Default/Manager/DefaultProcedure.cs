@@ -89,6 +89,11 @@ namespace RSJWYFamework.Runtime.Default.Manager
             }
         }
 
+        public void ClearBlackboard()
+        {
+            blackboard.Clear();
+        }
+
         public void OnUpdate(float time, float realtime)
         {
             if (CurrentProcedure != null)
