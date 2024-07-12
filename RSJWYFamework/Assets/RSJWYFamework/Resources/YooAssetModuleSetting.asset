@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayMode: 0
   package:
-  - PackagesName: RawFilePackages
+  - PackageName: RawFilePackages
     BuildPipeline: 2
     InitOk: 0
-  - PackagesName: PrefabPackage
+    PackageVersion: 
+  - PackageName: PrefabPackage
     BuildPipeline: 0
     InitOk: 0
+    PackageVersion: 

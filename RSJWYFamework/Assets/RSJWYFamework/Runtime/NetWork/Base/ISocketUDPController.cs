@@ -1,9 +1,10 @@
+using MyFamework.Runtime.Base;
 using RSJWYFamework.Runtime.NetWork.Public;
 using RSJWYFamework.Runtime.NetWork.UDP;
 
 namespace RSJWYFamework.Runtime.NetWork.Base
 {
-    public interface ISocketUDPController
+    public interface ISocketUDPController:ModleInterface
     {
         /// <summary>
         /// 初始化UDP监听

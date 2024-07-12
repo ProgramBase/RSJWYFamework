@@ -1,4 +1,5 @@
-﻿using RSJWYFamework.Runtime.Event;
+﻿using MyFamework.Runtime.Base;
+using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.TCP.Client;
 
@@ -7,7 +8,7 @@ namespace RSJWYFamework.Runtime.Socket.Base
     /// <summary>
     /// socket客户端控制器接口
     /// </summary>
-    public interface ISocketTCPClientController
+    public interface ISocketTCPClientController:ModleInterface
     {
         /// <summary>
         /// 连接事件回调

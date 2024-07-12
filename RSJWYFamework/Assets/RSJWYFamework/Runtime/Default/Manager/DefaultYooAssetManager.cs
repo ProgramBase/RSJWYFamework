@@ -30,6 +30,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         
         public void InitPackage()
         {
+            YooAssets.Initialize();
             //创建流程
             //2.2.1版本offlinePlayModeEditorSimulateMode需要依次调用
             //init,requestversion,updatemanifest三部曲
@@ -56,7 +57,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 if (!t.InitOk)
                 {
                     pc.SetBlackboardValue("PackageName",t.PackageName);
-                    pc.SetBlackboardValue("BuildPipeline",t.BuildPipeline);
+                    pc.SetBlackboardValue("BuildPipeline",t.BuildPipeline.ToString());
                     pc.StartProcedure(typeof(InitPackageProcedure));
                     return;
                 }
@@ -82,6 +83,17 @@ namespace RSJWYFamework.Runtime.Default.Manager
             if (nextProcedure is UpdaterDoneProcedure)
             {
                 SetInitPackageInfo();
+            }
+            else if (lastProcedure is InitPackageProcedure)
+            {
+                var packageName = (string)pc.GetBlackboardValue("PackageName");
+                foreach (var t in _assetModuleSettingData.package)
+                {
+                    if (t.PackageName==packageName&&!t.InitOk)
+                    {
+                        t.InitOk = true;
+                    }
+                }
             }
             
         }

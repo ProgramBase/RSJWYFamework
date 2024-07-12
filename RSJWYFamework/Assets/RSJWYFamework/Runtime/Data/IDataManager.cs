@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MyFamework.Runtime.Base;
 using RSJWYFamework.Runtime.Data.Base;
 
 namespace RSJWYFamework.Runtime.Data
@@ -7,7 +8,7 @@ namespace RSJWYFamework.Runtime.Data
     /// <summary>
     /// 数据管理类
     /// </summary>
-    public interface IDataManager
+    public interface IDataManager:ModleInterface
     {
         /// <summary>
         /// 添加数据集至数据集仓库

@@ -11,7 +11,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 默认事件系统
     /// </summary>
-    public class DefaultEvenManager :IModule,IEventManage
+    public class DefaultEvenManager :IEventManage,IModule
     {
         ConcurrentDictionary<Type, EventHandler<EventArgsBase>> CallBackDic = new();
         /// <summary>

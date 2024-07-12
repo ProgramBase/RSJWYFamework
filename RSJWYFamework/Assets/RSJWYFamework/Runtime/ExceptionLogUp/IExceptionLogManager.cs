@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using MyFamework.Runtime.Base;
+using UnityEngine;
 
 namespace RSJWYFamework.Runtime.ExceptionLogUp
 {
-    public interface IExceptionLogManager
+    public interface IExceptionLogManager:ModleInterface
     {
         /// <summary>
         /// 绑定Unity日志监听

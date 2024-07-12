@@ -1,3 +1,4 @@
+using MyFamework.Runtime.Base;
 using RSJWYFamework.Runtime.Procedure;
 
 namespace RSJWYFamework.Runtime.YooAssetModule
@@ -5,7 +6,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule
     /// <summary>
     /// yooasset管理器接口
     /// </summary>
-    public interface IYooAssetManager
+    public interface IYooAssetManager:ModleInterface
     {
         /// <summary>
         /// 流程化切换回调
