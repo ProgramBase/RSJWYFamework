@@ -94,6 +94,8 @@ namespace RSJWYFamework.Runtime.Main
         SenseShield,
         Procedure,
         EditorTool,
-        Data
+        Data,
+        YooAssets,
+        ReferencePool
     }
 }

@@ -13,3 +13,10 @@ MonoBehaviour:
   m_Name: YooAssetModuleSetting
   m_EditorClassIdentifier: 
   PlayMode: 0
+  package:
+  - PackagesName: RawFilePackages
+    BuildPipeline: 2
+    InitOk: 0
+  - PackagesName: PrefabPackage
+    BuildPipeline: 0
+    InitOk: 0

@@ -90,10 +90,10 @@ namespace RSJWYFamework.Runtime.Data
         /// <summary>
         /// 根据先后顺序获取某一类型的第一条数据集
         /// </summary>
-        /// <param name="type">数据集类型</param>
         /// <param name="isCut">是否同时在数据集仓库中移除该数据集</param>
-        /// <returns>数据集</returns>
-        DataBaseSB GetDataSetSB(Type type, bool isCut = false);
+        /// <typeparam name="TDataBase">类型，继承自DataBaseSB</typeparam>
+        /// <returns></returns>
+        TDataBase GetDataSetSB<TDataBase>(bool isCut = false)where TDataBase :DataBaseSB;
         
         /// <summary>
         /// 根据索引获取某一类型的一条数据集

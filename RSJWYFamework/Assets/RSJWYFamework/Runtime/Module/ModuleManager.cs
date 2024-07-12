@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using MyFamework.Runtime.Base;
-using RSJWYFamework.Runtime.Base;
+using RSJWYFamework.Runtime.ExceptionLogManager;
+using RSJWYFamework.Runtime.Main;
 
 namespace RSJWYFamework.Runtime.Module
 {
@@ -30,7 +31,7 @@ namespace RSJWYFamework.Runtime.Module
             }
             else
             {
-                throw new RSJWYFameworkException($"模块管理器:设置模块重复");
+                throw new RSJWYException(RSJWYFameworkEnum.Main,$"模块管理器:设置模块重复");
             }
         }
         /// <summary>

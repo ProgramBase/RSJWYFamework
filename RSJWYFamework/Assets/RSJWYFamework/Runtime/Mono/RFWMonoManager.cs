@@ -27,6 +27,11 @@ namespace RSJWYFamework.Runtime.Mono
             YooAssetManager= Main.Main.Instance.AddModule<DefaultYooAssetManager>();
         }
 
+        private void Start()
+        {
+            YooAssetManager.InitPackage();
+        }
+
         protected void OnApplicationQuit()
         {
             

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using RSJWYFamework.Runtime.Base;
 using RSJWYFamework.Runtime.Data;
 using RSJWYFamework.Runtime.Data.Base;
 using RSJWYFamework.Runtime.ExceptionLogManager;
@@ -35,7 +34,10 @@ namespace RSJWYFamework.Runtime.Default.Manager
         public void AddDataSet(DataBaseSB dataSet)
         {
             if (dataSet == null)
-                return;
+            {
+                throw new RSJWYException(RSJWYFameworkEnum.Data, $"数据为空");
+            }
+               
 
             Type type = dataSet.GetType();
             if (!dataSBDic.ContainsKey(type))
@@ -175,8 +177,9 @@ namespace RSJWYFamework.Runtime.Default.Manager
             throw new RSJWYException(RSJWYFameworkEnum.Data, $"获取所有数据集失败：{type.Name} 并不是有效的数据集类型！");
         }
 
-        public DataBaseSB GetDataSetSB(Type type, bool isCut = false)
+        public TDataBase GetDataSetSB<TDataBase>( bool isCut = false)where TDataBase :DataBaseSB
         {
+            var type = typeof(TDataBase);
             if (dataSBDic.ContainsKey(type))
             {
                 if (dataSBDic[type].Count > 0)
@@ -186,7 +189,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
                     {
                         dataSBDic[type].RemoveAt(0);
                     }
-                    return dataset;
+                    return (TDataBase)dataset;
                 }
                 else
                 {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using RSJWYFamework.Runtime.ExceptionLogManager;
+using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.Procedure;
@@ -38,9 +39,14 @@ namespace RSJWYFamework.Runtime.Default.Manager
         /// </summary>
         public event Action<IProcedure, IProcedure> ProcedureSwitchEvent;
         
+        /// <summary>
+        /// 黑板数据
+        /// </summary>
+        private readonly Dictionary<string, System.Object> blackboard = new (100);
+        
         
         private float _timer = 0;
-        private IProcedureController _procedureControllerImplementation;
+        //private IProcedureController _procedureControllerImplementation;
 
         public DefaultProcedureController(IModule module)
         {
@@ -60,6 +66,27 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 procedure.Value.OnClose();
             }
             Procedures.Clear();
+        }
+
+        public void SetBlackboardValue(string key, object value)
+        {
+            if (blackboard.ContainsKey(key) == false)
+                blackboard.Add(key, value);
+            else
+                blackboard[key] = value;
+        }
+
+        public object GetBlackboardValue(string key)
+        {
+            if (blackboard.TryGetValue(key, out System.Object value))
+            {
+                return value;
+            }
+            else
+            {
+                RSJWYLogger.LogWarning(RSJWYFameworkEnum.YooAssets,$"未能从黑板中获取数据：{key}");
+                return null;
+            }
         }
 
         public void OnUpdate(float time, float realtime)
@@ -96,8 +123,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 {
                     lastProcedure.OnLeave(nextProcedure);
                 }
-                nextProcedure.OnEnter(lastProcedure);
                 CurrentProcedure = nextProcedure;
+                nextProcedure.OnEnter(lastProcedure);
 
                 ProcedureSwitchEvent?.Invoke(lastProcedure, nextProcedure);
             }
@@ -117,6 +144,11 @@ namespace RSJWYFamework.Runtime.Default.Manager
             {
                 SwitchProcedure(ProcedureTypes[index + 1]);
             }
+        }
+
+        public void StartProcedure(Type type)
+        {
+            SwitchProcedure(type);
         }
 
 

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using HT.Framework;
 using MyFamework.Runtime.Base;
-using RSJWYFamework.Runtime.Base;
+using RSJWYFamework.Runtime.ExceptionLogManager;
+using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.ReferencePool.Base;
 
 namespace RSJWYFamework.Runtime.ReferencePool.Helper
@@ -34,7 +35,7 @@ namespace RSJWYFamework.Runtime.ReferencePool.Helper
             }
             else
             {
-                throw new RSJWYFameworkException($"获取引用数量失败：不存在引用池 {type.FullName} ！");
+                throw new RSJWYException(RSJWYFameworkEnum.ReferencePool,$"获取引用数量失败：不存在引用池 {type.FullName} ！");
             }
         }
         /// <summary>

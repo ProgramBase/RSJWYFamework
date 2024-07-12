@@ -52,9 +52,56 @@ MonoBehaviour:
         UserData: 
   - PackageName: PrefabPackage
     PackageDesc: "\u9884\u5236\u4F53"
-    EnableAddressable: 0
+    EnableAddressable: 1
     LocationToLower: 0
-    IncludeAssetGUID: 0
+    IncludeAssetGUID: 1
     AutoCollectShaders: 1
     IgnoreRuleName: NormalIgnoreRule
-    Groups: []
+    Groups:
+    - GroupName: Reference
+      GroupDesc: "\u5F15\u7528"
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/RSJWYFamework/HotUpdate/Reference/Shadervariants
+        CollectorGUID: fd2b9544e7c110e4f83a1f872458d10a
+        CollectorType: 1
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackGroup
+        FilterRuleName: CollectShaderVariants
+        AssetTags: 
+        UserData: 
+    - GroupName: Shader
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/RSJWYFamework/HotUpdate/Shader
+        CollectorGUID: ad6af784dbb3236408abf9882b9432e1
+        CollectorType: 1
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackGroup
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/RSJWYFamework/HotUpdate/Material
+        CollectorGUID: 64ca3bf54ae710d4780672182e2d89de
+        CollectorType: 1
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackGroup
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: Prefab
+      GroupDesc: "\u9884\u5236\u4F53"
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/RSJWYFamework/HotUpdate/Prefab
+        CollectorGUID: 4582e539a56fa1e4e9ce4492665f0718
+        CollectorType: 0
+        AddressRuleName: AddressByGroupAndFileName
+        PackRuleName: PackCollector
+        FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 

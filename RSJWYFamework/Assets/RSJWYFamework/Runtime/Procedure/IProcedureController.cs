@@ -21,6 +21,12 @@ namespace RSJWYFamework.Runtime.Procedure
         void SwitchNextProcedure();
 
         /// <summary>
+        /// 启动流程
+        /// </summary>
+        /// <param name="type"></param>
+        void StartProcedure(Type type);
+
+        /// <summary>
         /// 添加流程
         /// </summary>
         /// <param name="procedure"></param>
@@ -50,6 +56,17 @@ namespace RSJWYFamework.Runtime.Procedure
         /// </summary>
         void Close();
 
-        
+        /// <summary>
+        /// 设置黑板数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public void SetBlackboardValue(string key, System.Object value);
+
+        /// <summary>
+        /// 获取黑板数据
+        /// </summary>
+        public System.Object GetBlackboardValue(string key);
+
     }
 }
