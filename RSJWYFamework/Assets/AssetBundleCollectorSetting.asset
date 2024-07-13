@@ -50,6 +50,19 @@ MonoBehaviour:
         FilterRuleName: HotCode
         AssetTags: 
         UserData: 
+    - GroupName: config
+      GroupDesc: "\u914D\u7F6E\u6587\u4EF6"
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/HotUpdateAssets/Config
+        CollectorGUID: d7f4c66ddbde8b140a38861877f12563
+        CollectorType: 0
+        AddressRuleName: AddressByGroupAndFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
   - PackageName: PrefabPackage
     PackageDesc: "\u9884\u5236\u4F53"
     EnableAddressable: 1
@@ -63,8 +76,8 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/RSJWYFamework/HotUpdate/Reference/Shadervariants
-        CollectorGUID: fd2b9544e7c110e4f83a1f872458d10a
+      - CollectPath: Assets/HotUpdateAssets/Reference
+        CollectorGUID: 24c3e8ddc0fdb524090743553a7c2335
         CollectorType: 1
         AddressRuleName: AddressByFileName
         PackRuleName: PackGroup
@@ -76,16 +89,8 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/RSJWYFamework/HotUpdate/Shader
+      - CollectPath: Assets/HotUpdateAssets/Shader
         CollectorGUID: ad6af784dbb3236408abf9882b9432e1
-        CollectorType: 1
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackGroup
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-      - CollectPath: Assets/RSJWYFamework/HotUpdate/Material
-        CollectorGUID: 64ca3bf54ae710d4780672182e2d89de
         CollectorType: 1
         AddressRuleName: AddressByFileName
         PackRuleName: PackGroup
@@ -97,7 +102,7 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/RSJWYFamework/HotUpdate/Prefab
+      - CollectPath: Assets/HotUpdateAssets/Prefab
         CollectorGUID: 4582e539a56fa1e4e9ce4492665f0718
         CollectorType: 0
         AddressRuleName: AddressByGroupAndFileName

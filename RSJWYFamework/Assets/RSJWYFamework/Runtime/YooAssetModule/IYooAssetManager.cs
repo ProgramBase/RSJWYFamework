@@ -1,3 +1,4 @@
+using System;
 using MyFamework.Runtime.Base;
 using RSJWYFamework.Runtime.Procedure;
 
@@ -18,5 +19,9 @@ namespace RSJWYFamework.Runtime.YooAssetModule
         /// /初始化包
         /// </summary>
         void InitPackage();
+        /// <summary>
+        /// 加载完成事件
+        /// </summary>
+        event Action InitOverEvent;
     }
 }
