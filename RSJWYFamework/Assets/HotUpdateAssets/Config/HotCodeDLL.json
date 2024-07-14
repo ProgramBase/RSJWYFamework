@@ -1,4 +1,6 @@
 {
-  "HotCode":[],
-  "MetadataForAOTAssemblies":[]
+  "MetadataForAOTAssemblies": [],
+  "HotCode": [
+    "HotCode"
+  ]
 }

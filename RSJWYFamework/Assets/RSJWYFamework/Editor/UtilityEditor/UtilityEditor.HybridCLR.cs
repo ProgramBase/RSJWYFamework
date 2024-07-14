@@ -5,10 +5,12 @@ using System.Text;
 using HybridCLR.Editor;
 using HybridCLR.Editor.Commands;
 using HybridCLR.Editor.Settings;
+using Newtonsoft.Json.Linq;
 using RSJWYFamework.Editor.Tool;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Utility;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace RSJWYFamework.Editor.UtilityEditor
@@ -118,6 +120,31 @@ namespace RSJWYFamework.Editor.UtilityEditor
                 listStr.Append($"\n");
                 AssetDatabase.Refresh();
                 Debug.Log($"补充元数据表如下{listStr.ToString()}");
+                AssetDatabase.Refresh();
+            }
+            
+            /// <summary>
+            /// 根据列表生成Json文件
+            /// </summary>
+            public static void BuildDLLJson(string GeneratedHotUpdateDLLJsonPath)
+            {
+                //读取列表
+                var aotAssemblies = HybridCLRSettings.Instance.patchAOTAssemblies.ToList();
+                var hotDllDef = HybridCLRSettings.Instance.hotUpdateAssemblyDefinitions.ToList();
+                //List<string> _HotdllName = HybridCLRSettings.Instance.hotUpdateAssemblies.ToList();
+                List<string> hotdlls = new();
+                //整理
+                foreach (AssemblyDefinitionAsset dlldef in hotDllDef)
+                {
+                    hotdlls.Add(dlldef.name);
+                }
+                JObject hclrLoadDLLJsonFile = new();
+                hclrLoadDLLJsonFile.Add("MetadataForAOTAssemblies", JArray.FromObject(aotAssemblies));
+                hclrLoadDLLJsonFile.Add("HotCode", JArray.FromObject(hotdlls));
+                string path =$"{UtilityEditor.GetProjectPath()}/{GeneratedHotUpdateDLLJsonPath}/HotCodeDLL.json";
+                Utility.FileAndFoder.CheckDirectoryAndFileCreate($"{UtilityEditor.GetProjectPath()}/{GeneratedHotUpdateDLLJsonPath}", "HotCodeDLL.json");
+                AssetDatabase.Refresh();
+                File.WriteAllText(path, hclrLoadDLLJsonFile.ToString());
                 AssetDatabase.Refresh();
             }
             

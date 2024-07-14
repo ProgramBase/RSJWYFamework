@@ -20,7 +20,9 @@ namespace RSJWYFamework.Editor.Windows
         public string BuildHotCodeDllPatch="Assets/HotUpdateAssets/HotCode";
         [FolderPath][LabelText("构建补充选数据DLL到：")]
         public string BuildMetadataForAOTAssembliesDllPatch="Assets/HotUpdateAssets/MetadataForAOTAssemblies";
-
+        
+        public string GeneratedHotUpdateDLLJson="Assets/HotUpdateAssets/Config"; 
+        [ReadOnly]
         public HotCodeDLL HotUpdateDll;
         
         
@@ -42,13 +44,28 @@ namespace RSJWYFamework.Editor.Windows
         {
             UtilityEditor.UtilityEditor.HybrildCLR.BuildHotCode(BuildHotCodeDllPatch);
         }
+        [Button("创建热更dll列表")]
+        private void BuildHotUpdateDllJson()
+        {
+            UtilityEditor.UtilityEditor.HybrildCLR.AddMetadataForAOTAssembliesToHCLRSetArr();
+            UtilityEditor.UtilityEditor.HybrildCLR.BuildDLLJson(GeneratedHotUpdateDLLJson);
+            UpdateHotDLLJson();
+        }
+        
+        
 
         protected override void OnEnable()
         {
+            //加载热更dll列表
             base.OnEnable();
+            UpdateHotDLLJson();
+        }
+
+        void UpdateHotDLLJson()
+        {
             var hotcodedllJson = $"{UtilityEditor.UtilityEditor.GetProjectPath()}/Assets/HotUpdateAssets/Config/HotCodeDLL.json";
             HotUpdateDll = JsonConvert.DeserializeObject<HotCodeDLL>(File.ReadAllText(hotcodedllJson));
+            
         }
-        
     }
 }

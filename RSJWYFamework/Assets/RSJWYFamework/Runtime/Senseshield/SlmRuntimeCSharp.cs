@@ -15,7 +15,7 @@ namespace RSJWYFamework.Runtime.Senseshield
         const string dll_name = "Assets/Plugins/senseshield/x64/slm_runtime_dev.dll";
 #else
         // 正式发版，使用具有反调试功能的运行时库（不允许调试）
-        const string dll_name64 = "Assets/Plugins/senseshield/x64/slm_runtime.dll";
+        const string dll_name = "Assets/Plugins/senseshield/x64/slm_runtime.dll";
 #endif
 
 
