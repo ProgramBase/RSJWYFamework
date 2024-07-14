@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Script.AOT.HybridCLR.Procedure
+namespace RSJWYFamework.Runtime.HybridCLR
 {
     /// <summary>
     /// 热更代码json加载

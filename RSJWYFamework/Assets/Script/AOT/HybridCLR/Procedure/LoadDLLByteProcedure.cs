@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using RSJWYFamework.Runtime.HybridCLR;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Procedure;
 

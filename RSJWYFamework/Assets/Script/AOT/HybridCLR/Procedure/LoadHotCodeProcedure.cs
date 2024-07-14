@@ -4,6 +4,7 @@ using System.Reflection;
 using Cysharp.Threading.Tasks;
 using HybridCLR;
 using Newtonsoft.Json;
+using RSJWYFamework.Runtime.HybridCLR;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Procedure;
 

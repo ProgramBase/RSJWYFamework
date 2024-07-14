@@ -4,7 +4,8 @@
     "references": [
         "GUID:42175401e9cd1e04fb597954c71771cd",
         "GUID:4d1926c9df5b052469a1c63448b7609a",
-        "GUID:e34a5702dd353724aa315fb8011f08c3"
+        "GUID:e34a5702dd353724aa315fb8011f08c3",
+        "GUID:2373f786d14518f44b0f475db77ba4de"
     ],
     "includePlatforms": [
         "Editor"
