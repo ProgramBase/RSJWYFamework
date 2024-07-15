@@ -11,12 +11,13 @@ namespace Script.AOT.YooAssetModule
 {
     public class DefaultYooAssetManager:IYooAssetManager,IModule
     {
-        private IProcedureController pc;
         
         private YooAssetModuleSettingData _assetModuleSettingData;
         
         public ResourcePackage RawPackage { get; private set; }
         public ResourcePackage PrefabPackage { get; private set; }
+
+        private IProcedureController[] procedures;
 
         /// <summary>
         /// 加载完成事件
@@ -26,8 +27,8 @@ namespace Script.AOT.YooAssetModule
 
         public void Init()
         {
-            pc = new DefaultProcedureController(this);
-            pc.ProcedureSwitchEvent += ProcedureSwitchEven;
+            /*pc = new DefaultProcedureController(this);
+            pc.ProcedureSwitchEvent += ProcedureSwitchEven;*/
             //获取数据并存入数据
             _assetModuleSettingData = Resources.Load<YooAssetModuleSettingData>("YooAssetModuleSetting");
             LoadServer_AOT.Instance.DataManagerataManager.AddDataSet(_assetModuleSettingData);
@@ -37,17 +38,31 @@ namespace Script.AOT.YooAssetModule
         public void InitPackage()
         {
             YooAssets.Initialize();
+            procedures = new IProcedureController[_assetModuleSettingData.package.Count];
+            for (int i = 0; i < _assetModuleSettingData.package.Count; i++)
+            {
+                var data = _assetModuleSettingData.package;
+                var pc = new DefaultProcedureController(this);
+                //添加流程
+                pc.AddProcedure(new InitPackageProcedure());
+                pc.AddProcedure(new UpdatePackageVersionProcedure());
+                pc.AddProcedure(new UpdatePackageManifestProcedure());
+                pc.AddProcedure(new CreatePackageDownloaderProcedure());
+                pc.AddProcedure(new DownloadPackageFilesProcedure());
+                pc.AddProcedure(new DownloadPackageOverProcedure());
+                pc.AddProcedure(new ClearPackageCacheProcedure());
+                pc.AddProcedure(new UpdaterDoneProcedure());
+                //
+                pc.SetBlackboardValue("PlayMode",_assetModuleSettingData.PlayMode);
+                pc.SetBlackboardValue("PackageName",data[i].PackageName);
+                pc.SetBlackboardValue("BuildPipeline",data[i].BuildPipeline.ToString());
+                pc.StartProcedure(typeof(InitPackageProcedure));
+                procedures[i] = pc;
+            }
             //创建流程
             //2.2.1版本offlinePlayModeEditorSimulateMode需要依次调用
             //init,requestversion,updatemanifest三部曲
-            pc.AddProcedure(new InitPackageProcedure());
-            pc.AddProcedure(new UpdatePackageVersionProcedure());
-            pc.AddProcedure(new UpdatePackageManifestProcedure());
-            pc.AddProcedure(new CreatePackageDownloaderProcedure());
-            pc.AddProcedure(new DownloadPackageFilesProcedure());
-            pc.AddProcedure(new DownloadPackageOverProcedure());
-            pc.AddProcedure(new ClearPackageCacheProcedure());
-            pc.AddProcedure(new UpdaterDoneProcedure());
+           
             //写入当前初始化的内容
             SetInitPackageInfo();
         }
@@ -56,17 +71,14 @@ namespace Script.AOT.YooAssetModule
         /// </summary>
         void SetInitPackageInfo()
         {
-            pc.SetBlackboardValue("PlayMode",_assetModuleSettingData.PlayMode);
+            /*pc.SetBlackboardValue("PlayMode",_assetModuleSettingData.PlayMode);
             int _n = 0;
             foreach (var t in _assetModuleSettingData.package)
             {
-                if (!t.InitOk)
-                {
-                    pc.SetBlackboardValue("PackageName",t.PackageName);
-                    pc.SetBlackboardValue("BuildPipeline",t.BuildPipeline.ToString());
-                    pc.StartProcedure(typeof(InitPackageProcedure));
-                    return;
-                }
+                pc.SetBlackboardValue("PackageName",t.PackageName);
+                pc.SetBlackboardValue("BuildPipeline",t.BuildPipeline.ToString());
+                pc.StartProcedure(typeof(InitPackageProcedure));
+                return;
                 _n++;
             }
             if (_assetModuleSettingData.package.Count==_n)
@@ -75,7 +87,7 @@ namespace Script.AOT.YooAssetModule
                 RawPackage = YooAssets.GetPackage(_assetModuleSettingData.package[0].PackageName);
                 PrefabPackage = YooAssets.GetPackage(_assetModuleSettingData.package[0].PackageName);
                 InitOverEvent?.Invoke();
-            }
+            }*/
         }
 
 
@@ -86,23 +98,6 @@ namespace Script.AOT.YooAssetModule
 
         public void ProcedureSwitchEven(IProcedure lastProcedure, IProcedure nextProcedure)
         {
-            if (lastProcedure is null&&nextProcedure is null)
-                return;
-            if (nextProcedure is UpdaterDoneProcedure)
-            {
-                SetInitPackageInfo();
-            }
-            else if (lastProcedure is InitPackageProcedure)
-            {
-                var packageName = (string)pc.GetBlackboardValue("PackageName");
-                foreach (var t in _assetModuleSettingData.package)
-                {
-                    if (t.PackageName==packageName&&!t.InitOk)
-                    {
-                        t.InitOk = true;
-                    }
-                }
-            }
             
         }
 

@@ -1,5 +1,7 @@
 {
-  "MetadataForAOTAssemblies": [],
+  "MetadataForAOTAssemblies": [
+    "UnityEngine.CoreModule"
+  ],
   "HotCode": [
     "HotCode"
   ]

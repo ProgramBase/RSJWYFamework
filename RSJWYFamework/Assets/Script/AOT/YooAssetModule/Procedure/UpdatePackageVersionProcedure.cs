@@ -45,7 +45,7 @@ namespace Script.AOT.YooAssetModule.Procedure
             {
                 pc.SetBlackboardValue("PackageVersion", operation.PackageVersion);
                 RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"包{packageName}请求到包版本为：{operation.PackageVersion}");
-                pc.SwitchProcedure(typeof(UpdatePackageVersionProcedure));
+                pc.SwitchProcedure(typeof(UpdatePackageManifestProcedure));
             }
         }
 

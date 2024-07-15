@@ -17,5 +17,13 @@ namespace RSJWYFamework.Runtime.ExceptionLogManager
         public RSJWYException(RSJWYFameworkEnum @enum,Exception inner) : base($"模块：{@enum}]\n内部错误：{inner}")
         {
         }
+        public RSJWYException(Exception inner) : base(inner.ToString())
+        {
+            
+        }
+        public RSJWYException(string err) : base(err)
+        {
+            
+        }
     }
 }

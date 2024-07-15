@@ -74,7 +74,7 @@ MonoBehaviour:
     - GroupName: Reference
       GroupDesc: "\u5F15\u7528"
       AssetTags: 
-      ActiveRuleName: EnableGroup
+      ActiveRuleName: DisableGroup
       Collectors:
       - CollectPath: Assets/HotUpdateAssets/Reference
         CollectorGUID: 24c3e8ddc0fdb524090743553a7c2335
@@ -100,7 +100,7 @@ MonoBehaviour:
     - GroupName: Prefab
       GroupDesc: "\u9884\u5236\u4F53"
       AssetTags: 
-      ActiveRuleName: EnableGroup
+      ActiveRuleName: DisableGroup
       Collectors:
       - CollectPath: Assets/HotUpdateAssets/Prefab
         CollectorGUID: 4582e539a56fa1e4e9ce4492665f0718
