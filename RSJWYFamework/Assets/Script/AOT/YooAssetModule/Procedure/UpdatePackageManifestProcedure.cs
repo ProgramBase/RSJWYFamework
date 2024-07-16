@@ -25,7 +25,7 @@ namespace Script.AOT.YooAssetModule.Procedure
         {
             UpdateManifest().Forget();
         }
-        private async UniTask UpdateManifest()
+        private async UniTask UpdateManifest() 
         {
             await UniTask.WaitForSeconds(0.5f);
             var packageName = (string)pc.GetBlackboardValue("PackageName");
