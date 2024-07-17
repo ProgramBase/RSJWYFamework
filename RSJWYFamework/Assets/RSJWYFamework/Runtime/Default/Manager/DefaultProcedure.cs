@@ -17,7 +17,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         /// <summary>
         /// 所属模块
         /// </summary>
-        public IModule modle;
+        public object modle;
         
         /// <summary>
         /// 当前流程
@@ -48,7 +48,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         private float _timer = 0;
         //private IProcedureController _procedureControllerImplementation;
 
-        public DefaultProcedureController(IModule module)
+        public DefaultProcedureController(object module)
         {
             this.modle = module;
         }
@@ -84,7 +84,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
             }
             else
             {
-                RSJWYLogger.LogWarning(RSJWYFameworkEnum.YooAssets,$"未能从黑板中获取数据：{key}");
+                RSJWYLogger.Warning(RSJWYFameworkEnum.YooAssets,$"未能从黑板中获取数据：{key}");
                 return null;
             }
         }

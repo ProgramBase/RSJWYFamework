@@ -57,7 +57,7 @@ namespace RSJWYFamework.Runtime.Driver
             if (LastestUpdateFrame > 0)
             {
                 if (LastestUpdateFrame == Time.frameCount)
-                    RSJWYLogger.LogWarning($"There are two {nameof(RSJWYFameworkDriverService)} in the scene. Please ensure there is always exactly one driver in the scene.");
+                    RSJWYLogger.Warning($"There are two {nameof(RSJWYFameworkDriverService)} in the scene. Please ensure there is always exactly one driver in the scene.");
             }
 
             LastestUpdateFrame = Time.frameCount;

@@ -10,7 +10,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
 {
     public class DefaultYooAssetManager:IYooAssetManager,IModule
     {
-        
         private YooAssetModuleSettingData _assetModuleSettingData;
         
         public ResourcePackage RawPackage { get; private set; }

@@ -50,13 +50,13 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                         LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(dllBytes, mode);
                         if (err != LoadImageErrorCode.OK)
                         {
-                            RSJWYLogger.LogError($"热更加载DLL流程，加载补充元：{_str_err_name} 时发生异常，HCLR错误码{err.ToString()}");
+                            RSJWYLogger.Error($"热更加载DLL流程，加载补充元：{_str_err_name} 时发生异常，HCLR错误码{err.ToString()}");
                         }
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    RSJWYLogger.LogError($"热更加载DLL流程，加载补充元：{_str_err_name} 时发生异常，{ex}");
+                    RSJWYLogger.Error($"热更加载DLL流程，加载补充元：{_str_err_name} 时发生异常，{ex}");
                 }
 
                 //加载热更代码，注意加载顺序
@@ -80,7 +80,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                 }
                 catch (System.Exception ex)
                 {
-                    RSJWYLogger.LogError($"热更加载DLL流程，加载热更：{_str_err_name} 时发生异常，{ex}");
+                    RSJWYLogger.Error($"热更加载DLL流程，加载热更：{_str_err_name} 时发生异常，{ex}");
                 }
 
                 await UniTask.SwitchToMainThread();

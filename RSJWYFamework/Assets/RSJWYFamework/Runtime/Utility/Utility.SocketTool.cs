@@ -34,7 +34,7 @@ namespace RSJWYFamework.Runtime.Utility
                 long RemoteTimeStamp = _msgPing.timeStamp;//获取远端传来的时间戳
                 if (RemoteTimeStamp <= 0)
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTool,"传入的值小于等于0，处理无效");
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTool,"传入的值小于等于0，处理无效");
                     return;
                 }
                 //根据时间戳计算时间

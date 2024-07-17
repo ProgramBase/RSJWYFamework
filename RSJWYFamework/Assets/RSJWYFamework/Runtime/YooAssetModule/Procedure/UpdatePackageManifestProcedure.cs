@@ -36,7 +36,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
 
             if (operation.Status != EOperationStatus.Succeed)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}清单失败！Error：{operation.Error}");
+                RSJWYLogger.Error(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}清单失败！Error：{operation.Error}");
             }
             else
             {

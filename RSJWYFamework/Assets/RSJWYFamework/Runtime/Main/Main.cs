@@ -100,7 +100,7 @@ namespace RSJWYFamework.Runtime.Main
             }
             else
             {
-                RSJWYLogger.LogError($"{RSJWYFameworkEnum.Main}:{type}模块不存在");
+                RSJWYLogger.Error($"{RSJWYFameworkEnum.Main}:{type}模块不存在");
                 return null;
             }
             /*
@@ -126,7 +126,7 @@ namespace RSJWYFamework.Runtime.Main
             else
             {
                 module = _modules[typeof(T)]; 
-                RSJWYLogger.LogWarning($"{RSJWYFameworkEnum.Main}:添加{type}模块失败，似乎已添加相同的模块，将释放本次实例化内容");
+                RSJWYLogger.Warning($"{RSJWYFameworkEnum.Main}:添加{type}模块失败，似乎已添加相同的模块，将释放本次实例化内容");
             }
             return (T)module;
         }

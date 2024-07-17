@@ -73,5 +73,11 @@ namespace RSJWYFamework.Runtime.Procedure
         /// </summary>
         public void ClearBlackboard();
 
+        /// <summary>
+        /// 获取当前的流程
+        /// </summary>
+        /// <returns></returns>
+        public Type GetNowProcedure();
+
     }
 }

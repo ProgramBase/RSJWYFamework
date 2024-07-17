@@ -94,7 +94,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 }
                 catch (HttpRequestException e)
                 {
-                    RSJWYLogger.LogWarning
+                    RSJWYLogger.Warning
                         (RSJWYFameworkEnum.ExceptionLogManager, $"提交日志时出错，写入本地和上传，准备汇报，错误日志\n{e}");
                     await UniTask.WaitForSeconds(1);
                 }

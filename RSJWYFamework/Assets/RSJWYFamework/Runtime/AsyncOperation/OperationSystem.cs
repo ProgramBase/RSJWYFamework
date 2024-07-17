@@ -51,7 +51,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         }
 
         /// <summary>
-        /// 销毁包裹的所有任务
+        /// 销毁指定名称的任务
         /// </summary>
         public static void ClearAsyncOperation(string AsyncOperationName)
         {
@@ -134,7 +134,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
                     continue;
                 //操作未结束时，每帧刷新
                 if (operation.IsDone == false)
-                    operation.InternalOnUpdate();
+                    operation.InternalOnUpdate(time,deltaTime);
                 //操作结束设置操作完成
                 if (operation.IsDone)
                     operation.SetFinish();

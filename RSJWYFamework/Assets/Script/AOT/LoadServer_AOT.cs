@@ -14,10 +14,6 @@ namespace Script.AOT
     /// </summary>
     public class LoadServer_AOT:SingletonBaseMono<LoadServer_AOT>
     {
-        public IEventManage EventModle { get; private set; }
-        public DefaultYooAssetManager YooAssetManager{get; private set; }
-        public DefaultDataManager DataManagerataManager{get; private set; }
-        public DefaultHybirdCLRManager HybridClrManager { get; private set; }
         protected override void Awake()
         {
             base.Awake();
@@ -27,11 +23,6 @@ namespace Script.AOT
 
         private void Start()
         {
-            YooAssetManager.InitOverEvent += () =>
-            {
-                HybridClrManager.InitProcedure();
-            };
-            YooAssetManager.InitPackage();
         }
 
         protected void OnApplicationQuit()

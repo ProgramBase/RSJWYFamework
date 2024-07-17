@@ -54,7 +54,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                     }
                     else
                     {
-                        RSJWYLogger.LogError($"热更获取DLL数据流程，加载资源文件地址：{asset}无效");
+                        RSJWYLogger.Error($"热更获取DLL数据流程，加载资源文件地址：{asset}无效");
                     }
                 }
                 await UniTask.SwitchToMainThread();

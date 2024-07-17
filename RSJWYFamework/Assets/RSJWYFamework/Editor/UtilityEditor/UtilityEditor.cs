@@ -32,7 +32,7 @@ namespace RSJWYFamework.Editor.UtilityEditor
         {
             if (File.Exists(path))
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.EditorTool,$"路径：{path} 已存在");
+                RSJWYLogger.Error(RSJWYFameworkEnum.EditorTool,$"路径：{path} 已存在");
                 return;
             }
             //创建数据资源文件

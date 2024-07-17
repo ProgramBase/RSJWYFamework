@@ -5,6 +5,9 @@ using RSJWYFamework.Runtime.Logger;
 
 namespace RSJWYFamework.Runtime.AsyncOperation
 {
+    /// <summary>
+    /// 异步系统基础
+    /// </summary>
     public abstract class RAsyncOperationBase : IUniTaskSource, IPlayerLoopItem, IComparable<RAsyncOperationBase>
     {
         /// <summary>
@@ -20,7 +23,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         /// <summary>
         /// 循环检测次数限制
         /// </summary>
-        private int _whileFrame = 1000;
+        //private int _whileFrame = 1000;
 
         /// <summary>
         /// 是否已经完成
@@ -65,7 +68,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         /// <summary>
         /// 内部刷新
         /// </summary>
-        internal abstract void InternalOnUpdate();
+        internal abstract void InternalOnUpdate(float time,float deltaTime);
 
         /// <summary>
         /// 内部秒刷新
@@ -112,33 +115,11 @@ namespace RSJWYFamework.Runtime.AsyncOperation
             {
                 Status = RAsyncOperationStatus.Failed;
                 Error = "user abort";
-                RSJWYLogger.LogWarning($"Async operaiton {this.GetType().Name} has been abort !");
+                RSJWYLogger.Warning($"Async operaiton {this.GetType().Name} has been abort !");
                 InternalOnAbort();
             }
         }
-
-        /// <summary>
-        /// 执行While循环
-        /// </summary>
-        protected bool ExecuteWhileDone()
-        {
-            if (IsDone == false)
-            {
-                // 执行更新逻辑
-                InternalOnUpdate();
-
-                // 当执行次数用完时
-                _whileFrame--;
-                if (_whileFrame == 0)
-                {
-                    Status = RAsyncOperationStatus.Failed;
-                    Error = $"Operation {this.GetType().Name} failed to wait for async complete !";
-                    RSJWYLogger.LogError(Error);
-                }
-            }
-
-            return IsDone;
-        }
+        
 
         /// <summary>
         /// 等待异步执行完毕

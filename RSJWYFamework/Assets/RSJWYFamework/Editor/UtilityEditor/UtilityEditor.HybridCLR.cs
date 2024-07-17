@@ -65,7 +65,7 @@ namespace RSJWYFamework.Editor.UtilityEditor
             {
                 if (!AutoSaveScence())
                 {
-                    RSJWYLogger.LogError("场景保存失败");
+                    RSJWYLogger.Error("场景保存失败");
                     return;
                 }
                 BuildTarget target = EditorUserBuildSettings.activeBuildTarget;

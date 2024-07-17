@@ -86,7 +86,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             await initializationOperation.ToUniTask();
             if (initializationOperation.Status!=EOperationStatus.Succeed)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.YooAssets,$"初始化包：{packageName}失败！Error：{initializationOperation.Error}");
+                RSJWYLogger.Error(RSJWYFameworkEnum.YooAssets,$"初始化包：{packageName}失败！Error：{initializationOperation.Error}");
             }
             pc.SwitchProcedure(typeof(UpdatePackageVersionProcedure));
         }
