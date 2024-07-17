@@ -1,13 +1,12 @@
 using System;
-using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.Procedure;
 using RSJWYFamework.Runtime.YooAssetModule;
-using Script.AOT.YooAssetModule.Procedure;
+using RSJWYFamework.Runtime.YooAssetModule.Procedure;
 using UnityEngine;
 using YooAsset;
 
-namespace Script.AOT.YooAssetModule
+namespace RSJWYFamework.Runtime.Default.Manager
 {
     public class DefaultYooAssetManager:IYooAssetManager,IModule
     {
@@ -31,7 +30,7 @@ namespace Script.AOT.YooAssetModule
             pc.ProcedureSwitchEvent += ProcedureSwitchEven;*/
             //获取数据并存入数据
             _assetModuleSettingData = Resources.Load<YooAssetModuleSettingData>("YooAssetModuleSetting");
-            LoadServer_AOT.Instance.DataManagerataManager.AddDataSet(_assetModuleSettingData);
+            //LoadServer_AOT.Instance.DataManagerataManager.AddDataSet(_assetModuleSettingData);
            
         }
         
@@ -94,6 +93,15 @@ namespace Script.AOT.YooAssetModule
         public void Close()
         {
            
+        }
+
+        public void Update(float time, float deltaTime)
+        {
+            
+        }
+
+        public void UpdatePerSecond(float time)
+        {
         }
 
         public void ProcedureSwitchEven(IProcedure lastProcedure, IProcedure nextProcedure)

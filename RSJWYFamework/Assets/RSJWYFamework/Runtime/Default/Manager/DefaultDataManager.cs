@@ -9,7 +9,7 @@ using RSJWYFamework.Runtime.Module;
 
 namespace RSJWYFamework.Runtime.Default.Manager
 {
-    public class DefaultDataManager:IDataManager,IModule
+    public class DefaultDataManager:IDataManager, IModule 
     {
         /// <summary>
         /// 数据集，基于ScriptableObject
@@ -29,6 +29,16 @@ namespace RSJWYFamework.Runtime.Default.Manager
         {
             dataSBDic.Clear();
             dataDic.Clear();
+        }
+
+        public void Update(float time, float deltaTime)
+        {
+            
+        }
+
+        public void UpdatePerSecond(float time)
+        {
+            
         }
 
         public void AddDataSet(DataBaseSB dataSet)

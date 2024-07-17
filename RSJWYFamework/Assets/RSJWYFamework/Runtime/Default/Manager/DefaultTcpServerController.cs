@@ -1,19 +1,11 @@
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
-using RSJWYFamework.Runtime.Default.EventsLibrary;
 using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.Base;
 using RSJWYFamework.Runtime.NetWork.Event;
 using RSJWYFamework.Runtime.NetWork.TCP.Server;
-using RSJWYFamework.Runtime.NetWork.UDP;
-using RSJWYFamework.Runtime.Utility;
 
 namespace RSJWYFamework.Runtime.Default.Manager
 {
@@ -27,8 +19,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void Init()
         {
-            Main.Main.Instance.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgEventArgs>(SendMsgToClient);
-            Main.Main.Instance.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgAllEventArgs>(SendMsgToClientAll);
+            Main.Main.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgEventArgs>(SendMsgToClient);
+            Main.Main.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgAllEventArgs>(SendMsgToClientAll);
             
             //检查是不是监听全部IP
             tcpsocket = new();
@@ -37,16 +29,22 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void Close()
         {
-            Main.Main.Instance.GetModule<DefaultEvenManager>().UnBindEvent<ServerToClientMsgEventArgs>(SendMsgToClient);
-            Main.Main.Instance.GetModule<DefaultEvenManager>().UnBindEvent<ServerToClientMsgAllEventArgs>(SendMsgToClientAll);
+            Main.Main.GetModule<DefaultEvenManager>().UnBindEvent<ServerToClientMsgEventArgs>(SendMsgToClient);
+            Main.Main.GetModule<DefaultEvenManager>().UnBindEvent<ServerToClientMsgAllEventArgs>(SendMsgToClientAll);
             tcpsocket?.Quit();
         }
 
-       
+        public void Update(float time, float deltaTime)
+        {
+        }
+
+        public void UpdatePerSecond(float time)
+        {
+        }
+
 
         public void SendMsgToClientAll(MsgBase msgBase)
         {
-            throw new NotImplementedException();
         }
 
         public void InitServer(string ip = "any", int port = 6000)
@@ -75,7 +73,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
             //全部错误则使用默认参数
             tcpsocket.Init(IPAddress.Any, 6000);
         }
-        void Update()
+        public void Update()
         {
             //TcpServerService.instance.TCPUpdate();
         }
@@ -107,7 +105,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void ClientConnectedCallBack(ClientSocket _clientSocket)
         {
-            Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this, new ServerClientConnectedCallBackEventArgs
+            Main.Main.GetModule<DefaultEvenManager>().SendEvent(this, new ServerClientConnectedCallBackEventArgs
             {
                 clientSocket = _clientSocket
             });
@@ -115,7 +113,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void ClientReConnectedCallBack(ClientSocket _clientSocket)
         {
-            Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this, new ServerClientReConnectedCallBackEventArgs
+            Main.Main.GetModule<DefaultEvenManager>().SendEvent(this, new ServerClientReConnectedCallBackEventArgs
             {
                 clientSocket = _clientSocket
             });
@@ -123,7 +121,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void ServerServiceStatus(NetServerStatus netServerStatus)
         {
-            Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this, new ServerStatusEventArgs
+            Main.Main.GetModule<DefaultEvenManager>().SendEvent(this, new ServerStatusEventArgs
             {
                 status = netServerStatus
             });
@@ -131,7 +129,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void FromClientReceiveMsgCallBack(ClientSocket _clientSocket, MsgBase msgBase)
         {
-            Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this, new FromClientReceiveMsgCallBackEventArgs
+            Main.Main.GetModule<DefaultEvenManager>().SendEvent(this, new FromClientReceiveMsgCallBackEventArgs
             {
                 clientSocket = _clientSocket,
                 msgBase=msgBase

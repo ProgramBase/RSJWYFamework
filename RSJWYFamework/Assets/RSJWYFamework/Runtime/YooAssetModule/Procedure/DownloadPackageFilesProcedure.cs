@@ -5,7 +5,7 @@ using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Procedure;
 using YooAsset;
 
-namespace Script.AOT.YooAssetModule.Procedure
+namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
 {
     /// <summary>
     /// 下载需要更新的文件

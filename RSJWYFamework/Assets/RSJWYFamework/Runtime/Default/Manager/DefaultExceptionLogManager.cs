@@ -44,6 +44,16 @@ namespace RSJWYFamework.Runtime.Default.Manager
             Application.logMessageReceivedThreaded -= UnityLogMessageReceivedThreadedEvent;
         }
 
+        public void Update(float time, float deltaTime)
+        {
+            
+        }
+
+        public void UpdatePerSecond(float time)
+        {
+            
+        }
+
         async UniTaskVoid CheckQueue()
         {
             await UniTask.SwitchToThreadPool();

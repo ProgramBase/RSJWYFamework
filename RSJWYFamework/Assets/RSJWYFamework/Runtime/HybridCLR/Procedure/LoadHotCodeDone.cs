@@ -1,15 +1,16 @@
 using RSJWYFamework.Runtime.Procedure;
 
-namespace Script.AOT.YooAssetModule.Procedure
+namespace RSJWYFamework.Runtime.HybridCLR.Procedure
 {
     /// <summary>
-    /// 下载更新文件完成
+    /// 加载热更代码流程结束
     /// </summary>
-    public class DownloadPackageOverProcedure:IProcedure
+    public class LoadHotCodeDone:IProcedure
     {
         public IProcedureController pc { get; set; }
         public void OnInit()
         {
+            
         }
 
         public void OnClose()
@@ -18,7 +19,6 @@ namespace Script.AOT.YooAssetModule.Procedure
 
         public void OnEnter(IProcedure lastProcedure)
         {
-            pc.SwitchProcedure(typeof(ClearPackageCacheProcedure));
         }
 
         public void OnLeave(IProcedure nextProcedure)

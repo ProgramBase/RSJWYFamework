@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
-using RSJWYFamework.Runtime.HybridCLR;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Procedure;
 
-namespace Script.AOT.HybridCLR.Procedure
+namespace RSJWYFamework.Runtime.HybridCLR.Procedure
 {
     /// <summary>
     /// 获取DLL
@@ -29,7 +28,7 @@ namespace Script.AOT.HybridCLR.Procedure
                 var loadDLLDic = new Dictionary<string, byte[]>();
                 await UniTask.SwitchToThreadPool();
                 //获取列表
-                var MFALisRFH = LoadServer_AOT.Instance.YooAssetManager.RawPackage.LoadRawFileAsync("Config_HotCodeDLL");
+                var MFALisRFH = Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync("Config_HotCodeDLL");
                 await MFALisRFH.ToUniTask();
                 var loadLis = JsonConvert.DeserializeObject<HotCodeDLL>(MFALisRFH.GetRawFileText());
                 //拼接成一个整体
@@ -41,10 +40,10 @@ namespace Script.AOT.HybridCLR.Procedure
                     //string _n = $"{asset}.dll";
                     //Debug.Log($"加载资产:{_n}");
                     //资源地址是否有效
-                    if (LoadServer_AOT.Instance.YooAssetManager.RawPackage.CheckLocationValid(asset))
+                    if (Main.Main.YooAssetManager.RawPackage.CheckLocationValid(asset))
                     {
                         //执行加载
-                        var _rfh =  LoadServer_AOT.Instance.YooAssetManager.RawPackage.LoadRawFileAsync(asset);
+                        var _rfh =  Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync(asset);
                         //等待加载完成
                         await _rfh.Task;
                         //转byte数组

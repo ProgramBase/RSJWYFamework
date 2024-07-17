@@ -22,7 +22,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         
         public void Init()
         {
-            Main.Main.Instance.GetModule<DefaultEvenManager>().BindEvent<UDPSendMsg>(UDPSendMsgEvent);
+            Main.Main.GetModule<DefaultEvenManager>().BindEvent<UDPSendMsg>(UDPSendMsgEvent);
             _udpService = new();
             _udpService.SocketUDPController = this;
         }
@@ -30,9 +30,18 @@ namespace RSJWYFamework.Runtime.Default.Manager
         
         public void Close()
         {           
-            Main.Main.Instance.GetModule<DefaultEvenManager>().BindEvent<UDPSendMsg>(UDPSendMsgEvent);
+            Main.Main.GetModule<DefaultEvenManager>().BindEvent<UDPSendMsg>(UDPSendMsgEvent);
             _udpService?.Close();
-        } 
+        }
+
+        public void Update(float time, float deltaTime)
+        {
+            
+        }
+
+        public void UpdatePerSecond(float time)
+        {
+        }
         private void UDPSendMsgEvent(object sender, EventArgsBase e)
         {
             if (e is not UDPSendMsg args) return;
@@ -86,13 +95,13 @@ namespace RSJWYFamework.Runtime.Default.Manager
             {
                 //UTF8是正确的指令
                 msg.command.Append(_utf8);
-                Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this,msg);
+                Main.Main.GetModule<DefaultEvenManager>().SendEvent(this,msg);
             }
             else
             {
                 //Hex任何时刻都是16进值，则传出，交给使用者判断
                 msg.command.Append(_hex);
-                Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this,msg);
+                Main.Main.GetModule<DefaultEvenManager>().SendEvent(this,msg);
             }
         }
     }

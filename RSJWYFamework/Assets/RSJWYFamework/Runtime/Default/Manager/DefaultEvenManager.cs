@@ -83,5 +83,15 @@ namespace RSJWYFamework.Runtime.Default.Manager
         {
             CallBackDic.Clear();
         }
+
+        public void Update(float time, float deltaTime)
+        {
+            
+        }
+
+        public void UpdatePerSecond(float time)
+        {
+            
+        }
     }
 }

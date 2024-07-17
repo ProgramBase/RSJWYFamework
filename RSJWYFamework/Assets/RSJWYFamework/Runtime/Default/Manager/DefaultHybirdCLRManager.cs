@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.HybridCLR;
+using RSJWYFamework.Runtime.HybridCLR.Procedure;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.Procedure;
-using Script.AOT.HybridCLR.Procedure;
 
-namespace Script.AOT.HybridCLR
+namespace RSJWYFamework.Runtime.Default.Manager
 {
     /// <summary>
     /// 热更管理器
@@ -33,7 +32,6 @@ namespace Script.AOT.HybridCLR
             pc.AddProcedure(new LoadDLLByteProcedure());
             pc.AddProcedure(new LoadHotCodeProcedure());
             pc.AddProcedure(new LoadHotCodeDone());
-            
             pc.StartProcedure(typeof(LoadDLLByteProcedure));
         }
 
@@ -53,6 +51,16 @@ namespace Script.AOT.HybridCLR
        
 
         public void Close()
+        {
+            
+        }
+
+        public void Update(float time, float deltaTime)
+        {
+            
+        }
+
+        public void UpdatePerSecond(float time)
         {
             
         }

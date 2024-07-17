@@ -81,7 +81,7 @@ MonoBehaviour:
         CollectorType: 1
         AddressRuleName: AddressByFileName
         PackRuleName: PackGroup
-        FilterRuleName: CollectShaderVariants
+        FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
     - GroupName: Shader
@@ -94,7 +94,7 @@ MonoBehaviour:
         CollectorType: 1
         AddressRuleName: AddressByFileName
         PackRuleName: PackGroup
-        FilterRuleName: CollectAll
+        FilterRuleName: CollectShaderVariants
         AssetTags: 
         UserData: 
     - GroupName: Prefab

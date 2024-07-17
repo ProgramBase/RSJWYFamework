@@ -7,7 +7,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
     /// <summary>
     /// 异步操作
     /// </summary>
-    public class AsyncOperation : IUniTaskSource,IPlayerLoopItem
+    public class AsyncOperation : IUniTaskSource,IPlayerLoopItem,IComparable<AsyncOperation>
     {
         /// <summary>
         /// 管理异步操作的状态的核心
@@ -47,5 +47,15 @@ namespace RSJWYFamework.Runtime.AsyncOperation
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 拍
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public int CompareTo(AsyncOperation other)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

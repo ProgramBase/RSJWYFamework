@@ -71,8 +71,7 @@ namespace RSJWYFamework.Runtime.Module
         {
             foreach (var keyValuePair in Modules)
             {
-                if (keyValuePair.Value is ILife life)
-                    life.OnUpdate(time, realtime);
+                    //life.OnUpdate(time, realtime);
             }
         }
 
@@ -80,7 +79,6 @@ namespace RSJWYFamework.Runtime.Module
         {
             foreach (var keyValuePair in Modules)
             {
-                if (keyValuePair.Value is ILife life){}
                     //life.OnClose();
             }
 

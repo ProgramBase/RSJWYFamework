@@ -4,17 +4,17 @@ using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Procedure;
 using YooAsset;
 
-namespace Script.AOT.YooAssetModule.Procedure
+namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
 {
     /// <summary>
-    /// 更新包版本
+    /// 更新资源清单
     /// </summary>
-    public class UpdatePackageVersionProcedure:IProcedure
+    public class UpdatePackageManifestProcedure:IProcedure
     {
         public IProcedureController pc { get; set; }
         public void OnInit()
         {
-            
+           
         }
 
         public void OnClose()
@@ -23,29 +23,25 @@ namespace Script.AOT.YooAssetModule.Procedure
 
         public void OnEnter(IProcedure lastProcedure)
         {
-            UpdatePackageVersion().Forget();
+            UpdateManifest().Forget();
         }
-        /// <summary>
-        /// 更新包版本
-        /// </summary>
-        private async UniTask UpdatePackageVersion()
+        private async UniTask UpdateManifest() 
         {
             await UniTask.WaitForSeconds(0.5f);
-
             var packageName = (string)pc.GetBlackboardValue("PackageName");
+            var packageVersion = (string)pc.GetBlackboardValue("PackageVersion");
             var package = YooAssets.GetPackage(packageName);
-            var operation = package.RequestPackageVersionAsync();
+            var operation = package.UpdatePackageManifestAsync(packageVersion);
             await operation.ToUniTask();
 
             if (operation.Status != EOperationStatus.Succeed)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}版本失败！Error：{operation.Error}");
+                RSJWYLogger.LogError(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}清单失败！Error：{operation.Error}");
             }
             else
             {
-                pc.SetBlackboardValue("PackageVersion", operation.PackageVersion);
-                RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"包{packageName}请求到包版本为：{operation.PackageVersion}");
-                pc.SwitchProcedure(typeof(UpdatePackageManifestProcedure));
+                RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}清单成功");
+                pc.SwitchProcedure(typeof(CreatePackageDownloaderProcedure));
             }
         }
 
