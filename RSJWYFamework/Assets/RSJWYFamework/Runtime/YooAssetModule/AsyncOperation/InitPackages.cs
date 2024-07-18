@@ -23,7 +23,9 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
         
         public InitPackages(string packageName, string buildPipeline, EPlayMode playMode)
         {
+            pc = new DefaultProcedureController(this);
             // 创建状态机
+            //2.2.1版本 offlinePlayMode EditorSimulateMode 需要依次调用init, request version, update manifest 三部曲
             pc.AddProcedure(new InitPackageProcedure());
             pc.AddProcedure(new UpdatePackageVersionProcedure());
             pc.AddProcedure(new UpdatePackageManifestProcedure());
@@ -46,10 +48,9 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
             if(_steps == RSteps.Update)
             {
                 pc.OnUpdate(time,deltaTime);
-                if(pc.CurrentNode == typeof(FsmUpdaterDone).FullName)
+                if(pc.GetNowProcedure() == typeof(UpdaterDoneProcedure))
                 {
-                    _eventGroup.RemoveAllListener();
-                    Status = EOperationStatus.Succeed;
+                    Status = RAsyncOperationStatus.Succeed;
                     _steps = RSteps.Done;
                 }
             }
@@ -57,7 +58,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
 
         internal override void InternalOnUpdatePerSecond(float time)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         protected override void OnStart()
@@ -68,13 +69,13 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
 
         protected override void OnUpdate(float time, float deltaTime)
         {
-            throw new System.NotImplementedException();
+            
         }
 
 
         protected override void OnAbort()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

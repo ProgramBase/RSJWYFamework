@@ -25,7 +25,7 @@ namespace RSJWYFamework.Runtime.Main
         public static DefaultDataManager DataManagerataManager{get; private set; }
         public static DefaultHybirdCLRManager HybridClrManager { get; private set; }
         
-        public static RAsyncAsyncAsyncAsyncOperationSystem AsyncAsyncAsyncOperation{ get; private set; }
+        public static RAsyncOperationSystem AsyncOperation{ get; private set; }
 
         /// <summary>
         /// 初始化框架服务
@@ -50,7 +50,7 @@ namespace RSJWYFamework.Runtime.Main
                 DataManagerataManager = Main.AddModule<IDataManager>(new DefaultDataManager()) as DefaultDataManager;
                 YooAssetManager= Main.AddModule<IYooAssetManager>(new DefaultYooAssetManager())as DefaultYooAssetManager;
                 HybridClrManager = Main.AddModule<IHybridCLRManager>(new DefaultHybirdCLRManager()) as DefaultHybirdCLRManager;
-                AsyncAsyncAsyncOperation = AddModule<IRAsyncAsyncOperationSystem>(new RAsyncAsyncAsyncAsyncOperationSystem()) as RAsyncAsyncAsyncAsyncOperationSystem;
+                AsyncOperation = AddModule<IRAsyncAsyncOperationSystem>(new RAsyncOperationSystem()) as RAsyncOperationSystem;
             }
             
         }

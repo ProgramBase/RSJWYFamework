@@ -8,7 +8,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
     /// 异步系统
     /// 参考Yooasset文件管理
     /// </summary>
-    public class RAsyncAsyncAsyncAsyncOperationSystem : IRAsyncAsyncOperationSystem, IModule
+    public class RAsyncOperationSystem : IRAsyncAsyncOperationSystem, IModule
     {
         /// <summary>
         /// 异步操作列表

@@ -10,20 +10,12 @@ namespace RSJWYFamework.Runtime.AsyncOperation
     /// </summary>
     public abstract class RAsyncOperationBase : IUniTaskSource, IPlayerLoopItem, IComparable<RAsyncOperationBase>
     {
-        /// <summary>
-        /// 管理异步操作的状态的核心
-        /// </summary>
-        UniTaskCompletionSourceCore<object> core;
-
+       
+        
         /// <summary>
         /// 异步操作名称
         /// </summary>
         internal string _AsyncOperationName = null;
-
-        /// <summary>
-        /// 循环检测次数限制
-        /// </summary>
-        //private int _whileFrame = 1000;
 
         /// <summary>
         /// 是否已经完成
@@ -82,15 +74,6 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         {
         }
 
-        /// <summary>
-        /// 内部等待完成异步
-        /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
-        internal virtual void InternalWaitForAsyncComplete()
-        {
-            throw new System.NotImplementedException(this.GetType().Name);
-        }
-
         internal void SetStart()
         {
             Status = RAsyncOperationStatus.Processing;
@@ -106,7 +89,16 @@ namespace RSJWYFamework.Runtime.AsyncOperation
 
             //注意：如果完成回调内发生异常，会导致Task无限期等待
             
-            core.TrySetResult(null);
+            tcs.TrySetResult(this);
+        }
+        /// <summary>
+        /// 设置发生异常
+        /// </summary>
+        internal void SetException()
+        {
+            //注意：如果完成回调内发生异常，会导致Task无限期等待
+            Status = RAsyncOperationStatus.Failed;
+            tcs.TrySetException(new Exception(Error));
         }
 
         internal void SetAbort()
@@ -120,18 +112,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
             }
         }
         
-
-        /// <summary>
-        /// 等待异步执行完毕
-        /// </summary>
-        public void WaitForAsyncComplete()
-        {
-            if (IsDone)
-                return;
-
-            InternalWaitForAsyncComplete();
-        }
-
+        
         #region 排序接口实现
 
         public int CompareTo(RAsyncOperationBase other)
@@ -143,25 +124,29 @@ namespace RSJWYFamework.Runtime.AsyncOperation
 
         #region 异步编程相关
 
+        /// <summary>
+        /// 管理异步操作的状态的核心
+        /// </summary>
+        UniTaskCompletionSource<RAsyncOperationBase> tcs;
         public UniTaskStatus GetStatus(short token)
         {
-            return core.GetStatus(token);
+            return tcs.GetStatus(token);
         }
 
         public void OnCompleted(Action<object> continuation, object state, short token)
         {
-            core.OnCompleted(continuation, state, token);
+            tcs.OnCompleted(continuation, state, token);
         }
 
         /// <summary>
         /// 获取结果
         /// </summary>
-        public void GetResult(short token)=>core.GetStatus(token);
+        public void GetResult(short token)=>tcs.GetStatus(token);
 
         /// <summary>
         /// 不安全的获取
         /// </summary>
-        public UniTaskStatus UnsafeGetStatus()=>core.UnsafeGetStatus();
+        public UniTaskStatus UnsafeGetStatus()=>tcs.UnsafeGetStatus();
         /// <summary>
         /// 执行异步逻辑
         /// </summary>
@@ -170,6 +155,24 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         public bool MoveNext()
         {
             return !IsDone;
+        }
+        
+        
+        /// <summary>
+        /// 异步操作任务
+        /// </summary>
+        public UniTask Task
+        {
+            get
+            {
+                if (tcs == null)
+                {
+                    tcs = new ();
+                    if (IsDone)
+                        tcs.TrySetResult(this);
+                }
+                return tcs.Task;
+            }
         }
 
         #endregion

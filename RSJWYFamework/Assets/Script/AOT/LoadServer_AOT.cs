@@ -3,6 +3,7 @@ using RSJWYFamework.Runtime.Data;
 using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.HybridCLR;
+using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.YooAssetModule;
 using RSJWYFamework.Runtime.Main;
 
@@ -21,8 +22,11 @@ namespace Script.AOT
             Main.Initialize();
         }
 
-        private void Start()
+        private async void Start()
         {
+            RSJWYLogger.Log("等待包初始化");
+            await Main.YooAssetManager.InitPackage();
+            RSJWYLogger.Log("包初始化完成");
         }
 
         protected void OnApplicationQuit()

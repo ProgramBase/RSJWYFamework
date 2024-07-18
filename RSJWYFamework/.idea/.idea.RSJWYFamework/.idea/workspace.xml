@@ -5,36 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/GameAsyncOperation.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/GameAsyncOperation.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/InitPackages.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/InitPackages.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.HybridCLR.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.HybridCLR.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/AsyncOperation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/AsyncOperation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/OperationSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/OperationSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/RAsyncOperationBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/RAsyncOperationBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultExceptionLogManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultExceptionLogManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultYooAssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultYooAssetManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Driver/RSJWYFameworkDriverService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Driver/RSJWYFameworkDriverService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadDLLByteProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadDLLByteProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadHotCodeProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadHotCodeProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Logger/RSJWYLogger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Logger/RSJWYLogger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Main/Main.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Main/Main.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/UDP/UDPService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/UDP/UDPService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/IProcedureController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/IProcedureController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Senseshield/SenseshieldServerHelp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Senseshield/SenseshieldServerHelp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.AES.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.AES.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.SocketTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.SocketTool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/InitPackageProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/InitPackageProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageManifestProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageManifestProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,27 +37,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "XThreadsFramesViewSplitterKey": "0.20187393",
-    "git-widget-placeholder": "feature/异步系统",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true",
-    "附加到 Unity 编辑器.附加到 Unity 编辑器.executor": "Debug"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.20187393&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/异步系统&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;附加到 Unity 编辑器.附加到 Unity 编辑器.executor&quot;: &quot;Debug&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\Administrator\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Administrator\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="附加到 Unity 编辑器.附加到 Unity 编辑器">
     <configuration name="启动 Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\unity\UnnityEditor\2021.3.34f1c1\Editor\Unity.exe" />
@@ -104,10 +75,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="6244">
+    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="6244" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -138,6 +109,8 @@
       <workItem from="1721119034096" duration="265000" />
       <workItem from="1721119314357" duration="159000" />
       <workItem from="1721119520854" duration="24672000" />
+      <workItem from="1721268662946" duration="86000" />
+      <workItem from="1721269419034" duration="609000" />
     </task>
     <servers />
   </component>

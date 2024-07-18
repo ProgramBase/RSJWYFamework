@@ -2,7 +2,7 @@ using System.IO;
 using UnityEngine;
 using YooAsset;
 
-namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
+namespace RSJWYFamework.Runtime.YooAssetModule
 {
     public static class YooAssetManagerLoadTool
     {

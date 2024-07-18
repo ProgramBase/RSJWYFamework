@@ -46,6 +46,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
         
         
         private float _timer = 0;
+
+        private IProcedureController _procedureControllerImplementation;
         //private IProcedureController _procedureControllerImplementation;
 
         public DefaultProcedureController(object module)
@@ -92,6 +94,11 @@ namespace RSJWYFamework.Runtime.Default.Manager
         public void ClearBlackboard()
         {
             blackboard.Clear();
+        }
+
+        public Type GetNowProcedure()
+        {
+            return CurrentProcedure.GetType();
         }
 
         public void OnUpdate(float time, float realtime)
