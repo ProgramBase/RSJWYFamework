@@ -3,9 +3,10 @@ using RSJWYFamework.Runtime.Data;
 using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.HybridCLR;
+using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.YooAssetModule;
-using Script.AOT.HybridCLR;
-using Script.AOT.YooAssetModule;
+using RSJWYFamework.Runtime.Main;
+
 
 namespace Script.AOT
 {
@@ -14,30 +15,18 @@ namespace Script.AOT
     /// </summary>
     public class LoadServer_AOT:SingletonBaseMono<LoadServer_AOT>
     {
-        public IEventManage EventModle { get; private set; }
-        public DefaultYooAssetManager YooAssetManager{get; private set; }
-        public DefaultDataManager DataManagerataManager{get; private set; }
-        
-        public DefaultHybirdCLRManager HybridClrManager { get; private set; }
         protected override void Awake()
         {
             base.Awake();
             DontDestroyOnLoad(this);
-            RSJWYFamework.Runtime.Main.Main.Instance.Init();
-            
-            EventModle = RSJWYFamework.Runtime.Main.Main.Instance.GetModule<IEventManage>();
-            DataManagerataManager = RSJWYFamework.Runtime.Main.Main.Instance.AddModule<IDataManager>(new DefaultDataManager()) as DefaultDataManager;
-            YooAssetManager= RSJWYFamework.Runtime.Main.Main.Instance.AddModule<IYooAssetManager>(new DefaultYooAssetManager())as DefaultYooAssetManager;
-            HybridClrManager = RSJWYFamework.Runtime.Main.Main.Instance.AddModule<IHybridCLRManager>(new DefaultHybirdCLRManager()) as DefaultHybirdCLRManager;
+            Main.Initialize();
         }
 
-        private void Start()
+        private async void Start()
         {
-            YooAssetManager.InitOverEvent += () =>
-            {
-                HybridClrManager.InitProcedure();
-            };
-            YooAssetManager.InitPackage();
+            RSJWYLogger.Log("等待包初始化");
+            await Main.YooAssetManager.InitPackage();
+            RSJWYLogger.Log("包初始化完成");
         }
 
         protected void OnApplicationQuit()

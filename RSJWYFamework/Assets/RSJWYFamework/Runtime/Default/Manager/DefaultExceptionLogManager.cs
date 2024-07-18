@@ -44,6 +44,16 @@ namespace RSJWYFamework.Runtime.Default.Manager
             Application.logMessageReceivedThreaded -= UnityLogMessageReceivedThreadedEvent;
         }
 
+        public void Update(float time, float deltaTime)
+        {
+            
+        }
+
+        public void UpdatePerSecond(float time)
+        {
+            
+        }
+
         async UniTaskVoid CheckQueue()
         {
             await UniTask.SwitchToThreadPool();
@@ -84,7 +94,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 }
                 catch (HttpRequestException e)
                 {
-                    RSJWYLogger.LogWarning
+                    RSJWYLogger.Warning
                         (RSJWYFameworkEnum.ExceptionLogManager, $"提交日志时出错，写入本地和上传，准备汇报，错误日志\n{e}");
                     await UniTask.WaitForSeconds(1);
                 }

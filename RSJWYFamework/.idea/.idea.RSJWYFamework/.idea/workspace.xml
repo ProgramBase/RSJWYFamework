@@ -5,96 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/Config.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/Config/SettingConfigWindows.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/Config/SettingConfigWindows.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework.dir/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework.dir/.idea/projectSettingsUpdater.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework.dir/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework.dir/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Config.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Config.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Config/HotCodeDLL.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Config/HotCodeDLL.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Config/HotCodeDLL.json.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Config/HotCodeDLL.json.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode.dll.bytes" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode.dll.bytes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Material.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Material.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Reference.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Reference.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Reference/Shadervariants.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Reference/Shadervariants.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Shader.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Shader/圆角UI.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Shader/圆角UI.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Shader/圆角UI/RoundConor.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Shader/圆角UI/RoundConor.shader" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Shader/圆角UI/RoundConor.shader.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Shader/圆角UI/RoundConor.shader.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HybridCLRGenerate/AOTGenericReferences.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HybridCLRGenerate/AOTGenericReferences.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HybridCLRGenerate/link.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HybridCLRGenerate/link.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/RFWManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab/RFWManager.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/RFWManager.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab/RFWManager.prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/EditorMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/EditorMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.HybridCLR.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.HybridCLR.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/HybridCLRTool.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/HybridCLRTool.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Base/ModleInterface.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Base/ModleInterface.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/HotCodeDLL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/HotCodeDLL.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/HotCodeDLL.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/HotCodeDLL.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/IHybridCLRManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/IHybridCLRManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Logger/RSJWYException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Logger/RSJWYException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/ReferencePool/Base/IReference.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/ReferencePool/Base/IReference.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.FileAndFoder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.FileAndFoder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetModuleSettingData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetModuleSettingData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/YooAssetSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/YooAssetSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/YooAssetSettings.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/YooAssetSettings.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/AOT.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/AOT.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/AOT.asmdef.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/AOT.asmdef.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/DefaultHybirdCLRManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/DefaultHybirdCLRManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/DefaultHybirdCLRManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/DefaultHybirdCLRManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadDLLByteProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadDLLByteProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadDLLByteProcedure.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadDLLByteProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadHotCodeDone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadHotCodeDone.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadHotCodeDone.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadHotCodeDone.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadHotCodeProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadHotCodeProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadHotCodeProcedure.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/HybridCLR/Procedure/LoadHotCodeProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/DefaultYooAssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/DefaultYooAssetManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/DefaultYooAssetManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/DefaultYooAssetManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/ClearPackageCacheProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/ClearPackageCacheProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/ClearPackageCacheProcedure.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/ClearPackageCacheProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/CreatePackageDownloaderProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/CreatePackageDownloaderProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/CreatePackageDownloaderProcedure.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/CreatePackageDownloaderProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/DownloadPackageFilesProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/DownloadPackageFilesProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/DownloadPackageFilesProcedure.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/DownloadPackageFilesProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/DownloadPackageOverProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/DownloadPackageOverProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/DownloadPackageOverProcedure.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/DownloadPackageOverProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/InitPackageProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/InitPackageProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/InitPackageProcedure.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/InitPackageProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdatePackageManifestProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdatePackageManifestProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdatePackageManifestProcedure.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdatePackageManifestProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdaterDoneProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdaterDoneProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdaterDoneProcedure.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/Procedure/UpdaterDoneProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/YooAssetManagerLoadTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/YooAssetManagerLoadTool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/YooAssetManagerLoadTool.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/YooAssetModule/YooAssetManagerLoadTool.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/HotCode.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/HotCode.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/HotCode/HotCode.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/HotCode/HotCode.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/HotCode/HotCode.asmdef.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/HotCode/HotCode.asmdef.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/HotCode/NewBehaviourScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/HotCode/NewBehaviourScript.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/HybridCLRSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/HybridCLRSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +16,17 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0a2e1cdc28c740eda1958d8128c28373827200/77/49fc49f9/AnimatorStateMachine.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/448a66bf9b31494bbd3f742f998b818b284000/34/a8633317/Stopwatch.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e05db41a20b45108859fa03b97088d446ac00/04/3fdf111b/TaskCompletionSource`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e05db41a20b45108859fa03b97088d446ac00/74/77a7f25d/List`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e05db41a20b45108859fa03b97088d446ac00/e3/ee1fe09c/IEnumerator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7ff4597333a544bc9923788716880fcc572e20/6c/108abbc1/Dictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7ff4597333a544bc9923788716880fcc572e20/84/d15b8aec/IEnumerator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9c6570448e70440ea7a2f0f4a152540d305400/a8/3ac13fa7/OdinMenuTreeExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/65/5a6f51ed/Time.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/9c/874fb8d0/AsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/IProcedureController.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -119,13 +40,15 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.20187393&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/异步系统&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;附加到 Unity 编辑器.附加到 Unity 编辑器.executor&quot;: &quot;Debug&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
@@ -135,18 +58,6 @@
     ]
   }
 }</component>
-  <component name="RunAnythingCache">
-    <myKeys>
-      <visibility group="Grunt" flag="true" />
-      <visibility group="Gulp" flag="true" />
-      <visibility group="HTTP 请求" flag="true" />
-      <visibility group="Node.js" flag="true" />
-      <visibility group="npm" flag="true" />
-      <visibility group="yarn" flag="true" />
-      <visibility group="最近的项目" flag="true" />
-      <visibility group="运行配置" flag="true" />
-    </myKeys>
-  </component>
   <component name="RunManager" selected="附加到 Unity 编辑器.附加到 Unity 编辑器">
     <configuration name="启动 Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\unity\UnnityEditor\2021.3.34f1c1\Editor\Unity.exe" />
@@ -195,6 +106,11 @@
       <updated>1721016545016</updated>
       <workItem from="1721016550015" duration="5569000" />
       <workItem from="1721032907814" duration="5719000" />
+      <workItem from="1721119034096" duration="265000" />
+      <workItem from="1721119314357" duration="159000" />
+      <workItem from="1721119520854" duration="24672000" />
+      <workItem from="1721268662946" duration="86000" />
+      <workItem from="1721269419034" duration="609000" />
     </task>
     <servers />
   </component>

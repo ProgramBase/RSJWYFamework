@@ -37,7 +37,7 @@ namespace RSJWYFamework.Runtime.Utility
                             if (headTag == AESHead)
                             {
 #if UNITY_EDITOR
-                                RSJWYLogger.LogError(RSJWYFameworkEnum.Utility, $"{path}已经加密过了！");
+                                RSJWYLogger.Error(RSJWYFameworkEnum.Utility, $"{path}已经加密过了！");
 #endif
                                 return;
                             }
@@ -151,12 +151,12 @@ namespace RSJWYFamework.Runtime.Utility
             {
                 if (EncryptByte.Length == 0)
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.Utility,"要加密的数据不得为空");
+                    RSJWYLogger.Error(RSJWYFameworkEnum.Utility,"要加密的数据不得为空");
                 }
 
                 if (string.IsNullOrEmpty(EncryptKey))
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.Utility,"秘钥不得为空");
+                    RSJWYLogger.Error(RSJWYFameworkEnum.Utility,"秘钥不得为空");
                 }
 
                 byte[] m_strEncrypt;
@@ -221,12 +221,12 @@ namespace RSJWYFamework.Runtime.Utility
             {
                 if (DecryptByte.Length == 0)
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.Utility,"要解密的数据不得为空");
+                    RSJWYLogger.Error(RSJWYFameworkEnum.Utility,"要解密的数据不得为空");
                 }
 
                 if (string.IsNullOrEmpty(DecryptKey))
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.Utility,"秘钥不得为空");
+                    RSJWYLogger.Error(RSJWYFameworkEnum.Utility,"秘钥不得为空");
                 }
 
                 byte[] m_strDecrypt;

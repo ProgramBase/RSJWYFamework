@@ -210,7 +210,7 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
                 }
                 else
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkUDP,$"非正常错误！取出UDP消息队列失败！！");
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkUDP,$"非正常错误！取出UDP消息队列失败！！");
                 }
             }
         }
@@ -239,7 +239,7 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
                         bool istimeout = Monitor.Wait(msgSendThreadLock, 10000);
                         if (!istimeout)
                         {
-                            RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,$"客户端消息：消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
+                            RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"客户端消息：消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
                             Close();
                         }
                     }
@@ -297,7 +297,7 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         {
             if (isThreadOver || udpClient == null)
             {
-               RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkUDP,"UDP服务未初始化或已关闭，无法发送消息。");
+               RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkUDP,"UDP服务未初始化或已关闭，无法发送消息。");
                return;
             }
             // 创建目标端点

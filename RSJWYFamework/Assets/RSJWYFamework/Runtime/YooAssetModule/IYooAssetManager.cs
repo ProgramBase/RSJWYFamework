@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using MyFamework.Runtime.Base;
 using RSJWYFamework.Runtime.Procedure;
 
@@ -18,10 +19,12 @@ namespace RSJWYFamework.Runtime.YooAssetModule
         /// <summary>
         /// /初始化包
         /// </summary>
-        void InitPackage();
+        UniTask InitPackage();
         /// <summary>
         /// 加载完成事件
         /// </summary>
         event Action InitOverEvent;
+
+        public void Start();
     }
 }

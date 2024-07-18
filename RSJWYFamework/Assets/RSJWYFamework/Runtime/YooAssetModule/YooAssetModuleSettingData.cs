@@ -12,12 +12,14 @@ namespace RSJWYFamework.Runtime.YooAssetModule
     {
         [Required]
         public EPlayMode PlayMode = EPlayMode.EditorSimulateMode;
-        [ListDrawerSettings(ShowIndexLabels =true)]
-        public List<YooAssetModulePackageData> package;
         
-       
+        
+
+        public YooAssetModulePackageData Prefab;
+        public YooAssetModulePackageData RawFile;
+
+
     }
-    
     
     
     /// <summary>

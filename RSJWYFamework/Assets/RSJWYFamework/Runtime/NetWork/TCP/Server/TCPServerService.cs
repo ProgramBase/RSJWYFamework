@@ -141,7 +141,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         {
             if (!isInit)
             {
-                RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpServer,$":没有初始化过，无法初始化指令");
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$":没有初始化过，无法初始化指令");
                 return;
             }
             SetInit();
@@ -188,7 +188,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             }
             catch (Exception e)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpServer,$" 服务端启动监听 IP:{ip}，Port{port}失败！！错误信息：\n {e}");
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$" 服务端启动监听 IP:{ip}，Port{port}失败！！错误信息：\n {e}");
             }
 
         }
@@ -234,7 +234,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             }
             catch (SocketException ex)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpServer,$"客户端建立连接失败！！错误信息：\n {ex.ToString()}" );
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"客户端建立连接失败！！错误信息：\n {ex.ToString()}" );
             }
         }
 
@@ -252,7 +252,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             System.Net.Sockets.Socket client = (System.Net.Sockets.Socket)ar.AsyncState;
             if (!ClientDic.ContainsKey(client))
             {
-                RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpServer,$"无法找到用于存储的客户端容器，无法执行接收,可能已经断开链接，当前数量为：{ClientDic.Count}");
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"无法找到用于存储的客户端容器，无法执行接收,可能已经断开链接，当前数量为：{ClientDic.Count}");
                 return;//找不到存储的容器
             }
             //找对应的客户端容器
@@ -264,7 +264,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 if (count <= 0)
                 {
                     //没有接收到数据
-                    RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpServer,$"读取客户端：{client.RemoteEndPoint.ToString()}发来的消息出错！！数据长度小于0，客户端连可能已经断开，服务器关闭对此客户端的链接。");
+                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"读取客户端：{client.RemoteEndPoint.ToString()}发来的消息出错！！数据长度小于0，客户端连可能已经断开，服务器关闭对此客户端的链接。");
                     //服务器关闭链接
                     CloseClient(_serverClient);
                     return;
@@ -281,7 +281,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             }
             catch (SocketException ex)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpServer,$"读取客户端：{client.RemoteEndPoint.ToString()}发来的消息出错！！错误信息： \n {ex.ToString()}" );
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"读取客户端：{client.RemoteEndPoint.ToString()}发来的消息出错！！错误信息： \n {ex.ToString()}" );
                 CloseClient(_serverClient);
             }
         }
@@ -311,7 +311,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             var _client=msgBase.targetSocket;//取出目标客户端
             if (_client == null || !_client.Connected)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpServer,$"Socket链接未设置或者未建立链接");
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"Socket链接未设置或者未建立链接");
                 return false;//链接不存在或者未建立链接
             }
             //写入数据
@@ -332,7 +332,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             }
             catch (SocketException ex)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpServer,$"向客户端发送消息失败 SendMessage Error:{ex.ToString()}");
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"向客户端发送消息失败 SendMessage Error:{ex.ToString()}");
                 CloseClient(ClientDic[_client]);
                 return false;//链接不存在或者未建立链接
             }
@@ -383,7 +383,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             }
             catch (SocketException e)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpServer,$"向客户端发送消息失败 SendCallBack Error:{e}" );
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"向客户端发送消息失败 SendCallBack Error:{e}" );
                 CloseClient(ClientDic[client]);
             }
         }
@@ -420,7 +420,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     bool istimeout = Monitor.Wait(msgSendThreadLock, 20000);
                     if (!istimeout)
                     {
-                        RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpServer,$"消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
+                        RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
                         CloseClient(ClientDic[_client]);
                     }
                 }
@@ -480,7 +480,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 //取出并移除取出来的数据
                 if (!serverMsgQueue.TryDequeue(out _msg))
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpServer,$"取出并处理消息队列失败！！");
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"取出并处理消息队列失败！！");
                     continue;
                 }
                 //处理取出来的数据
@@ -538,7 +538,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     }
                     else
                     {
-                        RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpServer,$"非正常错误！服务器在处理返回给unity处理的信息时，取出并处理消息队列失败！！");
+                        RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"非正常错误！服务器在处理返回给unity处理的信息时，取出并处理消息队列失败！！");
                     }
                 }
             }

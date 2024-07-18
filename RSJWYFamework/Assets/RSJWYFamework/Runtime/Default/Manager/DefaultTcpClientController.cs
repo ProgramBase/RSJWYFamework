@@ -20,16 +20,26 @@ namespace RSJWYFamework.Runtime.Default.Manager
         
         public void Init()
         {
-            Main.Main.Instance.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgEventArgs>(ClientSendToServerMsg);
+            Main.Main.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgEventArgs>(ClientSendToServerMsg);
             tcpsocket = new();
             tcpsocket.SocketTcpClientController = this;
         }
 
         public void Close()
         {
-            Main.Main.Instance.GetModule<DefaultEvenManager>().UnBindEvent<ServerToClientMsgEventArgs>(ClientSendToServerMsg);
+            Main.Main.GetModule<DefaultEvenManager>().UnBindEvent<ServerToClientMsgEventArgs>(ClientSendToServerMsg);
             tcpsocket?.Quit();
         }
+
+        public void Update(float time, float deltaTime)
+        {
+            
+        }
+
+        public void UpdatePerSecond(float time)
+        {
+        }
+
 
         public void InitTCPClient(string ip = "127.0.0.1", int port = 6000)
         {
@@ -70,7 +80,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
        
         public void ClientStatus(NetClientStatus eventEnum)
         {
-            Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this, new ClientStatusEventArgs
+            Main.Main.GetModule<DefaultEvenManager>().SendEvent(this, new ClientStatusEventArgs
             {
                 netClientStatus = eventEnum
             });
@@ -78,7 +88,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void ReceiveMsgCallBack(MsgBase msgBase)
         {
-            Main.Main.Instance.GetModule<DefaultEvenManager>().SendEvent(this, new ClientReceivesMSGFromServer
+            Main.Main.GetModule<DefaultEvenManager>().SendEvent(this, new ClientReceivesMSGFromServer
             {
                 msg = msgBase
             });

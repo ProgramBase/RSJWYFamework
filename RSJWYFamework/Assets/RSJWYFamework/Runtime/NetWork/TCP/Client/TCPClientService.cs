@@ -217,14 +217,14 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             //链接不为空并且链接成功
             if (_socket != null && _socket.Connected)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpClient,"链接失败，已经有链接服务器");
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpClient,"链接失败，已经有链接服务器");
                 ConnectEvent(NetClientStatus.ConnectFail);
                 return;
             }
             //链接状态
             if (m_Connecting)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpClient,"链接失败，正在链接中");
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpClient,"链接失败，正在链接中");
                 ConnectEvent(NetClientStatus.ConnectFail);
                 return;
             }
@@ -293,11 +293,11 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             catch (SocketException ex)
             {
                 //会无限重连，直到重新连接成功
-                RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,$"Socket连接失败,等待3秒后重新尝试链接 和服务器连接失败原因:{ex.ToString()}");
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"Socket连接失败,等待3秒后重新尝试链接 和服务器连接失败原因:{ex.ToString()}");
                 Thread.Sleep(3000);//延时处理
                 //开始接收
                 _socket.BeginConnect(_ip, _port, ConnectCallBack, _socket);//异步连接服务器，以免堵塞unity主线程
-                RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,$"开始重连，配置信息为：IP:{_ip.ToString()},Port：{_port.ToString()}");
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"开始重连，配置信息为：IP:{_ip.ToString()},Port：{_port.ToString()}");
                 
                 ConnectEvent(NetClientStatus.ReConnect);
                 m_Connecting = true;
@@ -316,7 +316,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             System.Net.Sockets.Socket socket = (System.Net.Sockets.Socket)ar.AsyncState;//获取socket
             if (m_Closing || !socket.Connected)
             {
-                RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,$"客户端消息：和服务器的连接关闭中,或服Socket连接状态为False，不执行消息处理回调");
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"客户端消息：和服务器的连接关闭中,或服Socket连接状态为False，不执行消息处理回调");
                 return;
             }
             try
@@ -324,7 +324,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 int count = socket.EndReceive(ar);//获取接收到的字节长度
                 if (count <= 0)
                 {
-                    RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,$"接收服务器：{socket.RemoteEndPoint},发来的字节长度为0，可能服务器已经断开了链接，本地Socket执行连接关闭");
+                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"接收服务器：{socket.RemoteEndPoint},发来的字节长度为0，可能服务器已经断开了链接，本地Socket执行连接关闭");
                     Close();
                     //服务器关闭链接
                     return;
@@ -340,7 +340,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             }
             catch (SocketException ex)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpClient,$"Socket数据接收完成处理失败 接收服务器数据失败:{ex.ToString()}");
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpClient,$"Socket数据接收完成处理失败 接收服务器数据失败:{ex.ToString()}");
                 Close();
             }
         }
@@ -367,17 +367,17 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         {
             if (_socket == null || !_socket.Connected)
             {
-                RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,"没有连接到服务器");
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"没有连接到服务器");
                 return;//链接不存在或者未建立链接
             }
             if (m_Connecting)
             {
-                RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,"正在链接服务器中，无法发送消息");
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"正在链接服务器中，无法发送消息");
                 return;
             }
             if (m_Closing)
             {
-                RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,"正在关闭链接服务器中，无法发送消息");
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"正在关闭链接服务器中，无法发送消息");
                 return;
             }
             //写入数据
@@ -389,7 +389,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             }
             catch (SocketException ex)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpClient,$"向服务器发送消息失败 SendMessage Error:{ex.ToString()}");
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpClient,$"向服务器发送消息失败 SendMessage Error:{ex.ToString()}");
                 Close();
             }
         }
@@ -423,7 +423,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 }
                 else if (m_Closing)
                 {
-                    RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,"正在断开链接");
+                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"正在断开链接");
                     //如果正在断开，最后一条也发送完整，则执行断开指令
                     RealClose();
                 }
@@ -439,7 +439,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             }
             catch (SocketException ex)
             {
-                RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpClient,"向服务器发送消息失败 SendCallBack Error:" + ex.ToString());
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpClient,"向服务器发送消息失败 SendCallBack Error:" + ex.ToString());
                 Close();
             }
         }
@@ -463,7 +463,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 //取出并移除取出来的数据
                 if (!msgQueue.TryDequeue(out msgBase))
                 {
-                    RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpClient,"客户端消息：非正常错误！取出并处理消息队列失败！！");
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpClient,"客户端消息：非正常错误！取出并处理消息队列失败！！");
                     continue;
                 }
                 //处理取出来的数据
@@ -514,7 +514,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 if (timeNow - lastPongTime > m_PingInterval * 4)
                 {
                     Close();
-                    RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,"服务器返回心跳包超时");
+                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"服务器返回心跳包超时");
                 }
             }
         }
@@ -543,7 +543,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                     bool istimeout = Monitor.Wait(msgSendThreadLock, 10000);
                     if (!istimeout)
                     {
-                        RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,$"客户端消息：消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
+                        RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"客户端消息：消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
                         Close();
                     }
                 }
@@ -594,7 +594,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                     }
                     else
                     {
-                        RSJWYLogger.LogError(RSJWYFameworkEnum.NetworkTcpClient,"非正常错误！客户端在处理返回给unity处理的信息时，取出并处理消息队列失败！！");
+                        RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpClient,"非正常错误！客户端在处理返回给unity处理的信息时，取出并处理消息队列失败！！");
                     }
 
                 }
@@ -716,7 +716,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         {
             _socket.Close();
             ConnectEvent(NetClientStatus.Close);
-            RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,"连接关闭 Close Socket");
+            RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"连接关闭 Close Socket");
             m_DiaoXian = true;
             isThreadOver = true;
         }
@@ -728,7 +728,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             Connect(_ip, _port);
             m_ReConnect = true;
             ConnectEvent(NetClientStatus.ReConnect);
-            RSJWYLogger.LogWarning(RSJWYFameworkEnum.NetworkTcpClient,"检测到服务器断开！！开始重新连接服务器");
+            RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"检测到服务器断开！！开始重新连接服务器");
 
         }
         internal void Quit()

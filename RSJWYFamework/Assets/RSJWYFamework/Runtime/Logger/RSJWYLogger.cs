@@ -30,7 +30,7 @@ namespace RSJWYFamework.Runtime.Logger
         {
             UnityEngine.Debug.Log(info);
             if (!Debugger.IsLogging())
-                Main.Main.Instance.GetModule<DefaultExceptionLogManager>()
+                Main.Main.GetModule<DefaultExceptionLogManager>()
                     .UnityLogMessageReceivedThreadedEvent(info, null, LogType.Log);
         }
         /// <summary>
@@ -39,51 +39,51 @@ namespace RSJWYFamework.Runtime.Logger
         [Conditional("DEBUG")]
         public static void Log(RSJWYFameworkEnum @enum,string info)
         {
-            UnityEngine.Debug.Log($"{@enum}:\n{info}");
+            UnityEngine.Debug.Log($"{@enum}:{info}");
             if (!Debugger.IsLogging())
-                Main.Main.Instance.GetModule<DefaultExceptionLogManager>()
+                Main.Main.GetModule<DefaultExceptionLogManager>()
                     .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Log);
         }
 
         /// <summary>
         /// 警告
         /// </summary>
-        public static void LogWarning(string info)
+        public static void Warning(string info)
         {
             UnityEngine.Debug.LogWarning(info);
             if (!Debugger.IsLogging())
-                Main.Main.Instance.GetModule<DefaultExceptionLogManager>()
+                Main.Main.GetModule<DefaultExceptionLogManager>()
                     .UnityLogMessageReceivedThreadedEvent(info, null, LogType.Warning);
         }
         /// <summary>
         /// 警告
         /// </summary>
-        public static void LogWarning(RSJWYFameworkEnum @enum,string info)
+        public static void Warning(RSJWYFameworkEnum @enum,string info)
         {
-            UnityEngine.Debug.LogWarning($"{@enum}:\n{info}");;
+            UnityEngine.Debug.LogWarning($"{@enum}:{info}");;
             if (!Debugger.IsLogging())
-                Main.Main.Instance.GetModule<DefaultExceptionLogManager>()
+                Main.Main.GetModule<DefaultExceptionLogManager>()
                     .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Warning);
         }
 
         /// <summary>
         /// 错误
         /// </summary>
-        public static void LogError(string info)
+        public static void Error(string info)
         {
             UnityEngine.Debug.LogError(info);
             if (!Debugger.IsLogging())
-                Main.Main.Instance.GetModule<DefaultExceptionLogManager>()
+                Main.Main.GetModule<DefaultExceptionLogManager>()
                     .UnityLogMessageReceivedThreadedEvent(info, null, LogType.Error);
         }
         /// <summary>
         /// 错误
         /// </summary>
-        public static void LogError(RSJWYFameworkEnum @enum,string info)
+        public static void Error(RSJWYFameworkEnum @enum,string info)
         {
-            UnityEngine.Debug.LogError($"{@enum}:\n{info}");;
+            UnityEngine.Debug.LogError($"{@enum}:{info}");;
             if (!Debugger.IsLogging())
-                Main.Main.Instance.GetModule<DefaultExceptionLogManager>()
+                Main.Main.GetModule<DefaultExceptionLogManager>()
                     .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Error);
         }
 
@@ -94,7 +94,7 @@ namespace RSJWYFamework.Runtime.Logger
         {
             UnityEngine.Debug.LogException(exception);
             if (!Debugger.IsLogging())
-                Main.Main.Instance.GetModule<DefaultExceptionLogManager>()
+                Main.Main.GetModule<DefaultExceptionLogManager>()
                     .UnityLogMessageReceivedThreadedEvent(exception.Message, exception.StackTrace, LogType.Exception);
         }
         /// <summary>
@@ -104,8 +104,8 @@ namespace RSJWYFamework.Runtime.Logger
         {
             UnityEngine.Debug.LogException(exception);
             if (!Debugger.IsLogging())
-                Main.Main.Instance.GetModule<DefaultExceptionLogManager>()
-                    .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{exception.Message}", exception.StackTrace, LogType.Exception);
+                Main.Main.GetModule<DefaultExceptionLogManager>()
+                    .UnityLogMessageReceivedThreadedEvent($"{@enum}:{exception.Message}", exception.StackTrace, LogType.Exception);
         }
 
     }

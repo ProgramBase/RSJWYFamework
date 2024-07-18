@@ -79,6 +79,17 @@ namespace RSJWYFamework.Runtime.Senseshield
             
         }
 
+        public void Update(float time, float deltaTime)
+        {
+            
+        }
+
+        public void UpdatePerSecond(float time)
+        {
+            
+        }
+
+
         /// <summary>
         /// 心跳维持线程
         /// </summary>

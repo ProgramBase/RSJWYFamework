@@ -80,3 +80,5 @@ HybridCLRData/LocalIl2CppData-WindowsEditor/
 #每个开发者的sdk都不一样，请前往目录复制SDK进去，拷贝x64的即可
 Assets/Plugins/senseshield/
 Assets/Plugins/PayPlugins/
+
+Assets/StreamingAssets/ImportantData/
