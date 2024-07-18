@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using RSJWYFamework.Runtime.AsyncOperation;
 using RSJWYFamework.Runtime.Logger;
 using UnityEngine;
@@ -14,10 +15,13 @@ namespace RSJWYFamework.Runtime.Driver
         private static int LastestUpdateFrame = 0;
         private float timer = 0f;
         private float interval = 1f;
+
+        
+        
         void Update()
         {
             Main.Main.Update(Time.time,Time.deltaTime);
-            
+            RAsyncOperationSystem.Update(Time.time,Time.deltaTime);
             // 累加计时器
             timer = Time.deltaTime;
             // 如果计时器达到时间间隔
@@ -27,22 +31,22 @@ namespace RSJWYFamework.Runtime.Driver
                 timer = 0f;
                 // 调用逻辑函数
                 Main.Main.UpdatePerSecond(Time.time); 
+                RAsyncOperationSystem.UpdatePerSecond(Time.time);
             }
             
             DebugCheckDuplicateDriver();
         }
 
-        void UpdateFame(float time,float deltaTime)
+        private void Start()
         {
-            
+            RAsyncOperationSystem.Init();
         }
 
-        void UpdatePerSecondFame()
+        private void OnDestroy()
         {
-            
+            RAsyncOperationSystem.Close();
         }
-        
-        
+
 
 #if UNITY_EDITOR
         void OnApplicationQuit()

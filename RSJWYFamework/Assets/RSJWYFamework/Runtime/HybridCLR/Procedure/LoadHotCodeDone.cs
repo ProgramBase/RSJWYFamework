@@ -1,3 +1,4 @@
+using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Procedure;
 
 namespace RSJWYFamework.Runtime.HybridCLR.Procedure
@@ -19,6 +20,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
 
         public void OnEnter(IProcedure lastProcedure)
         {
+            RSJWYLogger.Log($"热更流程结束");
         }
 
         public void OnLeave(IProcedure nextProcedure)

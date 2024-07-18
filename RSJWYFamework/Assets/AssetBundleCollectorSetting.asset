@@ -47,10 +47,10 @@ MonoBehaviour:
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackRawFile
-        FilterRuleName: HotCode
+        FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: config
+    - GroupName: Config
       GroupDesc: "\u914D\u7F6E\u6587\u4EF6"
       AssetTags: 
       ActiveRuleName: EnableGroup

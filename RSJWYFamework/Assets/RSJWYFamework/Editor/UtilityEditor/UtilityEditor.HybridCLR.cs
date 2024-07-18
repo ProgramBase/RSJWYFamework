@@ -94,8 +94,6 @@ namespace RSJWYFamework.Editor.UtilityEditor
             public static void AddMetadataForAOTAssembliesToHCLRSetArr()
             {
                 //生成补充元数据表
-                AOTReferenceGeneratorCommand.CompileAndGenerateAOTGenericReference();
-                AssetDatabase.Refresh();
                 var aotdlls = AOTGenericReferences.PatchedAOTAssemblyList.ToList();
                 //处理信息
                 var temp = new List<string>();
@@ -109,15 +107,15 @@ namespace RSJWYFamework.Editor.UtilityEditor
                 HybridCLRSettings.Save();
                 AssetDatabase.Refresh();
                 //输出结果方便复制
-                StringBuilder listStr = new();
+                /*StringBuilder listStr = new();
                 listStr.Append($"\n");
                 foreach (string str in aotdlls)
                 {
-                    listStr.Append($"\n{str}.bytes");
+                    listStr.Append($"\n{str}..hotcode");
                 }
                 listStr.Append($"\n");
                 AssetDatabase.Refresh();
-                Debug.Log($"补充元数据表如下{listStr.ToString()}");
+                Debug.Log($"补充元数据表如下{listStr.ToString()}");*/
                 AssetDatabase.Refresh();
             }
             

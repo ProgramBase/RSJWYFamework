@@ -1,10 +1,5 @@
 using MyFamework.Runtime.Base;
-using RSJWYFamework.Runtime.Data;
-using RSJWYFamework.Runtime.Default.Manager;
-using RSJWYFamework.Runtime.Event;
-using RSJWYFamework.Runtime.HybridCLR;
 using RSJWYFamework.Runtime.Logger;
-using RSJWYFamework.Runtime.YooAssetModule;
 using RSJWYFamework.Runtime.Main;
 
 
@@ -25,8 +20,9 @@ namespace Script.AOT
         private async void Start()
         {
             RSJWYLogger.Log("等待包初始化");
-            await Main.YooAssetManager.InitPackage();
-            RSJWYLogger.Log("包初始化完成");
+            await Main.YooAssetManager.LoadPackage();
+            RSJWYLogger.Log("包初始化完成，加载热更代码");
+            await Main.HybridClrManager.LoadHotCodeDLL();
         }
 
         protected void OnApplicationQuit()

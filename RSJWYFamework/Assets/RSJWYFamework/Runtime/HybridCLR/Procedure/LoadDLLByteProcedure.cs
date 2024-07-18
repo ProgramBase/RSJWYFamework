@@ -3,6 +3,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using RSJWYFamework.Runtime.Logger;
+using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Procedure;
 
 namespace RSJWYFamework.Runtime.HybridCLR.Procedure
@@ -23,10 +24,10 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
 
         public void OnEnter(IProcedure lastProcedure)
         {
+            RSJWYLogger.Log($"加载热更代码数据");
             UniTask.Create(async () =>
             {
                 var loadDLLDic = new Dictionary<string, byte[]>();
-                await UniTask.SwitchToThreadPool();
                 //获取列表
                 var MFALisRFH = Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync("Config_HotCodeDLL");
                 await MFALisRFH.ToUniTask();
@@ -37,27 +38,26 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                 foreach (var asset in _DLL)
                 {
                     //string dllPath = MyTool.GetYooAssetWebRequestPath(asset);
-                    //string _n = $"{asset}.dll";
+                    string _n = $"{asset}.dll";
                     //Debug.Log($"加载资产:{_n}");
                     //资源地址是否有效
-                    if (Main.Main.YooAssetManager.RawPackage.CheckLocationValid(asset))
+                    if (Main.Main.YooAssetManager.RawPackage.CheckLocationValid(_n))
                     {
                         //执行加载
-                        var _rfh =  Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync(asset);
+                        var _rfh =  Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync(_n);
                         //等待加载完成
                         await _rfh.Task;
                         //转byte数组
                         byte[] assetData = _rfh.GetRawFileData();
                         loadDLLDic.Add(asset,assetData);
                         //Debug.Log($"dll:{asset}  size:{assetData.Length}");
-                        RSJWYLogger.Log($"热更加载DLL流程，加载资源dll:{asset}  size:{assetData.Length}");
+                        RSJWYLogger.Log($"热更加载DLL流程，加载资源dll:{_n}  size:{assetData.Length}");
                     }
                     else
                     {
-                        RSJWYLogger.Error($"热更获取DLL数据流程，加载资源文件地址：{asset}无效");
+                        RSJWYLogger.Error($"热更获取DLL数据流程，加载资源文件地址：{_n}无效");
                     }
                 }
-                await UniTask.SwitchToMainThread();
                 pc.SetBlackboardValue("LoadList",loadLis);
                 pc.SetBlackboardValue("DLLDic",loadDLLDic);
                 pc.SwitchProcedure(typeof(LoadHotCodeProcedure));

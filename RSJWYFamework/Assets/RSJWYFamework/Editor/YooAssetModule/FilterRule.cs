@@ -9,7 +9,7 @@ namespace RSJWYFamework.Editor.YooAssetModule
         public bool IsCollectAsset(FilterRuleData data)
         {
             string extension = Path.GetExtension(data.AssetPath);
-            return extension == ".bytes" || extension == ".hotcode";
+            return extension == ".bytes";
         }
     }
 }

@@ -18,12 +18,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
         public ResourcePackage RawPackage { get; private set; }
         public ResourcePackage PrefabPackage { get; private set; }
 
-        private IProcedureController[] procedures;
-
-        /// <summary>
-        /// 加载完成事件
-        /// </summary>
-        public event Action InitOverEvent;
 
         public void Start()
         {
@@ -36,15 +30,19 @@ namespace RSJWYFamework.Runtime.Default.Manager
             _assetModuleSettingData = Resources.Load<YooAssetModuleSettingData>("YooAssetModuleSetting");
         }
         
-        public async UniTask InitPackage()
+        public async UniTask LoadPackage()
         {
             YooAssets.Initialize();
-            InitPackages operationR = new InitPackages(_assetModuleSettingData.RawFile.PackageName, _assetModuleSettingData.RawFile.BuildPipeline.ToString(), _assetModuleSettingData.PlayMode);
-            InitPackages operationP = new InitPackages(_assetModuleSettingData.Prefab.PackageName, _assetModuleSettingData.Prefab.BuildPipeline.ToString(), _assetModuleSettingData.PlayMode);
+            LoadPackages operationR = new LoadPackages(_assetModuleSettingData.RawFile.PackageName, _assetModuleSettingData.RawFile.BuildPipeline.ToString(), _assetModuleSettingData.PlayMode);
+            LoadPackages operationP = new LoadPackages(_assetModuleSettingData.Prefab.PackageName, _assetModuleSettingData.Prefab.BuildPipeline.ToString(), _assetModuleSettingData.PlayMode);
             RAsyncOperationSystem.StartOperation(string.Empty,operationR);
             RAsyncOperationSystem.StartOperation(string.Empty,operationP);
-            await UniTask.WhenAll(operationR.Task, operationP.Task);
+            await UniTask.WhenAll(operationR.UniTask, operationP.UniTask);
+            RawPackage = YooAssets.GetPackage(_assetModuleSettingData.RawFile.PackageName);
+            PrefabPackage = YooAssets.GetPackage(_assetModuleSettingData.Prefab.PackageName);
         }
+
+        public event Action InitOverEvent;
 
         public void Close()
         {

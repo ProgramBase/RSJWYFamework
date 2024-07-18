@@ -8,7 +8,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
     /// 异步系统
     /// 参考Yooasset文件管理
     /// </summary>
-    public class RAsyncOperationSystem : IRAsyncAsyncOperationSystem, IModule
+    public static class RAsyncOperationSystem
     {
         /// <summary>
         /// 异步操作列表
@@ -41,7 +41,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         /// <summary>
         /// 销毁异步操作系统
         /// </summary>
-        public static void DestroyAll()
+        static void DestroyAll()
         {
             _operations.Clear();
             _newList.Clear();
@@ -84,12 +84,12 @@ namespace RSJWYFamework.Runtime.AsyncOperation
             operation.SetStart();
         }
 
-        public void Init()
+        public static void Init()
         {
             _watch = Stopwatch.StartNew();
         }
 
-        public void Close()
+        public static void Close()
         {
             DestroyAll();
         }
@@ -97,7 +97,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         /// <summary>
         /// 更新异步操作系统
         /// </summary>
-        public void Update(float time, float deltaTime)
+        public static void Update(float time, float deltaTime)
         {
             _frameTime = _watch.ElapsedMilliseconds;
 
@@ -149,7 +149,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
             }
         }
 
-        public void UpdatePerSecond(float time)
+        public static void UpdatePerSecond(float time)
         {
             for (int i = 0; i < _operations.Count; i++)
             {

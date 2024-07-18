@@ -19,7 +19,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule
         /// <summary>
         /// /初始化包
         /// </summary>
-        UniTask InitPackage();
+        UniTask LoadPackage();
         /// <summary>
         /// 加载完成事件
         /// </summary>

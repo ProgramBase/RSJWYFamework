@@ -25,6 +25,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
 
         public void OnEnter(IProcedure lastProcedure)
         {
+            RSJWYLogger.Log($"加载热更代码");
             UniTask.Create(async () =>
             {
                 await UniTask.WaitForSeconds(0.5f);

@@ -7,9 +7,9 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
 {
     
     /// <summary>
-    /// 初始化包
+    /// 加载资源包
     /// </summary>
-    public class InitPackages:GameRAsyncOperation
+    public class LoadPackages:GameRAsyncOperation
     {
         enum RSteps
         {
@@ -21,7 +21,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
         private RSteps _steps = RSteps.None;
         
         
-        public InitPackages(string packageName, string buildPipeline, EPlayMode playMode)
+        public LoadPackages(string packageName, string buildPipeline, EPlayMode playMode)
         {
             pc = new DefaultProcedureController(this);
             // 创建状态机

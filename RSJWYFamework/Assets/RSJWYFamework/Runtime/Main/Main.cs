@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace RSJWYFamework.Runtime.Main
 {
-    public sealed partial class Main
+    public static partial class Main
     {
         public static bool IsInitialize { get; private set; } = false;
         private static GameObject _driver = null;
@@ -25,7 +25,6 @@ namespace RSJWYFamework.Runtime.Main
         public static DefaultDataManager DataManagerataManager{get; private set; }
         public static DefaultHybirdCLRManager HybridClrManager { get; private set; }
         
-        public static RAsyncOperationSystem AsyncOperation{ get; private set; }
 
         /// <summary>
         /// 初始化框架服务
@@ -50,7 +49,6 @@ namespace RSJWYFamework.Runtime.Main
                 DataManagerataManager = Main.AddModule<IDataManager>(new DefaultDataManager()) as DefaultDataManager;
                 YooAssetManager= Main.AddModule<IYooAssetManager>(new DefaultYooAssetManager())as DefaultYooAssetManager;
                 HybridClrManager = Main.AddModule<IHybridCLRManager>(new DefaultHybirdCLRManager()) as DefaultHybirdCLRManager;
-                AsyncOperation = AddModule<IRAsyncAsyncOperationSystem>(new RAsyncOperationSystem()) as RAsyncOperationSystem;
             }
             
         }
