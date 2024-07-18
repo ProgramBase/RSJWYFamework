@@ -4,13 +4,14 @@ using System.Reflection;
 using RSJWYFamework.Runtime.AsyncOperation;
 using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.HybridCLR.Procedure;
+using RSJWYFamework.Runtime.Procedure;
 
 namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
 {
     /// <summary>
     /// 加载热更代码
     /// </summary>
-    public class LoadHotCodeOperation:GameRAsyncOperation
+    public class LoadHotCodeOperation:GameRAsyncOperation,IProcedureException
     {
         enum RSteps
         {
@@ -22,17 +23,17 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
         /// 加载到的程序集
         /// </summary>
         public Dictionary<string, Assembly> HotCode { get; private set; } = new();
-        private readonly DefaultProcedureController pc;
+        private readonly ProcedureController pc;
         private RSteps _steps = RSteps.None;
         
         public LoadHotCodeOperation()
         {
-            pc = new DefaultProcedureController(this);
+            pc = new ProcedureController(this);
             //创建流程
-            pc.AddProcedure(new LoadDLLByteProcedure());
-            pc.AddProcedure(new LoadHotCodeProcedure());
+            pc.AddProcedure(new LoadDLLByteProcedureBase());
+            pc.AddProcedure(new LoadHotCodeProcedureBase());
             pc.AddProcedure(new LoadHotCodeDone());
-            pc.StartProcedure(typeof(LoadDLLByteProcedure));
+            pc.StartProcedure(typeof(LoadDLLByteProcedureBase));
         }
         internal override void InternalOnUpdatePerSecond(float time)
         {
@@ -60,6 +61,11 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
 
         protected override void OnAbort()
         {
+        }
+
+        public void Exception(ProcedureException exception)
+        {
+            SetException(exception);
         }
     }
 }

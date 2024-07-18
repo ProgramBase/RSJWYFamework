@@ -156,6 +156,7 @@ namespace RSJWYFamework.Runtime.Main
         EditorTool,
         Data,
         YooAssets,
-        ReferencePool
+        ReferencePool,
+        HybridCLR
     }
 }

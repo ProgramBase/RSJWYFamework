@@ -1,3 +1,4 @@
+using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Procedure;
@@ -7,36 +8,35 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
     /// <summary>
     /// 完成更新流程
     /// </summary>
-    public class UpdaterDoneProcedure:IProcedure
+    public class UpdaterDoneProcedureBase:ProcedureBase
     {
-        public IProcedureController pc { get; set; }
-        public void OnInit()
+        public override void OnInit()
         {
            
         }
 
-        public void OnClose()
+        public override void OnClose()
         {
             
         }
 
-        public void OnEnter(IProcedure lastProcedure)
+        public override void OnEnter(ProcedureBase lastProcedureBase)
         {
             var packageName = (string)pc.GetBlackboardValue("PackageName");
             RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"完成包{packageName}更新流程");
         }
 
-        public void OnLeave(IProcedure nextProcedure)
+        public override void OnLeave(ProcedureBase nextProcedureBase)
         {
             
         }
 
-        public void OnUpdate()
+        public override void OnUpdate()
         {
            
         }
 
-        public void OnUpdateSecond()
+        public override void OnUpdateSecond()
         {
             
         }

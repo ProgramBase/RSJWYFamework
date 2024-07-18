@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Procedure;
@@ -10,19 +11,18 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
     /// <summary>
     /// 下载需要更新的文件
     /// </summary>
-    public class DownloadPackageFilesProcedure:IProcedure
+    public class DownloadPackageFilesProcedureBase:ProcedureBase
     {
-        public IProcedureController pc { get; set; }
         private string packageName;
-        public void OnInit()
+        public override void OnInit()
         {
         }
 
-        public void OnClose()
+        public override void OnClose()
         {
         }
 
-        public void OnEnter(IProcedure lastProcedure)
+        public override void OnEnter(ProcedureBase lastProcedureBase)
         {
             BeginDownload().Forget();
         }
@@ -40,12 +40,13 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             // 检测下载结果
             if (downloader.Status != EOperationStatus.Succeed)
             {
-                RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"包{packageName}下载失败：{downloader.Error}");
+                //新清单文件新版本数据，不全无法正常启动
+                pc.modle.Exception(new ProcedureException($"包{packageName}下载失败：{downloader.Error}"));
             }
             else
             {
                 RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"包{packageName}下载新资源完成");
-                pc.SwitchProcedure(typeof(DownloadPackageOverProcedure));
+                pc.SwitchProcedure(typeof(DownloadPackageOverProcedureBase));
             }
         }
         
@@ -99,15 +100,15 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             return (int)sizeBytes / now * 100;
         }
 
-        public void OnLeave(IProcedure nextProcedure)
+        public override void OnLeave(ProcedureBase nextProcedureBase)
         {
         }
 
-        public void OnUpdate()
+        public override void OnUpdate()
         {
         }
 
-        public void OnUpdateSecond()
+        public override void OnUpdateSecond()
         {
         }
     }

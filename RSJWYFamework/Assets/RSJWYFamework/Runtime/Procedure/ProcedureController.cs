@@ -3,31 +3,29 @@ using System.Collections.Generic;
 using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
-using RSJWYFamework.Runtime.Module;
-using RSJWYFamework.Runtime.Procedure;
 using UnityEngine;
 
-namespace RSJWYFamework.Runtime.Default.Manager
+namespace RSJWYFamework.Runtime.Procedure
 {
     /// <summary>
     /// 默认的流程控制
     /// </summary>
-    public class DefaultProcedureController:IProcedureController
+    public class ProcedureController
     {
         /// <summary>
         /// 所属模块
         /// </summary>
-        public object modle;
+        public IProcedureException modle { get; private set; }
         
         /// <summary>
         /// 当前流程
         /// </summary>
-        private IProcedure CurrentProcedure;
+        private ProcedureBase _currentProcedureBase;
 
         /// <summary>
         /// 流程表
         /// </summary>
-        private Dictionary<Type, IProcedure> Procedures = new();
+        private Dictionary<Type, ProcedureBase> Procedures = new();
 
         /// <summary>
         /// 所有流程的类型
@@ -37,7 +35,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         /// <summary>
         /// 任意流程切换事件（上一个离开的流程、下一个进入的流程）
         /// </summary>
-        public event Action<IProcedure, IProcedure> ProcedureSwitchEvent;
+        public event Action<ProcedureBase, ProcedureBase> ProcedureSwitchEvent;
         
         /// <summary>
         /// 黑板数据
@@ -47,18 +45,17 @@ namespace RSJWYFamework.Runtime.Default.Manager
         
         private float _timer = 0;
 
-        private IProcedureController _procedureControllerImplementation;
+        private ProcedureController _procedureControllerImplementation;
         //private IProcedureController _procedureControllerImplementation;
 
-        public DefaultProcedureController(object module)
+        public ProcedureController(IProcedureException module)
         {
             this.modle = module;
         }
         
-        
-
         public void Init()
         {
+            
         }
 
         public void Close()
@@ -98,14 +95,14 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public Type GetNowProcedure()
         {
-            return CurrentProcedure.GetType();
+            return _currentProcedureBase.GetType();
         }
 
         public void OnUpdate(float time, float realtime)
         {
-            if (CurrentProcedure != null)
+            if (_currentProcedureBase != null)
             {
-                CurrentProcedure.OnUpdate();
+                _currentProcedureBase.OnUpdate();
 
                 if (_timer < 1)
                 {
@@ -114,7 +111,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 else
                 {
                     _timer -= 1;
-                    CurrentProcedure.OnUpdateSecond();
+                    _currentProcedureBase.OnUpdateSecond();
                 }
             }
         }
@@ -122,20 +119,20 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void SwitchProcedure(Type type)
         {
-            if (type.IsAssignableFrom(typeof(IProcedure)))
+            if (type.IsAssignableFrom(typeof(ProcedureBase)))
                 throw new RSJWYException(RSJWYFameworkEnum.Procedure, $"切换流程失败：流程 {type.Name} 并非继承自流程基类！");
             if (Procedures.ContainsKey(type))
             {
-                if (CurrentProcedure == Procedures[type])
+                if (_currentProcedureBase == Procedures[type])
                     return;
 
-                var lastProcedure = CurrentProcedure;
+                var lastProcedure = _currentProcedureBase;
                 var nextProcedure = Procedures[type];
                 if (lastProcedure != null)
                 {
                     lastProcedure.OnLeave(nextProcedure);
                 }
-                CurrentProcedure = nextProcedure;
+                _currentProcedureBase = nextProcedure;
                 nextProcedure.OnEnter(lastProcedure);
 
                 ProcedureSwitchEvent?.Invoke(lastProcedure, nextProcedure);
@@ -147,7 +144,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         }
         public void SwitchNextProcedure()
         {
-            int index = ProcedureTypes.IndexOf(CurrentProcedure.GetType());
+            int index = ProcedureTypes.IndexOf(_currentProcedureBase.GetType());
             if (index >= ProcedureTypes.Count - 1)
             {
                 SwitchProcedure(ProcedureTypes[0]);
@@ -166,24 +163,24 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public bool IsExistProcedur(Type type)
         {
-            if (type.IsAssignableFrom(typeof(IProcedure)))
+            if (type.IsAssignableFrom(typeof(ProcedureBase)))
                 throw new RSJWYException(RSJWYFameworkEnum.Procedure, $"流程 {type.Name} 并非继承自流程基类！");
             return Procedures.ContainsKey(type.GetType());
         }
 
-        public void AddProcedure(IProcedure procedure)
+        public void AddProcedure(ProcedureBase procedureBase)
         {
-            Type _t = procedure.GetType();
+            Type _t = procedureBase.GetType();
             
-            if (_t.IsAssignableFrom(typeof(IProcedure)))
+            if (_t.IsAssignableFrom(typeof(ProcedureBase)))
                 throw new RSJWYException(RSJWYFameworkEnum.Procedure, $"增加流程失败：流程 {_t.Name} 并非继承自流程基类！");
             
             if (!Procedures.ContainsKey(_t))
             {
-                Procedures.Add(_t, procedure);
+                Procedures.Add(_t, procedureBase);
                 ProcedureTypes.Add(_t);
-                procedure.pc = this;
-                procedure.OnInit();
+                procedureBase.pc = this;
+                procedureBase.OnInit();
             }
             else
             {
@@ -198,9 +195,9 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 procedure.OnClose();
                 Procedures.Remove(type);
                 ProcedureTypes.Remove(type);
-                if (CurrentProcedure == procedure)
+                if (_currentProcedureBase == procedure)
                 {
-                    CurrentProcedure = null;
+                    _currentProcedureBase = null;
                 }
             }
             else

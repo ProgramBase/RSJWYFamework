@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using RSJWYFamework.Runtime.Module;
 
 namespace RSJWYFamework.Runtime.Procedure
@@ -80,4 +80,4 @@ namespace RSJWYFamework.Runtime.Procedure
         public Type GetNowProcedure();
 
     }
-}
+}*/

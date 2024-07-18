@@ -13,9 +13,9 @@ namespace RSJWYFamework.Runtime.YooAssetModule
         /// <summary>
         /// 流程化切换回调
         /// </summary>
-        /// <param name="lastProcedure"></param>
-        /// <param name="nextProcedure"></param>
-        void ProcedureSwitchEven(IProcedure lastProcedure, IProcedure nextProcedure);
+        /// <param name="lastProcedureBase"></param>
+        /// <param name="nextProcedureBase"></param>
+        void ProcedureSwitchEven(ProcedureBase lastProcedureBase, ProcedureBase nextProcedureBase);
         /// <summary>
         /// /初始化包
         /// </summary>

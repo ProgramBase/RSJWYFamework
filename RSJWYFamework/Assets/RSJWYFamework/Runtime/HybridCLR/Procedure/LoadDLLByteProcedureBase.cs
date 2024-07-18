@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Procedure;
@@ -11,20 +12,19 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
     /// <summary>
     /// 获取DLL
     /// </summary>
-    public class LoadDLLByteProcedure:IProcedure
+    public class LoadDLLByteProcedureBase:ProcedureBase
     {
-        public IProcedureController pc { get; set; }
-        public void OnInit()
+        public override void OnInit()
         {
         }
 
-        public void OnClose()
+        public override void OnClose()
         {
         }
 
-        public void OnEnter(IProcedure lastProcedure)
+        public override void OnEnter(ProcedureBase lastProcedureBase)
         {
-            RSJWYLogger.Log($"加载热更代码数据");
+            RSJWYLogger.Log(RSJWYFameworkEnum.HybridCLR,$"加载热更代码数据");
             UniTask.Create(async () =>
             {
                 var loadDLLDic = new Dictionary<string, byte[]>();
@@ -60,19 +60,19 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                 }
                 pc.SetBlackboardValue("LoadList",loadLis);
                 pc.SetBlackboardValue("DLLDic",loadDLLDic);
-                pc.SwitchProcedure(typeof(LoadHotCodeProcedure));
+                pc.SwitchProcedure(typeof(LoadHotCodeProcedureBase));
             });
         }
 
-        public void OnLeave(IProcedure nextProcedure)
+        public override void OnLeave(ProcedureBase nextProcedureBase)
         {
         }
 
-        public void OnUpdate()
+        public override void OnUpdate()
         {
         }
 
-        public void OnUpdateSecond()
+        public override void OnUpdateSecond()
         {
         }
     }

@@ -67,6 +67,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         /// </summary>
         internal abstract void InternalOnUpdatePerSecond(float time);
 
+
         /// <summary>
         /// 内部中止
         /// </summary>
@@ -94,11 +95,11 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         /// <summary>
         /// 设置发生异常
         /// </summary>
-        internal void SetException()
+        internal void SetException(Exception exception)
         {
             //注意：如果完成回调内发生异常，会导致Task无限期等待
             Status = RAsyncOperationStatus.Failed;
-            tcs.TrySetException(new Exception(Error));
+            tcs.TrySetException(exception);
         }
 
         internal void SetAbort()

@@ -58,7 +58,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         {
         }
 
-        public void ProcedureSwitchEven(IProcedure lastProcedure, IProcedure nextProcedure)
+        public void ProcedureSwitchEven(ProcedureBase lastProcedureBase, ProcedureBase nextProcedureBase)
         {
             
         }

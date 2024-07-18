@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Procedure;
@@ -9,21 +10,20 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
     /// <summary>
     /// 初始化包
     /// </summary>
-    public class InitPackageProcedure:IProcedure
+    public class InitPackageProcedureBase:ProcedureBase
     {
-        public IProcedureController pc { get; set; }
         
-        public void OnInit()
+        public override void OnInit()
         {
            
         }
         
-        public void OnEnter(IProcedure lastProcedure)
+        public override void OnEnter(ProcedureBase lastProcedureBase)
         {
             InitPackage().Forget();
         }
 
-        public void OnLeave(IProcedure nextProcedure)
+        public override void OnLeave(ProcedureBase nextProcedureBase)
         {
             
         }
@@ -36,6 +36,8 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             var playMode = (EPlayMode)pc.GetBlackboardValue("PlayMode");
             var packageName = (string)pc.GetBlackboardValue("PackageName");
             var buildPipeline = (string)pc.GetBlackboardValue("BuildPipeline");
+            
+            RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"初始化包{packageName} 运行模式{playMode}  构建管线{buildPipeline}");
             // 创建资源包裹类
             var package = YooAssets.TryGetPackage(packageName);
             if (package == null)
@@ -86,21 +88,21 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             await initializationOperation.ToUniTask();
             if (initializationOperation.Status!=EOperationStatus.Succeed)
             {
-                RSJWYLogger.Error(RSJWYFameworkEnum.YooAssets,$"初始化包：{packageName}失败！Error：{initializationOperation.Error}");
+                pc.modle.Exception(new ProcedureException($"$初始化包：{packageName}失败！Error：{initializationOperation.Error}"));
             }
-            pc.SwitchProcedure(typeof(UpdatePackageVersionProcedure));
+            pc.SwitchProcedure(typeof(UpdatePackageVersionProcedureBase));
         }
 
-        public void OnClose()
+        public override void OnClose()
         {
             
         }
 
-        public void OnUpdate()
+        public override void OnUpdate()
         {
         }
 
-        public void OnUpdateSecond()
+        public override void OnUpdateSecond()
         {
             
         }

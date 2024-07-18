@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Cysharp.Threading.Tasks;
 using HybridCLR;
+using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Procedure;
 
@@ -11,19 +12,18 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
     /// <summary>
     /// 加载DLL流程
     /// </summary>
-    public class LoadHotCodeProcedure : IProcedure
+    public class LoadHotCodeProcedureBase : ProcedureBase
     {
-        public IProcedureController pc { get; set; }
 
-        public void OnInit()
+        public override void OnInit()
         {
         }
 
-        public void OnClose()
+        public override void OnClose()
         {
         }
 
-        public void OnEnter(IProcedure lastProcedure)
+        public override void OnEnter(ProcedureBase lastProcedureBase)
         {
             RSJWYLogger.Log($"加载热更代码");
             UniTask.Create(async () =>
@@ -57,7 +57,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                 }
                 catch (System.Exception ex)
                 {
-                    RSJWYLogger.Error($"热更加载DLL流程，加载补充元：{_str_err_name} 时发生异常，{ex}");
+                    pc.modle.Exception(new ProcedureException($"热更加载DLL流程，加载补充元：{_str_err_name} 时发生异常，{ex}"));
                 }
 
                 //加载热更代码，注意加载顺序
@@ -81,7 +81,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                 }
                 catch (System.Exception ex)
                 {
-                    RSJWYLogger.Error($"热更加载DLL流程，加载热更：{_str_err_name} 时发生异常，{ex}");
+                    pc.modle.Exception(new ProcedureException($"热更加载DLL流程，加载热更：{_str_err_name} 时发生异常，{ex}"));
                 }
 
                 await UniTask.SwitchToMainThread();
@@ -91,15 +91,15 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
             });
         }
 
-        public void OnLeave(IProcedure nextProcedure)
+        public override void OnLeave(ProcedureBase nextProcedureBase)
         {
         }
 
-        public void OnUpdate()
+        public override void OnUpdate()
         {
         }
 
-        public void OnUpdateSecond()
+        public override void OnUpdateSecond()
         {
         }
     }

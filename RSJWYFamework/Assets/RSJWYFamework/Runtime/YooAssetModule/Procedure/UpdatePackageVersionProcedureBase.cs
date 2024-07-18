@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Procedure;
@@ -9,19 +10,18 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
     /// <summary>
     /// 更新包版本
     /// </summary>
-    public class UpdatePackageVersionProcedure:IProcedure
+    public class UpdatePackageVersionProcedureBase:ProcedureBase
     {
-        public IProcedureController pc { get; set; }
-        public void OnInit()
+        public override void OnInit()
         {
             
         }
 
-        public void OnClose()
+        public override void OnClose()
         {
         }
 
-        public void OnEnter(IProcedure lastProcedure)
+        public override void OnEnter(ProcedureBase lastProcedureBase)
         {
             UpdatePackageVersion().Forget();
         }
@@ -35,6 +35,9 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             var packageName = (string)pc.GetBlackboardValue("PackageName");
             var modle = (EPlayMode)pc.GetBlackboardValue("PlayMode");
             var package = YooAssets.GetPackage(packageName);
+            
+            RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}版本");
+            
             var operation = package.RequestPackageVersionAsync();
             await operation.ToUniTask();
 
@@ -48,19 +51,19 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
                 pc.SetBlackboardValue("PackageVersion", operation.PackageVersion);
                 pc.SetBlackboardValue("NetworkNormal", true);
                 RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"包{packageName}请求到包版本为：{operation.PackageVersion}");
-                pc.SwitchProcedure(typeof(UpdatePackageManifestProcedure));
+                pc.SwitchProcedure(typeof(UpdatePackageManifestProcedureBase));
             }
         }
 
-        public void OnLeave(IProcedure nextProcedure)
+        public override void OnLeave(ProcedureBase nextProcedureBase)
         {
         }
 
-        public void OnUpdate()
+        public override void OnUpdate()
         {
         }
 
-        public void OnUpdateSecond()
+        public override void OnUpdateSecond()
         {
         }
     }
