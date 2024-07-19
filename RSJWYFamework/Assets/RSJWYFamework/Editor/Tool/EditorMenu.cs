@@ -2,6 +2,7 @@ using System.IO;
 using RSJWYFamework.Editor.Windows;
 using RSJWYFamework.Editor.Windows.Config;
 using RSJWYFamework.Editor.Windows.HybridCLR;
+using RSJWYFamework.Runtime.Config;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.YooAssetModule;
@@ -13,18 +14,24 @@ namespace RSJWYFamework.Editor.Tool
 {
     public class EditorMenu
     {
-        [MenuItem("RSJWYFamework/创建Yoo资源管理参数")]
+        [MenuItem("RSJWYFamework/Config/创建Yoo资源管理参数")]
         public static void CreateYooAssetModuleSettingData()
         {
             UtilityEditor.UtilityEditor.CreateScriptableObject<YooAssetModuleSettingData>(
-                "Assets/RSJWYFamework/Prefab/YooAssetModuleSetting.asset");
+                "Assets/RSJWYFamework/Resources/YooAssetModuleSetting.asset");
         }
 
-        [MenuItem("RSJWYFamework/创建热更路径设置参数")]
+        [MenuItem("RSJWYFamework/Config/创建热更路径设置参数")]
         public static void CreateHCLRToolSetting()
         {
             UtilityEditor.UtilityEditor.CreateScriptableObject<HCLRToolSetting>(
                 "Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset");
+        }
+        [MenuItem("RSJWYFamework/Config/创建项目配置文件")]
+        public static void CreateProjectConfig()
+        {
+            UtilityEditor.UtilityEditor.CreateScriptableObject<ProjectConfig>(
+                "Assets/Resources/ProjectConfig.asset");
         }
 
         [MenuItem("RSJWYFamework/打开热更新系统工具")]

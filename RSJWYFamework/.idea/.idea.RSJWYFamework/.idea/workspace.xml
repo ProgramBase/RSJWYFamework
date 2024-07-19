@@ -5,25 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/AsyncOperation.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/AsyncOperation/LoadHotCodeOperation.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/AsyncOperation/LoadHotCodeOperation.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Module/ILife.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Module/ILife.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/IRAsyncAsyncOperationSystem.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/IRAsyncAsyncOperationSystem.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/OperationSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/RAsyncOperationSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/OperationSystem.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/RAsyncOperationSystem.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/RAsyncOperationBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/RAsyncOperationBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultHybirdCLRManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultHybirdCLRManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Abandon.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/ProjectConfig.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/ProjectConfig.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/EditorMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/EditorMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/Config/SettingConfigWindows.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/Config/SettingConfigWindows.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/Base.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/Base/IDataBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/IDataBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/Base/IDataBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/IDataBase.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/IDataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Abandon/IDataManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/IDataManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Abandon/IDataManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultDataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/DataManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultDataManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/DataManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultYooAssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultYooAssetManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Driver/RSJWYFameworkDriverService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Driver/RSJWYFameworkDriverService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/IHybridCLRManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/IHybridCLRManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Main/Main.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Main/Main.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/InitPackages.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/LoadPackagesOperation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/InitPackages.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/LoadPackagesOperation.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/IYooAssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/IYooAssetManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedureBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetManagerLoadTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetManagerLoadTool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetModuleSettingData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetModuleSettingData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/ImportantData.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,16 +40,22 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0a2e1cdc28c740eda1958d8128c28373827200/77/49fc49f9/AnimatorStateMachine.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0a2e1cdc28c740eda1958d8128c28373827200/f5/3488578a/PlayerSettings.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/139c2424719c42c290d4b5921dc9d89d35f370/03/3f18be5a/ConcurrentBag`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/448a66bf9b31494bbd3f742f998b818b284000/34/a8633317/Stopwatch.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/57122b35ba4a46e4b13b3c579403b46119c00/bd/40868bbe/ShowIfAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e05db41a20b45108859fa03b97088d446ac00/04/3fdf111b/TaskCompletionSource`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e05db41a20b45108859fa03b97088d446ac00/21/81135072/CollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e05db41a20b45108859fa03b97088d446ac00/74/77a7f25d/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e05db41a20b45108859fa03b97088d446ac00/e3/ee1fe09c/IEnumerator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7ff4597333a544bc9923788716880fcc572e20/6c/108abbc1/Dictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7ff4597333a544bc9923788716880fcc572e20/84/d15b8aec/IEnumerator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9c6570448e70440ea7a2f0f4a152540d305400/a8/3ac13fa7/OdinMenuTreeExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/15/52c2cad1/ResourcesAPI.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/65/5a6f51ed/Time.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/9c/874fb8d0/AsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/bc/e5b6bc52/ResourcesAPIInternal.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/fd/a5fa7e76/Resources.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/AsyncOperation/LoadHotCodeOperation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/IProcedureController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/LoadPackagesOperation.cs" root0="FORCE_HIGHLIGHTING" />
@@ -59,27 +70,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "XThreadsFramesViewSplitterKey": "0.20187393",
-    "git-widget-placeholder": "develop",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true",
-    "附加到 Unity 编辑器.附加到 Unity 编辑器.executor": "Debug"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.20187393&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;附加到 Unity 编辑器.附加到 Unity 编辑器.executor&quot;: &quot;Debug&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\Administrator\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Administrator\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="附加到 Unity 编辑器.附加到 Unity 编辑器">
     <configuration name="启动 Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\unity\UnnityEditor\2021.3.34f1c1\Editor\Unity.exe" />
@@ -97,10 +108,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="21024">
+    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="2712">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="21024" />
+      <option name="pid" value="2712" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -133,6 +144,7 @@
       <workItem from="1721119520854" duration="24672000" />
       <workItem from="1721268662946" duration="86000" />
       <workItem from="1721269419034" duration="609000" />
+      <workItem from="1721356781546" duration="12388000" />
     </task>
     <servers />
   </component>
@@ -150,24 +162,5 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <option name="LAST_COMMIT_MESSAGE" value="" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/RAsyncOperationBase.cs</url>
-          <line>84</line>
-          <properties documentPath="D:\unity\RSJWYFamework\RSJWYFamework\Assets\RSJWYFamework\Runtime\AsyncOperation\RAsyncOperationBase.cs" containingFunctionPresentation="方法 'SetFinish'">
-            <startOffsets>
-              <option value="2027" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2043" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

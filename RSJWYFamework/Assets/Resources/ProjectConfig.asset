@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04a35db6fe7e47f89bfecf37ab4810c3, type: 3}
-  m_Name: YooAssetModuleSetting
+  m_Script: {fileID: 11500000, guid: b1312f27a2e64a95acad865eb12574c1, type: 3}
+  m_Name: ProjectConfig
   m_EditorClassIdentifier: 
-  PlayMode: 2
-  Prefab:
-    PackageName: PrefabPackage
-    BuildPipeline: 0
-  RawFile:
-    PackageName: RawFilePackages
-    BuildPipeline: 2
-  hostServerIP: http://172.17.224.1:9909
+  ProjectName: "\u6D4B\u8BD5\u5DE5\u7A0B"
+  APPName: "\u6D4B\u8BD5\u8F6F\u4EF6"
+  Version: v1.0
+  YooAssets: {fileID: 11400000, guid: de273a62c6500cc4d95d98eb7220c371, type: 2}

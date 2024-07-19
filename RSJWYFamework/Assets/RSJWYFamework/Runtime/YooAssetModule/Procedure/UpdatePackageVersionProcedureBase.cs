@@ -38,7 +38,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             
             RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}版本");
             
-            var operation = package.RequestPackageVersionAsync();
+            var operation = package.RequestPackageVersionAsync(false);
             await operation.ToUniTask();
 
             if (operation.Status != EOperationStatus.Succeed)

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RSJWYFamework.Runtime.Data.Base
+namespace RSJWYFamework.Runtime.Data
 {
     /// <summary>
     /// 这不是在骂人！！！！

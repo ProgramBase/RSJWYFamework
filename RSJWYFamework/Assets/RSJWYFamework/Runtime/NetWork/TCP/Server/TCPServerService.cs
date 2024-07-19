@@ -59,10 +59,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// </summary>
         static System.Net.Sockets.Socket ListenSocket;
 
-        /// <summary>
-        /// 客户端Socket集合(已经建立连接的)
-        /// </summary>
-        //internal static List<System.Net.Sockets.Socket> clientList = new List<System.Net.Sockets.Socket>();
 
         /// <summary>
         /// 客户端容器字典

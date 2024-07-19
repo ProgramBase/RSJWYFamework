@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using RSJWYFamework.Runtime.AsyncOperation;
+using RSJWYFamework.Runtime.Config;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.Procedure;
 using RSJWYFamework.Runtime.YooAssetModule;
@@ -11,10 +12,8 @@ using YooAsset;
 
 namespace RSJWYFamework.Runtime.Default.Manager
 {
-    public class DefaultYooAssetManager:IYooAssetManager,IModule
+    public class DefaultYooAssetManager : IYooAssetManager, IModule
     {
-        private YooAssetModuleSettingData _assetModuleSettingData;
-        
         public ResourcePackage RawPackage { get; private set; }
         public ResourcePackage PrefabPackage { get; private set; }
 
@@ -26,32 +25,35 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void Init()
         {
-            //获取数据并存入数据
-            _assetModuleSettingData = Resources.Load<YooAssetModuleSettingData>("YooAssetModuleSetting");
+            YooAssets.Initialize();
         }
-        
+
         public async UniTask LoadPackage()
         {
-            YooAssets.Initialize();
-            LoadPackages operationR = new LoadPackages(_assetModuleSettingData.RawFile.PackageName, _assetModuleSettingData.RawFile.BuildPipeline.ToString(), _assetModuleSettingData.PlayMode);
-            LoadPackages operationP = new LoadPackages(_assetModuleSettingData.Prefab.PackageName, _assetModuleSettingData.Prefab.BuildPipeline.ToString(), _assetModuleSettingData.PlayMode);
-            RAsyncOperationSystem.StartOperation(string.Empty,operationR);
-            RAsyncOperationSystem.StartOperation(string.Empty,operationP);
+            //获取数据并存入数据
+            var projectConfig = Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>();
+            YooAssetManagerLoadTool.Setting(projectConfig.YooAssets.hostServerIP, projectConfig.ProjectName, projectConfig.APPName, projectConfig.Version);
+            
+            LoadPackages operationR = new LoadPackages(projectConfig.YooAssets.RawFile.PackageName, projectConfig.YooAssets.RawFile.BuildPipeline.ToString(), projectConfig.YooAssets.PlayMode);
+            LoadPackages operationP = new LoadPackages(projectConfig.YooAssets.Prefab.PackageName, projectConfig.YooAssets.Prefab.BuildPipeline.ToString(), projectConfig.YooAssets.PlayMode);
+           
+            RAsyncOperationSystem.StartOperation(string.Empty, operationR);
+            RAsyncOperationSystem.StartOperation(string.Empty, operationP);
+          
             await UniTask.WhenAll(operationR.UniTask, operationP.UniTask);
-            RawPackage = YooAssets.GetPackage(_assetModuleSettingData.RawFile.PackageName);
-            PrefabPackage = YooAssets.GetPackage(_assetModuleSettingData.Prefab.PackageName);
+           
+            RawPackage = YooAssets.GetPackage(projectConfig.YooAssets.RawFile.PackageName);
+            PrefabPackage = YooAssets.GetPackage(projectConfig.YooAssets.Prefab.PackageName);
         }
 
         public event Action InitOverEvent;
 
         public void Close()
         {
-           
         }
 
         public void Update(float time, float deltaTime)
         {
-            
         }
 
         public void UpdatePerSecond(float time)
@@ -60,8 +62,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void ProcedureSwitchEven(ProcedureBase lastProcedureBase, ProcedureBase nextProcedureBase)
         {
-            
         }
-
     }
 }

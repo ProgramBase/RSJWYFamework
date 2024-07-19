@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using RSJWYFamework.Runtime.Data;
-using RSJWYFamework.Runtime.Data.Base;
 using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Module;
+using Sirenix.Utilities;
 
-namespace RSJWYFamework.Runtime.Default.Manager
+namespace RSJWYFamework.Runtime.Data
 {
-    public class DefaultDataManager:IDataManager, IModule 
+    public class DataManager :IModule
     {
         /// <summary>
         /// 数据集，基于ScriptableObject
@@ -40,15 +39,16 @@ namespace RSJWYFamework.Runtime.Default.Manager
         {
             
         }
-
+        /// <summary>
+        /// 添加数据
+        /// </summary>
         public void AddDataSet(DataBaseSB dataSet)
         {
             if (dataSet == null)
             {
                 throw new RSJWYException(RSJWYFameworkEnum.Data, $"数据为空");
             }
-               
-
+            
             Type type = dataSet.GetType();
             if (!dataSBDic.ContainsKey(type))
             {
@@ -56,7 +56,9 @@ namespace RSJWYFamework.Runtime.Default.Manager
             }
             dataSBDic[type].Add(dataSet);
         }
-
+        /// <summary>
+        /// 添加数据
+        /// </summary>
         public void AddDataSet(DataBase dataSet)
         {
             if (dataSet == null)
@@ -67,59 +69,69 @@ namespace RSJWYFamework.Runtime.Default.Manager
             {
                 dataDic.TryAdd(type, new List<DataBase>());
             }
-            if (dataDic[type].Contains(dataSet))
-            {
-                dataDic[type].Remove(dataSet);
-            }
+            dataDic[type].Add(dataSet);
         }
-
+        /// <summary>
+        /// 移除数据
+        /// </summary>
         public void RemoveDataSet(DataBaseSB dataSet)
         {
             if (dataSet == null)
                 return;
 
             Type type = dataSet.GetType();
-            if (!dataSBDic.ContainsKey(type))
+            if (dataSBDic[type].Contains(dataSet))
             {
-                dataSBDic.TryAdd(type, new List<DataBaseSB>());
+                dataSBDic[type].Remove(dataSet);
             }
-            dataSBDic[type].Add(dataSet);
+            if (dataSBDic[type].IsNullOrEmpty())
+            {
+                dataSBDic.TryRemove(type,out var _);
+            }
         }
-
+        /// <summary>
+        /// 移除数据
+        /// </summary>
         public void RemoveDataSet(DataBase dataSet)
         {
             if (dataSet == null)
                 return;
 
             Type type = dataSet.GetType();
-            if (!dataDic.ContainsKey(type))
-            {
-                dataDic.TryAdd(type, new List<DataBase>());
-            }
             if (dataDic[type].Contains(dataSet))
             {
                 dataDic[type].Remove(dataSet);
             }
-        }
 
+            if (dataDic[type].IsNullOrEmpty())
+            {
+                dataDic.TryRemove(type, out var _);
+            }
+        }
+        /// <summary>
+        /// 获取所有指定类型的数据
+        /// </summary>
         public List<DataBaseSB> GetAllDataSetsSB(Type type)
         {
-            if (dataSBDic.ContainsKey(type))
+            if (dataSBDic.TryGetValue(type,out var dataBaseSbs))
             {
-                return dataSBDic[type];
+                return dataBaseSbs;
             }
             throw new RSJWYException(RSJWYFameworkEnum.Data, $"获取所有数据集失败：{type.Name} 并不是有效的数据集类型！");
         }
-
+        /// <summary>
+        /// 获取所有指定类型的数据
+        /// </summary>
         public List<DataBase> GetAllDataSets(Type type)
         {
-            if (dataDic.ContainsKey(type))
+            if (dataDic.TryGetValue(type,out var dataBaseSbs))
             {
-                return dataDic[type];
+                return dataBaseSbs;
             }
             throw new RSJWYException(RSJWYFameworkEnum.Data, $"获取所有数据集失败：{type.Name} 并不是有效的数据集类型！");
         }
 
+        
         public List<DataBase> GetAllDataSets(Type type, Predicate<DataBase> match)
         {
             if (dataDic.ContainsKey(type))

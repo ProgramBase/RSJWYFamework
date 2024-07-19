@@ -22,7 +22,7 @@ namespace RSJWYFamework.Runtime.Main
         
         public static IEventManage EventModle { get; private set; }
         public static DefaultYooAssetManager YooAssetManager{get; private set; }
-        public static DefaultDataManager DataManagerataManager{get; private set; }
+        public static DataManager DataManagerataManager{get; private set; }
         public static DefaultHybirdCLRManager HybridClrManager { get; private set; }
         
 
@@ -46,7 +46,7 @@ namespace RSJWYFamework.Runtime.Main
                 RSJWYLogger.Log(RSJWYFameworkEnum.Main,"初始化完成");
                 //添加基础的模块
                 EventModle = Main.AddModule<IEventManage>(new DefaultEvenManager()) as DefaultEvenManager;
-                DataManagerataManager = Main.AddModule<IDataManager>(new DefaultDataManager()) as DefaultDataManager;
+                DataManagerataManager = Main.AddModule<DataManager>(new DataManager()) as DataManager;
                 YooAssetManager= Main.AddModule<IYooAssetManager>(new DefaultYooAssetManager())as DefaultYooAssetManager;
                 HybridClrManager = Main.AddModule<IHybridCLRManager>(new DefaultHybirdCLRManager()) as DefaultHybirdCLRManager;
             }
@@ -113,7 +113,7 @@ namespace RSJWYFamework.Runtime.Main
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T AddModule<T>(IModule module ) where T : ModleInterface
+        public static T AddModule<T>(IModule module )
         {
             var type = typeof(T);
             if (_modules.TryAdd(type, module))
