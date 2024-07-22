@@ -15,7 +15,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 热更管理器
     /// </summary>
-    public class DefaultHybirdCLRManager:IHybridCLRManager,IModule
+    public class DefaultHybirdCLRManager:IModule
     {
         /// <summary>
         /// 加载到的程序集
@@ -29,7 +29,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         public async UniTask LoadHotCodeDLL()
         {
             var op = new LoadHotCodeOperation();
-            RAsyncOperationSystem.StartOperation(string.Empty,op);
+            Main.Main.RAsyncOperationSystem.StartOperation(string.Empty,op);
             await op.UniTask;
             HotCode = op.HotCode;
         }

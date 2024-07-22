@@ -1,5 +1,4 @@
 using System.IO;
-using dnlib;
 using UnityEngine;
 using YooAsset;
 
@@ -21,30 +20,32 @@ namespace RSJWYFamework.Runtime.YooAssetModule
             HostServerIP = hostServerIP;
             AppVersion = appVersion;
         }
-
+        
         /// <summary>
         /// 获取资源服务器地址
         /// </summary>
-        public static string GetHostServerURL()
+        /// <param name="packageName">包名</param>
+        /// <returns></returns>
+        public static string GetHostServerURL(string packageName)
         {
 #if UNITY_EDITOR
             if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.Android)
-                return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/Android";
+                return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/Android/{packageName}";
             else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.iOS)
-                return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/IPhone";
+                return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/IPhone/{packageName}";
             else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL)
-                return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/WebGL";
+                return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/WebGL/{packageName}";
             else
-                return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/PC";
+                return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/PC/{packageName}";
 #else
         if (Application.platform == RuntimePlatform.Android)
-            return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/Android";
+            return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/Android/{packageName}";
         else if (Application.platform == RuntimePlatform.IPhonePlayer)
-            return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/IPhone";
+            return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/IPhone/{packageName}";
         else if (Application.platform == RuntimePlatform.WebGLPlayer)
-            return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/WebGL";
+            return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/WebGL/{packageName}";
         else
-            return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/PC";
+            return $"{HostServerIP}/{ProjectName}/{AppName}/{AppVersion}/PC/{packageName}";
 #endif
         }
 

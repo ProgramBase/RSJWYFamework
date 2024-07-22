@@ -19,8 +19,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void Init()
         {
-            Main.Main.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgEventArgs>(SendMsgToClient);
-            Main.Main.GetModule<DefaultEvenManager>().BindEvent<ServerToClientMsgAllEventArgs>(SendMsgToClientAll);
+            Main.Main.EventModle.BindEvent<ServerToClientMsgEventArgs>(SendMsgToClient);
+            Main.Main.EventModle.BindEvent<ServerToClientMsgAllEventArgs>(SendMsgToClientAll);
             
             //检查是不是监听全部IP
             tcpsocket = new();
@@ -29,8 +29,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void Close()
         {
-            Main.Main.GetModule<DefaultEvenManager>().UnBindEvent<ServerToClientMsgEventArgs>(SendMsgToClient);
-            Main.Main.GetModule<DefaultEvenManager>().UnBindEvent<ServerToClientMsgAllEventArgs>(SendMsgToClientAll);
+            Main.Main.EventModle.UnBindEvent<ServerToClientMsgEventArgs>(SendMsgToClient);
+            Main.Main.EventModle.UnBindEvent<ServerToClientMsgAllEventArgs>(SendMsgToClientAll);
             tcpsocket?.Quit();
         }
 
@@ -105,7 +105,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void ClientConnectedCallBack(ClientSocket _clientSocket)
         {
-            Main.Main.GetModule<DefaultEvenManager>().SendEvent(this, new ServerClientConnectedCallBackEventArgs
+            Main.Main.EventModle.SendEvent(this, new ServerClientConnectedCallBackEventArgs
             {
                 clientSocket = _clientSocket
             });
@@ -113,7 +113,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void ClientReConnectedCallBack(ClientSocket _clientSocket)
         {
-            Main.Main.GetModule<DefaultEvenManager>().SendEvent(this, new ServerClientReConnectedCallBackEventArgs
+            Main.Main.EventModle.SendEvent(this, new ServerClientReConnectedCallBackEventArgs
             {
                 clientSocket = _clientSocket
             });
@@ -121,7 +121,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void ServerServiceStatus(NetServerStatus netServerStatus)
         {
-            Main.Main.GetModule<DefaultEvenManager>().SendEvent(this, new ServerStatusEventArgs
+            Main.Main.EventModle.SendEvent(this, new ServerStatusEventArgs
             {
                 status = netServerStatus
             });
@@ -129,7 +129,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void FromClientReceiveMsgCallBack(ClientSocket _clientSocket, MsgBase msgBase)
         {
-            Main.Main.GetModule<DefaultEvenManager>().SendEvent(this, new FromClientReceiveMsgCallBackEventArgs
+            Main.Main.EventModle.SendEvent(this, new FromClientReceiveMsgCallBackEventArgs
             {
                 clientSocket = _clientSocket,
                 msgBase=msgBase

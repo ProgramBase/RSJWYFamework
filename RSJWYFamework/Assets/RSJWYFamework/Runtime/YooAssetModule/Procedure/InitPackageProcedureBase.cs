@@ -66,8 +66,8 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             // 联机运行模式
             if (playMode == EPlayMode.HostPlayMode)
             {
-                string defaultHostServer = YooAssetManagerLoadTool.GetHostServerURL();
-                string fallbackHostServer = YooAssetManagerLoadTool.GetHostServerURL();
+                string defaultHostServer = YooAssetManagerLoadTool.GetHostServerURL(packageName);
+                string fallbackHostServer = YooAssetManagerLoadTool.GetHostServerURL(packageName);
                 IRemoteServices remoteServices = new YooAssetManagerLoadTool.RemoteServices(defaultHostServer, fallbackHostServer);
                 var createParameters = new HostPlayModeParameters();
                 createParameters.BuildinFileSystemParameters =

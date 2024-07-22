@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a35db6fe7e47f89bfecf37ab4810c3, type: 3}
   m_Name: YooAssetModuleSetting
   m_EditorClassIdentifier: 
-  PlayMode: 2
+  PlayMode: 0
   Prefab:
     PackageName: PrefabPackage
     BuildPipeline: 0
   RawFile:
     PackageName: RawFilePackages
     BuildPipeline: 2
-  hostServerIP: http://172.17.224.1:9909
+  hostServerIP: "http://192.168.124.21:32768/d/\u70ED\u66F4\u6D4B\u8BD5"

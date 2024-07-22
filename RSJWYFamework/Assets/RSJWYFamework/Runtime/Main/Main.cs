@@ -18,12 +18,16 @@ namespace RSJWYFamework.Runtime.Main
     {
         public static bool IsInitialize { get; private set; } = false;
         private static GameObject _driver = null;
-        private static ConcurrentDictionary<Type, IModule> _modules = new();
+        private static ConcurrentDictionary<RSJWYFameworkEnum, IModule> _modules = new();
         
-        public static IEventManage EventModle { get; private set; }
+        public static DefaultEvenManager EventModle { get; private set; }
         public static DefaultYooAssetManager YooAssetManager{get; private set; }
         public static DataManager DataManagerataManager{get; private set; }
         public static DefaultHybirdCLRManager HybridClrManager { get; private set; }
+        
+        public static DefaultExceptionLogManager ExceptionLogManager { get; private set; }
+        
+        public static RAsyncOperationSystem RAsyncOperationSystem{get; private set; }
         
 
         /// <summary>
@@ -45,10 +49,12 @@ namespace RSJWYFamework.Runtime.Main
                 IsInitialize = true;
                 RSJWYLogger.Log(RSJWYFameworkEnum.Main,"初始化完成");
                 //添加基础的模块
-                EventModle = Main.AddModule<IEventManage>(new DefaultEvenManager()) as DefaultEvenManager;
-                DataManagerataManager = Main.AddModule<DataManager>(new DataManager()) as DataManager;
-                YooAssetManager= Main.AddModule<IYooAssetManager>(new DefaultYooAssetManager())as DefaultYooAssetManager;
-                HybridClrManager = Main.AddModule<IHybridCLRManager>(new DefaultHybirdCLRManager()) as DefaultHybirdCLRManager;
+                EventModle = (DefaultEvenManager)AddModule<DefaultEvenManager>(RSJWYFameworkEnum.Event);
+                DataManagerataManager = (DataManager)AddModule<DataManager>(RSJWYFameworkEnum.Data);
+                YooAssetManager = (DefaultYooAssetManager)AddModule<DefaultYooAssetManager>(RSJWYFameworkEnum.YooAssets);
+                HybridClrManager = (DefaultHybirdCLRManager)AddModule<DefaultHybirdCLRManager>(RSJWYFameworkEnum.HybridCLR);
+                RAsyncOperationSystem =
+                    (RAsyncOperationSystem)AddModule<RAsyncOperationSystem>(RSJWYFameworkEnum.RAsyncOperationSystem);
             }
             
         }
@@ -89,16 +95,15 @@ namespace RSJWYFamework.Runtime.Main
         /// </summary>
         /// <typeparam name="T">模块类，从IModule继承</typeparam>
         /// <returns></returns>
-        public static T GetModule<T>()where T: class,ModleInterface
+        public static IModule GetModule(RSJWYFameworkEnum emodule)
         {
-            var type = typeof(T);
-            if (_modules.TryGetValue(type, out var module))
+            if (_modules.TryGetValue(emodule, out var module))
             {
-                return module as T;
+                return module;
             }
             else
             {
-                RSJWYLogger.Error($"{RSJWYFameworkEnum.Main}:{type}模块不存在");
+                RSJWYLogger.Error($"{RSJWYFameworkEnum.Main}:{emodule}模块不存在");
                 return null;
             }
             /*
@@ -108,25 +113,26 @@ namespace RSJWYFamework.Runtime.Main
                 AddModule<T>
             }*/
         }
+
         /// <summary>
         /// 添加模块
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T AddModule<T>(IModule module )
+        public static IModule AddModule<T>(RSJWYFameworkEnum emodule) where T : class,IModule,new()
         {
-            var type = typeof(T);
-            if (_modules.TryAdd(type, module))
+            IModule module = new T();
+            if (_modules.TryAdd(emodule, module))
             {
                 module.Init();
-                RSJWYLogger.Log(RSJWYFameworkEnum.Main,$"添加模块{type}成功");
+                RSJWYLogger.Log(RSJWYFameworkEnum.Main,$"添加模块{emodule}成功！为{module}");
             }
             else
             {
-                module = _modules[typeof(T)]; 
-                RSJWYLogger.Warning($"{RSJWYFameworkEnum.Main}:添加{type}模块失败，似乎已添加相同的模块，将释放本次实例化内容");
+                module = _modules[emodule]; 
+                RSJWYLogger.Warning($"{RSJWYFameworkEnum.Main}:添加{emodule}模块失败，似乎已添加相同的模块");
             }
-            return (T)module;
+            return module;
         }
         /// <summary>
         /// 关闭所有模块
@@ -157,6 +163,8 @@ namespace RSJWYFamework.Runtime.Main
         Data,
         YooAssets,
         ReferencePool,
-        HybridCLR
+        HybridCLR,
+        Event,
+        RAsyncOperationSystem
     }
 }

@@ -12,7 +12,7 @@ using YooAsset;
 
 namespace RSJWYFamework.Runtime.Default.Manager
 {
-    public class DefaultYooAssetManager : IYooAssetManager, IModule
+    public class DefaultYooAssetManager :  IModule
     {
         public ResourcePackage RawPackage { get; private set; }
         public ResourcePackage PrefabPackage { get; private set; }
@@ -33,15 +33,15 @@ namespace RSJWYFamework.Runtime.Default.Manager
             //获取数据并存入数据
             var projectConfig = Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>();
             YooAssetManagerLoadTool.Setting(projectConfig.YooAssets.hostServerIP, projectConfig.ProjectName, projectConfig.APPName, projectConfig.Version);
-            
+            //创建异步任务
             LoadPackages operationR = new LoadPackages(projectConfig.YooAssets.RawFile.PackageName, projectConfig.YooAssets.RawFile.BuildPipeline.ToString(), projectConfig.YooAssets.PlayMode);
             LoadPackages operationP = new LoadPackages(projectConfig.YooAssets.Prefab.PackageName, projectConfig.YooAssets.Prefab.BuildPipeline.ToString(), projectConfig.YooAssets.PlayMode);
-           
-            RAsyncOperationSystem.StartOperation(string.Empty, operationR);
-            RAsyncOperationSystem.StartOperation(string.Empty, operationP);
-          
+            //开始异步任务
+            Main.Main.RAsyncOperationSystem.StartOperation(string.Empty, operationR);
+            Main.Main.RAsyncOperationSystem.StartOperation(string.Empty, operationP);
+            //等待完成
             await UniTask.WhenAll(operationR.UniTask, operationP.UniTask);
-           
+            //获取包
             RawPackage = YooAssets.GetPackage(projectConfig.YooAssets.RawFile.PackageName);
             PrefabPackage = YooAssets.GetPackage(projectConfig.YooAssets.Prefab.PackageName);
         }

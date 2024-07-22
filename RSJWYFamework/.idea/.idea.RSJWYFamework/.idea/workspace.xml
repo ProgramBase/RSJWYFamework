@@ -5,30 +5,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Abandon.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/ProjectConfig.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/ProjectConfig.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/EditorMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/EditorMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/Config/SettingConfigWindows.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/Config/SettingConfigWindows.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/Base.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/Base/IDataBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/IDataBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/Base/IDataBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/IDataBase.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/IDataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Abandon/IDataManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/IDataManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Abandon/IDataManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultDataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/DataManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultDataManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Data/DataManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultYooAssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultYooAssetManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/RAsyncOperationSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/RAsyncOperationSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultEvenManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultEvenManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultExceptionLogManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/ExceptionLogUp/DefaultExceptionLogManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultExceptionLogManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/ExceptionLogUp/DefaultExceptionLogManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultHybirdCLRManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/DefaultHybirdCLRManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultHybirdCLRManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/DefaultHybirdCLRManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpServerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpServerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultUDPController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultUDPController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultYooAssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/DefaultYooAssetManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultYooAssetManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/DefaultYooAssetManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Driver/RSJWYFameworkDriverService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Driver/RSJWYFameworkDriverService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/ExceptionLogUp/IExceptionLogManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/ExceptionLogUp/IExceptionLogManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/IHybridCLRManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/IHybridCLRManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Logger/RSJWYLogger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Logger/RSJWYLogger.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Main/Main.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Main/Main.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedureBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Senseshield/Senseshield.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Senseshield/DefaultSenseshieldManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Senseshield/Senseshield.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Senseshield/DefaultSenseshieldManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Tips/TipsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Tips/TipsManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/IYooAssetManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/IYooAssetManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/InitPackageProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/InitPackageProcedureBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetManagerLoadTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetManagerLoadTool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetModuleSettingData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetModuleSettingData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/ImportantData.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImportantData/PrefabPackage/ManifestFiles/ApplicationFootPrint.bytes" beforeDir="false" afterPath="$PROJECT_DIR$/ImportantData/PrefabPackage/ManifestFiles/ApplicationFootPrint.bytes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImportantData/PrefabPackage/ManifestFiles/PackageDataManifest_PrefabPackage_2024-07-19-637.bytes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImportantData/PrefabPackage/ManifestFiles/PackageDataManifest_PrefabPackage_2024-07-19-637.hash" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImportantData/RawFilePackages/ManifestFiles/ApplicationFootPrint.bytes" beforeDir="false" afterPath="$PROJECT_DIR$/ImportantData/RawFilePackages/ManifestFiles/ApplicationFootPrint.bytes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImportantData/RawFilePackages/ManifestFiles/PackageDataManifest_RawFilePackages_2024-07-19-636.bytes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImportantData/RawFilePackages/ManifestFiles/PackageDataManifest_RawFilePackages_2024-07-19-636.hash" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,27 +80,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.20187393&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;附加到 Unity 编辑器.附加到 Unity 编辑器.executor&quot;: &quot;Debug&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "XThreadsFramesViewSplitterKey": "0.20187393",
+    "git-widget-placeholder": "develop",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "Settings.JavaScript",
+    "vue.rearranger.settings.migration": "true",
+    "附加到 Unity 编辑器.附加到 Unity 编辑器.executor": "Debug"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\Administrator\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\Administrator\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="附加到 Unity 编辑器.附加到 Unity 编辑器">
     <configuration name="启动 Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\unity\UnnityEditor\2021.3.34f1c1\Editor\Unity.exe" />
@@ -108,10 +119,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="2712">
+    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="23092">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="2712" />
+      <option name="pid" value="23092" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -145,6 +156,7 @@
       <workItem from="1721268662946" duration="86000" />
       <workItem from="1721269419034" duration="609000" />
       <workItem from="1721356781546" duration="12388000" />
+      <workItem from="1721629286029" duration="6088000" />
     </task>
     <servers />
   </component>

@@ -22,11 +22,11 @@ public class TipsManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Main.GetModule<DefaultEvenManager>().BindEvent<TipsInfoEventArgs>(TipsEvent);
+        Main.EventModle.BindEvent<TipsInfoEventArgs>(TipsEvent);
     } 
     private void OnDisable()
     {
-        Main.GetModule<DefaultEvenManager>().UnBindEvent<TipsInfoEventArgs>(TipsEvent);
+        Main.EventModle.UnBindEvent<TipsInfoEventArgs>(TipsEvent);
     }
     private void TipsEvent(object sender, EventArgsBase e)
     {

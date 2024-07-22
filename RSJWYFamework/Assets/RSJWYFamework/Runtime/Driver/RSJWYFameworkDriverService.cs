@@ -21,7 +21,6 @@ namespace RSJWYFamework.Runtime.Driver
         void Update()
         {
             Main.Main.Update(Time.time,Time.deltaTime);
-            RAsyncOperationSystem.Update(Time.time,Time.deltaTime);
             // 累加计时器
             timer = Time.deltaTime;
             // 如果计时器达到时间间隔
@@ -31,7 +30,6 @@ namespace RSJWYFamework.Runtime.Driver
                 timer = 0f;
                 // 调用逻辑函数
                 Main.Main.UpdatePerSecond(Time.time); 
-                RAsyncOperationSystem.UpdatePerSecond(Time.time);
             }
             
             DebugCheckDuplicateDriver();
@@ -39,12 +37,12 @@ namespace RSJWYFamework.Runtime.Driver
 
         private void Start()
         {
-            RAsyncOperationSystem.Init();
+            
         }
 
         private void OnDestroy()
         {
-            RAsyncOperationSystem.Close();
+            Main.Main.CloseAllModule();
         }
 
 

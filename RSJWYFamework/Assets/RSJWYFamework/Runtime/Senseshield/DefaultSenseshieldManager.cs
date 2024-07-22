@@ -8,7 +8,7 @@ namespace RSJWYFamework.Runtime.Senseshield
     /// <summary>
     /// 深信服Virbox加密服务
     /// </summary>
-    public class SenseshieldServer:IModule
+    public class DefaultSenseshieldManager:IModule
     {
         /// <summary>
         /// 登录的会话ID
@@ -31,6 +31,9 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// 是否初始化
         /// </summary>
         public bool isInit { get; private set; }
+        /// <summary>
+        /// 是否登录
+        /// </summary>
         public bool isLogin { get; private set; }
         /// <summary>
         /// 开发者密钥
@@ -53,9 +56,6 @@ namespace RSJWYFamework.Runtime.Senseshield
             isLogin = _loginHandle.loginSuccess;
             if (_loginHandle.loginSuccess)
             {
-                _keepAlive = new Thread(keepAliveThread);
-                _keepAlive.IsBackground = true;
-                _keepAlive.Start();
                 Handle = _loginHandle.Handle;
                 //var asaa= SenseshieldServerHelp.DeviceCertVerify(Handle);
                 var test = SenseshieldServerHelp.GetInfoLicenseInfo(Handle);
@@ -86,21 +86,12 @@ namespace RSJWYFamework.Runtime.Senseshield
 
         public void UpdatePerSecond(float time)
         {
-            
-        }
-
-
-        /// <summary>
-        /// 心跳维持线程
-        /// </summary>
-        void keepAliveThread()
-        {
-            while (!isThreadOver)
+            if (isInit&&isLogin&&Handle!=0)
             {
-                if (!SenseshieldServerHelp.KeepAlive(Handle)) break;
-                Thread.Sleep(1000);
+                SenseshieldServerHelp.KeepAlive(Handle);
             }
         }
+
     }
        /*
         //main方法，测试主程序

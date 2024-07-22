@@ -18,7 +18,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 日志回传处理程序
     /// </summary>
-    public class DefaultExceptionLogManager:IModule,IExceptionLogManager
+    public class DefaultExceptionLogManager:IModule
     {
         /// <summary>
         /// 上传日志队列
