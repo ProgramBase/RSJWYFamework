@@ -165,6 +165,7 @@ namespace RSJWYFamework.Runtime.Main
         ReferencePool,
         HybridCLR,
         Event,
-        RAsyncOperationSystem
+        RAsyncOperationSystem,
+        GameObjectPool,
     }
 }

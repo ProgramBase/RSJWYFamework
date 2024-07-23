@@ -5,6 +5,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
 {
     /// <summary>
     /// 游戏的异步操作
+    /// 允许非本程序集访问
     /// </summary>
     public abstract class GameRAsyncOperation : RAsyncOperationBase
     {
