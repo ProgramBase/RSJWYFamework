@@ -20,8 +20,7 @@ namespace RSJWYFamework.Runtime.Event
         private readonly ConcurrentQueue<EventArgsBase> _callQueue = new();
         /// <summary>
         /// 绑定
-        /// </summary>
-        /// <param name="eventID">事件类（ID）</param>
+        /// </summary> 
         /// <param name="callback">事件回调</param>
         public void BindEvent<T>( EventHandler<EventArgsBase> callback)where T:EventArgsBase
         {
@@ -44,7 +43,6 @@ namespace RSJWYFamework.Runtime.Event
         /// <summary>
         /// 解除绑定
         /// </summary>
-        /// <param name="eventID">事件类（ID）</param>
         /// <param name="callback">事件回调</param>
         public void UnBindEvent<T>(EventHandler<EventArgsBase> callback)where T:EventArgsBase
         {
@@ -95,6 +93,7 @@ namespace RSJWYFamework.Runtime.Event
         public void Close()
         {
             _callBackDic.Clear();
+            _callQueue.Clear();
         }
 
         public void Update(float time, float deltaTime)

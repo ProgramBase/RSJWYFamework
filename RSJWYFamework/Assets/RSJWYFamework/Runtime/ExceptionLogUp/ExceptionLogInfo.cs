@@ -1,4 +1,4 @@
-﻿using RSJWYFamework.Runtime.ReferencePool.Base;
+﻿using RSJWYFamework.Runtime.ReferencePool;
 using UnityEngine;
 
 namespace RSJWYFamework.Runtime.ExceptionLogUp

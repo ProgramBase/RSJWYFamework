@@ -51,9 +51,13 @@ namespace RSJWYFamework.Runtime.ObjectPool
         /// 创建池
         /// </summary>
         /// <param name="spawnTem">模板</param>
-        /// <param name="limit">初始化数量</param>
-        /// <param name="parent">池子实例化时的父类</param>
-        public ObjectSpawnPool(T spawnTem, int limit,
+        /// <param name="limit">最大数量限制</param>
+        /// <param name="initCount">初始化数量</param>
+        /// <param name="onCreate">创建时执行的事件</param>
+        /// <param name="onDestroy">销毁时执行的事件</param>
+        /// <param name="onGet">获取时执行的事件</param>
+        /// <param name="onRelease">回收物体时执行的回调</param>
+        public ObjectSpawnPool(T spawnTem, int limit,int initCount,
             Func<T> onCreate,Action<T> onDestroy,Action<T> onGet,Action<T> onRelease)
         {
             _spawnTem = spawnTem;
@@ -62,6 +66,8 @@ namespace RSJWYFamework.Runtime.ObjectPool
            _onDestroy = onDestroy;
            _onGet = onGet;
            _onRelease = onRelease;
+           
+           
         }
         /// <summary>
         /// 获取一个对象池内的对象

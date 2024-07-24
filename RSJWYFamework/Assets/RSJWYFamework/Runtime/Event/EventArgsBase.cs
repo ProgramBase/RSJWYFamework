@@ -1,5 +1,5 @@
 ﻿using System;
-using RSJWYFamework.Runtime.ReferencePool.Base;
+using RSJWYFamework.Runtime.ReferencePool;
 
 namespace RSJWYFamework.Runtime.Event
 {
