@@ -12,7 +12,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public abstract class TCPServerSoketEventArgs:EventArgsBase
     {
         public ClientSocket clientSocket { get; internal set; }
-        public virtual void Reset()
+        public override void Reset()
         {
             clientSocket = null;
         }
@@ -20,7 +20,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public abstract class TCPClientSoketEventArgs:EventArgsBase
     {
         public MsgBase clientSocket;
-        public virtual void Reset()
+        public override void Reset()
         {
             clientSocket = null;
         }
@@ -87,7 +87,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public sealed class ServerStatusEventArgs : EventArgsBase
     {
         public NetServerStatus status;
-        public void Reset()
+        public override void Reset()
         {
             status = NetServerStatus.None;
         }
@@ -102,7 +102,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public sealed class ClientStatusEventArgs : EventArgsBase
     {
         public NetClientStatus netClientStatus { get; internal set; }
-        public  void Reset()
+        public override void Reset()
         {
             netClientStatus = NetClientStatus.None;
         }
@@ -113,7 +113,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public sealed class ClientSendToServerEventArgs : EventArgsBase
     {
         public MsgBase msg;
-        public  void Reset()
+        public override void Reset()
         {
             msg = null;
         }
@@ -124,7 +124,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public sealed class ClientReceivesMSGFromServer: EventArgsBase
     {
         public MsgBase msg { get; internal set; }
-        public  void Reset()
+        public override void Reset()
         {
             msg = null;
         }
@@ -143,7 +143,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
         
         public string ip;
         public int port;
-        public virtual void Reset()
+        public override void Reset()
         {
             command.Clear();
         }

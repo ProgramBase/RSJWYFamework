@@ -105,7 +105,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void ClientConnectedCallBack(ClientSocket _clientSocket)
         {
-            Main.Main.EventModle.SendEvent(this, new ServerClientConnectedCallBackEventArgs
+            Main.Main.EventModle.FireNow(new ServerClientConnectedCallBackEventArgs
             {
                 clientSocket = _clientSocket
             });
@@ -113,24 +113,27 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void ClientReConnectedCallBack(ClientSocket _clientSocket)
         {
-            Main.Main.EventModle.SendEvent(this, new ServerClientReConnectedCallBackEventArgs
+            Main.Main.EventModle.FireNow(new ServerClientReConnectedCallBackEventArgs
             {
+                Sender = this,
                 clientSocket = _clientSocket
             });
         }
 
         public void ServerServiceStatus(NetServerStatus netServerStatus)
         {
-            Main.Main.EventModle.SendEvent(this, new ServerStatusEventArgs
+            Main.Main.EventModle.FireNow( new ServerStatusEventArgs
             {
+                Sender = this,
                 status = netServerStatus
             });
         }
 
         public void FromClientReceiveMsgCallBack(ClientSocket _clientSocket, MsgBase msgBase)
         {
-            Main.Main.EventModle.SendEvent(this, new FromClientReceiveMsgCallBackEventArgs
+            Main.Main.EventModle.FireNow(new FromClientReceiveMsgCallBackEventArgs
             {
+                Sender = this,
                 clientSocket = _clientSocket,
                 msgBase=msgBase
             });

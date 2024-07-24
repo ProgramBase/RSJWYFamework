@@ -88,20 +88,23 @@ namespace RSJWYFamework.Runtime.Default.Manager
             string _hex = _strHex.Replace("-", " ");
             //Debug.Log($"UTF8:{IsHex(_utf8)}，HEX:{IsHex(_hex)}");
             //优先检查UTF8
-            var msg = new UDPReceiveMsgCallBack();
-            msg.port = ReciveMsg.remoteEndPoint.Port;
-            msg.ip = ReciveMsg.remoteEndPoint.Address.ToString();
+            var msg = new UDPReceiveMsgCallBack
+            {
+                Sender = this,
+                ip = ReciveMsg.remoteEndPoint.Address.ToString(),
+                port = ReciveMsg.remoteEndPoint.Port
+            };
             if (Utility.Utility.SocketTool.IsHex(_utf8))
             {
                 //UTF8是正确的指令
                 msg.command.Append(_utf8);
-                Main.Main.EventModle.SendEvent(this,msg);
+                Main.Main.EventModle.FireNow(msg);
             }
             else
             {
                 //Hex任何时刻都是16进值，则传出，交给使用者判断
                 msg.command.Append(_hex);
-                Main.Main.EventModle.SendEvent(this,msg);
+                Main.Main.EventModle.FireNow(msg);
             }
         }
     }
