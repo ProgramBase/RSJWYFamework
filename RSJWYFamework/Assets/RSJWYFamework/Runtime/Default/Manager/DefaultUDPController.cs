@@ -88,12 +88,10 @@ namespace RSJWYFamework.Runtime.Default.Manager
             string _hex = _strHex.Replace("-", " ");
             //Debug.Log($"UTF8:{IsHex(_utf8)}，HEX:{IsHex(_hex)}");
             //优先检查UTF8
-            var msg = new UDPReceiveMsgCallBack
-            {
-                Sender = this,
-                ip = ReciveMsg.remoteEndPoint.Address.ToString(),
-                port = ReciveMsg.remoteEndPoint.Port
-            };
+            var msg= Main.Main.ReferencePoolManager.Get<UDPReceiveMsgCallBack>();
+            msg.Sender = this;
+            msg.ip = ReciveMsg.remoteEndPoint.Address.ToString();
+            msg.port = ReciveMsg.remoteEndPoint.Port;
             if (Utility.Utility.SocketTool.IsHex(_utf8))
             {
                 //UTF8是正确的指令

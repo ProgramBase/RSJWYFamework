@@ -7,9 +7,9 @@ using UnityEngine;
 namespace RSJWYFamework.Runtime.ObjectPool
 {
     /// <summary>
-    /// 对象池
+    /// 引用池
     /// </summary>
-    public sealed class ObjectSpawnPool<T>where T:MonoBehaviour,new ()
+    public sealed class ObjectPool<T>where T:MonoBehaviour,new ()
     {
         /// <summary>
         /// 模板
@@ -57,7 +57,7 @@ namespace RSJWYFamework.Runtime.ObjectPool
         /// <param name="onDestroy">销毁时执行的事件</param>
         /// <param name="onGet">获取时执行的事件</param>
         /// <param name="onRelease">回收物体时执行的回调</param>
-        public ObjectSpawnPool(T spawnTem, int limit,int initCount,
+        public ObjectPool(T spawnTem, int limit,int initCount,
             Func<T> onCreate,Action<T> onDestroy,Action<T> onGet,Action<T> onRelease)
         {
             _spawnTem = spawnTem;

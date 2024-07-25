@@ -13,5 +13,6 @@ namespace RSJWYFamework.Runtime.Event
         /// 消息发送者
         /// </summary>
         public object Sender;
+
     }
 }
