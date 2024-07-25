@@ -80,20 +80,18 @@ namespace RSJWYFamework.Runtime.Default.Manager
        
         public void ClientStatus(NetClientStatus eventEnum)
         {
-            Main.Main.EventModle.FireNow(new ClientStatusEventArgs
-            {
-                Sender = this,
-                netClientStatus = eventEnum
-            });
+            var _event= Main.Main.ReferencePoolManager.Get<ClientStatusEventArgs>();
+            _event.Sender = this;
+            _event.netClientStatus = eventEnum;
+            Main.Main.EventModle.FireNow(_event);
         }
 
         public void ReceiveMsgCallBack(MsgBase msgBase)
         {
-            Main.Main.EventModle.FireNow(new ClientReceivesMSGFromServer
-            {
-                Sender = this,
-                msg = msgBase
-            });
+            var _event= Main.Main.ReferencePoolManager.Get<ClientReceivesMSGFromServer>();
+            _event.Sender = this;
+            _event.msg = msgBase;
+            Main.Main.EventModle.FireNow(_event);
         }
         public void ClientSendToServerMsg(object sender, EventArgsBase eventArgsBase)
         {

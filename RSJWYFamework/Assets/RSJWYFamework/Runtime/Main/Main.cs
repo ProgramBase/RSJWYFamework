@@ -9,6 +9,7 @@ using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.HybridCLR;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Module;
+using RSJWYFamework.Runtime.ReferencePool;
 using RSJWYFamework.Runtime.YooAssetModule;
 using UnityEngine;
 
@@ -20,14 +21,13 @@ namespace RSJWYFamework.Runtime.Main
         private static GameObject _driver = null;
         private static ConcurrentDictionary<RSJWYFameworkEnum, IModule> _modules = new();
         
-        public static DefaultEvenManager EventModle { get; private set; }
+        public static EvenManager EventModle { get; private set; }
         public static DefaultYooAssetManager YooAssetManager{get; private set; }
         public static DataManager DataManagerataManager{get; private set; }
         public static DefaultHybirdCLRManager HybridClrManager { get; private set; }
-        
         public static DefaultExceptionLogManager ExceptionLogManager { get; private set; }
-        
         public static RAsyncOperationSystem RAsyncOperationSystem{get; private set; }
+        public static ReferencePoolManager ReferencePoolManager {get; private set; }
         
 
         /// <summary>
@@ -49,12 +49,12 @@ namespace RSJWYFamework.Runtime.Main
                 IsInitialize = true;
                 RSJWYLogger.Log(RSJWYFameworkEnum.Main,"初始化完成");
                 //添加基础的模块
-                EventModle = (DefaultEvenManager)AddModule<DefaultEvenManager>(RSJWYFameworkEnum.Event);
+                EventModle = (EvenManager)AddModule<EvenManager>(RSJWYFameworkEnum.Event);
                 DataManagerataManager = (DataManager)AddModule<DataManager>(RSJWYFameworkEnum.Data);
                 YooAssetManager = (DefaultYooAssetManager)AddModule<DefaultYooAssetManager>(RSJWYFameworkEnum.YooAssets);
                 HybridClrManager = (DefaultHybirdCLRManager)AddModule<DefaultHybirdCLRManager>(RSJWYFameworkEnum.HybridCLR);
-                RAsyncOperationSystem =
-                    (RAsyncOperationSystem)AddModule<RAsyncOperationSystem>(RSJWYFameworkEnum.RAsyncOperationSystem);
+                RAsyncOperationSystem = (RAsyncOperationSystem)AddModule<RAsyncOperationSystem>(RSJWYFameworkEnum.RAsyncOperationSystem);
+                ReferencePoolManager = (ReferencePoolManager)AddModule<ReferencePoolManager>(RSJWYFameworkEnum.ReferencePool);
             }
             
         }

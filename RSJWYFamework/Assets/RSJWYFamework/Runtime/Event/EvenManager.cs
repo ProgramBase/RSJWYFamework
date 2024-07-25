@@ -8,7 +8,7 @@ namespace RSJWYFamework.Runtime.Event
     /// <summary>
     /// 默认事件系统
     /// </summary>
-    public class DefaultEvenManager:IModule
+    public class EvenManager:IModule
     {
         /// <summary>
         /// 订阅者列表
@@ -65,7 +65,7 @@ namespace RSJWYFamework.Runtime.Event
         }
         /// <summary>
         /// 广播事件，不进入队列直接广播
-        /// 禁止多线程调用，请调用Fire
+        /// 只允许Unity主线程调用，禁止多线程调用，请调用Fire
         /// </summary>
         /// <param name="eventArgs">消息载体</param>
         public void FireNow(EventArgsBase eventArgs)
@@ -74,6 +74,7 @@ namespace RSJWYFamework.Runtime.Event
             {
                 handler?.Invoke(eventArgs.Sender, eventArgs);
             }
+            Main.Main.ReferencePoolManager.Release(eventArgs);
         }
         /// <summary>
         /// 广播事件，进入队列进行广播，每帧调用一次
@@ -101,7 +102,7 @@ namespace RSJWYFamework.Runtime.Event
             if (_callQueue.IsEmpty)
                 return;
             _callQueue.TryDequeue(out var _call);
-            Fire(_call);
+            FireNow(_call);
         }
 
         public void UpdatePerSecond(float time)

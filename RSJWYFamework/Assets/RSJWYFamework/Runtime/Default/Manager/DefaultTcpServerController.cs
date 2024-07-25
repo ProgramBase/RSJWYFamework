@@ -105,38 +105,35 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void ClientConnectedCallBack(ClientSocket _clientSocket)
         {
-            Main.Main.EventModle.FireNow(new ServerClientConnectedCallBackEventArgs
-            {
-                clientSocket = _clientSocket
-            });
+            var _event= Main.Main.ReferencePoolManager.Get<ServerClientConnectedCallBackEventArgs>();
+            _event.Sender = this;
+            _event.clientSocket = _clientSocket;
+            Main.Main.EventModle.FireNow(_event);
         }
 
         public void ClientReConnectedCallBack(ClientSocket _clientSocket)
         {
-            Main.Main.EventModle.FireNow(new ServerClientReConnectedCallBackEventArgs
-            {
-                Sender = this,
-                clientSocket = _clientSocket
-            });
+            var _event= Main.Main.ReferencePoolManager.Get<ServerClientReConnectedCallBackEventArgs>();
+            _event.clientSocket = _clientSocket;
+            _event.Sender = this;
+            Main.Main.EventModle.FireNow(_event);
         }
 
         public void ServerServiceStatus(NetServerStatus netServerStatus)
         {
-            Main.Main.EventModle.FireNow( new ServerStatusEventArgs
-            {
-                Sender = this,
-                status = netServerStatus
-            });
+            var _event= Main.Main.ReferencePoolManager.Get<ServerStatusEventArgs>();
+            _event.Sender = this;
+            _event.status = netServerStatus;
+            Main.Main.EventModle.FireNow( _event);
         }
 
         public void FromClientReceiveMsgCallBack(ClientSocket _clientSocket, MsgBase msgBase)
         {
-            Main.Main.EventModle.FireNow(new FromClientReceiveMsgCallBackEventArgs
-            {
-                Sender = this,
-                clientSocket = _clientSocket,
-                msgBase=msgBase
-            });
+            var _event= Main.Main.ReferencePoolManager.Get<FromClientReceiveMsgCallBackEventArgs>();
+            _event.Sender = this;
+            _event.clientSocket = _clientSocket;
+            _event.msgBase = msgBase;
+            Main.Main.EventModle.FireNow(_event);
         }
     }
 }
