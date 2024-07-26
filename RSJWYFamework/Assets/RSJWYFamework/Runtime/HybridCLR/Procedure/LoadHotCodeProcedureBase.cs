@@ -83,11 +83,10 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                 {
                     pc.modle.Exception(new ProcedureException($"热更加载DLL流程，加载热更：{_str_err_name} 时发生异常，{ex}"));
                 }
-
+                _DllDic.Clear();
                 await UniTask.SwitchToMainThread();
                 pc.SetBlackboardValue("HotCodeAssembly",hotCode);
                 pc.SwitchProcedure(typeof(LoadHotCodeDone));
-                
             });
         }
 

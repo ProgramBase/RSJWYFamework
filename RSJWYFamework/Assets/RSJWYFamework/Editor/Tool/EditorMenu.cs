@@ -2,6 +2,7 @@ using System.IO;
 using RSJWYFamework.Editor.Windows;
 using RSJWYFamework.Editor.Windows.Config;
 using RSJWYFamework.Editor.Windows.HybridCLR;
+using RSJWYFamework.Editor.Windows.YooAsset;
 using RSJWYFamework.Runtime.Config;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
@@ -48,6 +49,13 @@ namespace RSJWYFamework.Editor.Tool
             var _windows = OdinEditorWindow.GetWindow<SettingConfigWindows>();
             _windows.Show();
             _windows.titleContent = new GUIContent("配置文件设置工具");
+        }
+        [MenuItem("RSJWYFamework/打开YooAsset资源构建工具")]
+        public static void OpenYooAssetBuildWindowsA()
+        {
+            var _windows = OdinEditorWindow.GetWindow<YooAssetBuildWindow>();
+            _windows.titleContent = new GUIContent("YooAsset资源构建工具");
+            _windows.Show();
         }
     }
 }

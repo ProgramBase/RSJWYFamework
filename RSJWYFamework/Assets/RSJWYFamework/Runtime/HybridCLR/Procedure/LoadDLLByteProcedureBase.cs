@@ -52,6 +52,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                         loadDLLDic.Add(asset,assetData);
                         //Debug.Log($"dll:{asset}  size:{assetData.Length}");
                         RSJWYLogger.Log($"热更加载DLL流程，加载资源dll:{_n}  size:{assetData.Length}");
+                        _rfh.Release();
                     }
                     else
                     {

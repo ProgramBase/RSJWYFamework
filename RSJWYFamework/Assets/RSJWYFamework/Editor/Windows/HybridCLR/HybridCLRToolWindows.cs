@@ -10,6 +10,9 @@ using UnityEditor;
 
 namespace RSJWYFamework.Editor.Windows.HybridCLR
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class HybridCLRToolWindows : OdinEditorWindow
     {
         [InlineEditor(InlineEditorModes.FullEditor)] [LabelText("配置文件")]
@@ -24,6 +27,7 @@ namespace RSJWYFamework.Editor.Windows.HybridCLR
         {
             BuildMetadataForAOTAssemblies();
             BuildHotCode();
+            BuildHotUpdateDllJson();
         }
 
         [Button("构建补充元数据")]
@@ -69,6 +73,7 @@ namespace RSJWYFamework.Editor.Windows.HybridCLR
 
         protected override void OnEnable()
         {
+            base.OnEnable();
             if (SettingData == null)
             {
                 SettingData =
@@ -76,7 +81,6 @@ namespace RSJWYFamework.Editor.Windows.HybridCLR
             }
 
             //加载热更dll列表
-            base.OnEnable();
             UpdateHotDLLJson();
         }
 
