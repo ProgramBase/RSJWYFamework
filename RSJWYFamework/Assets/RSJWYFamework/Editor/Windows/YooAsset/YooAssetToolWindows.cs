@@ -27,6 +27,21 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
         [LabelText("streamingAssets根路径")]
         public string streamingAssetsRoot;
         
+        [LabelText("构建模式")]
+        public EBuildMode BuildMode=EBuildMode.ForceRebuild;
+
+        [LabelText("包版本")]
+        public string PackageVersion ;
+
+        [LabelText("文件名样式")]
+        public EFileNameStyle FileNameStyle=EFileNameStyle.BundleName_HashName;
+
+        [LabelText("构建后文件拷贝模式")]
+        public EBuildinFileCopyOption BuildinFileCopyOption = EBuildinFileCopyOption.ClearAndCopyAll;
+
+        [LabelText("压缩选项")]
+        public ECompressOption CompressOption = ECompressOption.LZ4;
+        
         [Button("构建Prefab包",ButtonSizes.Gigantic)]
         [ButtonGroup("构建按钮")]
         void BuildPrefabPackage()
@@ -55,16 +70,16 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
             buildParameters.BuildinFileRoot = streamingAssetsRoot;
             buildParameters.BuildPipeline = BuildPipeline.ToString();
             buildParameters.BuildTarget = buildTarget;
-            buildParameters.BuildMode = EBuildMode.ForceRebuild;
+            buildParameters.BuildMode = BuildMode;
             buildParameters.PackageName = PackageName;
-            buildParameters.PackageVersion = "1.0";
+            buildParameters.PackageVersion = PackageVersion;
             buildParameters.VerifyBuildingResult = true;
             buildParameters.EnableSharePackRule = true; //启用共享资源构建模式，兼容1.5x版本
-            buildParameters.FileNameStyle = EFileNameStyle.HashName;
-            buildParameters.BuildinFileCopyOption = EBuildinFileCopyOption.None;
+            buildParameters.FileNameStyle = FileNameStyle;
+            buildParameters.BuildinFileCopyOption = BuildinFileCopyOption;
             buildParameters.BuildinFileCopyParams = string.Empty;
             //buildParameters.EncryptionServices = CreateEncryptionInstance();
-            buildParameters.CompressOption = ECompressOption.LZ4;
+            buildParameters.CompressOption = CompressOption;
     
             // 执行构建
             BuiltinBuildPipeline pipeline = new BuiltinBuildPipeline();

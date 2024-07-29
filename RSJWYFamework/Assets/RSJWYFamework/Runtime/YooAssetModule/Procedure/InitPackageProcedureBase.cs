@@ -3,6 +3,7 @@ using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Procedure;
+using RSJWYFamework.Runtime.YooAssetModule.Tool;
 using YooAsset;
 
 namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
@@ -66,9 +67,9 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             // 联机运行模式
             if (playMode == EPlayMode.HostPlayMode)
             {
-                string defaultHostServer = YooAssetManagerLoadTool.GetHostServerURL(packageName);
-                string fallbackHostServer = YooAssetManagerLoadTool.GetHostServerURL(packageName);
-                IRemoteServices remoteServices = new YooAssetManagerLoadTool.RemoteServices(defaultHostServer, fallbackHostServer);
+                string defaultHostServer = YooAssetManagerTool.GetHostServerURL(packageName);
+                string fallbackHostServer = YooAssetManagerTool.GetHostServerURL(packageName);
+                IRemoteServices remoteServices = new YooAssetManagerTool.RemoteServices(defaultHostServer, fallbackHostServer);
                 var createParameters = new HostPlayModeParameters();
                 createParameters.BuildinFileSystemParameters =
                     FileSystemParameters.CreateDefaultBuildinFileSystemParameters();

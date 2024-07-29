@@ -7,6 +7,7 @@ using RSJWYFamework.Runtime.Procedure;
 using RSJWYFamework.Runtime.YooAssetModule;
 using RSJWYFamework.Runtime.YooAssetModule.AsyncOperation;
 using RSJWYFamework.Runtime.YooAssetModule.Procedure;
+using RSJWYFamework.Runtime.YooAssetModule.Tool;
 using UnityEngine;
 using YooAsset;
 
@@ -32,7 +33,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         {
             //获取数据并存入数据
             var projectConfig = Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>();
-            YooAssetManagerLoadTool.Setting(projectConfig.YooAssets.hostServerIP, projectConfig.ProjectName, projectConfig.APPName, projectConfig.Version);
+            YooAssetManagerTool.Setting(projectConfig.YooAssets.hostServerIP, projectConfig.ProjectName, projectConfig.APPName, projectConfig.Version);
             //创建异步任务
             LoadPackages operationR = new LoadPackages(projectConfig.YooAssets.RawFile.PackageName, projectConfig.YooAssets.RawFile.BuildPipeline.ToString(), projectConfig.YooAssets.PlayMode);
             LoadPackages operationP = new LoadPackages(projectConfig.YooAssets.Prefab.PackageName, projectConfig.YooAssets.Prefab.BuildPipeline.ToString(), projectConfig.YooAssets.PlayMode);

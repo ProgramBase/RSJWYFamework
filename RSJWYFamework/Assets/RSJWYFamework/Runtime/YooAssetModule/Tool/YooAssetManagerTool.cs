@@ -2,9 +2,9 @@ using System.IO;
 using UnityEngine;
 using YooAsset;
 
-namespace RSJWYFamework.Runtime.YooAssetModule
+namespace RSJWYFamework.Runtime.YooAssetModule.Tool
 {
-    public static class YooAssetManagerLoadTool
+    public static class YooAssetManagerTool
     {
         static string ProjectName = "测试工程";
         private static string AppName = "测试软件";
@@ -110,7 +110,24 @@ namespace RSJWYFamework.Runtime.YooAssetModule
                 return 1024;
             }
         }
-
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         /// <summary>
         /// 资源文件偏移加载解密类
         /// </summary>
