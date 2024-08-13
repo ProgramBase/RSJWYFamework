@@ -31,7 +31,8 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                 await UniTask.WaitForSeconds(0.5f);
                 //获取数据
                 var _loadLis = (HotCodeDLL)pc.GetBlackboardValue("LoadList");
-                var _DllDic = (Dictionary<string, byte[]>)pc.GetBlackboardValue("DLLDic");
+                var _DllDic = (Dictionary<string, HotCodeBytes>)pc.GetBlackboardValue("HotcodeDic");
+                var MFAOTbytesMap= (Dictionary<string, byte[]>)pc.GetBlackboardValue("MFAOTDic");
                 Dictionary<string, Assembly> hotCode = new();
 
                 await UniTask.SwitchToThreadPool();
@@ -46,7 +47,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                     foreach (string aotDllName in _loadLis.MetadataForAOTAssemblies)
                     {
                         _str_err_name = aotDllName;
-                        byte[] dllBytes = _DllDic[aotDllName];
+                        byte[] dllBytes = MFAOTbytesMap[aotDllName];
                         // 加载assembly对应的dll，会自动为它hook。一旦aot泛型函数的native函数不存在，用解释器版本代码
                         LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(dllBytes, mode);
                         if (err != LoadImageErrorCode.OK)
@@ -64,18 +65,23 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                 try
                 {
 #if UNITY_EDITOR
-                    foreach (var _hotAss in _loadLis.MetadataForAOTAssemblies)
+                    foreach (var _hotAss in _loadLis.HotCode)
                     {
                         _str_err_name = _hotAss;
                         hotCode.Add(_hotAss,
                             System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == _hotAss));
                     }
 #else
-                    foreach (var _hotAss in _loadLis.MetadataForAOTAssemblies)
+                    foreach (var _hotAss in _loadLis.HotCode)
                     {
+
                         _str_err_name = _hotAss;
-                        byte[] _dll = _DllDic[_hotAss];
-                        hotCode.Add(_hotAss, Assembly.Load(_dll));
+                        var _dll = _DllDic[_hotAss];
+                        
+                        if (_dll.pdbBytes!=null)
+                            hotCode.Add(_hotAss, Assembly.Load(_dll.dllBytes,_dll.pdbBytes));
+                        else
+                            hotCode.Add(_hotAss, Assembly.Load(_dll.dllBytes));
                     }
 #endif
                 }

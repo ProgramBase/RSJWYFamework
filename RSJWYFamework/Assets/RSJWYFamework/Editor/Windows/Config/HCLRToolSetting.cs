@@ -7,10 +7,10 @@ namespace RSJWYFamework.Editor.Windows.Config
     public class HCLRToolSetting : ScriptableObject
     {
         [FolderPath][LabelText("构建热更代码DLL到：")]
-        public string BuildHotCodeDllPatch="Assets/HotUpdateAssets/HotCode";
+        public string BuildHotCodeDllPatch="Assets/HotUpdateAssets/HotCode/HotCode";
         [FolderPath][LabelText("构建补充选数据DLL到：")]
-        public string BuildMetadataForAOTAssembliesDllPatch="Assets/HotUpdateAssets/MetadataForAOTAssemblies";
-        [FilePath]
-        public string GeneratedHotUpdateDLLJson="Assets/HotUpdateAssets/Config/HotCodeDLL.json"; 
+        public string BuildMetadataForAOTAssembliesDllPatch="Assets/HotUpdateAssets/HotCode/MetadataForAOTAssemblies";
+        [FilePath][LabelText("构建热更列表文件路径：")]
+        public string GeneratedHotUpdateDLLJson="Assets/HotUpdateAssets/HotCode/List/HotCodeDLL.json"; 
     }
 }

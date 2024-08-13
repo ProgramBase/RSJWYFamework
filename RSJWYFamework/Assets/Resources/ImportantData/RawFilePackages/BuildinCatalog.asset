@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BuildinCatalog
   m_EditorClassIdentifier: 
   PackageName: RawFilePackages
-  PackageVersion: 2024-07-19-636
+  PackageVersion: 2024-07-26-609
   Wrappers:
-  - BundleGUID: 050fc9d81361374a9aefb6e6ced45723
-    FileName: 050fc9d81361374a9aefb6e6ced45723.rawfile
+  - BundleGUID: 31fc3bf5a6b6bc4d8d3d6b188766144a
+    FileName: 31fc3bf5a6b6bc4d8d3d6b188766144a.rawfile
   - BundleGUID: 61ca8d92fd488046e1d9d860e3e67a69
     FileName: 61ca8d92fd488046e1d9d860e3e67a69.bundle
-  - BundleGUID: f1d46cb91fbf2056a2fa321ec9e400f6
-    FileName: f1d46cb91fbf2056a2fa321ec9e400f6.rawfile
+  - BundleGUID: 78702fd631812b7db85b4386ab16c564
+    FileName: 78702fd631812b7db85b4386ab16c564.rawfile

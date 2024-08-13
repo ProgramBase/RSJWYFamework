@@ -19,4 +19,18 @@ namespace RSJWYFamework.Runtime.HybridCLR
         [JsonProperty("HotCode")]
         public List<string> HotCode;
     }
+    /// <summary>
+    /// 热更代码DLL&PDB对
+    /// </summary>
+    public class HotCodeBytes
+    {
+        /// <summary>
+        /// 热更代码
+        /// </summary>
+        public byte[] dllBytes;
+        /// <summary>
+        /// pdb字符文件
+        /// </summary>
+        public byte[] pdbBytes;
+    }
 }

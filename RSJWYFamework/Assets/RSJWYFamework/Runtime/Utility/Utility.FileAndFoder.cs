@@ -71,7 +71,7 @@ namespace RSJWYFamework.Runtime.Utility
                 // 验证路径是否指向一个文件夹
                 if (!Directory.Exists(directoryPath))
                 {
-                    throw new RSJWYException(RSJWYFameworkEnum.Utility,$"The directory '{directoryPath}' does not exist.");
+                    return;
                 }
 
                 // 获取文件夹内的所有文件（包括子文件夹中的文件）

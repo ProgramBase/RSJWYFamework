@@ -78,12 +78,18 @@ namespace RSJWYFamework.Editor.UtilityEditor
                 var hotfixDllSrcDir = SettingsUtil.GetHotUpdateDllsOutputDirByTarget(target);
                 Utility.FileAndFoder.CheckDirectoryExistsAndCreate(BuildHotCodeDllPatch);
                 //拷贝到资源
-                foreach (var dll in SettingsUtil.HotUpdateAssemblyFilesExcludePreserved)
+                foreach (var dll in SettingsUtil.HotUpdateAssemblyNamesExcludePreserved)
                 {
-                    string dllPath = $"{hotfixDllSrcDir}/{dll}";
-                    string dllBytesPath = $"{BuildHotCodeDllPatch}/{dll}.bytes";//File.Copy(srcDllPath, dllBytesPath, true);
+                    //拷贝热更代码
+                    string dllPath = $"{hotfixDllSrcDir}/{dll}.dll";
+                    string dllBytesPath = $"{BuildHotCodeDllPatch}/{dll}.dll.bytes";//File.Copy(srcDllPath, dllBytesPath, true);
                     File.Copy(dllPath, dllBytesPath, true);
                     Debug.Log($"[拷贝热更代码到热更包] 拷贝 {dllPath} -> 到{dllBytesPath}");
+                    //拷贝PDB
+                    string pdbpath= $"{hotfixDllSrcDir}/{dll}.pdb";
+                    string pdbBytesPath = $"{BuildHotCodeDllPatch}/{dll}.pdb.bytes";//File.Copy(srcDllPath, dllBytesPath, true);
+                    File.Copy(pdbpath, pdbBytesPath, true);
+                    Debug.Log($"[拷贝热更代码PDB到热更包] 拷贝 {pdbpath} -> 到{pdbBytesPath}");
                 }
                 AssetDatabase.Refresh();
             }
@@ -138,7 +144,6 @@ namespace RSJWYFamework.Editor.UtilityEditor
                 hclrLoadDLLJsonFile.Add("MetadataForAOTAssemblies", JArray.FromObject(aotAssemblies));
                 hclrLoadDLLJsonFile.Add("HotCode", JArray.FromObject(hotdlls));
                 Utility.FileAndFoder.CheckDirectoryAndFileCreate(GeneratedHotUpdateDLLJsonPath);
-                AssetDatabase.Refresh();
                 File.WriteAllText(GeneratedHotUpdateDLLJsonPath, hclrLoadDLLJsonFile.ToString());
                 AssetDatabase.Refresh();
             }

@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e0b5591-2f8b-46c2-ae63-a36e903522e5" name="更改" comment="" />
+    <list default="true" id="9e0b5591-2f8b-46c2-ae63-a36e903522e5" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/../RSJWYFamework/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../RSJWYFamework/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,10 +42,10 @@
     "RunOnceActivity.go.modules.automatic.dependencies.download": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "configurable..is.expanded": "true",
-    "git-widget-placeholder": "正在变基 dev",
+    "git-widget-placeholder": "develop",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "D:/unity/RSJWYFamework/RSJWYFameworkExceptionLogServer/logupapi",
+    "last_opened_file_path": "D:/unity/RSJWYFamework/RSJWYFameworkExceptionLogServer",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -50,6 +53,16 @@
   }
 }]]></component>
   <component name="RunManager">
+    <configuration name="go build RSJWYFameworkExceptionLogServer/logupapi" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="RSJWYFameworkExceptionLogServer" />
+      <working_directory value="$PROJECT_DIR$" />
+      <sudo value="true" />
+      <kind value="PACKAGE" />
+      <package value="RSJWYFameworkExceptionLogServer/logupapi" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/logupapi/rsjwyfameworklogup.go" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build RSJWYFameworkExceptionLogServer/logupapi" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="RSJWYFameworkExceptionLogServer" />
       <working_directory value="$PROJECT_DIR$" />
