@@ -4,30 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/FileSys/RSJWYFileSystem.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/FileSys/RSJWYFileSystem.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode.dll.bytes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode.dll.bytes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/MetadataForAOTAssemblies.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/MetadataForAOTAssemblies/UnityEngine.CoreModule.dll.bytes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/MetadataForAOTAssemblies/UnityEngine.CoreModule.dll.bytes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HybridCLRGenerate/link.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HybridCLRGenerate/link.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.HybridCLR.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.HybridCLR.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/Config/HCLRToolSetting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/Config/HCLRToolSetting.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/HybridCLR/HybridCLRToolWindows.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/HybridCLR/HybridCLRToolWindows.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/HotCodeDLL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/HotCodeDLL.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadDLLByteProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadDLLByteProcedureBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadHotCodeProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadHotCodeProcedureBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.FileAndFoder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.FileAndFoder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportantData/PrefabPackage/BuildinCatalog.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ImportantData/PrefabPackage/BuildinCatalog.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportantData/RawFilePackages/BuildinCatalog.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ImportantData/RawFilePackages/BuildinCatalog.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RSJWYFameworkExceptionLogServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../RSJWYFameworkExceptionLogServer/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,7 +138,7 @@
       <workItem from="1722221363141" duration="3391000" />
       <workItem from="1723527334019" duration="1216000" />
       <workItem from="1723528933527" duration="38000" />
-      <workItem from="1723529002749" duration="6495000" />
+      <workItem from="1723529002749" duration="7147000" />
     </task>
     <servers />
   </component>

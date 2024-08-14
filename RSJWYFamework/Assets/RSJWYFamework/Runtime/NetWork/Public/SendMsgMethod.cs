@@ -1,20 +1,21 @@
 using RSJWYFamework.Runtime.Net.Public;
-using RSJWYFamework.Runtime.Utility;
-using UnityEngine;
 
-public static partial class SendMsgMethod
+namespace RSJWYFamework.Runtime.NetWork.Public
 {
-    /// <summary>
-    /// 心跳包
-    /// </summary>
-    /// <param name="timeStamp"></param>
-    /// <returns></returns>
-    public static MsgPing SendMsgPing(long timeStamp)
+    public static partial class SendMsgMethod
     {
-        MsgPing _MsgPing = new()
+        /// <summary>
+        /// 心跳包
+        /// </summary>
+        /// <param name="timeStamp"></param>
+        /// <returns></returns>
+        public static MsgPing SendMsgPing(long timeStamp)
         {
-            timeStamp =Utility.GetTimeStamp()
-        };
-        return _MsgPing;
+            MsgPing _MsgPing = new()
+            {
+                timeStamp =Utility.Utility.GetTimeStamp()
+            };
+            return _MsgPing;
+        }
     }
 }
