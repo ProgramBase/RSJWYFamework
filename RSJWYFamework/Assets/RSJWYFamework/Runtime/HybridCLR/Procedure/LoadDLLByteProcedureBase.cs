@@ -28,7 +28,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
             UniTask.Create(async () =>
             {
                 //获取列表
-                var MFALisRFH = Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync("Config_HotCodeDLL");
+                var MFALisRFH = Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync("HotCode_HotCodeDLL");
                 await MFALisRFH.ToUniTask();
                 var loadLis = JsonConvert.DeserializeObject<HotCodeDLL>(MFALisRFH.GetRawFileText());
                 var hotCodeBytesMap = new Dictionary<string, HotCodeBytes>();

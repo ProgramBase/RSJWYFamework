@@ -37,18 +37,18 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-      - CollectPath: Assets/HotUpdateAssets/HotCode/HotPDB
-        CollectorGUID: 70133208f03536a48a475169b071353e
+      - CollectPath: Assets/HotUpdateAssets/HotCode/MetadataForAOTAssemblies
+        CollectorGUID: 883c203fc8ee7dc40b14d18edac8519e
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-      - CollectPath: Assets/HotUpdateAssets/HotCode/MetadataForAOTAssemblies
-        CollectorGUID: 883c203fc8ee7dc40b14d18edac8519e
+      - CollectPath: Assets/HotUpdateAssets/HotCode/List
+        CollectorGUID: e3d575cf570fe094185c8efbb2ee9fc8
         CollectorType: 0
-        AddressRuleName: AddressByFileName
+        AddressRuleName: AddressByGroupAndFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
         AssetTags: 
@@ -77,7 +77,7 @@ MonoBehaviour:
     - GroupName: Reference
       GroupDesc: "\u5F15\u7528"
       AssetTags: 
-      ActiveRuleName: DisableGroup
+      ActiveRuleName: EnableGroup
       Collectors:
       - CollectPath: Assets/HotUpdateAssets/Reference
         CollectorGUID: 24c3e8ddc0fdb524090743553a7c2335
@@ -94,7 +94,7 @@ MonoBehaviour:
       Collectors:
       - CollectPath: Assets/HotUpdateAssets/Shader
         CollectorGUID: ad6af784dbb3236408abf9882b9432e1
-        CollectorType: 0
+        CollectorType: 1
         AddressRuleName: AddressByFileName
         PackRuleName: PackGroup
         FilterRuleName: CollectShader

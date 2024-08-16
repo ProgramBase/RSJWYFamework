@@ -6,22 +6,9 @@ using Debug = System.Diagnostics.Debug;
 
 namespace RSJWYFamework.Runtime.Logger
 {
-    /// <summary>
-    /// 自定义日志处理
-    /// </summary>
-    public interface ILogger
-    {
-        void Log(string message);
-        void Warning(string message);
-        void Error(string message);
-        void Exception(System.Exception exception);
-        
-        void Exception(string e);
-    }
 
     public static class RSJWYLogger
     {
-
         /// <summary>
         /// 日志
         /// </summary>
@@ -52,8 +39,12 @@ namespace RSJWYFamework.Runtime.Logger
         {
             UnityEngine.Debug.LogWarning(info);
             if (!Debugger.IsLogging())
+            {
+                // 获取堆栈跟踪信息
+                StackTrace stackTrace = new StackTrace(1, true); // 1 表示跳过当前方法帧，true 表示包含文件信息
                 Main.Main.ExceptionLogManager
-                    .UnityLogMessageReceivedThreadedEvent(info, null, LogType.Warning);
+                    .UnityLogMessageReceivedThreadedEvent(info, stackTrace.ToString(), LogType.Warning);
+            }
         }
         /// <summary>
         /// 警告
