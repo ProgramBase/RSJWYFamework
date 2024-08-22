@@ -37,6 +37,12 @@ namespace Script.AOT
             await Main.YooAssetManager.LoadPackage();
             RSJWYLogger.Log("包初始化完成，加载热更代码");
             await Main.HybridClrManager.LoadHotCodeDLL();
+            
+            RSJWYLogger.Log("加载入口");
+            var prefab = Main.YooAssetManager.PrefabPackage.LoadAssetAsync("Prefab_GameObject");
+            await prefab.ToUniTask();
+            var Io = prefab.InstantiateAsync();
+            await Io.ToUniTask();
         }
         protected void OnApplicationQuit()
         {

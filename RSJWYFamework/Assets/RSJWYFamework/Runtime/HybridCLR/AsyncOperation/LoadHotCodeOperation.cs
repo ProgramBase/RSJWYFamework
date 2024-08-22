@@ -33,17 +33,8 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
             pc.AddProcedure(new LoadDLLByteProcedureBase());
             pc.AddProcedure(new LoadHotCodeProcedureBase());
             pc.AddProcedure(new LoadHotCodeDone());
-            pc.StartProcedure(typeof(LoadDLLByteProcedureBase));
         }
-        internal override void InternalOnUpdatePerSecond(float time)
-        {
-        }
-
-        protected override void OnStart()
-        {
-        }
-
-        protected override void OnUpdate(float time, float deltaTime)
+        internal override void InternalOnUpdate(float time, float deltaTime)
         {
             if (_steps == RSteps.None || _steps == RSteps.Done)
                 return;
@@ -59,8 +50,25 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
             }
         }
 
+        protected override void OnStart()
+        {
+            _steps = RSteps.Update;
+            pc.StartProcedure(typeof(LoadDLLByteProcedureBase));
+        }
+
+        protected override void OnUpdate(float time, float deltaTime)
+        {
+           
+        }
+
         protected override void OnAbort()
         {
+            
+        }
+
+        internal override void InternalOnUpdatePerSecond(float time)
+        {
+            
         }
 
         public void Exception(ProcedureException exception)

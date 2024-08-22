@@ -27,14 +27,14 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
             pc = new ProcedureController(this);
             // 创建状态机
             //2.2.1版本 offlinePlayMode EditorSimulateMode 需要依次调用init, request version, update manifest 三部曲
-            pc.AddProcedure(new InitPackageProcedureBase());
-            pc.AddProcedure(new UpdatePackageVersionProcedureBase());
-            pc.AddProcedure(new UpdatePackageManifestProcedureBase());
-            pc.AddProcedure(new CreatePackageDownloaderProcedureBase());
-            pc.AddProcedure(new DownloadPackageFilesProcedureBase());
-            pc.AddProcedure(new DownloadPackageOverProcedureBase());
+            pc.AddProcedure(new InitPackageProcedure());
+            pc.AddProcedure(new UpdatePackageVersionProcedure());
+            pc.AddProcedure(new UpdatePackageManifestProcedur());
+            pc.AddProcedure(new CreatePackageDownloaderProcedure());
+            pc.AddProcedure(new DownloadPackageFilesProcedure());
+            pc.AddProcedure(new DownloadPackageOverProcedure());
             pc.AddProcedure(new ClearPackageCacheProcedureBase());
-            pc.AddProcedure(new UpdaterDoneProcedureBase());
+            pc.AddProcedure(new UpdaterDoneProcedure());
             //写入数据
             pc.SetBlackboardValue("PlayMode",playMode);
             pc.SetBlackboardValue("PackageName",packageName);
@@ -49,7 +49,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
             if(_steps == RSteps.Update)
             {
                 pc.OnUpdate(time,deltaTime);
-                if(pc.GetNowProcedure() == typeof(UpdaterDoneProcedureBase))
+                if(pc.GetNowProcedure() == typeof(UpdaterDoneProcedure))
                 {
                     Status = RAsyncOperationStatus.Succeed;
                     _steps = RSteps.Done;
@@ -65,7 +65,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
         protected override void OnStart()
         {
             _steps = RSteps.Update;
-            pc.StartProcedure(typeof(InitPackageProcedureBase));
+            pc.StartProcedure(typeof(InitPackageProcedure));
         }
 
         protected override void OnUpdate(float time, float deltaTime)
