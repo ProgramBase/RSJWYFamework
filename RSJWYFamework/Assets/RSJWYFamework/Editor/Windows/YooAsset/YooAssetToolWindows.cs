@@ -46,15 +46,14 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
         [ButtonGroup("构建按钮")]
         void BuildPrefabPackage()
         {
-            Build(SettingData.Prefab.PackageName,SettingData.Prefab.BuildPipeline);
+            Build(SettingData.PrefabP.PackageName,SettingData.PrefabP.BuildPipeline);
         }
         [Button("构建RawFile包",ButtonSizes.Gigantic)]
         [ButtonGroup("构建按钮")]
         void BuildRawFilePackage()
         {
-            Build(SettingData.RawFile.PackageName,SettingData.Prefab.BuildPipeline);
+            Build(SettingData.RawFileP.PackageName,SettingData.PrefabP.BuildPipeline);
         }
-        
         
         
         private void Build(string PackageName,EDefaultBuildPipeline BuildPipeline)

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: BuildinCatalog
   m_EditorClassIdentifier: 
   PackageName: PrefabPackage
-  PackageVersion: 2024-07-26-609
+  PackageVersion: 0.1
   Wrappers:
-  - BundleGUID: 99518f16f0cd3c260fb9dab9a4e4bf47
-    FileName: 99518f16f0cd3c260fb9dab9a4e4bf47.bundle
+  - BundleGUID: 4c42c98b2769d9a404018d26d30094c9
+    FileName: prefabpackage_assets_hotupdateassets_prefab_4c42c98b2769d9a404018d26d30094c9.bundle
+  - BundleGUID: 543d243ba19cde994d7688857db7e72b
+    FileName: prefabpackage_unityshaders_543d243ba19cde994d7688857db7e72b.bundle

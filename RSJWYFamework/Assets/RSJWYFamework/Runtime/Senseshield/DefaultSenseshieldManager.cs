@@ -43,12 +43,6 @@ namespace RSJWYFamework.Runtime.Senseshield
 
         public void Init()
         {
-            uint ret = 0;
-            
-            string StrMsg = string.Empty;
-            IntPtr a = IntPtr.Zero;
-            IntPtr desc = IntPtr.Zero;
-            
             isInit=SenseshieldServerHelp.Init(developerPW);
             var json = SenseshieldServerHelp.GetAllDevice();
             var id = SenseshieldServerHelp.GetLicenseId(json[0]);
@@ -61,8 +55,6 @@ namespace RSJWYFamework.Runtime.Senseshield
                 var test = SenseshieldServerHelp.GetInfoLicenseInfo(Handle);
 
             }
-           
-
         }
         public void Close()
         {

@@ -1,4 +1,9 @@
+using System;
 using System.IO;
+using System.Text;
+using RSJWYFamework.Runtime.ExceptionLogManager;
+using RSJWYFamework.Runtime.Logger;
+using RSJWYFamework.Runtime.Senseshield;
 using UnityEngine;
 using YooAsset;
 
@@ -73,7 +78,56 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
                 return $"{_fallbackHostServer}/{fileName}";
             }
         }
+        
+#if UNITY_EDITOR
+        /// <summary>
+        /// 加密资源包-原生资源
+        /// </summary>
+        public class EncryptRF : IEncryptionServices
+        {
+            public EncryptResult Encrypt(EncryptFileInfo fileInfo)
+            {
+                // 注意：针对特定规则加密
+                if (fileInfo.BundleName.Contains("_assets_hotupdateassets_hotcode_"))
+                {
+                    RSJWYLogger.Log($"加密文件{fileInfo.BundleName}");
+                    byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
 
+                    var edata = Utility.Utility.AESTool.AESEncrypt(fileData,"");
+                    
+                    EncryptResult result = new EncryptResult();
+                    result.Encrypted = true;
+                    result.EncryptedData = edata;
+                    return result;
+                }
+                else
+                {
+                    EncryptResult result = new EncryptResult();
+                    result.Encrypted = false;
+                    return result;
+                }
+            }
+        }
+        /// <summary>
+        /// 加密资源包-资源文件
+        /// </summary>
+        public class EncryptPF : IEncryptionServices
+        {
+            public EncryptResult Encrypt(EncryptFileInfo fileInfo)
+            {
+                // 注意：针对特定规则加密
+                RSJWYLogger.Log($"加密文件{fileInfo.BundleName}");
+                byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
+
+                var edata = Utility.Utility.AESTool.AESEncrypt(fileData,"");
+                    
+                EncryptResult result = new EncryptResult();
+                result.Encrypted = true;
+                result.EncryptedData = edata;
+                return result;
+            }
+        }
+#endif
         /// <summary>
         /// 资源文件流加载解密类
         /// </summary>
@@ -103,6 +157,28 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
                 managedStream = bundleStream;
                 return AssetBundle.LoadFromStreamAsync(bundleStream, fileInfo.FileLoadCRC,
                     GetManagedReadBufferSize());
+            }
+            /// <summary>
+            /// 获取加密过的Data
+            /// </summary>
+            /// <param name="fileInfo"></param>
+            /// <returns></returns>
+            public byte[] ReadFileData(DecryptFileInfo fileInfo)
+            {
+                RSJWYLogger.Log($"解密文件{fileInfo.BundleName}");
+                byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
+                return Utility.Utility.AESTool.AESEncrypt(fileData,"");
+            }
+            /// <summary>
+            /// 获取加密过的Text
+            /// </summary>
+            /// <param name="fileInfo"></param>
+            /// <returns></returns>
+            public string ReadFileText(DecryptFileInfo fileInfo)
+            {
+                byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
+                var DData= Utility.Utility.AESTool.AESEncrypt(fileData,"");
+                return File.ReadAllText(fileInfo.FileLoadPath, Encoding.UTF8);
             }
 
             private static uint GetManagedReadBufferSize()
@@ -152,6 +228,16 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
             {
                 managedStream = null;
                 return AssetBundle.LoadFromFileAsync(fileInfo.FileLoadPath, fileInfo.FileLoadCRC, GetFileOffset());
+            }
+
+            public byte[] ReadFileData(DecryptFileInfo fileInfo)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public string ReadFileText(DecryptFileInfo fileInfo)
+            {
+                throw new System.NotImplementedException();
             }
 
             private static ulong GetFileOffset()

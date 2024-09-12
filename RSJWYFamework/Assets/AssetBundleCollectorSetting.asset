@@ -16,8 +16,8 @@ MonoBehaviour:
   ShowEditorAlias: 1
   UniqueBundleName: 1
   Packages:
-  - PackageName: RawFilePackages
-    PackageDesc: "\u539F\u751F\u6587\u4EF6"
+  - PackageName: RawFilePackage
+    PackageDesc: "\u70ED\u66F4\u4EE3\u7801"
     EnableAddressable: 1
     LocationToLower: 0
     IncludeAssetGUID: 1
@@ -29,24 +29,24 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/HotUpdateAssets/HotCode/HotCode
-        CollectorGUID: 2278bf733314fbc4d9cc3d1c0cd5d2f7
+      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/HotCode
+        CollectorGUID: 72bb78504a138914582cb7d70e5c039b
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackRawFile
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-      - CollectPath: Assets/HotUpdateAssets/HotCode/MetadataForAOTAssemblies
-        CollectorGUID: 883c203fc8ee7dc40b14d18edac8519e
+      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/List
+        CollectorGUID: e3d575cf570fe094185c8efbb2ee9fc8
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-      - CollectPath: Assets/HotUpdateAssets/HotCode/List
-        CollectorGUID: e3d575cf570fe094185c8efbb2ee9fc8
+      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/MetadataForAOTAssemblies
+        CollectorGUID: 883c203fc8ee7dc40b14d18edac8519e
         CollectorType: 0
         AddressRuleName: AddressByGroupAndFileName
         PackRuleName: PackDirectory
@@ -54,18 +54,10 @@ MonoBehaviour:
         AssetTags: 
         UserData: 
     - GroupName: Config
-      GroupDesc: "\u914D\u7F6E\u6587\u4EF6"
+      GroupDesc: 
       AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/HotUpdateAssets/Config
-        CollectorGUID: d7f4c66ddbde8b140a38861877f12563
-        CollectorType: 0
-        AddressRuleName: AddressByGroupAndFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
+      ActiveRuleName: DisableGroup
+      Collectors: []
   - PackageName: PrefabPackage
     PackageDesc: "\u9884\u5236\u4F53"
     EnableAddressable: 1

@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: YooAssetModuleSetting
   m_EditorClassIdentifier: 
   PlayMode: 0
-  Prefab:
+  PrefabP:
     PackageName: PrefabPackage
     BuildPipeline: 0
-  RawFile:
-    PackageName: RawFilePackages
+  RawFileP:
+    PackageName: RawFilePackage
+    BuildPipeline: 2
+  HotCodeP:
+    PackageName: HotCodePackages
     BuildPipeline: 2
   hostServerIP: "http://192.168.124.21:32768/d/\u70ED\u66F4\u6D4B\u8BD5"

@@ -5,65 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/StreamingAssets/RSJWYFamerowk/LogConfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/StreamingAssets/RSJWYFamerowk/LogConfig.json.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/.signature.p7s" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/Icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/Icon.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/LICENSE.TXT" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/LICENSE.TXT.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/Microsoft.Bcl.AsyncInterfaces.nuspec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/Microsoft.Bcl.AsyncInterfaces.nuspec.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/THIRD-PARTY-NOTICES.TXT" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/THIRD-PARTY-NOTICES.TXT.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/lib.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/lib/netstandard2.1.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.xml.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/useSharedDesignerContext.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/useSharedDesignerContext.txt.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2/.signature.p7s" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2/N.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2/N.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2/NLog.nuspec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2/NLog.nuspec.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2/lib.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2/lib/netstandard2.0.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2/lib/netstandard2.0/NLog.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2/lib/netstandard2.0/NLog.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2/lib/netstandard2.0/NLog.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/NLog.5.3.2/lib/netstandard2.0/NLog.xml.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/AsyncOperation/LoadHotCodeOperation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/AsyncOperation/LoadHotCodeOperation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Logger/RSJWYLogger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Logger/RSJWYLogger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/LoadPackagesOperation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/LoadPackagesOperation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/ClearPackageCacheProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/ClearPackageCacheProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/ClearPackageCacheProcedureBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/ClearPackageCacheProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/CreatePackageDownloaderProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/CreatePackageDownloaderProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/CreatePackageDownloaderProcedureBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/CreatePackageDownloaderProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageFilesProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageFilesProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageFilesProcedureBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageFilesProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageOverProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageOverProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageOverProcedureBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageOverProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/InitPackageProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/InitPackageProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/InitPackageProcedureBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/InitPackageProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageManifestProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageManifestProcedur.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageManifestProcedureBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageManifestProcedur.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedureBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdaterDoneProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdaterDoneProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdaterDoneProcedureBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdaterDoneProcedure.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/LoadServer_AOT.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/HotCode/NewBehaviourScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/HotCode/NewBehaviourScript.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/NewBehaviourScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/NewBehaviourScript.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/RSJWYFamerowk/NLog.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/RSJWYFamerowk/NLog.config.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Config/HotCodeDLL.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Config/HotCodeDLL.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode/HotCode.dll.bytes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode/HotCode.dll.bytes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode/HotCode.pdb.bytes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode/HotCode.pdb.bytes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/List.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/List/HotCodeDLL.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/List/HotCodeDLL.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/MetadataForAOTAssemblies.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/MetadataForAOTAssemblies/UnityEngine.CoreModule.dll.bytes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/MetadataForAOTAssemblies/UnityEngine.CoreModule.dll.bytes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HybridCLRGenerate/AOTGenericReferences.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HybridCLRGenerate/AOTGenericReferences.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/YooAssetToolWindows.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/YooAssetToolWindows.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/DefaultYooAssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/DefaultYooAssetManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Tool/YooAssetManagerTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Tool/YooAssetManagerTool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportantData/PrefabPackage/BuildinCatalog.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ImportantData/PrefabPackage/BuildinCatalog.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportantData/RawFilePackages/BuildinCatalog.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ImportantData/RawFilePackages/BuildinCatalog.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/RSJWYFamerowk/LogConfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/RSJWYFamerowk/LogConfig.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/HybridCLRSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/HybridCLRSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +127,7 @@
       <method v="2" />
     </configuration>
     <configuration name="独立播放器" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/Desktop/新建文件夹 (2)\AA.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/Desktop/新建文件夹\测试软件.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="C:\Users\Administrator\Desktop\新建文件夹 (2)" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -171,10 +142,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="22664">
+    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="22664" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -220,6 +191,8 @@
       <workItem from="1723792201488" duration="5817000" />
       <workItem from="1724042951299" duration="9108000" />
       <workItem from="1724291267885" duration="12756000" />
+      <workItem from="1724307528607" duration="1061000" />
+      <workItem from="1726112035639" duration="6254000" />
     </task>
     <servers />
   </component>

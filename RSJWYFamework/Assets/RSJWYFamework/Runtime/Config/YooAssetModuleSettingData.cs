@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using RSJWYFamework.Runtime.Data;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 using YooAsset;
 
 namespace RSJWYFamework.Runtime.YooAssetModule
@@ -12,9 +13,9 @@ namespace RSJWYFamework.Runtime.YooAssetModule
         [Required][LabelText("运行模式")]
         public EPlayMode PlayMode = EPlayMode.EditorSimulateMode;
         [LabelText("预制体包")]
-        public YooAssetModulePackageData Prefab;
-        [LabelText("原生文件包")]
-        public YooAssetModulePackageData RawFile;
+        public YooAssetModulePackageData PrefabP;
+         [LabelText("原生文件包")]
+        public YooAssetModulePackageData RawFileP;
 
         [BoxGroup("Host配置")]
         [LabelText("资源根地址")]

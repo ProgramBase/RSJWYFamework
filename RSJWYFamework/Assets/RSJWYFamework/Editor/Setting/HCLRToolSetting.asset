@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d25cc446f0f42f4fa6c8f2d2f644277, type: 3}
   m_Name: HCLRToolSetting
   m_EditorClassIdentifier: 
-  BuildHotCodeDllPatch: Assets/HotUpdateAssets/HotCode/HotCode
-  BuildHotCodePDBPatch: Assets/HotUpdateAssets/HotCode/HotCodePDB
-  BuildMetadataForAOTAssembliesDllPatch: Assets/HotUpdateAssets/HotCode/MetadataForAOTAssemblies
-  GeneratedHotUpdateDLLJson: Assets/HotUpdateAssets/HotCode/List/HotCodeDLL.json
+  BuildHotCodeDllPatch: Assets/HotUpdateAssets/HotUpdateCode/HotCode
+  BuildMetadataForAOTAssembliesDllPatch: Assets/HotUpdateAssets/HotUpdateCode/MetadataForAOTAssemblies
+  GeneratedHotUpdateDLLJson: Assets/HotUpdateAssets/HotUpdateCode/List/HotCodeDLL.json

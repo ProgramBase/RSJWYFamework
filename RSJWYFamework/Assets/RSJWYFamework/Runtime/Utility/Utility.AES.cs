@@ -160,8 +160,8 @@ namespace RSJWYFamework.Runtime.Utility
                 }
 
                 byte[] m_strEncrypt;
-                byte[] m_btIV = Convert.FromBase64String("Rkb4jvUy/ye7Cd7k89QQgQ==");
-                byte[] m_salt = Convert.FromBase64String("gsf4jvkyhye5/d7k8OrLgM==");
+                byte[] m_btIV = Convert.FromBase64String("rBRPa2ypTMMGtbK7n9dPisd36TzjZdyQjT==");
+                byte[] m_salt = Convert.FromBase64String("FMAAmASK7ncTa3PxPmaJtsYBTr4a21aw2r==");
                 Rijndael m_AESProvider = Rijndael.Create();
                 try
                 {
@@ -230,8 +230,8 @@ namespace RSJWYFamework.Runtime.Utility
                 }
 
                 byte[] m_strDecrypt;
-                byte[] m_btIV = Convert.FromBase64String("Rkb4jvUy/ye7Cd7k89QQgQ==");
-                byte[] m_salt = Convert.FromBase64String("gsf4jvkyhye5/d7k8OrLgM==");
+                byte[] m_btIV = Convert.FromBase64String("rBRPa2ypTMMGtbK7n9dPisd36TzjZdyQjT==");
+                byte[] m_salt = Convert.FromBase64String("FMAAmASK7ncTa3PxPmaJtsYBTr4a21aw2r==");
                 Rijndael m_AESProvider = Rijndael.Create();
                 try
                 {
