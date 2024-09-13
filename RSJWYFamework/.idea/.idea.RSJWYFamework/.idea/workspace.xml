@@ -6,35 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Config/HotCodeDLL.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Config/HotCodeDLL.json.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode/HotCode.dll.bytes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode/HotCode.dll.bytes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode/HotCode.pdb.bytes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/HotCode/HotCode.pdb.bytes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/List.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/List/HotCodeDLL.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/List/HotCodeDLL.json.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/MetadataForAOTAssemblies.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/MetadataForAOTAssemblies/UnityEngine.CoreModule.dll.bytes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotCode/MetadataForAOTAssemblies/UnityEngine.CoreModule.dll.bytes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HybridCLRGenerate/AOTGenericReferences.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HybridCLRGenerate/AOTGenericReferences.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/YooAssetToolWindows.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/YooAssetToolWindows.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/DefaultYooAssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/DefaultYooAssetManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.AES.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.AES.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Tool/YooAssetManagerTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Tool/YooAssetManagerTool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportantData/PrefabPackage/BuildinCatalog.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ImportantData/PrefabPackage/BuildinCatalog.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportantData/RawFilePackages/BuildinCatalog.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ImportantData/RawFilePackages/BuildinCatalog.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/RSJWYFamerowk/LogConfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/RSJWYFamerowk/LogConfig.json.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/HybridCLRSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/HybridCLRSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +49,11 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/9c/874fb8d0/AsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/bc/e5b6bc52/ResourcesAPIInternal.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/fd/a5fa7e76/Resources.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d248f12cb1984690921c0baddbc784026200/c3/4776eddc/AssetBundle.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4b6a1e0ce4440e6851e7faab96fbc1de7200/c9/d1d623ad/LogManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/15/ef9f54e7/FileStream.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/36/cb6635bc/File.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/3b/bb4d949b/Stream.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5a83f26a7bb1cfdddba86fba3e3a9df693c5327962694fdeeb76548f26299323/Logger-generated.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/714a62ca061ca7296a83270e66b1ce9afa958fa3966434e5c6becb472e2b/Logger-V1Compat.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8af5ddcdc55c744519ab894985d326cac92c1ab57f53e39c7d523617ef570/XmlLoggingConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
@@ -193,6 +170,7 @@
       <workItem from="1724291267885" duration="12756000" />
       <workItem from="1724307528607" duration="1061000" />
       <workItem from="1726112035639" duration="6254000" />
+      <workItem from="1726189845282" duration="8490000" />
     </task>
     <servers />
   </component>
@@ -207,6 +185,17 @@
     <option name="unityProjectFolder" value="true" />
   </component>
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <option name="LAST_COMMIT_MESSAGE" value="" />

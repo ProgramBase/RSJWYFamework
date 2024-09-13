@@ -139,24 +139,24 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
             /// </summary>
             AssetBundle IDecryptionServices.LoadAssetBundle(DecryptFileInfo fileInfo, out Stream managedStream)
             {
-                BundleStream bundleStream = new BundleStream(fileInfo.FileLoadPath, FileMode.Open, FileAccess.Read,
-                    FileShare.Read);
-                managedStream = bundleStream;
-                return AssetBundle.LoadFromStream(bundleStream, fileInfo.FileLoadCRC, GetManagedReadBufferSize());
+                RSJWYLogger.Log($"解密文件：{fileInfo.BundleName}");
+                managedStream = null;
+                byte[] AESFileData = File.ReadAllBytes(fileInfo.FileLoadPath);
+                byte[] fileData = Utility.Utility.AESTool.AESDecrypt(AESFileData, "MyTool_AOT.AESkey");
+                return AssetBundle.LoadFromMemory(fileData);
             }
 
             /// <summary>
             /// 异步方式获取解密的资源包对象
             /// 注意：加载流对象在资源包对象释放的时候会自动释放
             /// </summary>
-            AssetBundleCreateRequest IDecryptionServices.LoadAssetBundleAsync(DecryptFileInfo fileInfo,
-                out Stream managedStream)
+            AssetBundleCreateRequest IDecryptionServices.LoadAssetBundleAsync(DecryptFileInfo fileInfo, out Stream managedStream)
             {
-                BundleStream bundleStream = new BundleStream(fileInfo.FileLoadPath, FileMode.Open, FileAccess.Read,
-                    FileShare.Read);
-                managedStream = bundleStream;
-                return AssetBundle.LoadFromStreamAsync(bundleStream, fileInfo.FileLoadCRC,
-                    GetManagedReadBufferSize());
+                RSJWYLogger.Log($"解密文件：{fileInfo.BundleName}");
+                managedStream = null;
+                byte[] AESFileData = File.ReadAllBytes(fileInfo.FileLoadPath);
+                byte[] fileData = Utility.Utility.AESTool.AESDecrypt(AESFileData, "MyTool_AOT.AESkey");
+                return AssetBundle.LoadFromMemoryAsync(fileData);
             }
             /// <summary>
             /// 获取加密过的Data
@@ -178,99 +178,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
             {
                 byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
                 var DData= Utility.Utility.AESTool.AESEncrypt(fileData,"");
-                return File.ReadAllText(fileInfo.FileLoadPath, Encoding.UTF8);
-            }
-
-            private static uint GetManagedReadBufferSize()
-            {
-                return 1024;
-            }
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        /// <summary>
-        /// 资源文件偏移加载解密类
-        /// </summary>
-        public class FileOffsetDecryption : IDecryptionServices
-        {
-            /// <summary>
-            /// 同步方式获取解密的资源包对象
-            /// 注意：加载流对象在资源包对象释放的时候会自动释放
-            /// </summary>
-            AssetBundle IDecryptionServices.LoadAssetBundle(DecryptFileInfo fileInfo, out Stream managedStream)
-            {
-                managedStream = null;
-                return AssetBundle.LoadFromFile(fileInfo.FileLoadPath, fileInfo.FileLoadCRC, GetFileOffset());
-            }
-
-            /// <summary>
-            /// 异步方式获取解密的资源包对象
-            /// 注意：加载流对象在资源包对象释放的时候会自动释放
-            /// </summary>
-            AssetBundleCreateRequest IDecryptionServices.LoadAssetBundleAsync(DecryptFileInfo fileInfo,
-                out Stream managedStream)
-            {
-                managedStream = null;
-                return AssetBundle.LoadFromFileAsync(fileInfo.FileLoadPath, fileInfo.FileLoadCRC, GetFileOffset());
-            }
-
-            public byte[] ReadFileData(DecryptFileInfo fileInfo)
-            {
-                throw new System.NotImplementedException();
-            }
-
-            public string ReadFileText(DecryptFileInfo fileInfo)
-            {
-                throw new System.NotImplementedException();
-            }
-
-            private static ulong GetFileOffset()
-            {
-                return 32;
-            }
-        }
-
-        /// <summary>
-        /// 资源文件解密流
-        /// </summary>
-        public class BundleStream : FileStream
-        {
-            public const byte KEY = 64;
-
-            public BundleStream(string path, FileMode mode, FileAccess access, FileShare share) : base(path, mode,
-                access, share)
-            {
-            }
-
-            public BundleStream(string path, FileMode mode) : base(path, mode)
-            {
-            }
-
-            public override int Read(byte[] array, int offset, int count)
-            {
-                var index = base.Read(array, offset, count);
-                for (int i = 0; i < array.Length; i++)
-                {
-                    array[i] ^= KEY;
-                }
-
-                return index;
+                return Encoding.UTF8.GetString(DData);
             }
         }
     }

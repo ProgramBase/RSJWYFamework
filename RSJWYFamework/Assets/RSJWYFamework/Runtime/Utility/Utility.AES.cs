@@ -17,6 +17,10 @@ namespace RSJWYFamework.Runtime.Utility
         {
             private static string AESHead = "AESEncrypt";
 
+            private const string btIV="rBRPa2ypTMMGtbK7n9dPisd36TzjZdyQjT";
+            private const string salt="FMAAmASK7ncTa3PxPmaJtsYBTr4a21aw2r";
+
+
             /// <summary>
             /// 文件加密，传入文件路径
             /// </summary>
@@ -160,8 +164,8 @@ namespace RSJWYFamework.Runtime.Utility
                 }
 
                 byte[] m_strEncrypt;
-                byte[] m_btIV = Convert.FromBase64String("rBRPa2ypTMMGtbK7n9dPisd36TzjZdyQjT==");
-                byte[] m_salt = Convert.FromBase64String("FMAAmASK7ncTa3PxPmaJtsYBTr4a21aw2r==");
+                byte[] m_btIV = Convert.FromBase64String(btIV);
+                byte[] m_salt = Convert.FromBase64String(salt);
                 Rijndael m_AESProvider = Rijndael.Create();
                 try
                 {
@@ -230,8 +234,8 @@ namespace RSJWYFamework.Runtime.Utility
                 }
 
                 byte[] m_strDecrypt;
-                byte[] m_btIV = Convert.FromBase64String("rBRPa2ypTMMGtbK7n9dPisd36TzjZdyQjT==");
-                byte[] m_salt = Convert.FromBase64String("FMAAmASK7ncTa3PxPmaJtsYBTr4a21aw2r==");
+                byte[] m_btIV = Convert.FromBase64String(btIV);
+                byte[] m_salt = Convert.FromBase64String(salt);
                 Rijndael m_AESProvider = Rijndael.Create();
                 try
                 {
