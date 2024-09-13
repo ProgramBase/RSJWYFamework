@@ -95,32 +95,32 @@ namespace RSJWYFamework.Runtime.Senseshield
     public class SenseShieldLicenseInfoJson
     {
         /// <summary>
-        /// 
+        /// ID
         /// </summary>
         [JsonProperty("license_id")]
         public int LicenseId { get; set; }
         /// <summary>
-        /// 
+        /// 授权是否有效
         /// </summary>
         [JsonProperty("enable")]
         public bool Enable { get; set; }
         /// <summary>
-        /// 
+        /// 许可的guid 
         /// </summary>
         [JsonProperty("guid")]
         public string Guid { get; set; }
         /// <summary>
-        /// 
+        /// 授权起始时间
         /// </summary>
         [JsonProperty("start_time")]
         public int StartTime { get; set; }
         /// <summary>
-        /// 
+        /// 授权到期时间
         /// </summary>
         [JsonProperty("end_time")]
         public int EndTime { get; set; }
         /// <summary>
-        /// 
+        /// 第一次使用时间 
         /// </summary>
         [JsonProperty("first_use_time")]
         public int FirstUseTime { get; set; }

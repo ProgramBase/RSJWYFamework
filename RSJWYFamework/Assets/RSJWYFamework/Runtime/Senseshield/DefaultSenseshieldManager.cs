@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Threading;
+using RSJWYFamework.Runtime.Config;
+using RSJWYFamework.Runtime.Logger;
+using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Module;
+using UnityEngine;
 using SLM_HANDLE_INDEX = System.UInt32;
 
 namespace RSJWYFamework.Runtime.Senseshield
@@ -35,27 +39,34 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// 是否登录
         /// </summary>
         public bool isLogin { get; private set; }
-        /// <summary>
-        /// 开发者密钥
-        /// 注意，每个开发者SDK和密钥一一绑定
-        /// </summary>
-        const string developerPW = "";
 
-        public void Init()
+        private ProjectConfig pc;
+        
+        public void Start()
         {
-            isInit=SenseshieldServerHelp.Init(developerPW);
-            var json = SenseshieldServerHelp.GetAllDevice();
-            var id = SenseshieldServerHelp.GetLicenseId(json[0]);
-            var _loginHandle =SenseshieldServerHelp.LoginSS(id[1]);
+            if (!isInit) return;
+            var _loginHandle =SenseshieldServerHelp.LoginSS((uint)pc.licenseID);
             isLogin = _loginHandle.loginSuccess;
             if (_loginHandle.loginSuccess)
             {
                 Handle = _loginHandle.Handle;
-                //var asaa= SenseshieldServerHelp.DeviceCertVerify(Handle);
-                var test = SenseshieldServerHelp.GetInfoLicenseInfo(Handle);
-
             }
         }
+
+        public void Init()
+        {
+            var pc =  Resources.Load<ProjectConfig>("ProjectConfig");
+            isInit=SenseshieldServerHelp.Init(pc.developerPW);
+            if (!isInit)
+            {
+                RSJWYLogger.Error(RSJWYFameworkEnum.SenseShield,"初始化Virbox失败");
+            }
+            else
+            {
+                RSJWYLogger.Log(RSJWYFameworkEnum.SenseShield,$"本机授权许可总数为：{SenseshieldServerHelp.GetAllDevice().Length}");
+            }
+        }
+
         public void Close()
         {
             if (isInit)

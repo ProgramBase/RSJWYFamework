@@ -81,7 +81,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
         /// <summary>
         /// 资源文件流加载解密类
         /// </summary>
-        public class FileStreamDecryption : IDecryptionServices
+        public class FileDecryption : IDecryptionServices
         {
             /// <summary>
             /// 同步方式获取解密的资源包对象

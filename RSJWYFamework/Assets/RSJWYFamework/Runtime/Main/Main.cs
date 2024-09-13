@@ -29,8 +29,6 @@ namespace RSJWYFamework.Runtime.Main
         public static RAsyncOperationSystem RAsyncOperationSystem{get; private set; }
         public static ReferencePoolManager ReferencePoolManager {get; private set; }
         
-        public static ReferencePoolManager SenseshieldManager {get; private set; }
-
         /// <summary>
         /// 初始化框架服务
         /// </summary>

@@ -52,6 +52,12 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// <returns></returns>
         public static bool Init(string apikey)
         {
+            if (apikey==String.Empty)
+            {
+                RSJWYLogger.Error(RSJWYFameworkEnum.SenseShield,"输入的开发者密钥为空，无法执行初始化流程");
+                return false;
+            }
+            
             uint ret = 0;
             ST_INIT_PARAM initPram = new ST_INIT_PARAM();
             initPram.version =SSDefine.SLM_CALLBACK_VERSION02;

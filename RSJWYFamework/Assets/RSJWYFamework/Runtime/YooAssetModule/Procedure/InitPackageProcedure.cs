@@ -43,7 +43,8 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             var package = YooAssets.TryGetPackage(packageName);
             if (package == null)
                 package = YooAssets.CreatePackage(packageName);
-
+            
+                
             // 编辑器下的模拟模式
             InitializationOperation initializationOperation = null;
             if (playMode == EPlayMode.EditorSimulateMode)
@@ -55,14 +56,16 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
                 };
                 initializationOperation = package.InitializeAsync(createParameters);
             }
-
             // 单机运行模式
             if (playMode == EPlayMode.OfflinePlayMode)
             {
+                var fs= buildPipeline == EDefaultBuildPipeline.RawFileBuildPipeline.ToString() 
+                        ? FileSystemParameters.CreateDefaultBuildinRawFileSystemParameters(new YooAssetManagerTool.FileDecryption()) 
+                        : FileSystemParameters.CreateDefaultBuildinFileSystemParameters(new YooAssetManagerTool.FileDecryption());
+                
                 var createParameters = new OfflinePlayModeParameters
                 {
-                    BuildinFileSystemParameters = FileSystemParameters.CreateDefaultBuildinFileSystemParameters()
-                    
+                    BuildinFileSystemParameters =fs
                 };
                 initializationOperation = package.InitializeAsync(createParameters);
             }
@@ -73,10 +76,24 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
                 string defaultHostServer = YooAssetManagerTool.GetHostServerURL(packageName);
                 string fallbackHostServer = YooAssetManagerTool.GetHostServerURL(packageName);
                 IRemoteServices remoteServices = new YooAssetManagerTool.RemoteServices(defaultHostServer, fallbackHostServer);
+                
+                FileSystemParameters bfsp;
+                FileSystemParameters cfsp;
+                if (buildPipeline == EDefaultBuildPipeline.RawFileBuildPipeline.ToString() )
+                {
+                    bfsp = FileSystemParameters.CreateDefaultBuildinRawFileSystemParameters(new YooAssetManagerTool.FileDecryption());
+                    cfsp = FileSystemParameters.CreateDefaultCacheRawFileSystemParameters(remoteServices,new YooAssetManagerTool.FileDecryption());
+                }
+                else
+                {
+                    bfsp = FileSystemParameters.CreateDefaultBuildinFileSystemParameters(new YooAssetManagerTool.FileDecryption());
+                    cfsp = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices,new YooAssetManagerTool.FileDecryption());
+                }
+                
                 var createParameters = new HostPlayModeParameters
                 {
-                    BuildinFileSystemParameters = FileSystemParameters.CreateDefaultBuildinFileSystemParameters(),
-                    CacheFileSystemParameters = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices)
+                    BuildinFileSystemParameters = bfsp,
+                    CacheFileSystemParameters = cfsp
                 };
                 initializationOperation = package.InitializeAsync(createParameters);
             }
@@ -89,7 +106,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
                     WebFileSystemParameters = FileSystemParameters.CreateDefaultWebFileSystemParameters()
                 };
                 initializationOperation = package.InitializeAsync(createParameters);*/
-                pc.modle.Exception(new ProcedureException($"初始化包：{packageName}失败！Error：本框架不支持WebGL运行模式"));
+                pc.modle.Exception(new ProcedureException($"初始化包：{packageName}失败！Error：本框架不支持WebGL运行模式，没用过，无法测试"));
             }
 
             await initializationOperation.ToUniTask();
