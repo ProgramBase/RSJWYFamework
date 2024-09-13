@@ -29,9 +29,8 @@ namespace Script.AOT
 
         async UniTaskVoid StartApp()
         {
-            var projectset =  Resources.LoadAsync<ProjectConfig>("ProjectConfig");
-            projectset.ToUniTask();
-            Main.DataManagerataManager.AddDataSet(projectset.asset as ProjectConfig);
+            var projectset =  Resources.Load<ProjectConfig>("ProjectConfig");
+            Main.DataManagerataManager.AddDataSet(projectset);
             
             RSJWYLogger.Log("等待包初始化");
             await Main.YooAssetManager.LoadPackage();

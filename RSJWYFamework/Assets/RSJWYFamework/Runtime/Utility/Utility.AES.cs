@@ -16,9 +16,14 @@ namespace RSJWYFamework.Runtime.Utility
         public static class AESTool
         {
             private static string AESHead = "AESEncrypt";
-
-            private const string btIV="rBRPa2ypTMMGtbK7n9dPisd36TzjZdyQjT";
-            private const string salt="FMAAmASK7ncTa3PxPmaJtsYBTr4a21aw2r";
+            /// <summary>
+            /// 加密初始化向量
+            /// </summary>
+            private const string btIV="USDRPueWLTspLozzHXksCg==";
+            /// <summary>
+            /// 加密盐值
+            /// </summary>
+            private const string salt="w4PLa847ZtM3oLXuYZhf+g==";
 
 
             /// <summary>

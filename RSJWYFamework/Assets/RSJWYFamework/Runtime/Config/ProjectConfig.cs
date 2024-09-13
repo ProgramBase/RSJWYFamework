@@ -23,6 +23,12 @@ namespace RSJWYFamework.Runtime.Config
         
         [InlineEditor(InlineEditorModes.FullEditor)] 
         public YooAssetModuleSettingData YooAssets;
+        
+        [Required("请输入加密密钥")] 
+        public string AESKey;
+        
+        [Required("请输入授权绑定ID")] 
+        public int VirboxID;
 
 
 #if UNITY_EDITOR

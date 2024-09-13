@@ -1,6 +1,7 @@
 ﻿using System;
 using RSJWYFamework.Editor.Windows.Config;
 using RSJWYFamework.Runtime.YooAssetModule;
+using RSJWYFamework.Runtime.YooAssetModule.Tool;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
@@ -31,7 +32,7 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
         public EBuildMode BuildMode=EBuildMode.ForceRebuild;
 
         [LabelText("包版本")]
-        public string PackageVersion ;
+        public string PackageVersion ="test";
 
         [LabelText("文件名样式")]
         public EFileNameStyle FileNameStyle=EFileNameStyle.BundleName_HashName;
@@ -77,9 +78,15 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
             buildParameters.FileNameStyle = FileNameStyle;
             buildParameters.BuildinFileCopyOption = BuildinFileCopyOption;
             buildParameters.BuildinFileCopyParams = string.Empty;
-            //buildParameters.EncryptionServices = CreateEncryptionInstance();
             buildParameters.CompressOption = CompressOption;
-    
+            //加密服务
+            buildParameters.EncryptionServices = BuildPipeline switch
+            {
+                EDefaultBuildPipeline.BuiltinBuildPipeline => new YooAssetManagerTool.EncryptPF(),
+                EDefaultBuildPipeline.RawFileBuildPipeline => new YooAssetManagerTool.EncryptRF(),
+                _ => buildParameters.EncryptionServices
+            };
+
             // 执行构建
             BuiltinBuildPipeline pipeline = new BuiltinBuildPipeline();
             var buildResult = pipeline.Run(buildParameters, true);

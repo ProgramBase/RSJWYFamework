@@ -1,9 +1,8 @@
 using System;
 using System.IO;
 using System.Text;
-using RSJWYFamework.Runtime.ExceptionLogManager;
+using RSJWYFamework.Runtime.Config;
 using RSJWYFamework.Runtime.Logger;
-using RSJWYFamework.Runtime.Senseshield;
 using UnityEngine;
 using YooAsset;
 
@@ -79,21 +78,80 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
             }
         }
         
+        /// <summary>
+        /// 资源文件流加载解密类
+        /// </summary>
+        public class FileStreamDecryption : IDecryptionServices
+        {
+            /// <summary>
+            /// 同步方式获取解密的资源包对象
+            /// 注意：加载流对象在资源包对象释放的时候会自动释放
+            /// </summary>
+            AssetBundle IDecryptionServices.LoadAssetBundle(DecryptFileInfo fileInfo, out Stream managedStream)
+            {
+                RSJWYLogger.Log($"解密文件：{fileInfo.BundleName}");
+                managedStream = null;
+                byte[] AESFileData = File.ReadAllBytes(fileInfo.FileLoadPath);
+                byte[] fileData = Utility.Utility.AESTool.AESDecrypt(AESFileData, Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>().AESKey);
+                return AssetBundle.LoadFromMemory(fileData);
+            }
+
+            /// <summary>
+            /// 异步方式获取解密的资源包对象
+            /// 注意：加载流对象在资源包对象释放的时候会自动释放
+            /// </summary>
+            AssetBundleCreateRequest IDecryptionServices.LoadAssetBundleAsync(DecryptFileInfo fileInfo, out Stream managedStream)
+            {
+                RSJWYLogger.Log($"解密文件：{fileInfo.BundleName}");
+                managedStream = null;
+                byte[] AESFileData = File.ReadAllBytes(fileInfo.FileLoadPath);
+                byte[] fileData = Utility.Utility.AESTool.AESDecrypt(AESFileData, Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>().AESKey);
+                return AssetBundle.LoadFromMemoryAsync(fileData);
+            }
+            /// <summary>
+            /// 获取加密过的Data
+            /// </summary>
+            /// <param name="fileInfo"></param>
+            /// <returns></returns>
+            public byte[] ReadFileData(DecryptFileInfo fileInfo)
+            {
+                RSJWYLogger.Log($"解密文件{fileInfo.BundleName}");
+                byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
+                return Utility.Utility.AESTool.AESEncrypt(fileData,Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>().AESKey);
+            }
+            /// <summary>
+            /// 获取加密过的Text
+            /// </summary>
+            /// <param name="fileInfo"></param>
+            /// <returns></returns>
+            public string ReadFileText(DecryptFileInfo fileInfo)
+            {
+                byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
+                var DData= Utility.Utility.AESTool.AESEncrypt(fileData,Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>().AESKey);
+                return Encoding.UTF8.GetString(DData);
+            }
+        }
 #if UNITY_EDITOR
         /// <summary>
         /// 加密资源包-原生资源
         /// </summary>
         public class EncryptRF : IEncryptionServices
         {
+            private string aeskey;
+            public EncryptRF() : base()
+            {
+                aeskey =  Resources.Load<ProjectConfig>("ProjectConfig").AESKey;
+            }
             public EncryptResult Encrypt(EncryptFileInfo fileInfo)
             {
                 // 注意：针对特定规则加密
-                if (fileInfo.BundleName.Contains("_assets_hotupdateassets_hotcode_"))
+                if (fileInfo.BundleName.Contains("_HoteCodeEncryptionUse"))
                 {
                     RSJWYLogger.Log($"加密文件{fileInfo.BundleName}");
                     byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
 
-                    var edata = Utility.Utility.AESTool.AESEncrypt(fileData,"");
+                    var projectset =  Resources.Load<ProjectConfig>("ProjectConfig");
+                    var edata = Utility.Utility.AESTool.AESEncrypt(fileData,aeskey);
                     
                     EncryptResult result = new EncryptResult();
                     result.Encrypted = true;
@@ -113,13 +171,19 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
         /// </summary>
         public class EncryptPF : IEncryptionServices
         {
+            private string aeskey;
+            public EncryptPF() : base()
+            {
+                aeskey =  Resources.Load<ProjectConfig>("ProjectConfig").AESKey;
+            }
+
             public EncryptResult Encrypt(EncryptFileInfo fileInfo)
             {
                 // 注意：针对特定规则加密
                 RSJWYLogger.Log($"加密文件{fileInfo.BundleName}");
                 byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-
-                var edata = Utility.Utility.AESTool.AESEncrypt(fileData,"");
+                
+                var edata = Utility.Utility.AESTool.AESEncrypt(fileData,aeskey);
                     
                 EncryptResult result = new EncryptResult();
                 result.Encrypted = true;
@@ -128,58 +192,5 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
             }
         }
 #endif
-        /// <summary>
-        /// 资源文件流加载解密类
-        /// </summary>
-        public class FileStreamDecryption : IDecryptionServices
-        {
-            /// <summary>
-            /// 同步方式获取解密的资源包对象
-            /// 注意：加载流对象在资源包对象释放的时候会自动释放
-            /// </summary>
-            AssetBundle IDecryptionServices.LoadAssetBundle(DecryptFileInfo fileInfo, out Stream managedStream)
-            {
-                RSJWYLogger.Log($"解密文件：{fileInfo.BundleName}");
-                managedStream = null;
-                byte[] AESFileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-                byte[] fileData = Utility.Utility.AESTool.AESDecrypt(AESFileData, "MyTool_AOT.AESkey");
-                return AssetBundle.LoadFromMemory(fileData);
-            }
-
-            /// <summary>
-            /// 异步方式获取解密的资源包对象
-            /// 注意：加载流对象在资源包对象释放的时候会自动释放
-            /// </summary>
-            AssetBundleCreateRequest IDecryptionServices.LoadAssetBundleAsync(DecryptFileInfo fileInfo, out Stream managedStream)
-            {
-                RSJWYLogger.Log($"解密文件：{fileInfo.BundleName}");
-                managedStream = null;
-                byte[] AESFileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-                byte[] fileData = Utility.Utility.AESTool.AESDecrypt(AESFileData, "MyTool_AOT.AESkey");
-                return AssetBundle.LoadFromMemoryAsync(fileData);
-            }
-            /// <summary>
-            /// 获取加密过的Data
-            /// </summary>
-            /// <param name="fileInfo"></param>
-            /// <returns></returns>
-            public byte[] ReadFileData(DecryptFileInfo fileInfo)
-            {
-                RSJWYLogger.Log($"解密文件{fileInfo.BundleName}");
-                byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-                return Utility.Utility.AESTool.AESEncrypt(fileData,"");
-            }
-            /// <summary>
-            /// 获取加密过的Text
-            /// </summary>
-            /// <param name="fileInfo"></param>
-            /// <returns></returns>
-            public string ReadFileText(DecryptFileInfo fileInfo)
-            {
-                byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-                var DData= Utility.Utility.AESTool.AESEncrypt(fileData,"");
-                return Encoding.UTF8.GetString(DData);
-            }
-        }
     }
 }

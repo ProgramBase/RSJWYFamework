@@ -177,7 +177,9 @@ namespace RSJWYFamework.Runtime.Data
             }
             throw new RSJWYException(RSJWYFameworkEnum.Data, $"获取所有数据集失败：{type.Name} 并不是有效的数据集类型！");
         }
-
+        /// <summary>
+        /// 获取第一条数据
+        /// </summary>
         public DataBase GetDataSet(Type type, bool isCut = false)
         {
             if (dataDic.ContainsKey(type))
@@ -196,9 +198,11 @@ namespace RSJWYFamework.Runtime.Data
                     return null;
                 }
             }
-            throw new RSJWYException(RSJWYFameworkEnum.Data, $"获取所有数据集失败：{type.Name} 并不是有效的数据集类型！");
+            throw new RSJWYException(RSJWYFameworkEnum.Data, $"获取第一条数据失败：{type.Name} 并不是有效的数据集类型！");
         }
-
+        /// <summary>
+        /// 获取第一条数据
+        /// </summary>
         public TDataBase GetDataSetSB<TDataBase>( bool isCut = false)where TDataBase :DataBaseSB
         {
             var type = typeof(TDataBase);
@@ -218,9 +222,16 @@ namespace RSJWYFamework.Runtime.Data
                     return null;
                 }
             }
-            throw new RSJWYException(RSJWYFameworkEnum.Data, $"获取所有数据集失败：{type.Name} 并不是有效的数据集类型！");
+            throw new RSJWYException(RSJWYFameworkEnum.Data, $"获取第一条数据失败：{type.Name} 并不是有效的数据集类型！");
         }
-
+        /// <summary>
+        /// 获取指定索引上的数据
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="index"></param>
+        /// <param name="isCut"></param>
+        /// <returns></returns>
+        /// <exception cref="RSJWYException"></exception>
         public DataBase GetDataSet(Type type, int index, bool isCut = false)
         {
             if (dataDic.ContainsKey(type))
@@ -242,6 +253,9 @@ namespace RSJWYFamework.Runtime.Data
             throw new RSJWYException(RSJWYFameworkEnum.Data, $"获取所有数据集失败：{type.Name} 并不是有效的数据集类型！");
         }
 
+        /// <summary>
+        /// 获取指定索引上的数据
+        /// </summary>
         public DataBaseSB GetDataSetSB(Type type, int index, bool isCut = false)
         {
             if (dataSBDic.ContainsKey(type))

@@ -24,7 +24,7 @@ MonoBehaviour:
     AutoCollectShaders: 1
     IgnoreRuleName: NormalIgnoreRule
     Groups:
-    - GroupName: HotCode
+    - GroupName: HotUpdateCode
       GroupDesc: "\u70ED\u66F4\u4EE3\u7801"
       AssetTags: 
       ActiveRuleName: EnableGroup
@@ -33,8 +33,8 @@ MonoBehaviour:
         CollectorGUID: 72bb78504a138914582cb7d70e5c039b
         CollectorType: 0
         AddressRuleName: AddressByFileName
-        PackRuleName: PackRawFile
-        FilterRuleName: CollectAll
+        PackRuleName: HotCodePackRule
+        FilterRuleName: HotCodeFilterRule
         AssetTags: 
         UserData: 
       - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/List
