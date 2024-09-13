@@ -49,18 +49,21 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             if (playMode == EPlayMode.EditorSimulateMode)
             {
                 var simulateBuildResult = EditorSimulateModeHelper.SimulateBuild(buildPipeline, packageName);
-                var createParameters = new EditorSimulateModeParameters();
-                createParameters.EditorFileSystemParameters =
-                    FileSystemParameters.CreateDefaultEditorFileSystemParameters(simulateBuildResult);
+                var createParameters = new EditorSimulateModeParameters
+                {
+                    EditorFileSystemParameters = FileSystemParameters.CreateDefaultEditorFileSystemParameters(simulateBuildResult)
+                };
                 initializationOperation = package.InitializeAsync(createParameters);
             }
 
             // 单机运行模式
             if (playMode == EPlayMode.OfflinePlayMode)
             {
-                var createParameters = new OfflinePlayModeParameters();
-                createParameters.BuildinFileSystemParameters =
-                    FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
+                var createParameters = new OfflinePlayModeParameters
+                {
+                    BuildinFileSystemParameters = FileSystemParameters.CreateDefaultBuildinFileSystemParameters()
+                    
+                };
                 initializationOperation = package.InitializeAsync(createParameters);
             }
 
@@ -70,26 +73,29 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
                 string defaultHostServer = YooAssetManagerTool.GetHostServerURL(packageName);
                 string fallbackHostServer = YooAssetManagerTool.GetHostServerURL(packageName);
                 IRemoteServices remoteServices = new YooAssetManagerTool.RemoteServices(defaultHostServer, fallbackHostServer);
-                var createParameters = new HostPlayModeParameters();
-                createParameters.BuildinFileSystemParameters =
-                    FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
-                createParameters.CacheFileSystemParameters =
-                    FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices);
+                var createParameters = new HostPlayModeParameters
+                {
+                    BuildinFileSystemParameters = FileSystemParameters.CreateDefaultBuildinFileSystemParameters(),
+                    CacheFileSystemParameters = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices)
+                };
                 initializationOperation = package.InitializeAsync(createParameters);
             }
 
             // WebGL运行模式
             if (playMode == EPlayMode.WebPlayMode)
             {
-                var createParameters = new WebPlayModeParameters();
-                createParameters.WebFileSystemParameters = FileSystemParameters.CreateDefaultWebFileSystemParameters();
-                initializationOperation = package.InitializeAsync(createParameters);
+                /*var createParameters = new WebPlayModeParameters
+                {
+                    WebFileSystemParameters = FileSystemParameters.CreateDefaultWebFileSystemParameters()
+                };
+                initializationOperation = package.InitializeAsync(createParameters);*/
+                pc.modle.Exception(new ProcedureException($"初始化包：{packageName}失败！Error：本框架不支持WebGL运行模式"));
             }
 
             await initializationOperation.ToUniTask();
             if (initializationOperation.Status!=EOperationStatus.Succeed)
             {
-                pc.modle.Exception(new ProcedureException($"$初始化包：{packageName}失败！Error：{initializationOperation.Error}"));
+                pc.modle.Exception(new ProcedureException($"初始化包：{packageName}失败！Error：{initializationOperation.Error}"));
             }
             pc.SwitchProcedure(typeof(UpdatePackageVersionProcedure));
         }
