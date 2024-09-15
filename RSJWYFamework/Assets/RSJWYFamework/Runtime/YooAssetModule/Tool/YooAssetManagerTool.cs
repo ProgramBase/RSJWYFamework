@@ -111,8 +111,6 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
             /// <summary>
             /// 获取加密过的Data
             /// </summary>
-            /// <param name="fileInfo"></param>
-            /// <returns></returns>
             public byte[] ReadFileData(DecryptFileInfo fileInfo)
             {
                 RSJWYLogger.Log($"解密文件{fileInfo.BundleName}");
@@ -122,8 +120,6 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
             /// <summary>
             /// 获取加密过的Text
             /// </summary>
-            /// <param name="fileInfo"></param>
-            /// <returns></returns>
             public string ReadFileText(DecryptFileInfo fileInfo)
             {
                 byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
@@ -149,20 +145,20 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
                 {
                     RSJWYLogger.Log($"加密文件{fileInfo.BundleName}");
                     byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-
-                    var projectset =  Resources.Load<ProjectConfig>("ProjectConfig");
                     var edata = Utility.Utility.AESTool.AESEncrypt(fileData,aeskey);
-                    
-                    EncryptResult result = new EncryptResult();
-                    result.Encrypted = true;
-                    result.EncryptedData = edata;
+                    EncryptResult result = new EncryptResult
+                    {
+                        Encrypted = true,
+                        EncryptedData = edata
+                    };
                     return result;
                 }
                 else
                 {
-                    EncryptResult result = new EncryptResult();
-                    result.Encrypted = false;
-                    return result;
+                    return new EncryptResult
+                    {
+                        Encrypted = false
+                    };
                 }
             }
         }
@@ -185,10 +181,11 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
                 
                 var edata = Utility.Utility.AESTool.AESEncrypt(fileData,aeskey);
                     
-                EncryptResult result = new EncryptResult();
-                result.Encrypted = true;
-                result.EncryptedData = edata;
-                return result;
+                return new EncryptResult
+                {
+                    Encrypted = true,
+                    EncryptedData = edata
+                };
             }
         }
 #endif

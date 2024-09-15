@@ -296,9 +296,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     CloseClient(serverClientSocket);
                 });
         }
-        #endregion
-
-        #region 消息发送
         /// <summary>
         /// 发送信息到客户端
         /// </summary>
@@ -394,31 +391,40 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         {
             while (!isThreadOver)
             {
-                if (msgSendQueue.Count <= 0)
+                try
                 {
-                    continue;
-                }
-                ServerToClientMsg _msgbase;
-                System.Net.Sockets.Socket _client;
-                ByteArray _sendByte;
-                //取出消息队列内的消息，但不移除队列，以获取目标客户端
-                msgSendQueue.TryPeek(out _msgbase);
-                //设置目标客户端
-                _client = _msgbase.msgTargetSocket;
-                //获取发送消息数组
-                _sendByte = _msgbase.sendBytes;
-                //发送消息
-                _client.BeginSend(_sendByte.Bytes, 0, _sendByte.length, 0, SendCallBack, _client);
-                //当前线程执行休眠，等待消息发送完成后继续
-                lock (msgSendThreadLock)
-                {
-                    //等待SendCallBack完成回调释放本锁再继续执行，超时10秒
-                    bool istimeout = Monitor.Wait(msgSendThreadLock, 20000);
-                    if (!istimeout)
+                    if (msgSendQueue.Count <= 0)
                     {
-                        RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
-                        CloseClient(ClientDic[_client]);
+                        Thread.Sleep(10);
+                        continue;
                     }
+                    ServerToClientMsg _msgbase;
+                    System.Net.Sockets.Socket _client;
+                    ByteArray _sendByte;
+                    //取出消息队列内的消息，但不移除队列，以获取目标客户端
+                    msgSendQueue.TryPeek(out _msgbase);
+                    //设置目标客户端
+                    _client = _msgbase.msgTargetSocket;
+                    //获取发送消息数组
+                    _sendByte = _msgbase.sendBytes;
+                    //发送消息
+                    _client.BeginSend(_sendByte.Bytes, 0, _sendByte.length, 0, SendCallBack, _client);
+                    //当前线程执行休眠，等待消息发送完成后继续
+                    lock (msgSendThreadLock)
+                    {
+                        //等待SendCallBack完成回调释放本锁再继续执行，超时10秒
+                        bool istimeout = Monitor.Wait(msgSendThreadLock, 20000);
+                        if (!istimeout)
+                        {
+                            RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
+                            CloseClient(ClientDic[_client]);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
                 }
             }
         }
@@ -469,6 +475,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             {
                 if (serverMsgQueue.Count <= 0)
                 {
+                    Thread.Sleep(10);
                     continue;//当前无消息，跳过进行下一次排查处理
                 }
                 //有待处理的消息
