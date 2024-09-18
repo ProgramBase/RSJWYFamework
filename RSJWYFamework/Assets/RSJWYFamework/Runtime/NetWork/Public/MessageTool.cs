@@ -190,7 +190,6 @@ namespace RSJWYFamework.Runtime.NetWork.Public
                 //此为分包，不包含完整数据
                 //因为产生了分包，可能容量不足，根据目标大小进行扩容到接收完整
                 //扩容后，retun，继续接收
-
                 byteArray.MoveBytes(); //已经完成一轮解析，移动数据
                 byteArray.ReSize(msgLength + 8); //扩容，扩容的同时，保证长度信息也能被存入
                 return;

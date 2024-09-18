@@ -1,4 +1,5 @@
 using RSJWYFamework.Runtime.Net.Public;
+using RSJWYFamework.Runtime.NetWork.Public;
 
 namespace RSJWYFamework.Runtime.NetWork.TCP.Server
 {
@@ -19,6 +20,14 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// 存储数据-接收到的数据暂存容器
         /// </summary>
         internal ByteArray ReadBuff;
+
+        /// <summary>
+        /// 客户端汇报的ID
+        /// 作为客户端的唯一标识符，以免出现同一个客户端多链接，
+        /// 需要做一个定时检查，出现重复拒绝链接以及移除已有链接，重新发起连接
+        /// </summary>
+        /// <returns></returns>
+        public string TokenID;
     }
     /// <summary>
     /// 服务器模块 消息发送数据容器
