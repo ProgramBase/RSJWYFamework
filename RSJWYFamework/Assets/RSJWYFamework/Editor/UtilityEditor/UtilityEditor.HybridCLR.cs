@@ -81,13 +81,14 @@ namespace RSJWYFamework.Editor.UtilityEditor
                 foreach (var dll in SettingsUtil.HotUpdateAssemblyNamesExcludePreserved)
                 {
                     //拷贝热更代码
-                    string dllPath = $"{hotfixDllSrcDir}/{dll}.dll";
-                    string dllBytesPath = $"{BuildHotCodeDllPatch}/{dll}.dll.bytes";//File.Copy(srcDllPath, dllBytesPath, true);
+                    string dllPath = $"{hotfixDllSrcDir}/{dll}";
+                    string dllBytesPath = $"{BuildHotCodeDllPatch}/{dll}.bytes";//File.Copy(srcDllPath, dllBytesPath, true);
                     File.Copy(dllPath, dllBytesPath, true);
                     Debug.Log($"[拷贝热更代码到热更包] 拷贝 {dllPath} -> 到{dllBytesPath}");
                     //拷贝PDB
-                    string pdbpath= $"{hotfixDllSrcDir}/{dll}.pdb";
-                    string pdbBytesPath = $"{BuildHotCodeDllPatch}/{dll}.pdb.bytes";//File.Copy(srcDllPath, dllBytesPath, true);
+                    string newdlll = Path.ChangeExtension(dll, ".pdb");
+                    string pdbpath= $"{hotfixDllSrcDir}/{newdlll}";
+                    string pdbBytesPath = $"{BuildHotCodeDllPatch}/{newdlll}.bytes";//File.Copy(srcDllPath, dllBytesPath, true);
                     File.Copy(pdbpath, pdbBytesPath, true);
                     Debug.Log($"[拷贝热更代码PDB到热更包] 拷贝 {pdbpath} -> 到{pdbBytesPath}");
                 }

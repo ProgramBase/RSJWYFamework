@@ -149,41 +149,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         #endregion
 
         #region 事件相关
-        /*
-        /// <summary>
-        /// 增加监听链接事件
-        /// </summary>
-        /// <param name="netEvent"></param>
-        /// <param name="listener"></param>
-        public void AddEventListener(NetEvent netEvent, Action listener)
-        {
-            if (m_ListenerDic.ContainsKey(netEvent))
-            {
-                m_ListenerDic[netEvent] += listener;
-            }
-            else
-            {
-                m_ListenerDic.Add(netEvent, listener);
-            }
-        }
-
-        /// <summary>
-        /// 移除监听链接事件
-        /// </summary>
-        /// <param name="netEvent"></param>
-        /// <param name="listener"></param>
-        public void RemoveEventListener(NetEvent netEvent, Action listener)
-        {
-            if (m_ListenerDic.ContainsKey(netEvent))
-            {
-                m_ListenerDic[netEvent] -= listener;
-                if (m_ListenerDic[netEvent] == null)
-                {
-                    m_ListenerDic.Remove(netEvent);
-                }
-            }
-        }
-        */
         /// <summary>
         /// 执行事件
         /// </summary>
@@ -321,7 +286,15 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             }
             try
             {
-                int count = socket.EndReceive(ar);//获取接收到的字节长度
+                 int count =socket.EndReceive(ar,out var SocketErr);//获取接收到的字节长度
+                
+                // 检查SocketError是否表示连接已断开
+                if (SocketErr is SocketError.ConnectionReset or SocketError.ConnectionAborted)
+                {
+                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"接收服务器：{socket.RemoteEndPoint.ToString()}发来的消息出错！！SocketError：{SocketErr}");
+                    Close();
+                    return;
+                }
                 if (count <= 0)
                 {
                     RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"接收服务器：{socket.RemoteEndPoint},发来的字节长度为0，可能服务器已经断开了链接，本地Socket执行连接关闭");
@@ -454,35 +427,45 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         {
             while (!isThreadOver)
             {
-                if (msgQueue.Count <= 0)
+                try
                 {
-                    continue;//当前无消息，跳过进行下一次排查处理
-                }
-                //有待处理的消息
-                MsgBase msgBase = null;
-                //取出并移除取出来的数据
-                if (!msgQueue.TryDequeue(out msgBase))
-                {
-                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpClient,"客户端消息：非正常错误！取出并处理消息队列失败！！");
-                    continue;
-                }
-                //处理取出来的数据
-                if (msgBase != null)
-                {
-                    //如果接收到是心跳包
-                    if (msgBase is MsgPing)
+                    if (msgQueue.Count <= 0)
                     {
-                        MsgPing _ServerMsg = msgBase as MsgPing;
+                        Thread.Sleep(10);
+                        continue; //当前无消息，跳过进行下一次排查处理
+                    }
 
-                        //更新接收到的心跳包时间（后台运行）
-                        lastPongTime =  Utility.Utility.GetTimeStamp();
-                        //Debug.LogFormat("收到服务器返回的心跳包！！时间戳为：{0}，同时更新本地时间戳，时间戳为：{1}", _ServerMsg.timeStamp.ToString(),lastPongTime.ToString());
-                    }
-                    else
+                    //有待处理的消息
+                    MsgBase msgBase = null;
+                    //取出并移除取出来的数据
+                    if (!msgQueue.TryDequeue(out msgBase))
                     {
-                        //其他消息交给unity消息队列处理
-                        unityMsgQueue.Enqueue(msgBase);
+                        RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpClient, "客户端消息：非正常错误！取出并处理消息队列失败！！");
+                        continue;
                     }
+
+                    //处理取出来的数据
+                    if (msgBase != null)
+                    {
+                        //如果接收到是心跳包
+                        if (msgBase is MsgPing)
+                        {
+                            MsgPing _ServerMsg = msgBase as MsgPing;
+
+                            //更新接收到的心跳包时间（后台运行）
+                            lastPongTime = Utility.Utility.GetTimeStamp();
+                            //Debug.LogFormat("收到服务器返回的心跳包！！时间戳为：{0}，同时更新本地时间戳，时间戳为：{1}", _ServerMsg.timeStamp.ToString(),lastPongTime.ToString());
+                        }
+                        else
+                        {
+                            //其他消息交给unity消息队列处理
+                            unityMsgQueue.Enqueue(msgBase);
+                        }
+                    }
+                }
+                catch (SocketException ex)
+                {
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"消息处理失败 SendMessage Error:{ex.ToString()}");
                 }
             }
         }
@@ -494,27 +477,35 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         {
             while (!isThreadOver)
             {
-                Thread.Sleep(1000);//本线程可以每秒检测一次
-                if (m_ReConnect)
+                try
                 {
-                    //正在重连，结束或者跳过？？
-                    break;
-                }
+                    Thread.Sleep(1000); //本线程可以每秒检测一次
+                    if (m_ReConnect)
+                    {
+                        //正在重连，结束或者跳过？？
+                        break;
+                    }
 
-                long timeNow =  Utility.Utility.GetTimeStamp();
-                if (timeNow - lastPingTime > m_PingInterval)
-                {
-                    //规定时间到，发送心跳包到服务器
-                    MsgPing msgPing = SendMsgMethod.SendMsgPing(timeNow);
-                    SendMessage(msgPing);
-                    lastPingTime = timeNow;
+                    long timeNow = Utility.Utility.GetTimeStamp();
+                    if (timeNow - lastPingTime > m_PingInterval)
+                    {
+                        //规定时间到，发送心跳包到服务器
+                        MsgPing msgPing = SendMsgMethod.SendMsgPing(timeNow);
+                        SendMessage(msgPing);
+                        lastPingTime = timeNow;
 
+                    }
+
+                    //如果心跳包过长时间没收到，关闭链接
+                    if (timeNow - lastPongTime > m_PingInterval * 4)
+                    {
+                        Close();
+                        RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient, "服务器返回心跳包超时");
+                    }
                 }
-                //如果心跳包过长时间没收到，关闭链接
-                if (timeNow - lastPongTime > m_PingInterval * 4)
+                catch (SocketException ex)
                 {
-                    Close();
-                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"服务器返回心跳包超时");
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"心跳包处理失败 SendMessage Error:{ex.ToString()}");
                 }
             }
         }
@@ -525,27 +516,38 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         {
             while (!isThreadOver)
             {
-                if (m_WriteQueue.Count <= 0)
+                try
                 {
-                    continue;
+                    if (m_WriteQueue.Count <= 0)
+                    {
+                        Thread.Sleep(10);
+                        continue;
+                    }
+
+                    //队列里有消息等待发送
+                    ByteArray _sendByte;
+                    //取出消息队列内的消息，但不移除队列，以获取目标客户端
+                    m_WriteQueue.TryPeek(out _sendByte);
+                    //当前线程执行休眠，等待消息发送完成后继续
+                    lock (msgSendThreadLock)
+                    {
+                        if (_socket != null && _socket.Connected)
+                        {
+                            _socket.BeginSend(_sendByte.Bytes, 0, _sendByte.length, 0, SendCallBack, _socket);
+                        }
+
+                        bool istimeout = Monitor.Wait(msgSendThreadLock, 10000);
+                        if (!istimeout)
+                        {
+                            RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,
+                                $"客户端消息：消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
+                            Close();
+                        }
+                    }
                 }
-                //队列里有消息等待发送
-                ByteArray _sendByte;
-                //取出消息队列内的消息，但不移除队列，以获取目标客户端
-                m_WriteQueue.TryPeek(out _sendByte);
-                //当前线程执行休眠，等待消息发送完成后继续
-                lock (msgSendThreadLock)
+                catch (SocketException ex)
                 {
-                    if (_socket != null && _socket.Connected)
-                    {
-                        _socket.BeginSend(_sendByte.Bytes, 0, _sendByte.length, 0, SendCallBack, _socket);
-                    }
-                    bool istimeout = Monitor.Wait(msgSendThreadLock, 10000);
-                    if (!istimeout)
-                    {
-                        RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"客户端消息：消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
-                        Close();
-                    }
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"向服务器发送消息失败 SendMessage Error:{ex.ToString()}");
                 }
             }
         }
@@ -599,50 +601,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
 
                 }
             }
-            /*
-            //线程是否出错
-            if (m_msgThread != null)
-            {
-                if (m_msgThread.IsAlive == false && isInit == true)
-                {
-
-                    Debug.LogWarning("消息处理线程无效");
-                    //创建消息处理线程-后台处理
-                    m_msgThread = new Thread(MsgThread);
-                    m_msgThread.IsBackground = true;//设置为后台可运行
-                    m_msgThread.Start();//启动线程
-                }
-            }
-            //线程是否出错
-            if (m_HeartThread != null)
-            {
-                if (m_HeartThread.IsAlive == false && isInit == true)
-                {
-
-                    Debug.LogWarning("心跳包处理线程无效");
-                    //重新创建本线程
-                    //心跳包线程-后台处理
-                    m_HeartThread = new Thread(PingThread);
-                    m_HeartThread.IsBackground = true;//后台运行
-                    m_HeartThread.Start();
-                }
-            }
-            //线程是否出错
-            if (msgSendThread != null)
-            {
-                if (msgSendThread.IsAlive == false && isInit == true)
-                {
-
-                    Debug.LogWarning("消息发送处理线程无效");
-                    //重新创建本线程
-
-                    //消息发送线程
-                    msgSendThread = new Thread(MsgSendListenThread);
-                    msgSendThread.IsBackground = true;
-                    msgSendThread.Start();
-                }
-            }*/
-
+           
         }
         /*
         /// <summary>

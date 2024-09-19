@@ -32,7 +32,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                 await MFALisRFH.ToUniTask();
                 var loadLis = JsonConvert.DeserializeObject<HotCodeDLL>(MFALisRFH.GetRawFileText());
                 var hotCodeBytesMap = new Dictionary<string, HotCodeBytes>();
-                
+                //加载热更代码和pdb
                 foreach (var asset in loadLis.HotCode)
                 {
                     //string dllPath = MyTool.GetYooAssetWebRequestPath(asset);
@@ -69,7 +69,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                         RSJWYLogger.Error($"热更获取DLL数据流程，加载热更代码资源文件地址：{_dllname}无效");
                     }
                 }
-                
+                //加载元数据
                 var MFAOTbytesMap = new Dictionary<string, byte[]>();
                 foreach (var asset in loadLis.MetadataForAOTAssemblies)
                 {
