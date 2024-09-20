@@ -11,16 +11,16 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     /// </summary>
     public abstract class TCPServerSoketEventArgs:EventArgsBase
     {
-        public ClientSocket clientSocket { get; internal set; }
-        public override void Reset()
+        public ClientSocketToken ClientSocketToken { get; internal set; }
+        public override void Release()
         {
-            clientSocket = null;
+            ClientSocketToken = null;
         }
     }
     public abstract class TCPClientSoketEventArgs:EventArgsBase
     {
         public MsgBase clientSocket;
-        public override void Reset()
+        public override void Release()
         {
             clientSocket = null;
         }
@@ -32,9 +32,9 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     /// </summary>
     public sealed class ServerClientConnectedCallBackEventArgs :TCPServerSoketEventArgs
     {
-        public override void Reset()
+        public override void Release()
         {
-            base.Reset();
+            base.Release();
         }
     }
     /// <summary>
@@ -43,9 +43,9 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     /// </summary>
     public sealed class ServerClientReConnectedCallBackEventArgs : TCPServerSoketEventArgs
     {
-        public override void Reset()
+        public override void Release()
         {
-            base.Reset();
+            base.Release();
         }
     }
     /// <summary>
@@ -54,9 +54,9 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public sealed class FromClientReceiveMsgCallBackEventArgs : TCPServerSoketEventArgs
     {
         public MsgBase msgBase { get; internal set; }
-        public override void Reset()
+        public override void Release()
         {
-            base.Reset();
+            base.Release();
         }
     }
     /// <summary>
@@ -65,9 +65,9 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public sealed class ServerToClientMsgEventArgs : TCPServerSoketEventArgs
     {
         public MsgBase msgBase;
-        public override void Reset()
+        public override void Release()
         {
-            base.Reset();
+            base.Release();
         }
     }
     /// <summary>
@@ -76,9 +76,9 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public sealed class ServerToClientMsgAllEventArgs : TCPServerSoketEventArgs
     {
         public MsgBase msgBase;
-        public override void Reset()
+        public override void Release()
         {
-            base.Reset();
+            base.Release();
         }
     }
     /// <summary>
@@ -87,7 +87,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public sealed class ServerStatusEventArgs : EventArgsBase
     {
         public NetServerStatus status;
-        public override void Reset()
+        public override void Release()
         {
             status = NetServerStatus.None;
         }
@@ -102,7 +102,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public sealed class ClientStatusEventArgs : EventArgsBase
     {
         public NetClientStatus netClientStatus { get; internal set; }
-        public override void Reset()
+        public override void Release()
         {
             netClientStatus = NetClientStatus.None;
         }
@@ -113,7 +113,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public sealed class ClientSendToServerEventArgs : EventArgsBase
     {
         public MsgBase msg;
-        public override void Reset()
+        public override void Release()
         {
             msg = null;
         }
@@ -124,7 +124,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     public sealed class ClientReceivesMSGFromServer: EventArgsBase
     {
         public MsgBase msg { get; internal set; }
-        public override void Reset()
+        public override void Release()
         {
             msg = null;
         }
@@ -143,7 +143,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
         
         public string ip;
         public int port;
-        public override void Reset()
+        public override void Release()
         {
             command.Clear();
         }

@@ -6,8 +6,8 @@
     public interface IReference
     {
         /// <summary>
-        /// 重置引用
+        /// 重置引用-回收时
         /// </summary>
-        void Reset();
+        void Release();
     }
 }

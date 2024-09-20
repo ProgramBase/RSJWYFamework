@@ -16,13 +16,13 @@ namespace RSJWYFamework.Runtime.NetWork.Base
         /// 客户端链接上来事件回调
         /// </summary>
         /// <param name="eventEnum"></param>
-        void ClientConnectedCallBack(ClientSocket _clientSocket);
+        void ClientConnectedCallBack(ClientSocketToken clientSocketToken);
         
         /// <summary>
         /// 客户端断开链接事件回调
         /// </summary>
         /// <param name="eventEnum"></param>
-        void ClientReConnectedCallBack(ClientSocket _clientSocket);
+        void ClientReConnectedCallBack(ClientSocketToken clientSocketToken);
         /// <summary>
         /// 服务端状态广播
         /// </summary>
@@ -32,7 +32,7 @@ namespace RSJWYFamework.Runtime.NetWork.Base
         /// 接收到消息时的回调
         /// </summary>
         /// <param name="msgBase"></param>
-        void FromClientReceiveMsgCallBack(ClientSocket _clientSocket, MsgBase msgBase);
+        void FromClientReceiveMsgCallBack(ClientSocketToken clientSocketToken, MsgBase msgBase);
         /// <summary>
         /// 向客户端发消息
         /// </summary>

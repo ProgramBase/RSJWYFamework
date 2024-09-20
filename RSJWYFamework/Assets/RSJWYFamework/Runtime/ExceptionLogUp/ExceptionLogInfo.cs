@@ -28,7 +28,7 @@ namespace RSJWYFamework.Runtime.ExceptionLogUp
             StackTrace = stackTrace;
             return this;
         }
-        public void Reset()
+        public void Release()
         {
             Type = LogType.Error;
             LogString = null;

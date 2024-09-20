@@ -8,7 +8,7 @@ namespace RSJWYFamework.Runtime.Event
     /// </summary>
     public abstract class EventArgsBase:IReference
     {
-        public abstract void Reset();
+        public abstract void Release();
         /// <summary>
         /// 消息发送者
         /// </summary>

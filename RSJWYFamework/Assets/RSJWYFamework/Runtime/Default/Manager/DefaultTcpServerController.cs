@@ -24,7 +24,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
             
             //检查是不是监听全部IP
             tcpsocket = new();
-            tcpsocket.SocketTcpClientController = this;
+            tcpsocket.SocketTcpServerController = this;
         }
 
         public void Close()
@@ -103,18 +103,18 @@ namespace RSJWYFamework.Runtime.Default.Manager
         }
 
 
-        public void ClientConnectedCallBack(ClientSocket _clientSocket)
+        public void ClientConnectedCallBack(ClientSocketToken clientSocketToken)
         {
             var _event= Main.Main.ReferencePoolManager.Get<ServerClientConnectedCallBackEventArgs>();
             _event.Sender = this;
-            _event.clientSocket = _clientSocket;
+            _event.ClientSocketToken = clientSocketToken;
             Main.Main.EventModle.FireNow(_event);
         }
 
-        public void ClientReConnectedCallBack(ClientSocket _clientSocket)
+        public void ClientReConnectedCallBack(ClientSocketToken clientSocketToken)
         {
             var _event= Main.Main.ReferencePoolManager.Get<ServerClientReConnectedCallBackEventArgs>();
-            _event.clientSocket = _clientSocket;
+            _event.ClientSocketToken = clientSocketToken;
             _event.Sender = this;
             Main.Main.EventModle.FireNow(_event);
         }
@@ -127,11 +127,11 @@ namespace RSJWYFamework.Runtime.Default.Manager
             Main.Main.EventModle.FireNow( _event);
         }
 
-        public void FromClientReceiveMsgCallBack(ClientSocket _clientSocket, MsgBase msgBase)
+        public void FromClientReceiveMsgCallBack(ClientSocketToken clientSocketToken, MsgBase msgBase)
         {
             var _event= Main.Main.ReferencePoolManager.Get<FromClientReceiveMsgCallBackEventArgs>();
             _event.Sender = this;
-            _event.clientSocket = _clientSocket;
+            _event.ClientSocketToken = clientSocketToken;
             _event.msgBase = msgBase;
             Main.Main.EventModle.FireNow(_event);
         }

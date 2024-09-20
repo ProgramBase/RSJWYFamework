@@ -1,3 +1,5 @@
+using System;
+using System.Net;
 using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.Public;
 
@@ -6,7 +8,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
     /// <summary>
     /// 服务器模块 单独客户端容器，存储客户端的相关信息等
     /// </summary>
-    public class ClientSocket
+    public class ClientSocketToken
     {
         /// <summary>
         /// 存储连接的客户端
@@ -20,6 +22,21 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// 存储数据-接收到的数据暂存容器
         /// </summary>
         internal ByteArray ReadBuff;
+        
+        /// <summary>  
+        /// 客户端IP地址  
+        /// </summary>  
+        public IPAddress IPAddress { get; set; }  
+  
+        /// <summary>  
+        /// 远程地址  
+        /// </summary>  
+        public EndPoint Remote { get; set; }  
+        
+        /// <summary>  
+        /// 连接时间  
+        /// </summary>  
+        public DateTime ConnectTime { get; set; }  
 
         /// <summary>
         /// 客户端汇报的ID

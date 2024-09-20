@@ -34,11 +34,12 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
     /// <summary>
     /// 服务器模块核心，仅允许通过ServerController调用
     /// </summary>
+    [Obsolete]
     internal class TcpServerService
     {
         #region 字段
         
-        internal ISocketTCPServerController SocketTcpClientController;
+        internal ISocketTCPServerController SocketTcpServerController;
         /// <summary>
         /// 监听端口
         /// </summary>
@@ -63,7 +64,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 客户端容器字典
         /// </summary>
-        internal static ConcurrentDictionary<System.Net.Sockets.Socket, ClientSocket> ClientDic = new ConcurrentDictionary<System.Net.Sockets.Socket, ClientSocket>();
+        internal static ConcurrentDictionary<System.Net.Sockets.Socket, ClientSocketToken> ClientDic = new ConcurrentDictionary<System.Net.Sockets.Socket, ClientSocketToken>();
 
         /// <summary>
         /// 服务器接收的消息队列
@@ -201,10 +202,8 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             {
                 //结束用于连接的异步请求，获取客户端socket
                 System.Net.Sockets.Socket client = ListenSocket.EndAccept(ar);
-                //获取完成继续开启异步监听，监听下一次的链接
-                ListenSocket.BeginAccept(AcceptCallBack, null);
                 //创建新客户端容器存储客户端信息
-                ClientSocket _ServerClient = new()
+                ClientSocketToken _ServerClient = new()
                 {
                     //存储
                     socket = client,
@@ -221,12 +220,15 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 //     clientList.Add(client);
                 // }
                 //广播客户端已上线
-                SocketTcpClientController.ClientConnectedCallBack(_ServerClient);
+                SocketTcpServerController.ClientConnectedCallBack(_ServerClient);
                 //开启异步接收消息
                 client.BeginReceive(
                     _ServerClient.ReadBuff.Bytes, _ServerClient.ReadBuff.WriteIndex, _ServerClient.ReadBuff.Remain, 0, ReceiveCallBack, client);
                 
                 RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"和客户端{client.RemoteEndPoint.ToString()}建立链接成功！！当前客户端数量:{ClientDic.Count}" );
+                
+                //获取完成继续开启异步监听，监听下一次的链接
+                ListenSocket.BeginAccept(AcceptCallBack, null);
             }
             catch (SocketException ex)
             {
@@ -252,7 +254,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 return;//找不到存储的容器
             }
             //找对应的客户端容器
-            ClientSocket _serverClient = ClientDic[client];
+            ClientSocketToken _serverClient = ClientDic[client];
             try
             {
                 ByteArray readBuff = _serverClient.ReadBuff;//获取客户端容器的字节容器
@@ -294,15 +296,15 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 接收数据处理，处理分包粘包情况
         /// </summary>
-        void OnReceiveData(ClientSocket serverClientSocket)
+        void OnReceiveData(ClientSocketToken serverClientSocketToken)
         {
             //取字节流数组
-            ByteArray _byteArray = serverClientSocket.ReadBuff;
+            ByteArray _byteArray = serverClientSocketToken.ReadBuff;
 
-            MessageTool.DecodeMsg(_byteArray, serverMsgQueue, serverClientSocket.socket,
+            MessageTool.DecodeMsg(_byteArray, serverMsgQueue, serverClientSocketToken.socket,
                 () =>
                 {
-                    CloseClient(serverClientSocket);
+                    CloseClient(serverClientSocketToken);
                 });
         }
         /// <summary>
@@ -442,7 +444,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// </summary>
         void PingThread()
         {
-            List<ClientSocket> _tmpClose = new List<ClientSocket>();//存储需要断开来的客户端
+            List<ClientSocketToken> _tmpClose = new List<ClientSocketToken>();//存储需要断开来的客户端
             while (!isThreadOver)
             {
                 try
@@ -456,7 +458,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     //获取当前时间
                     long timeNow =  Utility.Utility.GetTimeStamp();
                     //遍历取出所有客户端
-                    foreach (ClientSocket serverClientSocket in ClientDic.Values)
+                    foreach (ClientSocketToken serverClientSocket in ClientDic.Values)
                     {
                         //超时，断开
                         if (timeNow - serverClientSocket.lastPingTime > pingInterval * 4)
@@ -467,7 +469,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                         }
                     }
                     //逐一取出执行断开操作
-                    foreach (ClientSocket clientSocket in _tmpClose)
+                    foreach (ClientSocketToken clientSocket in _tmpClose)
                     {
                         RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"{clientSocket.socket.RemoteEndPoint.ToString()}在允许时间{pingInterval * 4}秒内发送心跳包超时，连接关闭！！");
                         CloseClient(clientSocket);
@@ -510,12 +512,12 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                         if (_msg is MsgPing)
                         {
                             MsgPing _clientMsgPing = _msg as MsgPing;
-                            ClientSocket _socket = ClientDic[_msg.targetSocket];
+                            ClientSocketToken socketToken = ClientDic[_msg.targetSocket];
                             //更新接收到的心跳包时间（后台运行）
-                            _socket.lastPingTime =  Utility.Utility.GetTimeStamp();
+                            socketToken.lastPingTime =  Utility.Utility.GetTimeStamp();
                             //创建消息并返回
-                            MsgPing msgPong = SendMsgMethod.SendMsgPing(_socket.lastPingTime);
-                            msgPong.targetSocket = _socket.socket;
+                            MsgPing msgPong = SendMsgMethod.SendMsgPing(socketToken.lastPingTime);
+                            msgPong.targetSocket = socketToken.socket;
                             SendMessage(msgPong);//返回客户端
                         }
                         else
@@ -560,7 +562,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     //取出并移除数据
                     if (UnityMsgQueue.TryDequeue(out msgBase))
                     {
-                        SocketTcpClientController.FromClientReceiveMsgCallBack( ClientDic[msgBase.targetSocket], msgBase);//交给执行回调
+                        SocketTcpServerController.FromClientReceiveMsgCallBack( ClientDic[msgBase.targetSocket], msgBase);//交给执行回调
                     }
                     else
                     {
@@ -577,13 +579,13 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 关闭客户端
         /// </summary>
-        public void CloseClient(ClientSocket client)
+        public void CloseClient(ClientSocketToken client)
         {
-            SocketTcpClientController.ClientReConnectedCallBack(client);
+            SocketTcpServerController.ClientReConnectedCallBack(client);
             //清除客户端
             client.socket.Close();//关闭链接
             //移除已连接客户端
-            ClientSocket _a = new();//创建用于存储返回的值，不使用
+            ClientSocketToken _a = new();//创建用于存储返回的值，不使用
             ClientDic.TryRemove(client.socket, out _a);
             // lock ((clientList as ICollection).SyncRoot)
             // {

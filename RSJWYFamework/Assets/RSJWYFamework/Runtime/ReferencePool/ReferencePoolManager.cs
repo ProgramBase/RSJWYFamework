@@ -29,9 +29,9 @@ namespace RSJWYFamework.Runtime.ReferencePool
             var type = typeof(T);
             if (!SpawnPools.ContainsKey(type))
             {
-                SpawnPools.TryAdd(type, new ReferencePool(_limit));
+                SpawnPools.TryAdd(type, new ReferencePool(_limit,type));
             }
-            return SpawnPools[type].Get<T>();
+            return SpawnPools[type].Get<T>() as T;
         }
 
         /// <summary>
@@ -46,14 +46,10 @@ namespace RSJWYFamework.Runtime.ReferencePool
             Type type = refe.GetType();
             if (!SpawnPools.ContainsKey(type))
             {
-                SpawnPools.TryAdd(type, new ReferencePool(_limit));
+                SpawnPools.TryAdd(type, new ReferencePool(_limit,type));
             }
-
             SpawnPools[type].Release(refe);
         }
-        
-        
-        
         
         public void Init()
         {

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using RSJWYFamework.Runtime.ExceptionLogManager;
+using RSJWYFamework.Runtime.Main;
 
 namespace RSJWYFamework.Runtime.ReferencePool
 {
-    public class ReferencePool
+    public class ReferencePool 
     {
         /// <summary>
         /// 数量上限
@@ -12,15 +14,21 @@ namespace RSJWYFamework.Runtime.ReferencePool
         /// <summary>
         /// 引用队列
         /// </summary>
-        private ConcurrentQueue<IReference> _referenceQueue = new ();
+        private ConcurrentStack<IReference> _referenceQueue = new ();
         /// <summary>
         /// 池子里当前未使用引用数量
         /// </summary>
         public int Count => _referenceQueue.Count;
+
+        /// <summary>
+        /// 记录当前池存储的类型
+        /// </summary>
+        private Type _ReferenceType;
         
-        public ReferencePool(int limit)
+        public ReferencePool(int limit,Type ReType)
         {
             _limit = limit;
+            _ReferenceType = ReType;
         }
 
         /// <summary>
@@ -28,19 +36,18 @@ namespace RSJWYFamework.Runtime.ReferencePool
         /// </summary>
         /// <typeparam name="T">继承自IReference的无参构造类</typeparam>
         /// <returns></returns>
-        public T Get<T>()where T : class, IReference, new()
+        public IReference Get<T>()where T : class, IReference, new()
         {
-            T refe;
-            if (_referenceQueue.Count > 0)
+            if (typeof(T) != _ReferenceType)
+                throw new RSJWYException(RSJWYFameworkEnum.ReferencePool,$"栈存储的是{_ReferenceType}，而要获取的是{typeof(T)}");
+            if (_referenceQueue.TryPop(out var popRef))
             {
-                _referenceQueue.TryDequeue(out var _a);
-                refe = _a as T;
+                return popRef as T;
             }
             else
             {
-                refe = new T();
+                return Activator.CreateInstance<T>();
             }
-            return refe;
         }
 
         /// <summary>
@@ -55,8 +62,8 @@ namespace RSJWYFamework.Runtime.ReferencePool
             }
             else
             {
-                refe.Reset();
-                _referenceQueue.Enqueue(refe);
+                refe.Release();
+                _referenceQueue.Push(refe);
             }
         }
         /// <summary>

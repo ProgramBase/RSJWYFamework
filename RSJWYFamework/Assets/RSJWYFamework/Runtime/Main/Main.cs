@@ -149,6 +149,7 @@ namespace RSJWYFamework.Runtime.Main
 
     public enum RSJWYFameworkEnum
     {
+        None,
         NetworkTcpServer,
         NetworkTcpClient,
         NetworkUDP,
@@ -165,6 +166,6 @@ namespace RSJWYFamework.Runtime.Main
         HybridCLR,
         Event,
         RAsyncOperationSystem,
-        GameObjectPool,
+        Pool,
     }
 }

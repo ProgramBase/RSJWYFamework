@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Main;
-using UnityEngine;
 
-namespace RSJWYFamework.Runtime.ObjectPool
+namespace RSJWYFamework.Runtime.Pool
 {
     /// <summary>
     /// 引用池
     /// </summary>
-    public sealed class ObjectPool<T>where T:MonoBehaviour,new ()
+    public sealed class ObjectPool<T>where T:class,new()
     {
-        /// <summary>
-        /// 模板
-        /// </summary>
-        private T _spawnTem;
-        
         /// <summary>
         /// 数量上限
         /// </summary>
@@ -24,7 +18,7 @@ namespace RSJWYFamework.Runtime.ObjectPool
         /// <summary>
         /// 池子
         /// </summary>
-        private Queue<T> _objectQueue = new ();
+        private ConcurrentStack<T> _objectQueue = new ();
 
         /// <summary>
         /// 池子里当前未使用物体数量
@@ -33,7 +27,7 @@ namespace RSJWYFamework.Runtime.ObjectPool
         /// <summary>
         /// 创建物体时回调
         /// </summary>
-        private Func<T> _onCreate;
+        private Action<T> _onCreate;
         /// <summary>
         /// 销毁物体时回调
         /// </summary>
@@ -49,25 +43,30 @@ namespace RSJWYFamework.Runtime.ObjectPool
         
         /// <summary>
         /// 创建池
+        /// 创建时，如果初始数量大于最大数量，将以最大数量来初始化（取这两值最小值）
         /// </summary>
-        /// <param name="spawnTem">模板</param>
         /// <param name="limit">最大数量限制</param>
         /// <param name="initCount">初始化数量</param>
         /// <param name="onCreate">创建时执行的事件</param>
         /// <param name="onDestroy">销毁时执行的事件</param>
         /// <param name="onGet">获取时执行的事件</param>
         /// <param name="onRelease">回收物体时执行的回调</param>
-        public ObjectPool(T spawnTem, int limit,int initCount,
-            Func<T> onCreate,Action<T> onDestroy,Action<T> onGet,Action<T> onRelease)
+        public ObjectPool(Action<T> onCreate,Action<T> onDestroy,Action<T> onGet,Action<T> onRelease,
+            int limit,int initCount)
         {
-            _spawnTem = spawnTem;
             _limit = limit;
            _onCreate = onCreate;
            _onDestroy = onDestroy;
            _onGet = onGet;
            _onRelease = onRelease;
-           
-           
+
+           var max = Math.Min(limit,initCount);
+           for (int i = 0; i < max; i++)
+           {
+               var _obj= new T();
+               _onCreate?.Invoke(_obj);
+               _onRelease?.Invoke(_obj);
+           }
         }
         /// <summary>
         /// 获取一个对象池内的对象
@@ -75,36 +74,36 @@ namespace RSJWYFamework.Runtime.ObjectPool
         /// <returns></returns>
         public T Get()
         {
-            GameObject obj;
-            if (_objectQueue.Count > 0)
+            if (_objectQueue.TryPop(out var popObj))
             {
-                obj = _objectQueue.Dequeue().gameObject;
+                _onGet?.Invoke(popObj);
+                return popObj;
             }
             else
             {
-                obj = _onCreate.Invoke().gameObject;
-                obj.AddComponent<T>();
+                var _obj= new T();
+                _onCreate?.Invoke(_obj);
+                _onGet?.Invoke(_obj);
+                return _obj;
             }
-            _onGet?.Invoke(obj.GetComponent<T>());
-            return obj.GetComponent<T>();
         }
 
         /// <summary>
         /// 回收一个对象
         /// </summary>
-        public void Release(T Object)
+        public void Release(T Obj)
         {
-            if (Object == null)
-                throw new RSJWYException(RSJWYFameworkEnum.GameObjectPool,"试图放入一个空对象到对象池中");
+            if (Obj == null)
+                throw new RSJWYException(RSJWYFameworkEnum.Pool,"试图放入一个空对象到对象池中");
             if (_objectQueue.Count<_limit)
             {
-                _onRelease?.Invoke(Object);
-                _objectQueue.Enqueue(Object);
+                _onRelease?.Invoke(Obj);
+                _objectQueue.Push(Obj);
             }
             else
             {
-                _onDestroy?.Invoke(Object);
-                Utility.Utility.GameObjectTool.Destory(Object.gameObject);
+                _onDestroy?.Invoke(Obj);
+                Obj = null;
             }
         }
         
@@ -113,14 +112,11 @@ namespace RSJWYFamework.Runtime.ObjectPool
         /// </summary>
         public void Clear()
         {
-            while (_objectQueue.Count > 0)
+            while (_objectQueue.TryPop(out var _obj))
             {
-                GameObject obj = _objectQueue.Dequeue().gameObject;
-                if (obj)
-                {
-                    Utility.Utility.GameObjectTool.Destory(obj);
-                }
+                _obj = null;
             }
+            _objectQueue.Clear();
         }
     }
 }

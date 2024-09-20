@@ -1,4 +1,5 @@
 ﻿using System;
+using RSJWYFamework.Runtime.ReferencePool;
 
 namespace RSJWYFamework.Runtime.NetWork.Public
 {
@@ -6,7 +7,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
     /// 数据数组
     /// 数据数组结构：记录本条消息后续长度的数据（4位）+协议名长度（4位）+编码后的协议名（长度不固定）+序列化后的协议+CRC32校验码（4位长度）
     /// </summary>
-    public class ByteArray
+    public class ByteArray:IReference
     {
         /// <summary>
         /// 默认大小
@@ -119,6 +120,11 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             //重新读
             WriteIndex = length;
             ReadIndex = 0;
+        }
+
+        public void Release()
+        {
+            
         }
     }
 }

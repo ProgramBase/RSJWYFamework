@@ -5,7 +5,7 @@ namespace RSJWYFamework.Runtime.Default.EventsLibrary
     public class TipsInfoEventArgs:EventArgsBase
     {
         public string tips;
-        public override void Reset()
+        public override void Release()
         {
             tips = string.Empty;
         }
