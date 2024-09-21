@@ -1,7 +1,9 @@
 using System;
 using System.Net;
+using System.Net.Sockets;
 using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.Public;
+using RSJWYFamework.Runtime.ReferencePool;
 
 namespace RSJWYFamework.Runtime.NetWork.TCP.Server
 {
@@ -13,7 +15,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 存储连接的客户端
         /// </summary>
-        public System.Net.Sockets.Socket socket { get;internal set; }
+        internal System.Net.Sockets.Socket socket { get;set; }
         /// <summary>
         /// 初次连接时间（心跳包）
         /// </summary>
@@ -26,17 +28,17 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>  
         /// 客户端IP地址  
         /// </summary>  
-        public IPAddress IPAddress { get; set; }  
+        public IPAddress IPAddress { get; internal set; }  
   
         /// <summary>  
         /// 远程地址  
         /// </summary>  
-        public EndPoint Remote { get; set; }  
+        public EndPoint Remote { get; internal set; }  
         
         /// <summary>  
         /// 连接时间  
         /// </summary>  
-        public DateTime ConnectTime { get; set; }  
+        public DateTime ConnectTime { get; internal set; }  
 
         /// <summary>
         /// 客户端汇报的ID
@@ -44,12 +46,23 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// 需要做一个定时检查，出现重复拒绝链接以及移除已有链接，重新发起连接
         /// </summary>
         /// <returns></returns>
-        public string TokenID;
+        public string TokenID{ get; internal set; }
+
+        /// <summary>
+        /// 写
+        /// </summary>
+        internal SocketAsyncEventArgs read;
+        /// <summary>
+        /// 读
+        /// </summary>
+        internal SocketAsyncEventArgs write;
+        
+        
     }
     /// <summary>
     /// 服务器模块 消息发送数据容器
     /// </summary>
-    internal class ServerToClientMsg
+    internal class ServerToClientMsg:IReference
     {
         /// <summary>
         /// 消息目标服务器
@@ -63,5 +76,10 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// 已转换完成的消息数组
         /// </summary>
         internal ByteArray sendBytes;
+
+        public void Release()
+        {
+            
+        }
     }
 }

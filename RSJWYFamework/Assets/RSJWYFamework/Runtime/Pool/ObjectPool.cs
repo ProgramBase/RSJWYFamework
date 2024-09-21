@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Main;
 
@@ -74,36 +76,36 @@ namespace RSJWYFamework.Runtime.Pool
         /// <returns></returns>
         public T Get()
         {
-            if (_objectQueue.TryPop(out var popObj))
+            if (_objectQueue.TryPop(out var popitem))
             {
-                _onGet?.Invoke(popObj);
-                return popObj;
+                _onGet?.Invoke(popitem);
+                return popitem;
             }
             else
             {
-                var _obj= new T();
-                _onCreate?.Invoke(_obj);
-                _onGet?.Invoke(_obj);
-                return _obj;
+                var item= new T();
+                _onCreate?.Invoke(item);
+                _onGet?.Invoke(item);
+                return item;
             }
         }
 
         /// <summary>
         /// 回收一个对象
         /// </summary>
-        public void Release(T Obj)
+        public void Release(T item)
         {
-            if (Obj == null)
+            if (item == null)
                 throw new RSJWYException(RSJWYFameworkEnum.Pool,"试图放入一个空对象到对象池中");
             if (_objectQueue.Count<_limit)
             {
-                _onRelease?.Invoke(Obj);
-                _objectQueue.Push(Obj);
+                _onRelease?.Invoke(item);
+                _objectQueue.Push(item);
             }
             else
             {
-                _onDestroy?.Invoke(Obj);
-                Obj = null;
+                _onDestroy?.Invoke(item);
+                item = null;
             }
         }
         

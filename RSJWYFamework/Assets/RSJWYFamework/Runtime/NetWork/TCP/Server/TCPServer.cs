@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
@@ -158,7 +159,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 },
                 (_obj) =>
                 {
-                    var _buffer = new byte[1048576]; 
+                    _obj.UserToken = null;
                     _obj.SetBuffer(null,0,0);
                 },
                 100,100);
@@ -218,7 +219,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 acceptEventArg = new SocketAsyncEventArgs();  
                 acceptEventArg.Completed += (sender, e) =>
                 {
-                    ProcessAccept(e);
+                    Task.Run(() => ProcessAccept(e));
                 };  
             }  
             else  
@@ -231,9 +232,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 //绑定时必须检查，绑定时已完成不会触发回调
                 //https://learn.microsoft.com/zh-cn/dotnet/api/system.net.sockets.socket.acceptasync?view=netframework-4.8.1#system-net-sockets-socket-acceptasync(system-net-sockets-socketasynceventargs)
                 if (!ListenSocket.AcceptAsync(acceptEventArg))
-                {
-                    ProcessAccept(acceptEventArg);
-                }
+                    Task.Run(() => ProcessAccept(acceptEventArg));
             }
             catch (Exception e)
             {
@@ -263,7 +262,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 readEventArgs.UserToken = clientToken;
                 //接受消息传入请求
                 if (!socketAsyncEArgs.AcceptSocket.ReceiveAsync(readEventArgs)) 
-                    ProcessReceive(readEventArgs);  
+                    Task.Run(() => ProcessReceive(readEventArgs)); // 异步执行接收处理，避免递归调用
             }  
             catch (Exception e)  
             {  
@@ -277,34 +276,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 return;
             }
             StartAccept(socketAsyncEArgs);  
-        }  
-        /// <summary>
-        /// 关闭客户端
-        /// </summary>
-        /// <param name="SocketAsyncEA"></param>
-        private void CloseClientSocket(SocketAsyncEventArgs SocketAsyncEA)  
-        {  
-            var token = SocketAsyncEA.UserToken as ClientSocketToken; 
-            SocketTcpServerController.ClientReConnectedCallBack(token);
-            ClientDic.TryRemove(token.socket, out var _a);
-            
-            Interlocked.Decrement(ref m_clientCount);  
-            // 关闭与客户端关联的套接字 
-            try  
-            {  
-                token.socket.Shutdown(SocketShutdown.Send);  
-            }
-            catch (Exception e)
-            {
-                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"向客户端执行socket.shutdown出现异常！{e}");
-            }
-            //关闭链接
-            token.socket.Close();
-            // 释放SocketAsyncEventArgs,并放回池子中
-            SocketAsyncEA.UserToken = null;  
-            RWSocketAsynvEA.Release(SocketAsyncEA);
-            RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"一个客户端断开连接，当前连接总数：{m_clientCount}");
-        }  
+        }
         /// <summary>
         /// SocketAsyncEventArgs的操作回调
         /// </summary>
@@ -314,13 +286,14 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             switch (e.LastOperation)  
             {  
                 case SocketAsyncOperation.Receive:  
-                    ProcessReceive(e);  
+                    Task.Run(() => ProcessReceive(e));  
                     break;  
                 case SocketAsyncOperation.Send:  
-                    ProcessSend(e);  
+                    Task.Run(() =>ProcessSend(e));  
                     break;  
                 default:  
-                    throw new RSJWYException(RSJWYFameworkEnum.NetworkTcpServer,"在套接字上完成的最后一个操作不是接收或发送，{e.LastOperation}");  
+                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,"在套接字上完成的最后一个操作不是接收或发送，{e.LastOperation}");  
+                    break;
             }  
         }  
         
@@ -363,23 +336,66 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     readBuff.CheckAndMoveBytes();
                     //继续接收. 为什么要这么写,请看Socket.ReceiveAsync方法的说明  
                     if (!token.socket.ReceiveAsync(socketAsyncEA))
-                        this.ProcessReceive(socketAsyncEA);
+                        Task.Run(() => ProcessReceive(socketAsyncEA));
                 }
                 else
                 {
-                    CloseClientSocket(e);
+                    CloseClientSocket(socketAsyncEA);
                 }
             }
-            catch (Exception xe)
+            catch (Exception ex)
             {
-                RuncomLib.Log.LogUtils.Info(xe.Message + "\r\n" + xe.StackTrace);
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"读取客户端：{token.TokenID}-{token.Remote}发来的消息出错！！错误信息： \n {ex.ToString()}" );
             }
         }
-// This method is invoked when an asynchronous send operation completes.    
-        // The method issues another receive on the socket to read any additional   
-        // data sent from the client  
-        //  
-        // <param name="e"></param>  
+        
+        /// <summary>
+        /// 发送信息到客户端
+        /// </summary>
+        /// <param name="msgBase">消息内容</param>
+        /// <param name="targetToken">目标客户端标志</param>
+        /// <returns>仅确保数据转换完毕，可以发送，但不确保数据发送成功</returns>
+        internal bool SendMessage(MsgBase msgBase,ClientSocketToken targetToken)
+        {
+            if (targetToken?.socket is not { Connected: true })
+            {
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"Socket链接未设置或者未建立链接");
+                return false;//链接不存在或者未建立链接
+            }
+            //写入数据
+            try
+            {
+                if (targetToken.socket.Poll(100, SelectMode.SelectWrite))
+                {
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"Socket状态不可写");
+                    return false;//链接不存在或者未建立链接
+                }
+                //编码
+                ByteArray _sendBytes = MessageTool.EncodMsg(msgBase);
+                //创建容器
+                ServerToClientMsg _msg = new()
+                {
+                    msgTargetSocket = msgBase.targetSocket,
+                    msg = msgBase,
+                    sendBytes = _sendBytes
+                };
+                //写入到队列，向客户端发送消息，根据客户端和绑定的数据发送
+                msgSendQueue.Enqueue(_msg);
+                return true;//链接不存在或者未建立链接
+            }
+            catch (SocketException ex)
+            {
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"向客户端发送消息失败 SendMessage Error:{ex.ToString()}");
+                //CloseSocket(ClientDic[_client]);?断开方式有待商讨
+                return false;//链接不存在或者未建立链接
+            }
+        }
+        
+        
+        /// <summary>
+        /// 数据发送后回调
+        /// </summary>
+        /// <param name="e"></param>
         private void ProcessSend(SocketAsyncEventArgs e)  
         {  
             if (e.SocketError == SocketError.Success)  
@@ -398,6 +414,47 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 CloseClientSocket(e);  
             }  
         }  
+        
+        
+        
+        /// <summary>
+        /// 关闭客户端
+        /// </summary>
+        /// <param name="SocketAsyncEA"></param>
+        private void CloseClientSocket(SocketAsyncEventArgs SocketAsyncEA)  
+        {  
+            var token = SocketAsyncEA.UserToken as ClientSocketToken; 
+            
+            CloseSocket(token.socket);
+            // 释放SocketAsyncEventArgs,并放回池子中
+            SocketAsyncEA.UserToken = null;  
+            RWSocketAsynvEA.Release(SocketAsyncEA);
+            RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"一个客户端断开连接，当前连接总数：{m_clientCount}");
+        }
+
+        /// <summary>
+        /// 关闭socket
+        /// </summary>
+        /// <param name="socket"></param>
+        void CloseSocket(System.Net.Sockets.Socket socket)
+        {
+            if (ClientDic.TryRemove(socket, out var _a))
+            {
+                Interlocked.Decrement(ref m_clientCount); 
+                
+                SocketTcpServerController.ClientReConnectedCallBack(token);
+                
+            }
+            try  
+            {  
+                socket.Shutdown(SocketShutdown.Send);  
+            }
+            catch (Exception e)
+            {
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"向客户端执行socket.shutdown出现异常！{e}");
+            }
+            socket.Close();
+        }
         #endregion
         
          #region 线程
