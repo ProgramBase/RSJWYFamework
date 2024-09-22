@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
+using RSJWYFamework.Runtime.Logger;
+using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.Public;
 using RSJWYFamework.Runtime.ReferencePool;
@@ -17,7 +21,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// </summary>
         internal System.Net.Sockets.Socket socket { get;set; }
         /// <summary>
-        /// 初次连接时间（心跳包）
+        /// 心跳包维持记录
         /// </summary>
         public long lastPingTime { get; internal set; }
         /// <summary>
@@ -51,23 +55,56 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 写
         /// </summary>
-        internal SocketAsyncEventArgs read;
+        internal SocketAsyncEventArgs readSocketAsyncEA;
         /// <summary>
         /// 读
         /// </summary>
-        internal SocketAsyncEventArgs write;
-        
-        
+        internal SocketAsyncEventArgs writeSocketAsyncEA;
+        /// <summary>
+        /// 目标消息
+        /// </summary>
+        internal ConcurrentQueue<ServerToClientMsgContainer> sendQueue;
+
+        /// <summary>
+        /// 通知多线程自己跳出
+        /// </summary>
+        internal CancellationTokenSource cts;
+
+        /// <summary>
+        /// 消息发送线程
+        /// </summary>
+        internal Thread msgSendThread;
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        internal void Close()
+        {
+            try
+            {
+                socket?.Close();
+                socket?.Shutdown(SocketShutdown.Send);
+                cts?.Cancel();
+            }
+            catch (Exception e)
+            {
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer, $"客户端关闭时发生错误！{e}");
+            }
+        }
     }
     /// <summary>
-    /// 服务器模块 消息发送数据容器
+    ///消息发送数据容器
     /// </summary>
-    internal class ServerToClientMsg:IReference
+    internal class ServerToClientMsgContainer:IReference
     {
         /// <summary>
         /// 消息目标服务器
         /// </summary>
+        [Obsolete]
         internal System.Net.Sockets.Socket msgTargetSocket;
+        /// <summary>
+        /// 消息目标服务器
+        /// </summary>
+        internal ClientSocketToken targetToken;
         /// <summary>
         /// 消息
         /// </summary>
@@ -80,6 +117,25 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         public void Release()
         {
             
+        }
+    }
+    /// <summary>
+    /// 接收到的客户端消息容器
+    /// </summary>
+    public class ClientMsgContainer : IReference
+    {
+        /// <summary>
+        /// 消息来源
+        /// </summary>
+        public ClientSocketToken targetToken { get; internal set; }
+        /// <summary>
+        /// 消息
+        /// </summary>
+        public MsgBase msg { get; internal set; }
+
+        public void Release()
+        {
+
         }
     }
 }

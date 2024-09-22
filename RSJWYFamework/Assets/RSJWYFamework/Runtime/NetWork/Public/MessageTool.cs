@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
@@ -51,7 +52,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             byte[] nameBytes = System.Text.Encoding.UTF8.GetBytes(msgBase.ProtoType.ToString());//编码协议名
             byte[] AESNameBytes =Utility.Utility.AESTool.AESEncrypt(nameBytes, MessageTool.MsgKey); //加密协议名
             uint nameLen = (uint)AESNameBytes.Length;//记录协议名长度
-            byte[] nameLenBytes =Utility.Utility.CRC32.GetCrc32Bytes(nameLen);//获取记录长度的数组
+            byte[] nameLenBytes =Utility.Utility.UIntToByteArray(nameLen);//获取记录长度的数组
             byte[] bytes = new byte[4 + nameLen];//开新的存储空间用于返回编码好的协议长度及协议名（协议长度通过前面4位数组存储
             //拷贝并存储
             Array.Copy(nameLenBytes, 0, bytes, 0, 4);//将协议名长度拷贝到数组中
@@ -76,7 +77,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
                 return MyProtocolEnum.None;//协议不存在
             }
             byte[] lenByte = bytes.Skip(offset).Take(4).ToArray();//取长度数组
-            int len = (int)Utility.Utility.CRC32.ReverseBytesToCRC32(lenByte);
+            int len = (int)Utility.Utility.ByteArrayToUInt(lenByte);//解码协议名长度
             if (offset+4 + len > bytes.Length)
             {
                 //只包含了协议名长度信息，但与之对应存储协议名称的数组不存在
@@ -169,6 +170,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// <param name="msgQueue">消息处理完后放入的队列</param>
         /// <param name="targetSocket">本条消息所属客户端</param>
         /// <param name="errorAction">发生错误时的回调</param>
+        [Obsolete]
         internal static void DecodeMsg(ByteArray byteArray, ConcurrentQueue<MsgBase> msgQueue, System.Net.Sockets.Socket targetSocket,
             Action errorAction)
         {
@@ -215,7 +217,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             byte[] remoteCRC32Bytes = byteArray.Bytes.Skip(byteArray.ReadIndex + bodyCount).Take(4).ToArray(); //取校验码
             byte[] bodyBytes = byteArray.Bytes.Skip(byteArray.ReadIndex).Take(bodyCount).ToArray(); //取数据体
             uint localCRC32 = Utility.Utility.CRC32.GetCrc32(bodyBytes); //获取协议体的CRC32校验码
-            uint remoteCRC32 = Utility.Utility.CRC32.ReverseBytesToCRC32(remoteCRC32Bytes); // 运算获取远端计算的验码
+            uint remoteCRC32 = Utility.Utility.ByteArrayToUInt(remoteCRC32Bytes); // 运算获取远端计算的验码
             if (localCRC32 != remoteCRC32)
             {
                 errorAction.Invoke();
@@ -260,6 +262,61 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             {
             }
         }
+        /// <summary>
+        /// 反序列化本次的消息
+        /// </summary>
+        /// <param name="byteArray">存储消息的自定义数组</param>
+        /// <param name="readIndex">开始读索引</param>
+        /// <param name="msgLength">消息整体长度</param>
+        /// <returns>解码后的消息</returns>
+        internal static MsgBase DecodeMsg(byte[] byteArray,int readIndex,int msgLength,out int count)
+        {
+            //确认数据是否有误
+            if (readIndex < 0)
+            {
+                throw new RSJWYException(RSJWYFameworkEnum.NetworkTool, $"发生异常，开始读索引小于0，无法对数据处理");
+            }
+            int nameCount = 0; //解析完协议名后要从哪开始读下一阶段的数据
+            MyProtocolEnum protocol = DecodeName(byteArray, readIndex, out nameCount); //解析协议名
+            if (protocol == MyProtocolEnum.None)
+            {
+                throw new RSJWYException(RSJWYFameworkEnum.NetworkTool,$"解析协议名出错,协议名不存在！！返回的协议名为: {MyProtocolEnum.None.ToString()}");
+            }
+            //读取没有问题
+            readIndex += nameCount; //移动开始读位置，开始解析协议体
+            //解析协议体-计算协议体长度
+            int bodyCount = msgLength - nameCount - 4; //剩余数组长度（剩余的长度就是协议体长度）要去掉校验码
+
+            //检查校验码
+            byte[] remoteCRC32Bytes = byteArray.Skip(readIndex + bodyCount).Take(4).ToArray(); //取校验码
+            byte[] bodyBytes = byteArray.Skip(readIndex).Take(bodyCount).ToArray(); //取数据体
+            uint localCRC32 = Utility.Utility.CRC32.GetCrc32(bodyBytes); //获取协议体的CRC32校验码
+            uint remoteCRC32 = Utility.Utility.ByteArrayToUInt(remoteCRC32Bytes); // 运算获取远端计算的验码
+            if (localCRC32 != remoteCRC32)
+            {
+                throw new RSJWYException(RSJWYFameworkEnum.NetworkTool,$"CRC32校验失败！！远端CRC32：{remoteCRC32}，本机计算的CRC32：{localCRC32}。协议体的一致性遭到破坏");
+            }
+
+            //校验码检测通过
+            try
+            {
+                //解析协议体
+                MsgBase msgBase = Decode(protocol, byteArray, readIndex, bodyCount);
+                if (msgBase == null)
+                {
+                    throw new RSJWYException(RSJWYFameworkEnum.NetworkTool,$"解析协议名出错！！无法匹配协议基类协议名不存在！！返回的协议名为: {MyProtocolEnum.None.ToString()}");
+                }
+                count=readIndex += bodyCount + 4;
+                return msgBase;
+            }
+            catch (SocketException ex)
+            {
+                throw new RSJWYException(RSJWYFameworkEnum.NetworkTool, $"反序列化消息时发生错误：{ex}");
+            }
+            finally
+            {
+            }
+        }
 
         /// <summary>
         /// 将消息进行序列化
@@ -274,7 +331,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
 
             //获取校验码
             uint crc32 = Utility.Utility.CRC32.GetCrc32(bodyBytes); //获取协议体的CRC32校验码
-            byte[] bodyCrc32Bytes = Utility.Utility.CRC32.GetCrc32Bytes(crc32); //获取协议体的CRC32校验码数组
+            byte[] bodyCrc32Bytes = Utility.Utility.UIntToByteArray(crc32); //获取协议体的CRC32校验码数组
 
             //长度转数组
             int len = nameBytes.Length + bodyBytes.Length + bodyCrc32Bytes.Length; //整体长度

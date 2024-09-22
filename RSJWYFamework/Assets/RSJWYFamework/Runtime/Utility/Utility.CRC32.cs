@@ -84,40 +84,7 @@ namespace RSJWYFamework.Runtime.Utility
                 return result;
             }
 
-            /// <summary>
-            /// 获取 CRC32 数值的4位字节数组 / 把 uint 数值转为4位数组
-            /// </summary>
-            /// <param name="crc32">CRC32 数值。</param>
-            /// <returns>CRC32 / uint 数值的4位字节数组 </returns>
-            public static byte[] GetCrc32Bytes(uint crc32)
-            {
-                return new byte[]
-                {
-                    (byte)((crc32 >> 24) & 0xff), (byte)((crc32 >> 16) & 0xff), (byte)((crc32 >> 8) & 0xff),
-                    (byte)(crc32 & 0xff)
-                };
-            }
-
-            /// <summary>
-            /// 把4位数组转为 CRC32 数值 / 把4位数组转为 uint 数值
-            /// </summary>
-            /// <param name="bytes">CRC32 数值的位字节数组</param>
-            /// <returns>CRC32 数值 / uint 数值</returns>
-            public static uint ReverseBytesToCRC32(byte[] bytes)
-            {
-                uint crc32 = (uint)(bytes[0] << 24 | bytes[1] << 16 | bytes[2] << 8 | bytes[3]);
-                return crc32;
-            }
-
-            /// <summary>
-            /// 获取 CRC32 数值的二进制数组。
-            /// </summary>
-            /// <param name="crc32">CRC32 数值。</param>
-            /// <param name="bytes">要存放结果的数组。</param>
-            public static void GetCrc32Bytes(int crc32, byte[] bytes)
-            {
-                GetCrc32Bytes(crc32, bytes, 0);
-            }
+        
 
             /// <summary>
             /// 获取 CRC32 数值的二进制数组。

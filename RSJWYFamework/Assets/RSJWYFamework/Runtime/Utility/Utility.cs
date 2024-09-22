@@ -101,5 +101,29 @@ namespace RSJWYFamework.Runtime.Utility
             }
             return flatList.ToArray();
         }
+        /// <summary>
+        /// uint转码为4位字节数组
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static byte[] UIntToByteArray(uint value)
+        {
+            byte[] byteArray = new byte[4];
+            byteArray[0] = (byte)((value >> 24) & 0xFF);
+            byteArray[1] = (byte)((value >> 16) & 0xFF);
+            byteArray[2] = (byte)((value >> 8) & 0xFF);
+            byteArray[3] = (byte)(value & 0xFF);
+            return byteArray;
+        }
+        /// <summary>
+        /// 把编码的4位uint数组转为uint
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static uint ByteArrayToUInt(byte[] byteArray)
+        {
+            return ((uint)byteArray[0] << 24) | ((uint)byteArray[1] << 16) | ((uint)byteArray[2] << 8) | byteArray[3];
+        }
+
     }
 }

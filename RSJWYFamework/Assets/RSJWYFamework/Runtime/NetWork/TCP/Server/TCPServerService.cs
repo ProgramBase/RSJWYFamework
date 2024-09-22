@@ -79,7 +79,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 消息发送队列
         /// </summary>
-        static ConcurrentQueue<ServerToClientMsg> msgSendQueue = new();
+        static ConcurrentQueue<ServerToClientMsgContainer> msgSendQueue = new();
 
         /// <summary>
         /// 消息处理线程
@@ -324,7 +324,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 //转数组
                 ByteArray _sendBytes = MessageTool.EncodMsg(msgBase);
                 //创建容器
-                ServerToClientMsg _msg = new()
+                ServerToClientMsgContainer _msg = new()
                 {
                     msgTargetSocket = msgBase.targetSocket,
                     msg = msgBase,
@@ -347,7 +347,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         void SendCallBack(IAsyncResult ar)
         {
             System.Net.Sockets.Socket client = (System.Net.Sockets.Socket)ar.AsyncState;//获取目标客户端的socket
-            ServerToClientMsg _msgbase;//存储从队列里取出来的数据
+            ServerToClientMsgContainer _msgbase;//存储从队列里取出来的数据
             ByteArray _ba;//存储字节流数组
             try
             {
@@ -364,7 +364,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 _ba.ReadIndex += count;//已发送索引
                 if (_ba.length == 0)//代表发送完整
                 {
-                    ServerToClientMsg _msDelete;
+                    ServerToClientMsgContainer _msDelete;
                     msgSendQueue.TryDequeue(out _msDelete);//取出但不使用，只为了从队列中移除
                     _ba = null;//发送完成
 
@@ -409,7 +409,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                         Thread.Sleep(10);
                         continue;
                     }
-                    ServerToClientMsg _msgbase;
+                    ServerToClientMsgContainer _msgbase;
                     System.Net.Sockets.Socket _client;
                     ByteArray _sendByte;
                     //取出消息队列内的消息，但不移除队列，以获取目标客户端
