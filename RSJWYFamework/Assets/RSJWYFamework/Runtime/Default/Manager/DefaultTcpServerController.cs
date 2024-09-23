@@ -12,11 +12,10 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 服务器模块管理器，用于和Unity之间交互
     /// </summary>
-    public class DefaultTcpServerController : ISocketTCPServerController, IModule
+    public class DefaultTcpServerController : ISocketTCPServerController
     {
         private TCPServer tcpsocket;
-
-
+        
         public void Init()
         {
             Main.Main.EventModle.BindEventRecord<ServerToClientMsgEventArgs>(SendMsgToClientEvent);
@@ -24,7 +23,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
             
             //检查是不是监听全部IP
             tcpsocket = new();
-            tcpsocket.SocketTcpServerController = this;
+            tcpsocket.TcpServerController = this;
         }
 
         public void Close()
@@ -34,17 +33,12 @@ namespace RSJWYFamework.Runtime.Default.Manager
             tcpsocket?.Quit();
         }
 
-        public void Update(float time, float deltaTime)
-        {
-        }
-
-        public void UpdatePerSecond(float time)
-        {
-        }
-
-
         public void SendMsgToClientAll(MsgBase msgBase)
         {
+            foreach (var token in tcpsocket.ClientDic)
+            {
+                tcpsocket.SendMessage(msgBase,token.Value);
+            }
         }
 
         public void InitServer(string ip = "any", int port = 6000)
@@ -75,7 +69,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
         }
         public void Update()
         {
-            //TcpServerService.instance.TCPUpdate();
         }
 
        

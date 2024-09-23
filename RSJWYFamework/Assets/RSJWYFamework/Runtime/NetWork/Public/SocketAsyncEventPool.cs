@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Main;
+using RSJWYFamework.Runtime.NetWork.TCP.Server;
 using RSJWYFamework.Runtime.Pool;
 
 namespace RSJWYFamework.Runtime.NetWork.Public
@@ -23,24 +24,12 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// <summary>
         /// 获取时配置完成要操作的数据
         /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="Length"></param>
         /// <returns></returns>
-        public SocketAsyncEventArgs Get(byte[] bytes,int offset,int Length)
+        public SocketAsyncEventArgs Get(ClientSocketToken token)
         {
-            if (_objectQueue.TryPop(out var popitem))
-            {
-                popitem.SetBuffer(bytes,offset,Length);
-                return popitem;
-            }
-            else
-            {
-                var item= new SocketAsyncEventArgs();
-                _onCreate?.Invoke(item);
-                item.SetBuffer(bytes,offset,Length);
-                return item;
-            }
+            var item= base.Get();
+            item.UserToken = token;
+            return item;
         }
 
         

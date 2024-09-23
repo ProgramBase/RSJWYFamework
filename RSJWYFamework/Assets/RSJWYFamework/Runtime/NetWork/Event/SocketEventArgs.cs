@@ -20,13 +20,12 @@ namespace RSJWYFamework.Runtime.NetWork.Event
         /// </summary>
         public MsgBase msgBase;
     }
-    public abstract class TCPClientSoketEventArgs:EventArgsBase
+    public abstract record TCPClientSoketEventArgs:RecordEventArgsBase
     {
-        public MsgBase clientSocket;
-        public override void Release()
-        {
-            clientSocket = null;
-        }
+        /// <summary>
+        /// 消息载体
+        /// </summary>
+        public MsgBase msgBase;
     }
 
     #region TCP服务端
@@ -75,35 +74,21 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     /// <summary>
     /// 客户端状态消息
     /// </summary>
-    public sealed class ClientStatusEventArgs : EventArgsBase
+    public sealed record ClientStatusEventArgs : TCPClientSoketEventArgs
     {
-        public NetClientStatus netClientStatus { get; internal set; }
-        public override void Release()
-        {
-            netClientStatus = NetClientStatus.None;
-        }
+        public NetClientStatus netClientStatus;
     }
     /// <summary>
     /// 向服务器发送消息
     /// </summary>
-    public sealed class ClientSendToServerEventArgs : EventArgsBase
+    public sealed record ClientSendToServerEventArgs : TCPClientSoketEventArgs
     {
-        public MsgBase msg;
-        public override void Release()
-        {
-            msg = null;
-        }
     }
     /// <summary>
     /// 接收到服务器发来的消息
     /// </summary>
-    public sealed class ClientReceivesMSGFromServer: EventArgsBase
+    public sealed record ClientReceivesMSGFromServer: TCPClientSoketEventArgs
     {
-        public MsgBase msg { get; internal set; }
-        public override void Release()
-        {
-            msg = null;
-        }
     }
 
     #endregion

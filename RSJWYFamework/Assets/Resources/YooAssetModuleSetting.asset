@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a35db6fe7e47f89bfecf37ab4810c3, type: 3}
   m_Name: YooAssetModuleSetting
   m_EditorClassIdentifier: 
-  PlayMode: 1
+  PlayMode: 0
   PrefabP:
     PackageName: PrefabPackage
     BuildPipeline: 0

@@ -49,5 +49,21 @@ namespace RSJWYFamework.Runtime.NetWork.Base
         /// <param name="ip"></param>
         /// <param name="port"></param>
         void InitServer(string ip = "127.0.0.1", int port = 6000);
+        
+        
+        /// <summary>
+        /// 添加时初始化
+        /// </summary>
+        void Init();
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        void Close();
+        
+        /// <summary>
+        /// 每帧更新
+        /// 勿在此执行高耗时应用
+        /// </summary>
+        void Update();
     }
 }

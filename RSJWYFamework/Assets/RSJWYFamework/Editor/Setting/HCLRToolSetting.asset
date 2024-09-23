@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BuildHotCodeDllPatch: Assets/HotUpdateAssets/HotUpdateCode/HotCode
   BuildMetadataForAOTAssembliesDllPatch: Assets/HotUpdateAssets/HotUpdateCode/MetadataForAOTAssemblies
-  GeneratedHotUpdateDLLJson: Assets/HotUpdateAssets/HotUpdateCode/List/HotCodeDLL.json
+  GeneratedHotUpdateDLLJson: Assets/HotUpdateAssets/HotUpdateCode/List/HotList.json

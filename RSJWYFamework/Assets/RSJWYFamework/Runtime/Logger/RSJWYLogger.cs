@@ -26,20 +26,18 @@ namespace RSJWYFamework.Runtime.Logger
         /// <summary>
         /// 日志
         /// </summary>
-        [Conditional("DEBUG")]
         public static void Log(string info)
         {
             /*logger_rf.Debug(info);*/
-            
+            StackTrace stackTrace = new StackTrace(1, true);
             Debug.Log(info);
             if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
-                    .UnityLogMessageReceivedThreadedEvent(info, null, LogType.Log);
+                    .UnityLogMessageReceivedThreadedEvent(info, stackTrace.ToString(), LogType.Log);
         }
         /// <summary>
         /// 日志
         /// </summary>
-        [Conditional("DEBUG")]
         public static void Log(RSJWYFameworkEnum @enum,string info)
         {
             //logger_rf.Debug($"{@enum}:{info}");

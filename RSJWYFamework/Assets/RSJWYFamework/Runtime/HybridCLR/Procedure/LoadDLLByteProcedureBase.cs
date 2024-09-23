@@ -27,8 +27,14 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
             RSJWYLogger.Log(RSJWYFameworkEnum.HybridCLR,$"加载热更代码数据");
             UniTask.Create(async () =>
             {
+                if (!Main.Main.YooAssetManager.RawPackage.CheckLocationValid("HotUpdateCode_HotList"))
+                {
+                    RSJWYLogger.Error("无法加载列表文件");
+                    return;
+                }
+                    
                 //获取列表
-                var MFALisRFH = Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync("HotCode_HotCodeDLL");
+                var MFALisRFH = Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync("HotUpdateCode_HotList");
                 await MFALisRFH.ToUniTask();
                 var loadLis = JsonConvert.DeserializeObject<HotCodeDLL>(MFALisRFH.GetRawFileText());
                 var hotCodeBytesMap = new Dictionary<string, HotCodeBytes>();

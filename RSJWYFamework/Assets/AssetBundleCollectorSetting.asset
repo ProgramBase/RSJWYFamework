@@ -33,31 +33,26 @@ MonoBehaviour:
         CollectorGUID: 72bb78504a138914582cb7d70e5c039b
         CollectorType: 0
         AddressRuleName: AddressByFileName
-        PackRuleName: HotCodePackRule
+        PackRuleName: PackRawFile
         FilterRuleName: HotCodeFilterRule
         AssetTags: 
         UserData: 
       - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/List
         CollectorGUID: e3d575cf570fe094185c8efbb2ee9fc8
         CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackDirectory
+        AddressRuleName: AddressByGroupAndFileName
+        PackRuleName: PackRawFile
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
       - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/MetadataForAOTAssemblies
         CollectorGUID: 883c203fc8ee7dc40b14d18edac8519e
         CollectorType: 0
-        AddressRuleName: AddressByGroupAndFileName
-        PackRuleName: PackDirectory
-        FilterRuleName: CollectAll
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackRawFile
+        FilterRuleName: HotCodeFilterRule
         AssetTags: 
         UserData: 
-    - GroupName: Config
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: DisableGroup
-      Collectors: []
   - PackageName: PrefabPackage
     PackageDesc: "\u9884\u5236\u4F53"
     EnableAddressable: 1

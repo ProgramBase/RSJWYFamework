@@ -14,30 +14,26 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 客户端的控制器
     /// </summary>
-    public class DefaultTcpClientController : ISocketTCPClientController,IModule
+    public class DefaultTcpClientController : ISocketTCPClientController
     {
         private TcpClientService tcpsocket;
         
         public void Init()
         {
-            Main.Main.EventModle.BindEvent<ClientSendToServerEventArgs>(ClientSendToServerMsg);
+            Main.Main.EventModle.BindEventRecord<ClientSendToServerEventArgs>(ClientSendToServerMsg);
             tcpsocket = new();
             tcpsocket.SocketTcpClientController = this;
         }
 
         public void Close()
         {
-            Main.Main.EventModle.UnBindEvent<ClientSendToServerEventArgs>(ClientSendToServerMsg);
+            Main.Main.EventModle.UnBindEventRecord<ClientSendToServerEventArgs>(ClientSendToServerMsg);
             tcpsocket?.Quit();
         }
 
-        public void Update(float time, float deltaTime)
+        public void Update()
         {
-            
-        }
-
-        public void UpdatePerSecond(float time)
-        {
+            tcpsocket?.TCPUpdate();
         }
 
 
@@ -80,23 +76,28 @@ namespace RSJWYFamework.Runtime.Default.Manager
        
         public void ClientStatus(NetClientStatus eventEnum)
         {
-            var _event= Main.Main.ReferencePoolManager.Get<ClientStatusEventArgs>();
-            _event.Sender = this;
-            _event.netClientStatus = eventEnum;
+            var _event= new ClientStatusEventArgs
+            {
+                Sender = this,
+                msgBase = null,
+                netClientStatus = eventEnum
+            };
             Main.Main.EventModle.FireNow(_event);
         }
 
         public void ReceiveMsgCallBack(MsgBase msgBase)
         {
-            var _event= Main.Main.ReferencePoolManager.Get<ClientReceivesMSGFromServer>();
-            _event.Sender = this;
-            _event.msg = msgBase;
+            var _event= new ClientReceivesMSGFromServer
+            {
+                Sender = null,
+                msgBase = msgBase
+            };
             Main.Main.EventModle.FireNow(_event);
         }
-        public void ClientSendToServerMsg(object sender, EventArgsBase eventArgsBase)
+        public void ClientSendToServerMsg(object sender, RecordEventArgsBase eventArgsBase)
         {
             if (eventArgsBase is ClientSendToServerEventArgs args)
-                ClientSendToServerMsg(args.msg);
+                ClientSendToServerMsg(args.msgBase);
         }
     }
 }

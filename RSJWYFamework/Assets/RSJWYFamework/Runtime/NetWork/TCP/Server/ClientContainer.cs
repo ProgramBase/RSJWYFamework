@@ -68,7 +68,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 通知多线程自己跳出
         /// </summary>
-        internal CancellationTokenSource cts=new();
+        internal CancellationTokenSource cts;
 
         /// <summary>
         /// 消息发送线程
@@ -79,7 +79,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         ///  消息队列发送锁
         /// </summary>
-        internal object msgSendThreadLock = new object();
+        internal object msgSendThreadLock ;
         /// <summary>
         /// 关闭
         /// </summary>

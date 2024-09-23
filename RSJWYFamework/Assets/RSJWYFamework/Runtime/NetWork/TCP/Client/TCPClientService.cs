@@ -94,7 +94,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         /// <summary>
         /// 心跳包间隔时间
         /// </summary>
-        static long m_PingInterval = 3;
+        static long m_PingInterval = 5;
         /// <summary>
         /// 掉线重连
         /// </summary>
@@ -454,7 +454,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
 
                             //更新接收到的心跳包时间（后台运行）
                             lastPongTime = Utility.Utility.GetTimeStamp();
-                            //Debug.LogFormat("收到服务器返回的心跳包！！时间戳为：{0}，同时更新本地时间戳，时间戳为：{1}", _ServerMsg.timeStamp.ToString(),lastPongTime.ToString());
+                            Debug.LogFormat("收到服务器返回的心跳包！！时间戳为：{0}，同时更新本地时间戳，时间戳为：{1}", _ServerMsg.timeStamp.ToString(),lastPongTime.ToString());
                         }
                         else
                         {
@@ -491,13 +491,12 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                     {
                         //规定时间到，发送心跳包到服务器
                         MsgPing msgPing = SendMsgMethod.SendMsgPing(timeNow);
-                        SendMessage(msgPing);
                         lastPingTime = timeNow;
-
+                        RSJWYLogger.Log($"<color=green>向服务器发送心跳包</color>");
+                        SendMessage(msgPing);
                     }
-
                     //如果心跳包过长时间没收到，关闭链接
-                    if (timeNow - lastPongTime > m_PingInterval * 4)
+                    if (timeNow - lastPongTime > m_PingInterval * 12)
                     {
                         Close();
                         RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient, "服务器返回心跳包超时");
