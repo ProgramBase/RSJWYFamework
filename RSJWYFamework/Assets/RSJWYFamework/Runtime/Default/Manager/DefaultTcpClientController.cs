@@ -20,14 +20,14 @@ namespace RSJWYFamework.Runtime.Default.Manager
         
         public void Init()
         {
-            Main.Main.EventModle.BindEvent<ServerToClientMsgEventArgs>(ClientSendToServerMsg);
+            Main.Main.EventModle.BindEvent<ClientSendToServerEventArgs>(ClientSendToServerMsg);
             tcpsocket = new();
             tcpsocket.SocketTcpClientController = this;
         }
 
         public void Close()
         {
-            Main.Main.EventModle.UnBindEvent<ServerToClientMsgEventArgs>(ClientSendToServerMsg);
+            Main.Main.EventModle.UnBindEvent<ClientSendToServerEventArgs>(ClientSendToServerMsg);
             tcpsocket?.Quit();
         }
 
@@ -95,8 +95,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
         }
         public void ClientSendToServerMsg(object sender, EventArgsBase eventArgsBase)
         {
-            if (eventArgsBase is ServerToClientMsgEventArgs args)
-                ClientSendToServerMsg(args.msgBase);
+            if (eventArgsBase is ClientSendToServerEventArgs args)
+                ClientSendToServerMsg(args.msg);
         }
     }
 }

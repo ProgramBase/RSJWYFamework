@@ -33,19 +33,11 @@ namespace RSJWYFamework.Runtime.NetWork.Base
         /// </summary>
         /// <param name="msgBase"></param>
         void FromClientReceiveMsgCallBack(ClientSocketToken clientSocketToken, MsgBase msgBase);
-        /// <summary>
-        /// 向客户端发消息
-        /// </summary>
-        void SendMsgToClient(object sender, EventArgsBase eventArgsBase);
-        /// <summary>
-        /// 向所有已链接上来的客户端发消息
-        /// </summary>
-        void SendMsgToClientAll(object sender, EventArgsBase eventArgsBase);
         
         /// <summary>
         /// 向客户端发消息
         /// </summary>
-        void SendMsgToClient(MsgBase msgBase);
+        void SendMsgToClient(MsgBase msgBase,ClientSocketToken clientSocketToken);
         
         /// <summary>
         /// 向所有已链接上来的客户端发消息

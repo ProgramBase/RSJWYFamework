@@ -15,4 +15,14 @@ namespace RSJWYFamework.Runtime.Event
         public object Sender;
 
     }
+    /// <summary>
+    /// 记录类型的事件内容载体
+    /// </summary>
+    public abstract record RecordEventArgsBase
+    {
+        /// <summary>
+        /// 消息发送者
+        /// </summary>
+        public object Sender;
+    }
 }

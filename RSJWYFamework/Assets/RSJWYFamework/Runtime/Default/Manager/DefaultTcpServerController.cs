@@ -19,8 +19,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void Init()
         {
-            Main.Main.EventModle.BindEvent<ServerToClientMsgEventArgs>(SendMsgToClient);
-            Main.Main.EventModle.BindEvent<ServerToClientMsgAllEventArgs>(SendMsgToClientAll);
+            Main.Main.EventModle.BindEventRecord<ServerToClientMsgEventArgs>(SendMsgToClientEvent);
+            Main.Main.EventModle.BindEventRecord<ServerToClientMsgAllEventArgs>(SendMsgToClientAllEvent);
             
             //检查是不是监听全部IP
             tcpsocket = new();
@@ -29,8 +29,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void Close()
         {
-            Main.Main.EventModle.UnBindEvent<ServerToClientMsgEventArgs>(SendMsgToClient);
-            Main.Main.EventModle.UnBindEvent<ServerToClientMsgAllEventArgs>(SendMsgToClientAll);
+            Main.Main.EventModle.UnBindEventRecord<ServerToClientMsgEventArgs>(SendMsgToClientEvent);
+            Main.Main.EventModle.UnBindEventRecord<ServerToClientMsgAllEventArgs>(SendMsgToClientAllEvent);
             tcpsocket?.Quit();
         }
 
@@ -79,61 +79,70 @@ namespace RSJWYFamework.Runtime.Default.Manager
         }
 
        
-        public void SendMsgToClient(object sender, EventArgsBase eventArgsBase)
+        public void SendMsgToClientEvent(object sender, RecordEventArgsBase eventArgsBase)
         {
             if (eventArgsBase is ServerToClientMsgEventArgs args)
-                SendMsgToClient(args.msgBase);
+                SendMsgToClient(args.msgBase,args.ClientSocketToken);
         }
 
         
-        public void SendMsgToClientAll(object sender, EventArgsBase eventArgsBase)
+        public void SendMsgToClientAllEvent(object sender, RecordEventArgsBase eventArgsBase)
         {
             if (eventArgsBase is not ServerToClientMsgAllEventArgs args) return;
-            foreach (var cs in TcpServerService.ClientDic)
+            foreach (var token in TcpServerService.ClientDic)
             {
                 var msg = args.msgBase;
-                msg.targetSocket = cs.Value.socket;
-                SendMsgToClient(msg);
+                SendMsgToClient(msg,token.Value);
             }
         }
 
-        public void SendMsgToClient(MsgBase msgBase)
+        public void SendMsgToClient(MsgBase msgBase,ClientSocketToken clientSocketToken)
         {
-            tcpsocket?.SendMessage(msgBase);
+            tcpsocket?.SendMessage(msgBase,clientSocketToken);
         }
 
 
         public void ClientConnectedCallBack(ClientSocketToken clientSocketToken)
         {
-            var _event= Main.Main.ReferencePoolManager.Get<ServerClientConnectedCallBackEventArgs>();
-            _event.Sender = this;
-            _event.ClientSocketToken = clientSocketToken;
-            Main.Main.EventModle.FireNow(_event);
+            var _event = new ServerClientConnectedCallBackEventArgs
+            {
+                Sender = this,
+                ClientSocketToken = clientSocketToken,
+                msgBase = null
+            };
+            Main.Main.EventModle.Fire(_event);
         }
 
         public void ClientReConnectedCallBack(ClientSocketToken clientSocketToken)
         {
-            var _event= Main.Main.ReferencePoolManager.Get<ServerClientReConnectedCallBackEventArgs>();
-            _event.ClientSocketToken = clientSocketToken;
-            _event.Sender = this;
-            Main.Main.EventModle.FireNow(_event);
+            var _event = new ServerClientReConnectedCallBackEventArgs
+            {
+                Sender = this,
+                ClientSocketToken = clientSocketToken,
+                msgBase = null
+            };
+            Main.Main.EventModle.Fire(_event);
         }
 
         public void ServerServiceStatus(NetServerStatus netServerStatus)
         {
-            var _event= Main.Main.ReferencePoolManager.Get<ServerStatusEventArgs>();
-            _event.Sender = this;
-            _event.status = netServerStatus;
-            Main.Main.EventModle.FireNow( _event);
+            var _event = new ServerStatusEventArgs
+            {
+                Sender = this,
+                status = netServerStatus
+            };
+            Main.Main.EventModle.Fire( _event);
         }
 
         public void FromClientReceiveMsgCallBack(ClientSocketToken clientSocketToken, MsgBase msgBase)
         {
-            var _event= Main.Main.ReferencePoolManager.Get<FromClientReceiveMsgCallBackEventArgs>();
-            _event.Sender = this;
-            _event.ClientSocketToken = clientSocketToken;
-            _event.msgBase = msgBase;
-            Main.Main.EventModle.FireNow(_event);
+            var _event= new FromClientReceiveMsgCallBackEventArgs
+            {
+                Sender = this,
+                ClientSocketToken = clientSocketToken,
+                msgBase = msgBase
+            };
+            Main.Main.EventModle.Fire(_event);
         }
     }
 }

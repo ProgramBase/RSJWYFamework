@@ -17,17 +17,9 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
     public class ClientSocketToken
     {
         /// <summary>
-        /// 存储连接的客户端
-        /// </summary>
-        internal System.Net.Sockets.Socket socket { get;set; }
-        /// <summary>
         /// 心跳包维持记录
         /// </summary>
         public long lastPingTime { get; internal set; }
-        /// <summary>
-        /// 存储数据-接收到的数据暂存容器
-        /// </summary>
-        internal ByteArray ReadBuff;
         
         /// <summary>  
         /// 客户端IP地址  
@@ -43,6 +35,14 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// 连接时间  
         /// </summary>  
         public DateTime ConnectTime { get; internal set; }  
+        /// <summary>
+        /// 存储连接的客户端
+        /// </summary>
+        internal System.Net.Sockets.Socket socket { get;set; }
+        /// <summary>
+        /// 存储数据-接收到的数据暂存容器
+        /// </summary>
+        internal ByteArray ReadBuff;
 
         /// <summary>
         /// 客户端汇报的ID
@@ -134,16 +134,17 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
     /// <summary>
     /// 接收到的客户端消息容器
     /// </summary>
-    public class ClientMsgContainer : IReference
+    internal class ClientMsgContainer : IReference
     {
         /// <summary>
         /// 消息来源
         /// </summary>
-        public ClientSocketToken targetToken { get; internal set; }
+        internal ClientSocketToken targetToken;
+
         /// <summary>
         /// 消息
         /// </summary>
-        public MsgBase msg { get; internal set; }
+        internal MsgBase msg;
 
         public void Release()
         {

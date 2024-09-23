@@ -9,13 +9,16 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     /// <summary>
     /// TCP服务端事件
     /// </summary>
-    public abstract class TCPServerSoketEventArgs:EventArgsBase
+    public abstract record TCPServerSoketEventArgs:RecordEventArgsBase
     {
-        public ClientSocketToken ClientSocketToken { get; internal set; }
-        public override void Release()
-        {
-            ClientSocketToken = null;
-        }
+        /// <summary>
+        /// 消息的关联客户端
+        /// </summary>
+        public ClientSocketToken ClientSocketToken;
+        /// <summary>
+        /// 消息的载体
+        /// </summary>
+        public MsgBase msgBase;
     }
     public abstract class TCPClientSoketEventArgs:EventArgsBase
     {
@@ -30,67 +33,40 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     /// <summary>
     /// 客户端连接上来的事件
     /// </summary>
-    public sealed class ServerClientConnectedCallBackEventArgs :TCPServerSoketEventArgs
+    public sealed record ServerClientConnectedCallBackEventArgs :TCPServerSoketEventArgs
     {
-        public override void Release()
-        {
-            base.Release();
-        }
     }
     /// <summary>
     /// 客户端离线的事件
     /// 在接收到本消息时，已从controller中移除，广播完后，将关闭并移除
     /// </summary>
-    public sealed class ServerClientReConnectedCallBackEventArgs : TCPServerSoketEventArgs
+    public sealed record ServerClientReConnectedCallBackEventArgs : TCPServerSoketEventArgs
     {
-        public override void Release()
-        {
-            base.Release();
-        }
     }
     /// <summary>
     /// 收到客户端发来的消息
     /// </summary>
-    public sealed class FromClientReceiveMsgCallBackEventArgs : TCPServerSoketEventArgs
+    public sealed record FromClientReceiveMsgCallBackEventArgs : TCPServerSoketEventArgs
     {
-        public MsgBase msgBase { get; internal set; }
-        public override void Release()
-        {
-            base.Release();
-        }
     }
     /// <summary>
     /// 向客户端发送消息
     /// </summary>
-    public sealed class ServerToClientMsgEventArgs : TCPServerSoketEventArgs
+    public sealed record ServerToClientMsgEventArgs : TCPServerSoketEventArgs
     {
-        public MsgBase msgBase;
-        public override void Release()
-        {
-            base.Release();
-        }
     }
     /// <summary>
     /// 向所有客户端发送消息
     /// </summary>
-    public sealed class ServerToClientMsgAllEventArgs : TCPServerSoketEventArgs
+    public sealed record ServerToClientMsgAllEventArgs : TCPServerSoketEventArgs
     {
-        public MsgBase msgBase;
-        public override void Release()
-        {
-            base.Release();
-        }
     }
     /// <summary>
     /// 服务端状态事件
     /// </summary>
-    public sealed class ServerStatusEventArgs : EventArgsBase
+    public sealed record ServerStatusEventArgs : RecordEventArgsBase
     {
         public NetServerStatus status;
-        public override void Release()
-        {
-            status = NetServerStatus.None;
-        }
     }
     #endregion
 

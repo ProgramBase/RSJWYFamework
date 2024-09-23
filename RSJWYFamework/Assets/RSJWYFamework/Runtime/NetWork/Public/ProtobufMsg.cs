@@ -44,6 +44,7 @@ namespace RSJWYFamework.Runtime.Net.Public
         /// <summary>
         /// 目标socket
         /// </summary>
+        [Obsolete]
         public System.Net.Sockets.Socket targetSocket;
     
     }
