@@ -302,10 +302,38 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                     //服务器关闭链接
                     return;
                 }
-
-                _readBuff.WriteIndex += count;
-                //
-                OnReceiveData();
+                //首先判断客户端token缓冲区剩余空间是否支持数据拷贝
+                if (_readBuff.Remain<=count)
+                    _readBuff.ReSize(_readBuff.length+count);
+                lock (_readBuff)
+                {
+                    _readBuff.WriteIndex += count;
+                }
+                while (_readBuff.length>4)
+                {
+                    //获取消息长度
+                    int msgLength = BitConverter.ToInt32(_readBuff.Bytes, _readBuff.ReadIndex);
+                    //判断是不是分包数据
+                    if (_readBuff.length < msgLength + 4)
+                    {
+                        //如果消息长度小于读出来的消息长度
+                        //此为分包，不包含完整数据
+                        //因为产生了分包，可能容量不足，根据目标大小进行扩容到接收完整
+                        //扩容后，retun，继续接收
+                        _readBuff.MoveBytes(); //已经完成一轮解析，移动数据
+                        _readBuff.ReSize(msgLength + 8); //扩容，扩容的同时，保证长度信息也能被存入
+                        return;
+                    }
+                    //移动，规避长度位，从整体消息开始位接收数据
+                    _readBuff.ReadIndex += 4; //前四位存储字节流数组长度信息
+                    //在消息接收异步线程内同步处理消息，保证当前客户消息顺序性
+                    var _msgBase= MessageTool.DecodeMsg(_readBuff.Bytes, _readBuff.ReadIndex, msgLength);
+                    //创建消息容器
+                    msgQueue.Enqueue(_msgBase);
+                    //处理完后移动数据位
+                    _readBuff.ReadIndex += msgLength;
+                    //结束本次处理循环，如果粘包，下一个循环将会处理
+                }
                 ////检查是否需要扩容
                 _readBuff.CheckAndMoveBytes();
                 _socket.BeginReceive(_readBuff.Bytes, _readBuff.WriteIndex, _readBuff.Remain, 0, ReceiveCallBack, _socket);
@@ -316,18 +344,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpClient,$"Socket数据接收完成处理失败 接收服务器数据失败:{ex.ToString()}");
                 Close();
             }
-        }
-
-        /// <summary>
-        /// 对数据进行处理
-        /// </summary>
-        void OnReceiveData()
-        {
-            MessageTool.DecodeMsg(_readBuff, msgQueue, _socket,
-                () =>
-                {
-                    Close();
-                });
         }
         #endregion
 

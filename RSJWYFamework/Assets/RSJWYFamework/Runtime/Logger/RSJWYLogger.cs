@@ -31,9 +31,9 @@ namespace RSJWYFamework.Runtime.Logger
             /*logger_rf.Debug(info);*/
             StackTrace stackTrace = new StackTrace(1, true);
             Debug.Log(info);
-            if (!Debugger.IsLogging())
+            /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
-                    .UnityLogMessageReceivedThreadedEvent(info, stackTrace.ToString(), LogType.Log);
+                    .UnityLogMessageReceivedThreadedEvent(info, stackTrace.ToString(), LogType.Log);*/
         }
         /// <summary>
         /// 日志
@@ -43,9 +43,9 @@ namespace RSJWYFamework.Runtime.Logger
             //logger_rf.Debug($"{@enum}:{info}");
             
             UnityEngine.Debug.Log($"{@enum}:{info}");
-            if (!Debugger.IsLogging())
+            /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
-                    .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Log);
+                    .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Log);*/
         }
 
         /// <summary>
@@ -56,13 +56,13 @@ namespace RSJWYFamework.Runtime.Logger
            // logger_rf.Warn(info);
             
             UnityEngine.Debug.LogWarning(info);
-            if (!Debugger.IsLogging())
+            /*if (!Debugger.IsLogging())
             {
                 // 获取堆栈跟踪信息
                 StackTrace stackTrace = new StackTrace(1, true); // 1 表示跳过当前方法帧，true 表示包含文件信息
                 Main.Main.ExceptionLogManager
                     .UnityLogMessageReceivedThreadedEvent(info, stackTrace.ToString(), LogType.Warning);
-            }
+            }*//**/
         }
         /// <summary>
         /// 警告
@@ -72,9 +72,9 @@ namespace RSJWYFamework.Runtime.Logger
             //logger_rf.Warn($"{@enum}:{info}");
             
             UnityEngine.Debug.LogWarning($"{@enum}:{info}");;
-            if (!Debugger.IsLogging())
+            /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
-                    .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Warning);
+                    .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Warning);*/
         }
 
         /// <summary>
@@ -85,9 +85,9 @@ namespace RSJWYFamework.Runtime.Logger
            // logger_rf.Error(info);
             
             UnityEngine.Debug.LogError(info);
-            if (!Debugger.IsLogging())
+            /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
-                    .UnityLogMessageReceivedThreadedEvent(info, null, LogType.Error);
+                    .UnityLogMessageReceivedThreadedEvent(info, null, LogType.Error);*/
         }
         /// <summary>
         /// 错误
@@ -97,9 +97,9 @@ namespace RSJWYFamework.Runtime.Logger
             //logger_rf.Error($"{@enum}:{info}");
             
             UnityEngine.Debug.LogError($"{@enum}:{info}");;
-            if (!Debugger.IsLogging())
+            /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
-                    .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Error);
+                    .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Error);*/
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace RSJWYFamework.Runtime.Logger
            // logger_rf.Fatal(exception);
             
             UnityEngine.Debug.LogException(exception);
-            if (!Debugger.IsLogging())
+            /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
-                    .UnityLogMessageReceivedThreadedEvent(exception.Message, exception.StackTrace, LogType.Exception);
+                    .UnityLogMessageReceivedThreadedEvent(exception.Message, exception.StackTrace, LogType.Exception);*//**/
         }
         /// <summary>
         /// 异常
@@ -122,9 +122,9 @@ namespace RSJWYFamework.Runtime.Logger
            // logger_rf.Fatal($"{@enum}:{exception.Message}");
             
             UnityEngine.Debug.LogException(exception);
-            if (!Debugger.IsLogging())
+            /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
-                    .UnityLogMessageReceivedThreadedEvent($"{@enum}:{exception.Message}", exception.StackTrace, LogType.Exception);
+                    .UnityLogMessageReceivedThreadedEvent($"{@enum}:{exception.Message}", exception.StackTrace, LogType.Exception);*/
         }
 
     }

@@ -163,7 +163,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
     
         #endregion
         
-        /// <summary>
+        /*/// <summary>
         /// 反序列化本次的消息
         /// </summary>
         /// <param name="byteArray">存储消息的自定义数组</param>
@@ -261,7 +261,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             finally
             {
             }
-        }
+        }*/
         /// <summary>
         /// 反序列化本次的消息
         /// </summary>
@@ -269,7 +269,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// <param name="readIndex">开始读索引</param>
         /// <param name="msgLength">消息整体长度</param>
         /// <returns>解码后的消息</returns>
-        internal static MsgBase DecodeMsg(byte[] byteArray,int readIndex,int msgLength,out int count)
+        internal static MsgBase DecodeMsg(byte[] byteArray,int readIndex,int msgLength)
         {
             //确认数据是否有误
             if (readIndex < 0)
@@ -306,7 +306,6 @@ namespace RSJWYFamework.Runtime.NetWork.Public
                 {
                     throw new RSJWYException(RSJWYFameworkEnum.NetworkTool,$"解析协议名出错！！无法匹配协议基类协议名不存在！！返回的协议名为: {MyProtocolEnum.None.ToString()}");
                 }
-                count=readIndex += bodyCount + 4;
                 return msgBase;
             }
             catch (SocketException ex)

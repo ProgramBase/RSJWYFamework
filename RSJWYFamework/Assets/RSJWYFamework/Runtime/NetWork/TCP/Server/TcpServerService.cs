@@ -17,8 +17,23 @@ using RSJWYFamework.Runtime.Pool;
 
 namespace RSJWYFamework.Runtime.NetWork.TCP.Server
 {
-    public class TCPServer
+    /// <summary>
+    /// 网络链接事件枚举
+    /// </summary>
+    public enum NetServerStatus
     {
+        None = 0,
+        ServerServicecOpen ,
+        ServerServicecClose,
+
+        /// <summary>
+        /// 网络重连
+        /// </summary>
+        ReConnect
+    }
+    public class TcpServerService
+    {  
+        
         
         #region 字段
 
@@ -256,7 +271,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 clientToken.readSocketAsyncEA.UserToken = clientToken;
                 clientToken.writeSocketAsyncEA.UserToken = clientToken;
                 
-                RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"一个客户端连接上来：{clientToken.Remote}");
+                RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"一个客户端连接上来：{clientToken.Remote},当前设备数：{m_clientCount}");
                 
                 //接受消息传入请求
                 if (!socketAsyncEArgs.AcceptSocket.ReceiveAsync( clientToken.readSocketAsyncEA)) 
@@ -343,7 +358,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                         //移动，规避长度位，从整体消息开始位接收数据
                         readBuff.ReadIndex += 4; //前四位存储字节流数组长度信息
                         //在消息接收异步线程内同步处理消息，保证当前客户消息顺序性
-                        var _msgBase= MessageTool.DecodeMsg(readBuff.Bytes, readBuff.ReadIndex, msgLength,out var _count);
+                        var _msgBase= MessageTool.DecodeMsg(readBuff.Bytes, readBuff.ReadIndex, msgLength);
                         //创建消息容器
                         var _msgContainer = new ClientMsgContainer()
                         {

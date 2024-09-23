@@ -9,7 +9,7 @@ public class test_client : MonoBehaviour
     // Start is called before the first frame update
     
     private DefaultTcpClientController col=new ();
-    void Start()
+    void OnEnable()
     {
         col.Init();
         col.InitTCPClient();
@@ -21,7 +21,7 @@ public class test_client : MonoBehaviour
         
     }
 
-    private void OnApplicationQuit()
+    private void OnDisable()
     {
         col?.Close();
     }

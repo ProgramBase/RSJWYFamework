@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -16,26 +17,13 @@ using RSJWYFamework.Runtime.Utility;
 
 namespace RSJWYFamework.Runtime.NetWork.TCP.Server
 {
-    /// <summary>
-    /// 网络链接事件枚举
-    /// </summary>
-    public enum NetServerStatus
-    {
-        None = 0,
-        ServerServicecOpen ,
-        ServerServicecClose,
-
-        /// <summary>
-        /// 网络重连
-        /// </summary>
-        ReConnect
-    }
+  
 
     /// <summary>
     /// 服务器模块核心，仅允许通过ServerController调用
     /// </summary>
     [Obsolete]
-    internal class TcpServerService
+    internal class old_TcpServerService
     {
         #region 字段
         
@@ -626,3 +614,4 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
     }
 
 }
+*/

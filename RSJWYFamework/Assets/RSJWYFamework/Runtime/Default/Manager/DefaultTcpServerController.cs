@@ -14,7 +14,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// </summary>
     public class DefaultTcpServerController : ISocketTCPServerController
     {
-        private TCPServer tcpsocket;
+        private TcpServerService tcpsocket;
         
         public void Init()
         {
@@ -82,7 +82,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         public void SendMsgToClientAllEvent(object sender, RecordEventArgsBase eventArgsBase)
         {
             if (eventArgsBase is not ServerToClientMsgAllEventArgs args) return;
-            foreach (var token in TcpServerService.ClientDic)
+            foreach (var token in tcpsocket.ClientDic)
             {
                 var msg = args.msgBase;
                 SendMsgToClient(msg,token.Value);

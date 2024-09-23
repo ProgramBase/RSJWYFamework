@@ -5,80 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotUpdateCode/List/HotCodeDLL.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotUpdateCode/List/HotCodeDLL.json.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpServerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpServerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadDLLByteProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadDLLByteProcedureBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Logger/RSJWYLogger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Logger/RSJWYLogger.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketTCPClientController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketTCPClientController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketTCPServerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketTCPServerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Event/SocketEventArgs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Event/SocketEventArgs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/MessageTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/MessageTool.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/ClientContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/ClientContainer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/YooAssetModuleSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/CustomPackRule.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/CustomPackRule.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/PackageComparator.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/PackageComparator/PackageComparatorWindow.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/PackageComparator/PackageComparatorWindow.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/PackageImporter.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/PackageImporter/PackageImporterWindow.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/PackageImporter/PackageImporterWindow.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollectionHelper.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollectionHelper.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollectionManifest.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollectionManifest.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollector.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollector.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollectorSetting.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollectorSetting.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollectorWindow.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollectorWindow.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollectorWindow.uxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Editor/ShaderVariantCollector/ShaderVariantCollectorWindow.uxml.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/AssetOperationHandleExtension.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/AssetOperationHandleExtension.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/GameObjectAssetReference.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/GameObjectAssetReference.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/LoadAssetsByTagOperation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/LoadAssetsByTagOperation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/WXFSDownloadFileOperation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/WXFSDownloadFileOperation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/WXFSInitializeOperation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/WXFSInitializeOperation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/WXFSLoadBundleOperation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/WXFSLoadBundleOperation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/WXFSLoadPackageManifestOperation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/WXFSLoadPackageManifestOperation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/WXFSRequestPackageVersionOperation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/WXFSRequestPackageVersionOperation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/internal.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/internal/LoadWechatPackageManifestOperation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/internal/LoadWechatPackageManifestOperation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/internal/RequestWechatPackageHashOperation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/internal/RequestWechatPackageHashOperation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/internal/RequestWechatPackageVersionOperation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/Operation/internal/RequestWechatPackageVersionOperation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/WechatFileSystem.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/WechatFileSystem/WechatFileSystem.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/YooAsset.RuntimeExtension.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Samples/YooAsset/2.2.1-preview/Extension Sample/Runtime/YooAsset.RuntimeExtension.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TcpServerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServer.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TcpServerService.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/old_TCPServerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TCPServerService.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/old_TCPServerService.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/HotCode/NewBehaviourScript.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/HotCode/NewBehaviourScript.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/HotCode/test_client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/HotCode/test_client.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,10 +55,14 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/83c38a410631422cb9ff71f779fb5969175e00/ae/fb336218/PooledObject`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/83c38a410631422cb9ff71f779fb5969175e00/e4/05e70987/ObjectPool`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/19/03b4d7f7/String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/34/3e6fef33/SystemException.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/3b/29a6564a/NullReferenceException.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/43/d72860be/ConcurrentDictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/ab/f4ed9c96/Exception.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/f2/d7b6438d/Dictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9c6570448e70440ea7a2f0f4a152540d305400/9d/30db211c/OdinEditorWindow.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9c6570448e70440ea7a2f0f4a152540d305400/a8/3ac13fa7/OdinMenuTreeExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bd10720ce6684a79834ed84aaf34d496176200/6e/0ae00f6e/Debug.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/15/52c2cad1/ResourcesAPI.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/65/5a6f51ed/Time.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/9c/874fb8d0/AsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
@@ -160,28 +100,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "XThreadsFramesViewSplitterKey": "0.20187393",
-    "git-widget-placeholder": "develop",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CodeLensConfigurable",
-    "vue.rearranger.settings.migration": "true",
-    "附加到 Unity 编辑器.附加到 Unity 编辑器.executor": "Debug"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.20187393&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CodeLensConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;附加到 Unity 编辑器.附加到 Unity 编辑器.executor&quot;: &quot;Debug&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\Administrator\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Administrator\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Administrator\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="附加到 Unity 编辑器.附加到 Unity 编辑器">
     <configuration name="启动 Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\unity\UnnityEditor\2022.3.42f1c1\Editor\Unity.exe" />
@@ -207,10 +147,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="34192">
+    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="34192" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
