@@ -10,38 +10,38 @@ namespace RSJWYFamework.Runtime.Pool
     /// <summary>
     /// 引用池
     /// </summary>
-    public sealed class ObjectPool<T>where T:class,new()
+    public class ObjectPool<T>where T:class,new()
     {
         /// <summary>
         /// 数量上限
         /// </summary>
-        private int _limit = 100;
+        protected int _limit = 100;
         
         /// <summary>
         /// 池子
         /// </summary>
-        private ConcurrentStack<T> _objectQueue = new ();
+        protected ConcurrentStack<T> _objectQueue = new ();
 
         /// <summary>
         /// 池子里当前未使用物体数量
         /// </summary>
-        public int Count => _objectQueue.Count;
+        protected int Count => _objectQueue.Count;
         /// <summary>
         /// 创建物体时回调
         /// </summary>
-        private Action<T> _onCreate;
+        protected Action<T> _onCreate;
         /// <summary>
         /// 销毁物体时回调
         /// </summary>
-        private Action<T> _onDestroy;
+        protected Action<T> _onDestroy;
         /// <summary>
         /// 获取物体时回调
         /// </summary>
-        private Action<T> _onGet;
+        protected Action<T> _onGet;
         /// <summary>
         /// 回收物体时回调
         /// </summary>
-        private Action<T> _onRelease;
+        protected Action<T> _onRelease;
         
         /// <summary>
         /// 创建池
@@ -74,7 +74,7 @@ namespace RSJWYFamework.Runtime.Pool
         /// 获取一个对象池内的对象
         /// </summary>
         /// <returns></returns>
-        public T Get()
+        public virtual T Get()
         {
             if (_objectQueue.TryPop(out var popitem))
             {
@@ -93,7 +93,7 @@ namespace RSJWYFamework.Runtime.Pool
         /// <summary>
         /// 回收一个对象
         /// </summary>
-        public void Release(T item)
+        public virtual void Release(T item)
         {
             if (item == null)
                 throw new RSJWYException(RSJWYFameworkEnum.Pool,"试图放入一个空对象到对象池中");
@@ -112,7 +112,7 @@ namespace RSJWYFamework.Runtime.Pool
         /// <summary>
         /// 清空所有对象
         /// </summary>
-        public void Clear()
+        public virtual void Clear()
         {
             while (_objectQueue.TryPop(out var _obj))
             {

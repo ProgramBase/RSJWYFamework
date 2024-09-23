@@ -14,7 +14,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// </summary>
     public class DefaultTcpServerController : ISocketTCPServerController, IModule
     {
-        private TcpServerService tcpsocket;
+        private TCPServer tcpsocket;
 
 
         public void Init()

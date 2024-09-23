@@ -68,12 +68,18 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 通知多线程自己跳出
         /// </summary>
-        internal CancellationTokenSource cts;
+        internal CancellationTokenSource cts=new();
 
         /// <summary>
         /// 消息发送线程
         /// </summary>
         internal Thread msgSendThread;
+        
+        
+        /// <summary>
+        ///  消息队列发送锁
+        /// </summary>
+        internal object msgSendThreadLock = new object();
         /// <summary>
         /// 关闭
         /// </summary>
@@ -81,9 +87,15 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         {
             try
             {
-                socket?.Close();
-                socket?.Shutdown(SocketShutdown.Send);
+                lock (msgSendThreadLock)
+                {
+                    //释放锁，继续执行信息发送
+                    Monitor.Pulse(msgSendThreadLock);
+                }
                 cts?.Cancel();
+                socket?.Shutdown(SocketShutdown.Send);
+                socket?.Close();
+                //本条数据发送完成，激活线程，继续处理下一条
             }
             catch (Exception e)
             {

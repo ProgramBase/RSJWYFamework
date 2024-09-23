@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -59,10 +60,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// </summary>
         static ConcurrentQueue<ClientMsgContainer> UnityMsgQueue = new();
 
-        /// <summary>
-        /// 消息发送队列
-        /// </summary>
-        static ConcurrentQueue<ServerToClientMsgContainer> msgSendQueue = new();
 
         /// <summary>
         /// 消息处理线程
@@ -72,14 +69,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// 心跳包监测线程
         /// </summary>
         static Thread pingThread;
-        /// <summary>
-        /// 消息队列发送监控线程
-        /// </summary>
-        static Thread msgSendThread;
-        /// <summary>
-        ///  消息队列发送锁
-        /// </summary>
-        object msgSendThreadLock = new object();
 
         /// <summary>
         /// 通知多线程自己跳出
@@ -90,6 +79,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// 是否已经初始化
         /// </summary>
         bool isInit = false;
+        
         /// <summary>
         /// 已连接客户端数量
         /// </summary>
@@ -98,9 +88,8 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// SocketAsyncEventArgs池-读写
         /// </summary>
-        private ObjectPool<SocketAsyncEventArgs> RWSocketAsynEA;
+        private SocketAsyncEventPool RWSocketAsynEA;
         
-
         #endregion
 
         #region 初始化
@@ -189,10 +178,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 pingThread = new Thread(() =>PingThread(cts.Token));
                 pingThread.IsBackground = true;
                 pingThread.Start();
-                //消息发送线程
-                msgSendThread = new Thread(() =>MsgSendListenThread(cts.Token));
-                msgSendThread.IsBackground = true;
-                msgSendThread.Start();
                 isInit = true;
                 StartAccept(null);
                 //输出日志
@@ -257,8 +242,16 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     socket = socketAsyncEArgs.AcceptSocket,
                     ConnectTime = DateTime.Now,
                     Remote = socketAsyncEArgs.AcceptSocket.RemoteEndPoint,
-                    IPAddress = ((IPEndPoint)(socketAsyncEArgs.AcceptSocket.RemoteEndPoint)).Address
+                    IPAddress = ((IPEndPoint)(socketAsyncEArgs.AcceptSocket.RemoteEndPoint)).Address,
+                    sendQueue=new(),
                 };
+                //绑定线程
+                //消息发送线程
+                clientToken.msgSendThread = new Thread(
+                    () =>MsgSendListenThread(cts.Token,clientToken.sendQueue,clientToken.msgSendThreadLock));
+                clientToken.msgSendThread.IsBackground = true;
+                clientToken.msgSendThread.Start();
+                
                 //添加和绑定
                 ClientDic.TryAdd(clientToken.socket, clientToken);
                 readEventArgs.UserToken = clientToken;
@@ -411,18 +404,14 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     msg = msgBase,
                     sendBytes = _sendBytes
                 };
-                targetToken.
-
+                targetToken.sendQueue.Enqueue(_msg);
 
                 //写入到队列，向客户端发送消息，根据客户端和绑定的数据发送
-                msgSendQueue.Enqueue(_msg);
-                return;//链接不存在或者未建立链接
             }
             catch (SocketException ex)
             {
                 RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"向客户端发送消息失败 SendMessage Error:{ex.ToString()}");
                 //CloseSocket(ClientDic[_client]);?断开方式有待商讨
-                return;//链接不存在或者未建立链接
             }
         }
         
@@ -431,23 +420,51 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// 数据发送后回调
         /// </summary>
         /// <param name="e"></param>
-        private void ProcessSend(SocketAsyncEventArgs e)  
-        {  
-            if (e.SocketError == SocketError.Success)  
-            {  
-                // done echoing data back to the client  
-                AsyncUserToken token = (AsyncUserToken)e.UserToken;  
-                // read the next block of data send from the client  
-                bool willRaiseEvent = token.Socket.ReceiveAsync(e);  
-                if (!willRaiseEvent)  
-                {  
-                    ProcessReceive(e);  
-                }  
-            }  
-            else  
-            {  
-                CloseClientSocket(e);  
-            }  
+        private void ProcessSend(SocketAsyncEventArgs socketAsyncEA)
+        {
+            var ClientToken = (ClientSocketToken)socketAsyncEA.UserToken;
+            try
+            {
+                if (socketAsyncEA.SocketError == SocketError.Success&&socketAsyncEA.BytesTransferred > 0)
+                {
+                    //获取本次数据操作长度，对比应该发送长度
+                    int senlength = socketAsyncEA.BytesTransferred;
+                    //取出消息类但不移除，用作数据比较，根据消息MSG队列，获取相应的客户端内的消息数组队列
+                    ClientToken.sendQueue.TryPeek(out var _msgbase);
+                    var _ba = _msgbase.sendBytes;
+                    _ba.ReadIndex += senlength;//已发送索引
+                    if (_ba.length == 0)//代表发送完整
+                    {
+                        ClientToken.sendQueue.TryDequeue(out var _);//取出但不使用，只为了从队列中移除
+                        _ba = null;//发送完成
+                    }
+                    //发送不完整，再次发送
+                    if (_ba != null)
+                    {
+                        socketAsyncEA.SetBuffer(_ba.ReadIndex,_ba.length);
+                    }
+                    else
+                    {
+                        //本条数据发送完成，激活线程，继续处理下一条
+                        lock (ClientToken.msgSendThreadLock)
+                        {
+                            //释放锁，继续执行信息发送
+                            Monitor.Pulse(ClientToken.msgSendThreadLock);
+                        }
+
+                    }
+                }
+                else
+                {
+                    CloseClientSocket(ClientToken.socket);
+                }
+
+            }
+            catch (Exception exception)
+            { 
+                CloseClientSocket(ClientToken.socket);
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"向客户端发送消息失败 SendCallBack Error:{exception}" );
+            }
         }  
         
         
@@ -455,7 +472,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 关闭客户端
         /// </summary>
-        /// <param name="SocketAsyncEA"></param>
+        /// <param name="targetSocket"></param>
         private void CloseClientSocket(System.Net.Sockets.Socket targetSocket)
         {  
             if (!ClientDic.TryRemove(targetSocket, out var clientToken))
@@ -472,6 +489,34 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 RWSocketAsynEA.Release(clientToken.writeSocketAsyncEA);
             RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"一个客户端断开连接，当前连接总数：{m_clientCount}");
         }
+        /// <summary>
+        /// 关闭服务器，关闭所有已经链接上来的socket以及关闭多余线程
+        /// </summary>
+        public void Quit()
+        {
+            if (!isInit)
+            {
+                return;
+            }
+            //关闭所有已经链接上来的socket
+            List<System.Net.Sockets.Socket> _tmp = ClientDic
+                .Select(x=>x.Value.socket)
+                .ToList();
+            // lock ((clientList as ICollection).SyncRoot)
+            // {
+            //     for (int i = 0; i < clientList.Count; i++)
+            //     {
+            //         _tmp.Add(clientList[i]);
+            //     }
+            // }
+            for (int i = 0; i < _tmp.Count; i++)
+            {
+                CloseClientSocket(_tmp[i]);
+            }
+            ListenSocket.Close();
+            RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"已关闭所有链接上来的客户端");
+
+        }
 
 
         #endregion
@@ -480,13 +525,14 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 消息队列发送监控线程
         /// </summary>
-        void MsgSendListenThread(CancellationToken token)
+        void MsgSendListenThread(CancellationToken token,ConcurrentQueue<ServerToClientMsgContainer> sendQueue
+        ,object ThreadLock)
         {
             while (!token.IsCancellationRequested)
             {
                 try
                 {
-                    if (msgSendQueue.Count <= 0)
+                    if (sendQueue.Count <= 0)
                     {
                         Thread.Sleep(10);
                         continue;
@@ -494,14 +540,14 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
 
                     ServerToClientMsgContainer _msgbase;
                     //取出消息队列内的消息，但不移除队列，以获取目标客户端
-                    msgSendQueue.TryPeek(out _msgbase);
+                    sendQueue.TryPeek(out _msgbase);
                     var socketAsyncEA = RWSocketAsynEA.Get();
                     socketAsyncEA.SetBuffer(_msgbase.sendBytes.Bytes, _msgbase.sendBytes.ReadIndex,_msgbase.sendBytes.length);
                     //当前线程执行休眠，等待消息发送完成后继续
-                    lock (msgSendThreadLock)
+                    lock (ThreadLock)
                     {
                         //等待SendCallBack完成回调释放本锁再继续执行，超时10秒
-                        bool istimeout = Monitor.Wait(msgSendThreadLock, 20000);
+                        bool istimeout = Monitor.Wait(ThreadLock, 20000);
                         if (!istimeout)
                         {
                             RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
