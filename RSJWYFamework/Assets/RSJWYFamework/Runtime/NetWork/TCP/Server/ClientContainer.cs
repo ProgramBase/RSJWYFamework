@@ -42,7 +42,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 存储数据-接收到的数据暂存容器
         /// </summary>
-        internal ByteArray ReadBuff;
+        internal ByteArrayMemory ReadBuff;
 
         /// <summary>
         /// 客户端汇报的ID
@@ -124,7 +124,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 已转换完成的消息数组
         /// </summary>
-        internal ByteArray sendBytes;
+        internal ByteArrayMemory SendBytes;
 
         public void Release()
         {

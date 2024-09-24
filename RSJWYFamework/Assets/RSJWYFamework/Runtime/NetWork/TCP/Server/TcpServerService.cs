@@ -154,7 +154,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 },
                 (_obj) =>
                 {
-                    var _buffer = new byte[1048576]; 
+                    var _buffer = new byte[10485760]; 
                     _obj.SetBuffer(_buffer,0,_buffer.Length);
                 },
                 (_obj) =>
@@ -251,7 +251,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     socket = socketAsyncEArgs.AcceptSocket,
                     ReadBuff = new(),
                     readSocketAsyncEA = RWSocketAsynEA.Get(),
-                    writeSocketAsyncEA = RWSocketAsynEA.Get(),
+                    writeSocketAsyncEA = RWSocketAsynEA.GetNullBuffer(),
                     ConnectTime = DateTime.Now,
                     Remote = socketAsyncEArgs.AcceptSocket.RemoteEndPoint,
                     IPAddress = ((IPEndPoint)(socketAsyncEArgs.AcceptSocket.RemoteEndPoint)).Address,
@@ -274,7 +274,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"一个客户端连接上来：{clientToken.Remote},当前设备数：{m_clientCount}");
                 
                 //接受消息传入请求
-                if (!socketAsyncEArgs.AcceptSocket.ReceiveAsync( clientToken.readSocketAsyncEA)) 
+                if (!clientToken.socket.ReceiveAsync( clientToken.readSocketAsyncEA)) 
                     Task.Run(() => ProcessReceive( clientToken.readSocketAsyncEA)); // 异步执行接收处理，避免递归调用
             }  
             catch (Exception e)  
@@ -330,48 +330,47 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 {
                     //首先判断客户端token缓冲区剩余空间是否支持数据拷贝
                     if (readBuff.Remain<=socketAsyncEA.BytesTransferred)
-                        readBuff.ReSize(readBuff.length+socketAsyncEA.BytesTransferred);
+                        readBuff.ReSize(readBuff.WriteIndex+socketAsyncEA.BytesTransferred);//确保从写入索引开始，能写入数据
                     //拷贝到容器缓冲区
                     lock (token.ReadBuff)
                     {
-                        //拷贝数据
-                        Array.Copy(socketAsyncEA.Buffer, socketAsyncEA.Offset,
-                            readBuff.Bytes, readBuff.WriteIndex,
-                            socketAsyncEA.BytesTransferred);
-                        readBuff.WriteIndex += socketAsyncEA.BytesTransferred;//移动已经写入索引
-                    }
-                    while (readBuff.length>4)
-                    {
-                        //获取消息长度
-                        int msgLength = BitConverter.ToInt32(readBuff.Bytes, readBuff.ReadIndex);
-                        //判断是不是分包数据
-                        if (readBuff.length < msgLength + 4)
+                        //从缓冲区获取并设置数据
+                        readBuff.SetBytes(socketAsyncEA.Buffer,socketAsyncEA.Offset,socketAsyncEA.BytesTransferred);
+                        //处理本次接收的数据
+                        while (readBuff.Readable>4)
                         {
-                            //如果消息长度小于读出来的消息长度
-                            //此为分包，不包含完整数据
-                            //因为产生了分包，可能容量不足，根据目标大小进行扩容到接收完整
-                            //扩容后，retun，继续接收
-                            readBuff.MoveBytes(); //已经完成一轮解析，移动数据
-                            readBuff.ReSize(msgLength + 8); //扩容，扩容的同时，保证长度信息也能被存入
-                            return;
+                            //获取消息长度
+                            int msgLength = BitConverter.ToInt32(readBuff.GetlengthBytes(4));
+                            //判断是不是分包数据
+                            if (readBuff.Readable < msgLength + 4)
+                            {
+                                //如果消息长度小于读出来的消息长度
+                                //此为分包，不包含完整数据
+                                //因为产生了分包，可能容量不足，根据目标大小进行扩容到接收完整
+                                //扩容后，retun，继续接收
+                                readBuff.MoveBytes(); //已经完成一轮解析，移动数据
+                                readBuff.ReSize(msgLength + 8); //扩容，扩容的同时，保证长度信息也能被存入
+                                return;
+                            }
+                            //移动，规避长度位，从整体消息开始位接收数据
+                            readBuff.ReadIndex += 4; //前四位存储字节流数组长度信息
+                            //在消息接收异步线程内同步处理消息，保证当前客户消息顺序性
+                            //var _msgBase= MessageTool.DecodeMsg(readBuff.Bytes, readBuff.ReadIndex, msgLength);
+                            var _msgBase= MessageTool.DecodeMsg(readBuff.GetlengthBytes(msgLength));
+                            //创建消息容器
+                            var _msgContainer = new ClientMsgContainer()
+                            {
+                                targetToken= token,
+                                msg= _msgBase,
+                            };
+                            serverMsgQueue.Enqueue(_msgContainer);
+                            //处理完后移动数据位
+                            readBuff.ReadIndex += msgLength;
+                            //检查是否需要扩容
+                            readBuff.CheckAndMoveBytes();
+                            //结束本次处理循环，如果粘包，下一个循环将会处理
                         }
-                        //移动，规避长度位，从整体消息开始位接收数据
-                        readBuff.ReadIndex += 4; //前四位存储字节流数组长度信息
-                        //在消息接收异步线程内同步处理消息，保证当前客户消息顺序性
-                        var _msgBase= MessageTool.DecodeMsg(readBuff.Bytes, readBuff.ReadIndex, msgLength);
-                        //创建消息容器
-                        var _msgContainer = new ClientMsgContainer()
-                        {
-                            targetToken= token,
-                            msg= _msgBase,
-                        };
-                        serverMsgQueue.Enqueue(_msgContainer);
-                        //处理完后移动数据位
-                        readBuff.ReadIndex += msgLength;
-                        readBuff.MoveBytes();//整理数据
-                        //结束本次处理循环，如果粘包，下一个循环将会处理
                     }
-                    readBuff.CheckAndMoveBytes();
                     //继续接收. 为什么要这么写,请看Socket.ReceiveAsync方法的说明  
                     if (!token.socket.ReceiveAsync(socketAsyncEA))
                         Task.Run(() => ProcessReceive(socketAsyncEA));
@@ -410,13 +409,13 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     return;//链接不存在或者未建立链接
                 }
                 //编码
-                ByteArray _sendBytes = MessageTool.EncodMsg(msgBase);
+                ByteArrayMemory sendOldBytes = MessageTool.EncodeMsg(msgBase);
                 //创建容器
                 ServerToClientMsgContainer _msg = new()
                 {
                     targetToken = targetToken,
                     msg = msgBase,
-                    sendBytes = _sendBytes
+                    SendBytes = sendOldBytes
                 };
                 targetToken.sendQueue.Enqueue(_msg);
 
@@ -433,10 +432,10 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 数据发送后回调
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="socketAsyncEA"></param>
         private void ProcessSend(SocketAsyncEventArgs socketAsyncEA)
         {
-            var ClientToken = (ClientSocketToken)socketAsyncEA.UserToken;
+            var clientToken = (ClientSocketToken)socketAsyncEA.UserToken;
             try
             {
                 if (socketAsyncEA.SocketError == SocketError.Success&&socketAsyncEA.BytesTransferred > 0)
@@ -444,41 +443,43 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     //获取本次数据操作长度，对比应该发送长度
                     int senlength = socketAsyncEA.BytesTransferred;
                     //取出消息类但不移除，用作数据比较，根据消息MSG队列，获取相应的客户端内的消息数组队列
-                    ClientToken.sendQueue.TryPeek(out var _msgbase);
-                    var _ba = _msgbase.sendBytes;
+                    clientToken.sendQueue.TryPeek(out var _msgbase);
+                    var _ba = _msgbase.SendBytes;
                     _ba.ReadIndex += senlength;//已发送索引
-                    if (_ba.length == 0)//代表发送完整
+                    if (_ba.Readable == 0)//代表发送完整
                     {
-                        ClientToken.sendQueue.TryDequeue(out var _);//取出但不使用，只为了从队列中移除
+                        clientToken.sendQueue.TryDequeue(out var _);//取出但不使用，只为了从队列中移除
                         _ba = null;//发送完成
                     }
                     //发送不完整，再次发送
                     if (_ba != null)
                     {
-                        socketAsyncEA.SetBuffer(_ba.ReadIndex,_ba.length);
+                        //重新获取可用数据切片作为发送数据
+                        socketAsyncEA.SetBuffer(_ba.GetRemainingSlices());
                         if (!_msgbase.targetToken.socket.SendAsync(socketAsyncEA))
                             Task.Run(() => ProcessSend(socketAsyncEA));
                     }
                     else
                     {
                         //本条数据发送完成，激活线程，继续处理下一条
-                        lock (ClientToken.msgSendThreadLock)
+                        lock (clientToken.msgSendThreadLock)
                         {
                             //释放锁，继续执行信息发送
-                            Monitor.Pulse(ClientToken.msgSendThreadLock);
+                            Monitor.Pulse(clientToken.msgSendThreadLock);
                         }
 
                     }
                 }
                 else
                 {
-                    CloseClientSocket(ClientToken.socket);
+                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"向服务器发送消息失败 ProcessSend Error:不满足回调进入条件");
+                    CloseClientSocket(clientToken.socket);
                 }
 
             }
             catch (Exception exception)
             { 
-                CloseClientSocket(ClientToken.socket);
+                CloseClientSocket(clientToken.socket);
                 RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"向客户端发送消息失败 SendCallBack Error:{exception}" );
             }
         }  
@@ -540,6 +541,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
          #region 线程
         /// <summary>
         /// 消息队列发送监控线程
+        /// 分配到每一个的客户端容器内
         /// </summary>
         void MsgSendListenThread(CancellationToken token,ConcurrentQueue<ServerToClientMsgContainer> sendQueue
         ,object ThreadLock)
@@ -554,10 +556,11 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                         continue;
                     }
 
-                    ServerToClientMsgContainer _msgbase;
                     //取出消息队列内的消息，但不移除队列，以获取目标客户端
-                    sendQueue.TryPeek(out _msgbase);
-                    _msgbase.targetToken.writeSocketAsyncEA.SetBuffer(_msgbase.sendBytes.Bytes, _msgbase.sendBytes.ReadIndex,_msgbase.sendBytes.length);
+                    sendQueue.TryPeek(out var _msgbase);
+                    //_msgbase.targetToken.writeSocketAsyncEA.SetBuffer(_msgbase.SendOldBytes.Bytes, _msgbase.SendOldBytes.ReadIndex,_msgbase.SendOldBytes.length);
+                    var data = _msgbase.SendBytes.GetRemainingSlices();
+                    _msgbase.targetToken.writeSocketAsyncEA.SetBuffer(data);
                     //当前线程执行休眠，等待消息发送完成后继续
                     lock (ThreadLock)
                     {
@@ -575,7 +578,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 catch (Exception ex)
                 {
                     RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer, $"消息发送时发生错误：{ex.Message}");
-                    if (!token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer, $"请求取消任务");
                         break;
@@ -624,7 +627,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 catch (Exception ex)
                 {
                     RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer, $"检测心跳包时发生错误：{ex.Message}");
-                    if (!token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer, $"请求取消任务");
                         break;
@@ -681,7 +684,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 catch (Exception ex)
                 {
                     RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer, $"消息分发时发生错误：{ex.Message}");
-                    if (!token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer, $"请求取消任务");
                         break;

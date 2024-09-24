@@ -3,11 +3,11 @@ using RSJWYFamework.Runtime.ReferencePool;
 
 namespace RSJWYFamework.Runtime.NetWork.Public
 {
-    /// <summary>
+    /*/// <summary>
     /// 数据数组
     /// 数据数组结构：记录本条消息后续长度的数据（4位）+协议名长度（4位）+编码后的协议名（长度不固定）+序列化后的协议+CRC32校验码（4位长度）
     /// </summary>
-    public class ByteArray:IReference
+    public class OldByteArray:IReference
     {
         /// <summary>
         /// 默认大小
@@ -21,6 +21,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// 缓冲区，存储数据的位置
         /// </summary>
         public byte[] Bytes;
+        
         /// <summary>
         /// 开始读索引
         /// </summary>
@@ -44,7 +45,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// </summary>
         public int length { get { return WriteIndex - ReadIndex; } }
 
-        public ByteArray()
+        public OldByteArray()
         {
             //数组初始化
             Bytes = new byte[default_Size];
@@ -56,7 +57,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// <summary>
         /// 发送信息构造函数
         /// </summary>
-        public ByteArray(byte[] defalutBytes)
+        public OldByteArray(byte[] defalutBytes)
         {
             Bytes = defalutBytes;
             Capacity = defalutBytes.Length;
@@ -120,6 +121,182 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             //重新读
             WriteIndex = length;
             ReadIndex = 0;
+        }
+
+        public void Release()
+        {
+            
+        }
+    }*/
+    
+      public class ByteArrayMemory:IReference
+    {
+        /// <summary>
+        /// 默认大小
+        /// </summary>
+        public const int default_Size = 1024;
+        /// <summary>
+        /// 初始大小
+        /// </summary>
+        private int m_InitSize = 0;
+        /// <summary>
+        /// 缓冲区，存储数据的位置
+        /// </summary>
+        public Memory<byte> Bytes;
+        
+        /// <summary>
+        /// 开始读索引
+        /// </summary>
+        public int ReadIndex = 0;//开始读索引
+        /// <summary>
+        /// 已经写入的索引
+        /// </summary>
+        public int WriteIndex = 0;//已经写入的索引
+        /// <summary>
+        /// 容量
+        /// </summary>
+        private int Capacity = 0;
+
+        /// <summary>
+        /// 剩余空间
+        /// </summary>
+        public int Remain { get { return Capacity - WriteIndex; } }
+
+        /// <summary>
+        /// 允许读取的数据长度
+        /// </summary>
+        public int Readable { get { return WriteIndex - ReadIndex; } }
+
+        /// <summary>
+        /// 长度
+        /// </summary>
+        public int Length => Bytes.Length;
+        
+        public ByteArrayMemory()
+        {
+            var initialBytes = new byte[default_Size];
+            Bytes = new Memory<byte>(initialBytes);
+            Capacity = default_Size;
+            m_InitSize = default_Size;
+            ReadIndex = 0;
+            WriteIndex = 0;
+        }
+        /// <summary>
+        /// 发送信息构造函数
+        /// </summary>
+        public ByteArrayMemory(byte[] defaultBytes)
+        {
+            Bytes = new Memory<byte>(defaultBytes);
+            Capacity = defaultBytes.Length;
+            m_InitSize = defaultBytes.Length;
+            ReadIndex = 0;
+            WriteIndex = defaultBytes.Length;
+        }
+        /// <summary>
+        /// 发送信息构造函数
+        /// </summary>
+        public ByteArrayMemory(Memory<byte> defaultBytes)
+        {
+            Bytes = defaultBytes;
+            Capacity = defaultBytes.Length;
+            m_InitSize = defaultBytes.Length;
+            ReadIndex = 0;
+            WriteIndex = defaultBytes.Length;
+        }
+        /// <summary>
+        /// 检查是否需要扩容
+        /// </summary>
+        public void CheckAndMoveBytes()
+        {
+            //长度8是保证能存储下整条消息长度信息的最小可用大小
+            if (Remain < 8)
+            {
+                //可读空间不足
+                //完成解析或者这次接收的数据是分包数据
+                //剩余空间不足（容量-已经写入索引
+                MoveBytes();
+                ReSize(Readable * 2);
+            }
+        }
+        /// <summary>
+        /// 移动数据
+        /// </summary>
+        public void MoveBytes()
+        {
+            if (ReadIndex < 0)
+            {
+                return;
+            }
+            //拷贝数据，将已使用后的数据进行清除
+            //Array.Copy(Bytes, ReadIndex, Bytes, 0, length);
+            Bytes.Slice(ReadIndex, Readable).CopyTo(Bytes);
+            //写入长度等于总长度
+            WriteIndex = Readable;
+            ReadIndex = 0;
+        }
+        /// <summary>
+        /// 重设尺寸
+        /// </summary>
+        /// <param name="size">想要的存储空间</param>
+        public void ReSize(int size)
+        {
+            if (ReadIndex < 0 || size < Readable || size < m_InitSize)
+            {
+                return;//开始读取位置小于0(超范围），可读数据长度大于要设置的新数据长度，初始空间大于要设置的新长度
+            }
+            int n = 1024;
+            while (n < size)
+            {
+                //一直翻倍，直到可以容纳下要重设的数据长度
+                n *= 2;
+            }
+            //重新指定容量大小
+            Capacity = n;
+            //创建新存储空间，使用新的长度
+            byte[] newBytes = new byte[Capacity];
+            //拷贝现有数据到新空间
+            Bytes.Slice(ReadIndex, Readable).CopyTo(newBytes);
+            Bytes = newBytes;
+            //重新读
+            WriteIndex = Readable;
+            ReadIndex = 0;
+        }
+        /// <summary>
+        /// 获取剩余可用切片
+        /// ReadIndex-Readable
+        /// </summary>
+        /// <returns></returns>
+        public Memory<byte> GetRemainingSlices()
+        {
+            return Bytes.Slice(ReadIndex, Readable);
+        }
+
+        /// <summary>
+        /// 设置数据到Memory
+        /// </summary>
+        /// <param name="buffer">数组</param>
+        /// <param name="offset">起始偏移</param>
+        /// <param name="length">读取长度</param>
+        public void SetBytes(byte[] buffer,int offset,int length)
+        {
+            // 获取目标 Memory<byte> 的一个切片（Slice），从 WriteIndex 开始，长度为 BytesTransferred
+            Memory<byte> target = Bytes.Slice(WriteIndex, length);
+            // 从 buffer 获取数据源的 Span<byte>
+            Span<byte> source = new Span<byte>(buffer, offset, length);
+            // 使用 Span.CopyTo 方法将数据从 source 复制到 target
+            source.CopyTo(target.Span);
+            // 更新 WriteIndex 以反映添加的数据量
+            WriteIndex += length;
+        }
+
+        /// <summary>
+        /// 获取指定长度的字节数组
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public byte[] GetlengthBytes(int length)
+        {
+            return Bytes.Slice(ReadIndex, length).ToArray();
         }
 
         public void Release()

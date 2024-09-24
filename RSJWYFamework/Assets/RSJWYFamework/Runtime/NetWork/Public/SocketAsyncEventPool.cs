@@ -25,11 +25,20 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// 获取时配置完成要操作的数据
         /// </summary>
         /// <returns></returns>
-        public SocketAsyncEventArgs Get(ClientSocketToken token)
+        public SocketAsyncEventArgs GetNullBuffer()
         {
-            var item= base.Get();
-            item.UserToken = token;
-            return item;
+            if (_objectQueue.TryPop(out var popitem))
+            {
+                _onGet?.Invoke(popitem);
+                return popitem;
+            }
+            else
+            {
+                var item= new SocketAsyncEventArgs();
+                _onCreate?.Invoke(item);
+                item.SetBuffer(null,0,0);
+                return item;
+            }
         }
 
         

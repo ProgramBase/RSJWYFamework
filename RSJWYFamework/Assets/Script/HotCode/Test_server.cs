@@ -25,9 +25,9 @@ public class Test_server : MonoBehaviour
         
     }
 
-
-    private void OnApplicationQuit()
+    private void OnDisable()
     {
         col?.Close();
     }
+
 }

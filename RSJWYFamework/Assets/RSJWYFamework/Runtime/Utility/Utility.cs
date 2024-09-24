@@ -124,6 +124,6 @@ namespace RSJWYFamework.Runtime.Utility
         {
             return ((uint)byteArray[0] << 24) | ((uint)byteArray[1] << 16) | ((uint)byteArray[2] << 8) | byteArray[3];
         }
-
+        
     }
 }
