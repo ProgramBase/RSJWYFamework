@@ -66,6 +66,12 @@ namespace RSJWYFamework.Runtime.Default.Manager
             tcpsocket.Connect("127.0.0.1", 6000); //开启链接服务器
         }
 
+
+        public void ClientSendToServerMsg(object sender, RecordEventArgsBase eventArgsBase)
+        {
+            if (eventArgsBase is ClientSendToServerEventArgs args)
+                ClientSendToServerMsg(args.msgBase);
+        }
         public void ClientSendToServerMsg(MsgBase msg)
         {
             tcpsocket?.SendMessage(msg);
@@ -77,10 +83,9 @@ namespace RSJWYFamework.Runtime.Default.Manager
             var _event= new ClientStatusEventArgs
             {
                 Sender = this,
-                msgBase = null,
                 netClientStatus = eventEnum
             };
-            Main.Main.EventModle.FireNow(_event);
+            Main.Main.EventModle.Fire(_event);
             
         }
 
@@ -91,12 +96,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 Sender = null,
                 msgBase = msgBase
             };
-            Main.Main.EventModle.FireNow(_event);
-        }
-        public void ClientSendToServerMsg(object sender, RecordEventArgsBase eventArgsBase)
-        {
-            if (eventArgsBase is ClientSendToServerEventArgs args)
-                ClientSendToServerMsg(args.msgBase);
+            Main.Main.EventModle.Fire(_event);
         }
 
         public void Update(float time, float deltaTime)
@@ -111,7 +111,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 UniTask.Create(async () =>
                 {
                     RSJWYLogger.Warning($"检测到服务器链接关闭，3秒后重新连接服务器");
-                    UniTask.WaitForSeconds(3);
+                    await UniTask.WaitForSeconds(3);
                     tcpsocket.Connect();
                 });
             }

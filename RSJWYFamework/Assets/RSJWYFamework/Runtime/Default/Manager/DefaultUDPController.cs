@@ -34,23 +34,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
             _udpService?.Close();
         }
 
-        public void Update(float time, float deltaTime)
-        {
-            
-        }
-
-        public void UpdatePerSecond(float time)
-        {
-        }
-        private void UDPSendMsgEvent(object sender, EventArgsBase e)
-        {
-            if (e is not UDPSendMsg args) return;
-            if (Utility.Utility.SocketTool.MatchPort(args.port)&&Utility.Utility.SocketTool.MatchIP(args.ip))
-            {
-                var bytes = Encoding.UTF8.GetBytes(args.command.ToString());
-                _udpService.SendUdpMessage(args.ip,args.port,bytes);
-            }
-        }
         public void InitListen(string ip = "any", int port = 5000)
         {
             string lowerip= ip.ToLower();
@@ -103,6 +86,17 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 //Hex任何时刻都是16进值，则传出，交给使用者判断
                 msg.command.Append(_hex);
                 Main.Main.EventModle.FireNow(msg);
+            }
+        }
+
+
+        private void UDPSendMsgEvent(object sender, EventArgsBase e)
+        {
+            if (e is not UDPSendMsg args) return;
+            if (Utility.Utility.SocketTool.MatchPort(args.port) && Utility.Utility.SocketTool.MatchIP(args.ip))
+            {
+                var bytes = Encoding.UTF8.GetBytes(args.command.ToString());
+                _udpService.SendUdpMessage(args.ip, args.port, bytes);
             }
         }
     }

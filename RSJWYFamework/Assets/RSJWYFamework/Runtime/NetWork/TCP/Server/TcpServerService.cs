@@ -305,6 +305,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 ClientDic.TryAdd(clientToken.socket, clientToken);
                 clientToken.readSocketAsyncEA.UserToken = clientToken;
                 clientToken.writeSocketAsyncEA.UserToken = clientToken;
+                //广播消息
                 TcpServerController.ClientConnectedCallBack(clientToken);
                 RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"一个客户端连接上来：{clientToken.Remote},当前设备数：{m_clientCount}");
                 
@@ -532,7 +533,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 return;
             }
             Interlocked.Decrement(ref m_clientCount);
-            TcpServerController.ClientReConnectedCallBack(clientToken);
+            TcpServerController.CloseClientReCallBack(clientToken);
             clientToken.Close();
             // 释放SocketAsyncEventArgs,并放回池子中
             if (clientToken.readSocketAsyncEA!=null)
@@ -576,7 +577,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
 
         #endregion
         
-         #region 线程
+        #region 线程
         /// <summary>
         /// 消息队列发送监控线程
         /// 分配到每一个的客户端容器内
