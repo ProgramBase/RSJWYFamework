@@ -60,19 +60,19 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         /// <summary>
         /// 状态
         /// </summary>
-        private NetClientStatus _clientStatus;
+        private NetClientStatus _status;
         /// <summary>
         /// 状态-变更时广播事件
         /// </summary>
-        public NetClientStatus ClientStatus
+        public NetClientStatus Status
         {
-            get => _clientStatus;
+            get => _status;
             private set
             {
-                if (_clientStatus != value)
+                if (_status != value)
                 {
-                    _clientStatus = value;
-                    NetStatusEvent(_clientStatus);
+                    _status = value;
+                    SocketTcpClientController?.ClientStatus(_status);
                 }
             }
         }
@@ -194,7 +194,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             _readBuff = new ByteArrayMemory();//开信息收数组
             m_WriteQueue = new ConcurrentQueue<ByteArrayMemory>();//消息发送队列
             msgQueue = new();//接收消息处理队列（所有接收到要处理的消息
-            ClientStatus = NetClientStatus.None;
+            Status = NetClientStatus.None;
         }
 
         /// <summary>
@@ -210,7 +210,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             if (_socket != null && _socket.Connected)
             {
                 RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"链接失败，已经有链接服务器");
-                NetStatusEvent(NetClientStatus.ConnectFail);//目前仅发送，不改变状态
                 return;
             }
             InitState();//初始
@@ -238,7 +237,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                     Task.Run(() => ProcessConnect(e));
                 };  
             } 
-            ClientStatus = NetClientStatus.Connecting;
+            Status = NetClientStatus.Connecting;
             try
             {
                 //绑定时必须检查，绑定时已完成不会触发回调
@@ -250,7 +249,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             }
             catch (Exception e)
             {
-                ClientStatus = NetClientStatus.Fail;
+                Status = NetClientStatus.Fail;
                 RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$" StartAConnect 连接服务器时发生异常，疑似\n {e}");
             }
         }
@@ -292,7 +291,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                     msgSendThread.IsBackground = true;
                     msgSendThread.Start();
                     //已连接
-                    ClientStatus = NetClientStatus.Connect;
+                    Status = NetClientStatus.Connect;
                     
                     RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpClient,$"客户端消息：和服务器连接成功！ 成功连接上服务器！Socket：{_socket.RemoteEndPoint.ToString()}");
                     //接收数据
@@ -301,13 +300,13 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 }
                 else
                 {
-                    ClientStatus = NetClientStatus.Fail;
+                    Status = NetClientStatus.Fail;
                     RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"ProcessConnect 未能和服务器完成链接，SocketError：{socketAsyncEArgs.SocketError}");
                 }
             }
             catch (Exception ex)
             {
-                ClientStatus = NetClientStatus.Fail;
+                Status = NetClientStatus.Fail;
                 RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"ProcessConnect 处理连接后回调错误:{ex.ToString()}");
             }
         }
@@ -391,7 +390,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 else
                 {
                     RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"ProcessReceive 接收服务器消息失败：socketError：{socketAsyncEventArgs.SocketError},");
-                    ClientStatus = NetClientStatus.Disconnect;
+                    Status = NetClientStatus.Disconnect;
                     Close();
                     //服务器关闭链接
                     return;
@@ -546,7 +545,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 try
                 {
                     Thread.Sleep(1000); //本线程可以每秒检测一次
-                    if (ClientStatus!=NetClientStatus.Connect)
+                    if (Status!=NetClientStatus.Connect)
                     {
                         Thread.Sleep(100);
                         //正在重连，结束或者跳过？？
@@ -663,14 +662,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             }
             
         }
-        /// <summary>
-        /// 广播Net事件
-        /// </summary>
-        /// <param name="eventEnum"></param>
-        public void NetStatusEvent(NetClientStatus eventEnum)
-        {
-            SocketTcpClientController?.ClientStatus(eventEnum);
-        }
         #endregion
 
         #region 关闭连接
@@ -684,8 +675,8 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 //不存在
                 return;
             }
-            if (ClientStatus!=NetClientStatus.Closing)
-                ClientStatus = NetClientStatus.Closing;
+            if (Status!=NetClientStatus.Closing)
+                Status = NetClientStatus.Closing;
             else 
                 return;
             RealClose();
@@ -704,7 +695,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 //释放锁，继续执行信息发送
                 Monitor.Pulse(msgSendThreadLock);
             }
-            ClientStatus = NetClientStatus.Close;
+            Status = NetClientStatus.Close;
             RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"连接关闭 Close Socket");
         }
         internal void Quit()

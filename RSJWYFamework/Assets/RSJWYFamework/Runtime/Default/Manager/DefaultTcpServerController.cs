@@ -12,7 +12,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 服务器模块管理器，用于和Unity之间交互
     /// </summary>
-    public class DefaultTcpServerController : ISocketTCPServerController
+    public class DefaultTcpServerController : ISocketTCPServerController,ILife
     {
         private TcpServerService tcpsocket;
         
@@ -20,7 +20,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         {
             Main.Main.EventModle.BindEventRecord<ServerToClientMsgEventArgs>(SendMsgToClientEvent);
             Main.Main.EventModle.BindEventRecord<ServerToClientMsgAllEventArgs>(SendMsgToClientAllEvent);
-            
+            Main.Main.AddLife(this);
             //检查是不是监听全部IP
             tcpsocket = new();
             tcpsocket.TcpServerController = this;
@@ -30,6 +30,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         {
             Main.Main.EventModle.UnBindEventRecord<ServerToClientMsgEventArgs>(SendMsgToClientEvent);
             Main.Main.EventModle.UnBindEventRecord<ServerToClientMsgAllEventArgs>(SendMsgToClientAllEvent);
+            Main.Main.RemoveLife(this);
             tcpsocket?.Quit();
         }
 
@@ -66,9 +67,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
             //全部错误则使用默认参数
             tcpsocket.Init(IPAddress.Any, 6000);
-        }
-        public void Update()
-        {
         }
 
        
@@ -136,6 +134,23 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 msgBase = msgBase
             };
             Main.Main.EventModle.Fire(_event);
+        }
+
+        public void Update(float time, float deltaTime)
+        {
+            
+        }
+
+        public void UpdatePerSecond(float time)
+        {
+        }
+
+        public void FixedUpdate()
+        {
+        }
+
+        public void LateUpdate()
+        {
         }
     }
 }

@@ -59,11 +59,5 @@ namespace RSJWYFamework.Runtime.NetWork.Base
         /// 关闭
         /// </summary>
         void Close();
-        
-        /// <summary>
-        /// 每帧更新
-        /// 勿在此执行高耗时应用
-        /// </summary>
-        void Update();
     }
 }

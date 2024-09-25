@@ -22,14 +22,27 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
     /// </summary>
     public enum NetServerStatus
     {
-        None = 0,
-        ServerServicecOpen ,
-        ServerServicecClose,
-
+        None ,
         /// <summary>
-        /// 网络重连
+        /// 正在打开监听
         /// </summary>
-        ReConnect
+        OpenListening,
+        /// <summary>
+        /// 正在监听
+        /// </summary>
+        Listen,
+        /// <summary>
+        /// 正在关闭
+        /// </summary>
+        CloseListening,
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        Close,
+        /// <summary>
+        /// 发生错误，无法监听，参数设置问题
+        /// </summary>
+        Fail
     }
     public class TcpServerService
     {  
@@ -37,6 +50,24 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         
         #region 字段
 
+        private NetServerStatus _status;
+
+        public NetServerStatus Status
+        {
+            get => _status;
+            set
+            {
+                if (_status != value)
+                {
+                    _status = value;
+                    TcpServerController?.ServerServiceStatus(_status);
+                }
+            }
+        }
+        
+        /// <summary>
+        /// 绑定的服务端控制器
+        /// </summary>
         internal ISocketTCPServerController TcpServerController;
         /// <summary>
         /// 监听端口
@@ -142,6 +173,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         void SetInit()
         {
             RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"服务端启动参数，IP：{ip.ToString()}，port：{port}");
+            Status = NetServerStatus.OpenListening;
             //初始化池
             RWSocketAsynEA = new(
                 (_obj) =>
@@ -176,7 +208,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 ListenSocket.Bind(ipendpoint);
                 //链接数量限制
                 ListenSocket.Listen(100);
-                
                 //启动线程
                 cts = new ();
                 //消息处理线程-后台处理
@@ -192,6 +223,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             }
             catch (Exception e)
             {
+                Status = NetServerStatus.Fail;
                 RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$" 服务端启动监听 IP:{ip}，Port{port}失败！！错误信息：\n {e}");
             }
 
@@ -202,7 +234,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         #region 功能处理
 
         /// <summary>
-        /// 开启监听，连接请求
+        /// 开启接受连接请求
         /// </summary>
         /// <param name="acceptEventArg"></param>
         public void StartAccept(SocketAsyncEventArgs acceptEventArg)  
@@ -227,11 +259,14 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 //https://learn.microsoft.com/zh-cn/dotnet/api/system.net.sockets.socket.acceptasync?view=netframework-4.8.1#system-net-sockets-socket-acceptasync(system-net-sockets-socketasynceventargs)
                 if (!ListenSocket.AcceptAsync(acceptEventArg))
                     Task.Run(() => ProcessAccept(acceptEventArg));
+                Status = NetServerStatus.Listen;
                 //输出日志
                 RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"服务端开启监听：{ListenSocket.LocalEndPoint.ToString()}");
+                
             }
             catch (Exception e)
             {
+                Status = NetServerStatus.Fail;
                 RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$" AcceptAsync监听时发生异常\n {e}");
             }
         } 
@@ -270,7 +305,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 ClientDic.TryAdd(clientToken.socket, clientToken);
                 clientToken.readSocketAsyncEA.UserToken = clientToken;
                 clientToken.writeSocketAsyncEA.UserToken = clientToken;
-                
+                TcpServerController.ClientConnectedCallBack(clientToken);
                 RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"一个客户端连接上来：{clientToken.Remote},当前设备数：{m_clientCount}");
                 
                 //接受消息传入请求
@@ -515,6 +550,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             {
                 return;
             }
+            Status = NetServerStatus.CloseListening;
             cts.Cancel();
             //关闭所有已经链接上来的socket
             List<System.Net.Sockets.Socket> _tmp = ClientDic
@@ -531,9 +567,10 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             {
                 CloseClientSocket(_tmp[i]);
             }
+            ListenSocket.Shutdown(SocketShutdown.Both);
             ListenSocket.Close();
             RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"已关闭所有链接上来的客户端");
-            
+            Status = NetServerStatus.Close;
         }
 
 

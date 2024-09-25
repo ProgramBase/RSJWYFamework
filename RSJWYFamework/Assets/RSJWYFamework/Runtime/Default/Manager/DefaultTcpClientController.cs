@@ -106,7 +106,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public void UpdatePerSecond(float time)
         {
-            if (tcpsocket.ClientStatus==NetClientStatus.Close||tcpsocket?.ClientStatus==NetClientStatus.Fail&&reLock==false)
+            if (tcpsocket.Status==NetClientStatus.Close||tcpsocket?.Status==NetClientStatus.Fail&&reLock==false)
             {
                 UniTask.Create(async () =>
                 {
