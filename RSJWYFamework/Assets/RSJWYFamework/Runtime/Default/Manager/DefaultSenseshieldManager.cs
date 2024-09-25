@@ -1,18 +1,19 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using RSJWYFamework.Runtime.Config;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Module;
+using RSJWYFamework.Runtime.Senseshield;
 using UnityEngine;
 using SLM_HANDLE_INDEX = System.UInt32;
 
-namespace RSJWYFamework.Runtime.Senseshield
+namespace RSJWYFamework.Runtime.Default
+
 {
     /// <summary>
     /// 深信服Virbox加密服务
     /// </summary>
-    public class DefaultSenseshieldManager:IModule
+    public class DefaultSenseshieldManager:IModule,ILife
     {
         /// <summary>
         /// 登录的会话ID
@@ -95,6 +96,13 @@ namespace RSJWYFamework.Runtime.Senseshield
             }
         }
 
+        public void FixedUpdate()
+        {
+        }
+
+        public void LateUpdate()
+        {
+        }
     }
        /*
         //main方法，测试主程序

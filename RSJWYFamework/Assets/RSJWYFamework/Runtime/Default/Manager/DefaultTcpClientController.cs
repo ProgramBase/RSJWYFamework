@@ -47,7 +47,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 if (Utility.Utility.SocketTool.MatchIP(ip) && Utility.Utility.SocketTool.MatchPort(port))
                 {
                     tcpsocket.Connect(ip, port);
-                    tcpsocket.AsyncCheckNetThread().Forget();
                     return;
                 }
             }
@@ -58,14 +57,12 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 if (Utility.Utility.SocketTool.MatchPort(port))
                 {
                     tcpsocket.Connect("127.0.0.1", port);
-                    tcpsocket.AsyncCheckNetThread().Forget();
                     return;
                 }
             }
 
             //全部匹配失败，使用默认
             tcpsocket.Connect("127.0.0.1", 6000); //开启链接服务器
-            tcpsocket.AsyncCheckNetThread().Forget();
         }
 
         public void ClientSendToServerMsg(MsgBase msg)

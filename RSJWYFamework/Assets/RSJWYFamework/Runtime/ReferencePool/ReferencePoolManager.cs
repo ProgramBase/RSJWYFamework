@@ -58,13 +58,5 @@ namespace RSJWYFamework.Runtime.ReferencePool
         public void Close()
         {
         }
-
-        public void Update(float time, float deltaTime)
-        {
-        }
-
-        public void UpdatePerSecond(float time)
-        {
-        }
     }
 }

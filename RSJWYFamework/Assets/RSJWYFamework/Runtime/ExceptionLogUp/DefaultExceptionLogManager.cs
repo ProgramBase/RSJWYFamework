@@ -1,19 +1,13 @@
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using RSJWYFamework.Runtime.ExceptionLogManager;
-using RSJWYFamework.Runtime.ExceptionLogUp;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Module;
-using RSJWYFamework.Runtime.Utility;
 using UnityEngine;
-using YooAsset;
 
-namespace RSJWYFamework.Runtime.Default.Manager
+namespace RSJWYFamework.Runtime.ExceptionLogUp
 {
     /// <summary>
     /// 日志回传处理程序

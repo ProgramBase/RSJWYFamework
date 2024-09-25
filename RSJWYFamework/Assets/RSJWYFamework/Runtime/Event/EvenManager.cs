@@ -8,7 +8,7 @@ namespace RSJWYFamework.Runtime.Event
     /// <summary>
     /// 默认事件系统
     /// </summary>
-    public class EvenManager:IModule
+    public class EvenManager:IModule,ILife
     {
         /// <summary>
         /// 订阅者列表
@@ -184,6 +184,14 @@ namespace RSJWYFamework.Runtime.Event
         public void UpdatePerSecond(float time)
         {
             
+        }
+
+        public void FixedUpdate()
+        {
+        }
+
+        public void LateUpdate()
+        {
         }
     }
     

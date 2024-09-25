@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using MyFamework.Runtime.Base;
+using RSJWYFamework.Runtime.Base;
 using RSJWYFamework.Runtime.Config;
 using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;

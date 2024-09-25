@@ -48,17 +48,5 @@ namespace RSJWYFamework.Runtime.YooAssetModule
         public void Close()
         {
         }
-
-        public void Update(float time, float deltaTime)
-        {
-        }
-
-        public void UpdatePerSecond(float time)
-        {
-        }
-
-        public void ProcedureSwitchEven(ProcedureBase lastProcedureBase, ProcedureBase nextProcedureBase)
-        {
-        }
     }
 }

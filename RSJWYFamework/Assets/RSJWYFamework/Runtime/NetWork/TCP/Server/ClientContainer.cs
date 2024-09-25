@@ -93,7 +93,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     Monitor.Pulse(msgSendThreadLock);
                 }
                 cts?.Cancel();
-                socket?.Shutdown(SocketShutdown.Send);
+                socket?.Shutdown(SocketShutdown.Both);
                 socket?.Close();
                 //本条数据发送完成，激活线程，继续处理下一条
             }

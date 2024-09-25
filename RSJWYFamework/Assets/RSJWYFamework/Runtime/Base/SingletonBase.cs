@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace MyFamework.Runtime.Base
+namespace RSJWYFamework.Runtime.Base
 {
     /// <summary>
     /// 单例模式

@@ -8,7 +8,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
     /// 异步系统
     /// 参考Yooasset文件管理
     /// </summary>
-    public class RAsyncOperationSystem:IModule
+    public class RAsyncOperationSystem:IModule,ILife
     {
         /// <summary>
         /// 异步操作列表
@@ -155,6 +155,15 @@ namespace RSJWYFamework.Runtime.AsyncOperation
             {
                 _operations[i].InternalOnUpdatePerSecond(time);
             }
+        }
+
+        public void FixedUpdate()
+        {
+            
+        }
+
+        public void LateUpdate()
+        {
         }
     }
 }

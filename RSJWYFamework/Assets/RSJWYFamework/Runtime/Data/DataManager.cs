@@ -29,16 +29,6 @@ namespace RSJWYFamework.Runtime.Data
             dataSBDic.Clear();
             dataDic.Clear();
         }
-
-        public void Update(float time, float deltaTime)
-        {
-            
-        }
-
-        public void UpdatePerSecond(float time)
-        {
-            
-        }
         /// <summary>
         /// 添加数据
         /// </summary>

@@ -22,7 +22,7 @@ namespace RSJWYFamework.Runtime.Driver
         {
             Main.Main.Update(Time.time,Time.deltaTime);
             // 累加计时器
-            timer = Time.deltaTime;
+            timer += Time.deltaTime;
             // 如果计时器达到时间间隔
             if (timer >= interval)
             {
@@ -31,13 +31,17 @@ namespace RSJWYFamework.Runtime.Driver
                 // 调用逻辑函数
                 Main.Main.UpdatePerSecond(Time.time); 
             }
-            
-            DebugCheckDuplicateDriver();
+            //DebugCheckDuplicateDriver();
         }
 
-        private void Start()
+        private void FixedUpdate()
         {
-            
+            Main.Main.FixedUpdate();
+        }
+
+        private void LateUpdate()
+        {
+            Main.Main.LateUpddate();
         }
 
         private void OnDestroy()

@@ -86,11 +86,11 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         object msgSendThreadLock = new object();
 
         /// <summary>
-        /// 最后一次发送时间
+        /// 最后一次发送心跳包时间
         /// </summary>
         long lastPingTime;
         /// <summary>
-        /// 最后一次接收到信息的时间
+        /// 最后一次接收到心跳包的时间
         /// </summary>
         long lastPongTime;
         /// <summary>
@@ -215,7 +215,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             //链接状态
             if (m_Connecting)
             {
-                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpClient,"链接失败，正在链接中");
+                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"链接失败，正在链接中");
                 ConnectEvent(NetClientStatus.ConnectFail);
                 return;
             }
@@ -309,6 +309,11 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 //会无限重连，直到重新连接成功
                 RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"Socket连接失败,等待3秒后重新尝试链接 和服务器连接失败原因:{ex.ToString()}");
                 Thread.Sleep(3000);//延时处理
+                if (cts.Token.IsCancellationRequested)
+                {
+                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer, $"请求取消任务");
+                    return;
+                }
                 //开始接收
                 RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"开始重连，配置信息为：IP:{_ip.ToString()},Port：{_port.ToString()}");
                 ConnectEvent(NetClientStatus.ReConnect);
@@ -692,7 +697,15 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
 
                 }
             }
-           
+            m_CurNetWork = Application.internetReachability;
+            while (_socket != null)
+            {
+                await UniTask.WaitForSeconds(1);//等待1s
+                if (!m_IsConnentSuccessed) continue;
+                if (m_CurNetWork == Application.internetReachability) continue;
+                ReConnect();
+                m_CurNetWork = Application.internetReachability;
+            }
         }
         /*
         /// <summary>
@@ -715,22 +728,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 }
             }
         }*/
-        /// <summary>
-         /// 检查当前网络类型，是否切换了网络
-         /// </summary>
-         /// <returns></returns>
-        internal async UniTaskVoid AsyncCheckNetThread()
-        {
-            m_CurNetWork = Application.internetReachability;
-            while (_socket != null)
-            {
-                await UniTask.WaitForSeconds(1);//等待1s
-                if (!m_IsConnentSuccessed) continue;
-                if (m_CurNetWork == Application.internetReachability) continue;
-                ReConnect();
-                m_CurNetWork = Application.internetReachability;
-            }
-        }
         #endregion
 
         #region 关闭连接
@@ -741,6 +738,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         {
             if (_socket == null || m_Closing)
             {
+                //不存在
                 return;
             }
             if (m_Connecting)
@@ -764,6 +762,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         /// <param name="normal"></param>
         void RealClose()
         {
+            _socket.Shutdown(SocketShutdown.Both);
             _socket.Close();
             ConnectEvent(NetClientStatus.Close);
             RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,"连接关闭 Close Socket");
