@@ -8,21 +8,10 @@ public class Test_server : MonoBehaviour
 {
     private DefaultTcpServerController col=new ();
     // Start is called before the first frame update
-    private void Awake()
+    private void OnEnable()
     {
         col.Init();
         col.InitServer();
-    }
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnDisable()

@@ -1,6 +1,8 @@
 using System;
+using Cysharp.Threading.Tasks;
 using RSJWYFamework.Runtime.Default.EventsLibrary;
 using RSJWYFamework.Runtime.Event;
+using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.Event;
@@ -14,26 +16,25 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 客户端的控制器
     /// </summary>
-    public class DefaultTcpClientController : ISocketTCPClientController
+    public class DefaultTcpClientController : ISocketTCPClientController,ILife
     {
         private TcpClientService tcpsocket;
-        
+        private bool reLock = false;
         public void Init()
         {
+            reLock = false;
             Main.Main.EventModle.BindEventRecord<ClientSendToServerEventArgs>(ClientSendToServerMsg);
+            Main.Main.AddLife(this);
             tcpsocket = new();
             tcpsocket.SocketTcpClientController = this;
         }
 
         public void Close()
         {
+            reLock = true;
             Main.Main.EventModle.UnBindEventRecord<ClientSendToServerEventArgs>(ClientSendToServerMsg);
+            Main.Main.RemoveLife(this);
             tcpsocket?.Quit();
-        }
-
-        public void Update()
-        {
-            tcpsocket?.TCPUpdate();
         }
 
 
@@ -80,6 +81,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 netClientStatus = eventEnum
             };
             Main.Main.EventModle.FireNow(_event);
+            
         }
 
         public void ReceiveMsgCallBack(MsgBase msgBase)
@@ -95,6 +97,32 @@ namespace RSJWYFamework.Runtime.Default.Manager
         {
             if (eventArgsBase is ClientSendToServerEventArgs args)
                 ClientSendToServerMsg(args.msgBase);
+        }
+
+        public void Update(float time, float deltaTime)
+        {
+            tcpsocket?.TCPUpdate();
+        }
+
+        public void UpdatePerSecond(float time)
+        {
+            if (tcpsocket.ClientStatus==NetClientStatus.Close||tcpsocket?.ClientStatus==NetClientStatus.Fail&&reLock==false)
+            {
+                UniTask.Create(async () =>
+                {
+                    RSJWYLogger.Warning($"检测到服务器链接关闭，3秒后重新连接服务器");
+                    UniTask.WaitForSeconds(3);
+                    tcpsocket.Connect();
+                });
+            }
+        }
+
+        public void FixedUpdate()
+        {
+        }
+
+        public void LateUpdate()
+        {
         }
     }
 }

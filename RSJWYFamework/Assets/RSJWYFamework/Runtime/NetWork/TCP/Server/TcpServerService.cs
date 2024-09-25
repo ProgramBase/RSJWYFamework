@@ -262,7 +262,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 //绑定线程
                 //消息发送线程
                 clientToken.msgSendThread = new Thread(
-                    () =>MsgSendListenThread(cts.Token,clientToken.sendQueue,clientToken.msgSendThreadLock));
+                    () =>MsgSendListenThread(clientToken.cts.Token,clientToken.sendQueue,clientToken.msgSendThreadLock));
                 clientToken.msgSendThread.IsBackground = true;
                 clientToken.msgSendThread.Start();
                 
@@ -515,6 +515,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             {
                 return;
             }
+            cts.Cancel();
             //关闭所有已经链接上来的socket
             List<System.Net.Sockets.Socket> _tmp = ClientDic
                 .Select(x=>x.Value.socket)
@@ -532,7 +533,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             }
             ListenSocket.Close();
             RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"已关闭所有链接上来的客户端");
-
+            
         }
 
 
@@ -567,12 +568,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                         if (!_msgbase.targetToken.socket.SendAsync( _msgbase.targetToken.writeSocketAsyncEA))
                             Task.Run(()=>ProcessSend(_msgbase.targetToken.writeSocketAsyncEA));
                         //等待SendCallBack完成回调释放本锁再继续执行，超时10秒
-                        bool istimeout = Monitor.Wait(ThreadLock, 20000);
-                        if (!istimeout)
-                        {
-                            RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
-                            CloseClientSocket(_msgbase.targetToken.socket);
-                        }
+                        Monitor.Wait(ThreadLock);
                     }
                 }
                 catch (Exception ex)
