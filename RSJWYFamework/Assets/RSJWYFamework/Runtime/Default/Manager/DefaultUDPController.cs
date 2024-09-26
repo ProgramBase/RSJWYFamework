@@ -26,21 +26,11 @@ namespace RSJWYFamework.Runtime.Default.Manager
             _udpService = new();
             _udpService.SocketUDPController = this;
         }
-
         
         public void Close()
         {           
             Main.Main.EventModle.BindEvent<UDPSendMsg>(UDPSendMsgEvent);
             _udpService?.Close();
-        }
-
-        public void Update(float time, float deltaTime)
-        {
-            
-        }
-
-        public void UpdatePerSecond(float time)
-        {
         }
         private void UDPSendMsgEvent(object sender, EventArgsBase e)
         {
@@ -71,7 +61,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 //检查Port是否合法
                 if (Utility.Utility.SocketTool.MatchPort(port))
                 {
-                    _udpService.Init(IPAddress.Any, port);
+                    _udpService.Init("any", port);
                     return;
                 }
             }
@@ -79,10 +69,10 @@ namespace RSJWYFamework.Runtime.Default.Manager
             _udpService.Init(IPAddress.Any, 5000);
         }
 
-        public void ReceiveMsgCallBack(UDPReciveMsg ReciveMsg)
+        public void ReceiveMsgCallBack(UDPMsg reciveMsg)
         {
-            string _strUTF8 = Encoding.UTF8.GetString(ReciveMsg.Bytes);
-            string _strHex = BitConverter.ToString(ReciveMsg.Bytes);
+            string _strUTF8 = Encoding.UTF8.GetString(reciveMsg.Bytes);
+            string _strHex = BitConverter.ToString(reciveMsg.Bytes);
 
             string _utf8 = _strUTF8.Replace(" ", "");
             string _hex = _strHex.Replace("-", " ");
@@ -90,8 +80,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
             //优先检查UTF8
             var msg= Main.Main.ReferencePoolManager.Get<UDPReceiveMsgCallBack>();
             msg.Sender = this;
-            msg.ip = ReciveMsg.remoteEndPoint.Address.ToString();
-            msg.port = ReciveMsg.remoteEndPoint.Port;
+            msg.ip = reciveMsg.remoteEndPoint.Address.ToString();
+            msg.port = reciveMsg.remoteEndPoint.Port;
             if (Utility.Utility.SocketTool.IsHex(_utf8))
             {
                 //UTF8是正确的指令

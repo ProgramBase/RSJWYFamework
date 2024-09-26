@@ -1,74 +1,11 @@
 using System.Net;
 
-namespace RSJWYFamework.Runtime.NetWork.Public
+namespace RSJWYFamework.Runtime.NetWork.UDP
 {
-    /// <summary>
-    /// UDP发送消息
-    /// </summary>
-    public class UDPSendMsg
-    {
-        /// <summary>
-        /// 发送目标
-        /// </summary>
-        public IPEndPoint remoteEndPoint;
-
-        /// <summary>
-        /// 初始大小
-        /// </summary>
-        private int m_InitSize = 0;
-
-        /// <summary>
-        /// 缓冲区，存储数据的位置
-        /// </summary>
-        public byte[] Bytes;
-
-        /// <summary>
-        /// 开始读索引
-        /// </summary>
-        public int ReadIndex = 0; //开始读索引
-
-        /// <summary>
-        /// 已经写入的索引
-        /// </summary>
-        public int WriteIndex = 0; //已经写入的索引
-
-        /// <summary>
-        /// 容量
-        /// </summary>
-        private int Capacity = 0;
-
-        /// <summary>
-        /// 剩余空间
-        /// </summary>
-        public int Remain
-        {
-            get { return Capacity - WriteIndex; }
-        }
-
-        /// <summary>
-        /// 允许读取的数据长度
-        /// </summary>
-        public int length
-        {
-            get { return WriteIndex - ReadIndex; }
-        }
-
-        /// <summary>
-        /// 发送信息构造函数
-        /// </summary>
-        public UDPSendMsg(byte[] defalutBytes)
-        {
-            Bytes = defalutBytes;
-            Capacity = defalutBytes.Length;
-            m_InitSize = defalutBytes.Length;
-            ReadIndex = 0;
-            WriteIndex = defalutBytes.Length;
-        }
-    }
     /// <summary>
     /// UDP接收消息
     /// </summary>
-    public class UDPReciveMsg
+    public class UDPMsg
     {
         /// <summary>
         /// 缓冲区，存储数据的位置

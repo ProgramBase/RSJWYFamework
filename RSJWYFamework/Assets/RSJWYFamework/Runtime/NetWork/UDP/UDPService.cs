@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.NetWork.Base;
@@ -18,56 +19,48 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         /// <summary>
         /// 监听端口
         /// </summary>
-        int port = 5000;
+        int _port = 5000;
         /// <summary>
         /// 监听IP
         /// </summary>
-        IPAddress ip = IPAddress.Any;
+        IPAddress _ip ;
         /// <summary>
         /// UDP Socket
         /// </summary>
-        System.Net.Sockets.Socket udpClient;
-        /// <summary>
-        /// 监听配置
-        /// </summary>
-        EndPoint clientEndPoint;
+        System.Net.Sockets.Socket _udpClient;
         /// <summary>
         /// 存储接收到的数据
         /// </summary>
-        byte[] ReceiveData = new byte[8192];
-        /// <summary>
-        /// 接收到的消息数组队列
-        /// </summary>
-        ConcurrentQueue<UDPReciveMsg> reciveByteMsgQueue = new ();
-
-        /// <summary>
-        /// 处理完毕的待执行的消息队列
-        /// </summary>
-        ///ConcurrentQueue<string> MsgQueue = new();
+        byte[] _ReceiveData = new byte[8192];
         /// <summary>
         /// 消息发送队列
         /// </summary>
-        ConcurrentQueue<UDPSendMsg> SendMsgQueue = new ();
-        /// <summary>
-        /// 通知多线程自己跳出
-        /// </summary>
-        bool isThreadOver;
+        ConcurrentQueue<UDPMsg> _SendMsgQueue = new ();
         /// <summary>
         /// 是否初始化过
         /// </summary>
-        bool isInit;
-        /// <summary>
-        /// 消息处理线程
-        /// </summary>
-        Thread MsgThread;
+        bool _isInit;
         /// <summary>
         /// 消息发送线程
         /// </summary>
-        Thread sendMsgThread;
+        Thread _sendMsgThread;
         /// <summary>
         ///  消息队列发送锁
         /// </summary>
-        object msgSendThreadLock = new object();
+        object _msgSendThreadLock = new object();
+        /// <summary>
+        /// 通知多线程自己跳出
+        /// </summary>
+        private static CancellationTokenSource _cts;
+
+        /// <summary>
+        /// 写
+        /// </summary>
+        private SocketAsyncEventArgs _read;
+        /// <summary>
+        /// 读
+        /// </summary>
+        private SocketAsyncEventArgs _write;
         
 
         /// <summary>
@@ -77,8 +70,8 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         /// <param name="_port"></param>
         public void Init(string _ip, int _port)
         {
-            ip = IPAddress.Parse(_ip);
-            port = _port;
+            this._ip = IPAddress.Parse(_ip);
+            this._port = _port;
             Init();
         }
         /// <summary>
@@ -88,8 +81,8 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         /// <param name="_port"></param>
         public void Init(IPAddress _ipAddress, int _port)
         {
-            ip = _ipAddress;
-            port = _port;
+            _ip = _ipAddress;
+            this._port = _port;
             Init();
         }
 
@@ -99,165 +92,137 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         /// <param name="_port"></param>
         public void Init()
         {
-            if (isInit)
+            if (_isInit)
             {
                 return;
             }
-
             try
             {
-                isThreadOver = false;
-                udpClient = new System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
+                _udpClient = new System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                //支持广播消息
+                _udpClient.EnableBroadcast = true;
                 //配置监听
-                IPEndPoint ipendpoint = new IPEndPoint(ip, port);
-                udpClient.Bind(ipendpoint);
-                clientEndPoint = new IPEndPoint(IPAddress.Any, 0);
+                IPEndPoint ipendpoint = new IPEndPoint(_ip, _port);
+                _udpClient.Bind(ipendpoint);
                 //开启异步监听
-                udpClient.BeginReceiveFrom(ReceiveData, 0, ReceiveData.Length,
-                    SocketFlags.None, ref clientEndPoint, ReceiveMessageToQueue, clientEndPoint);
+                _sendMsgThread = new Thread(SendMsgThread);
+                _sendMsgThread.IsBackground = true;//后台运行
+                _sendMsgThread.Start();
+                _isInit = true;
 
-                //MsgThread = new Thread(Msghandle);
-                //MsgThread.IsBackground = true;//后台运行
-                //MsgThread.Start();
-                sendMsgThread = new Thread(SendMsgHandle);
-                sendMsgThread.IsBackground = true;//后台运行
-                sendMsgThread.Start();
-
-                isInit = true;
-                Debug.Log($"UDP启动监听{udpClient.LocalEndPoint.ToString()}成功");
+                RSJWYLogger.Log($"UDP启动监听 {_udpClient.LocalEndPoint.ToString()} ");
+                Start();
             }
             catch (Exception e)
             {
-                Debug.LogError($"UDP启动监听 {udpClient.LocalEndPoint.ToString()} 失败！！错误信息：\n {e.ToString()}");
-                isThreadOver = true;
+                RSJWYLogger.Error($"UDP启动监听 {_udpClient.LocalEndPoint.ToString()} 失败！！错误信息：\n {e.ToString()}");
             }
         }
-
         /// <summary>
-        /// 接收消息并存放 
+        /// 开启接收
         /// </summary>
-        /// <param name="iar"></param>
-        void ReceiveMessageToQueue(IAsyncResult iar)
+        private void Start()
         {
-            if (isThreadOver)
-            {
-                return;
-            }
+            _read = new SocketAsyncEventArgs();
+            _read.SetBuffer(new byte[10240], 0, 10240);
+            _read.Completed += OnReceiveComplete;
+            _read.RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0);  
+            
+            _write = new SocketAsyncEventArgs();
+            _read.Completed += OnReceiveComplete;
+            _read.RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0);  
+
+            if (!_udpClient.ReceiveFromAsync(_read))
+                Task.Run(() => ProcessReceivedData(_read));
+        }
+        private void OnReceiveComplete(object sender, SocketAsyncEventArgs e)
+        {
+            ProcessReceivedData(e);
+        }
+
+        private void ProcessReceivedData(SocketAsyncEventArgs e)
+        {
             try
             {
-                var receiveDataLength = udpClient.EndReceiveFrom(iar, ref clientEndPoint);
-                //如果有数据
-                if (receiveDataLength > 0)
+                if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success)
                 {
-                    
-                    byte[] data = new byte[receiveDataLength];
-                    Buffer.BlockCopy(ReceiveData, 0, data, 0, receiveDataLength);
-                    var ipend = clientEndPoint as IPEndPoint;
-                    var REP=new IPEndPoint(ipend.Address, ipend.Port);
-                    var msg = new UDPReciveMsg
+                    byte[] data = new byte[e.BytesTransferred];
+                    Buffer.BlockCopy(_ReceiveData, 0, data, 0, e.BytesTransferred);
+                    var msg = new UDPMsg
                     {
                         Bytes =data,
-                        remoteEndPoint = REP
+                        remoteEndPoint = e.RemoteEndPoint as IPEndPoint
                     };
-                    reciveByteMsgQueue.Enqueue(msg);
+                    SocketUDPController.ReceiveMsgCallBack(msg);//交给执行回调
+                }
+                else
+                {
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkUDP, $"UDP ProcessReceivedData error: {e.SocketError}");
                 }
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                Debug.LogError($"UDP启动监听 {udpClient.LocalEndPoint.ToString()} 失败！！错误信息：\n {e.ToString()}");
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkUDP, $"UDP ProcessReceivedData exception: {exception}");
             }
             finally
             {
-                //继续监听
-                udpClient.BeginReceiveFrom(ReceiveData, 0, ReceiveData.Length,
-                    SocketFlags.None, ref clientEndPoint, ReceiveMessageToQueue, clientEndPoint);
+                //无论是否异常，重设缓冲区，接收下一组数据
+                e.SetBuffer(0,e.Buffer.Length);
+                if (!_udpClient.ReceiveFromAsync(e))
+                    Task.Run(() => ProcessReceivedData(e));
             }
         }
+        
         /// <summary>
         /// 关闭监听
         /// </summary>
         public void Close()
         {
-            isThreadOver = true;
-            if (udpClient != null)
+            if (_udpClient != null)
             {
-                udpClient.Close();
+                _udpClient.Close();
             }
-            isInit = false;
+            _isInit = false;
         }
-        public void UnityUpdate()
+        void SendMsgThread()
         {
-            /*//线程是否出错
-            if (sendMsgThread != null)
+            while (!_cts.IsCancellationRequested)
             {
-                if (sendMsgThread.IsAlive == false && isInit == true)
+                try
                 {
-                    //重新创建本线程
-                    sendMsgThread = new Thread(Msghandle);
-                    sendMsgThread.IsBackground = true;//后台运行
-                    sendMsgThread.Start();
-                }
-            }*/
-            
-            //取出消息
-            if (!reciveByteMsgQueue.IsEmpty)
-            {
-                //取出并移除数据
-                if (reciveByteMsgQueue.TryDequeue(out var msgBase))
-                {
-                    SocketUDPController.ReceiveMsgCallBack(msgBase);//交给执行回调
-                }
-                else
-                {
-                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkUDP,$"非正常错误！取出UDP消息队列失败！！");
-                }
-            }
-        }
-        void SendMsgHandle()
-        {
-            if (isThreadOver)
-            {
-                return;
-            }
-            try
-            {
-                if (!SendMsgQueue.IsEmpty)
-                {
-                    //取出数据
-                    UDPSendMsg _data;
-                    SendMsgQueue.TryDequeue(out _data);
-                    //处理数据，分别尝试不同协议
-                    //string _strASCII = Encoding.ASCII.GetString(_data);
-                    //SocketUDPController.ReceiveMsgCallBack(_data);
-                    lock (msgSendThreadLock)
+                    if (_SendMsgQueue.Count <= 0)
                     {
-                        if (udpClient != null && udpClient.Connected)
+                        Thread.Sleep(100);
+                        continue;
+                    }
+                    //取出数据
+                    UDPMsg _data;
+                    _SendMsgQueue.TryDequeue(out _data);
+                    lock (_msgSendThreadLock)
+                    {
+                        if (_udpClient != null && _udpClient.Connected)
                         {
-                            udpClient.BeginSendTo(_data.Bytes, 0, _data.length, SocketFlags.None, _data.remoteEndPoint, new AsyncCallback(SendCallback), udpClient);
+                            _udpClient.BeginSendTo(_data.Bytes, 0, _data.length, SocketFlags.None, _data.remoteEndPoint, new AsyncCallback(SendCallback), _udpClient);
                         }
-                        bool istimeout = Monitor.Wait(msgSendThreadLock, 10000);
-                        if (!istimeout)
-                        {
-                            RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"客户端消息：消息发送时间超时（超过10s），请检查网络质量，关闭本客户端的链接");
-                            Close();
-                        }
+                        Monitor.Wait(_msgSendThreadLock);
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                // 重启线程
-                Thread.Sleep(1000); // 等待一段时间再重启，避免立即重启可能导致的问题
-                sendMsgThread.Interrupt(); // 打断当前线程
-                sendMsgThread = new Thread(SendMsgHandle);
-                sendMsgThread.Start();
+                catch (Exception e)
+                {
+                    // 重启线程
+                    Thread.Sleep(1000); // 等待一段时间再重启，避免立即重启可能导致的问题
+                    if (_cts.IsCancellationRequested)
+                    {
+                        RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkUDP, $"请求取消任务");
+                        break;
+                    }
+                }
             }
         }
         private void SendCallback(IAsyncResult ar)
         {
             // 从异步操作中获取Socket
-            UDPSendMsg sendMsg;
+            UDPMsg sendMsg;
             System.Net.Sockets.Socket socket = (System.Net.Sockets.Socket)ar.AsyncState;
             if (socket == null || !socket.Connected)
             {
@@ -266,11 +231,11 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
             // 完成异步发送操作
             int bytesSent = socket.EndSendTo(ar);
             
-            SendMsgQueue.TryPeek(out sendMsg);
+            _SendMsgQueue.TryPeek(out sendMsg);
             sendMsg.ReadIndex += bytesSent;
             if (sendMsg.length == 0)//代表发送完整
             {
-                SendMsgQueue.TryDequeue(out var _);//取出但不使用，只为了从队列中移除
+                _SendMsgQueue.TryDequeue(out var _);//取出但不使用，只为了从队列中移除
                 sendMsg = null;//发送完成，置空
             }
             if (sendMsg != null)
@@ -280,9 +245,9 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
             else
             {
                 //本条消息发送完成，激活线程
-                lock (msgSendThreadLock)
+                lock (_msgSendThreadLock)
                 {
-                    Monitor.Pulse(msgSendThreadLock);
+                    Monitor.Pulse(_msgSendThreadLock);
                 }
             }
         }
@@ -295,17 +260,20 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
         /// <param name="message">要发送的消息内容</param>
         public void SendUdpMessage(string ipAddress, int port, byte[] message)
         {
-            if (isThreadOver || udpClient == null)
+            if (_udpClient == null)
             {
                RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkUDP,"UDP服务未初始化或已关闭，无法发送消息。");
                return;
             }
-            // 创建目标端点
-            IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
-            var sendMsg = new UDPSendMsg(message);
+            //创建消息容器
+            var sendMsg = new UDPMsg
+            {
+                Bytes = message,
+                remoteEndPoint =  new IPEndPoint(IPAddress.Parse(ipAddress), port)
+            };
             
             // 发送数据
-            SendMsgQueue.Enqueue(sendMsg);
+            _SendMsgQueue.Enqueue(sendMsg);
         }
         
     }

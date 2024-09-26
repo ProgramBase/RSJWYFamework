@@ -6,11 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpServerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpServerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketTCPServerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketTCPServerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultUDPController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultUDPController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketUDPController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketUDPController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/UDPSendMsg.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/UDP/UDPContainer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/UDPSendMsg.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/UDP/UDPContainer.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TcpServerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TcpServerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/UDP/UDPService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/UDP/UDPService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +82,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/36/cb6635bc/File.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/3b/bb4d949b/Stream.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/7f/fd66fb16/ObsoleteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/d8/5134ebc8/ConcurrentQueue`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/e0/36d67866/BitConverter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5a83f26a7bb1cfdddba86fba3e3a9df693c5327962694fdeeb76548f26299323/Logger-generated.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/714a62ca061ca7296a83270e66b1ce9afa958fa3966434e5c6becb472e2b/Logger-V1Compat.cs" root0="SKIP_HIGHLIGHTING" />
@@ -148,10 +150,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="10388">
+    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="10388" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -208,6 +210,7 @@
       <workItem from="1727053400829" duration="23087000" />
       <workItem from="1727138680128" duration="24150000" />
       <workItem from="1727223370791" duration="22065000" />
+      <workItem from="1727329748362" duration="8051000" />
     </task>
     <servers />
   </component>
