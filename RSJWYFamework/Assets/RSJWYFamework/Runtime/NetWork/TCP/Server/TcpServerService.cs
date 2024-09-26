@@ -341,7 +341,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     Task.Run(() =>ProcessSend(e));  
                     break;  
                 default:  
-                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,"在套接字上完成的最后一个操作不是接收或发送，{e.LastOperation}");  
+                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"TCP IO_Completed 在套接字上完成的最后一个操作不是接收或发送，{e.LastOperation}");  
                     break;
             }  
         }  

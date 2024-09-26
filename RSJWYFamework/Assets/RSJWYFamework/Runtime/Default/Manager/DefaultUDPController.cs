@@ -32,18 +32,9 @@ namespace RSJWYFamework.Runtime.Default.Manager
             Main.Main.EventModle.BindEvent<UDPSendMsg>(UDPSendMsgEvent);
             _udpService?.Close();
         }
-        private void UDPSendMsgEvent(object sender, EventArgsBase e)
-        {
-            if (e is not UDPSendMsg args) return;
-            if (Utility.Utility.SocketTool.MatchPort(args.port)&&Utility.Utility.SocketTool.MatchIP(args.ip))
-            {
-                var bytes = Encoding.UTF8.GetBytes(args.command.ToString());
-                _udpService.SendUdpMessage(args.ip,args.port,bytes);
-            }
-        }
         public void InitListen(string ip = "any", int port = 5000)
         {
-            string lowerip= ip.ToLower();
+            string lowerip = ip.ToLower();
             //检查是不是监听全部IP
             if (lowerip != "any")
             {
@@ -67,6 +58,15 @@ namespace RSJWYFamework.Runtime.Default.Manager
             }
             //全部错误则使用默认参数
             _udpService.Init(IPAddress.Any, 5000);
+        }
+        private void UDPSendMsgEvent(object sender, EventArgsBase e)
+        {
+            if (e is not UDPSendMsg args) return;
+            if (Utility.Utility.SocketTool.MatchPort(args.port)&&Utility.Utility.SocketTool.MatchIP(args.ip))
+            {
+                var bytes = Encoding.UTF8.GetBytes(args.command.ToString());
+                _udpService.SendUdpMessage(args.ip,args.port,bytes);
+            }
         }
 
         public void ReceiveMsgCallBack(UDPMsg reciveMsg)
