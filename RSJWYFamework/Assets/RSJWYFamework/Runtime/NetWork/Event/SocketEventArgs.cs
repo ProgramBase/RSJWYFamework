@@ -37,9 +37,8 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     }
     /// <summary>
     /// 客户端离线的事件
-    /// 在接收到本消息时，已从controller中移除，广播完后，将关闭并移除
     /// </summary>
-    public sealed record ServerClientReConnectedCallBackEventArgs : TCPServerSoketEventArgs
+    public sealed record ServerCloseClientCallBackEventArgs : TCPServerSoketEventArgs
     {
     }
     /// <summary>
@@ -74,7 +73,7 @@ namespace RSJWYFamework.Runtime.NetWork.Event
     /// <summary>
     /// 客户端状态消息
     /// </summary>
-    public sealed record ClientStatusEventArgs : TCPClientSoketEventArgs
+    public sealed record ClientStatusEventArgs : RecordEventArgsBase
     {
         public NetClientStatus netClientStatus;
     }

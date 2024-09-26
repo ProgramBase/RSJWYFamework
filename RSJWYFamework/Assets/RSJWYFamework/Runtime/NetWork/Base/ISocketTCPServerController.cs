@@ -13,32 +13,32 @@ namespace RSJWYFamework.Runtime.NetWork.Base
     public interface ISocketTCPServerController:ModleInterface
     {
         /// <summary>
-        /// 客户端链接上来事件回调
+        /// 客户端链接上来事件回调-多线程下调用
         /// </summary>
         /// <param name="eventEnum"></param>
         void ClientConnectedCallBack(ClientSocketToken clientSocketToken);
-        
+
         /// <summary>
-        /// 客户端断开链接事件回调
+        /// 客户端断开链接事件回调-多线程下调用
         /// </summary>
         /// <param name="eventEnum"></param>
-        void ClientReConnectedCallBack(ClientSocketToken clientSocketToken);
+        void CloseClientReCallBack(ClientSocketToken clientSocketToken);
         /// <summary>
-        /// 服务端状态广播
+        /// 服务端状态广播-多线程下调用
         /// </summary>
         /// <param name="netServerStatus"></param>
         void ServerServiceStatus(NetServerStatus netServerStatus);
         /// <summary>
-        /// 接收到消息时的回调
+        /// 接收到消息时的回调-多线程下调用
         /// </summary>
         /// <param name="msgBase"></param>
         void FromClientReceiveMsgCallBack(ClientSocketToken clientSocketToken, MsgBase msgBase);
-        
+
         /// <summary>
         /// 向客户端发消息
         /// </summary>
         void SendMsgToClient(MsgBase msgBase,ClientSocketToken clientSocketToken);
-        
+
         /// <summary>
         /// 向所有已链接上来的客户端发消息
         /// </summary>

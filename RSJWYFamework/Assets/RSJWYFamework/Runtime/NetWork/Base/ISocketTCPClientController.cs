@@ -11,7 +11,7 @@ namespace RSJWYFamework.Runtime.Socket.Base
     public interface ISocketTCPClientController:ModleInterface
     {
         /// <summary>
-        /// 连接事件回调
+        /// 连接状态
         /// </summary>
         /// <param name="eventEnum">链接枚举</param>
         void ClientStatus(NetClientStatus eventEnum);

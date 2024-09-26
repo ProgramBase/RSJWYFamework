@@ -34,13 +34,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
             tcpsocket?.Quit();
         }
 
-        public void SendMsgToClientAll(MsgBase msgBase)
-        {
-            foreach (var token in tcpsocket.ClientDic)
-            {
-                tcpsocket.SendMessage(msgBase,token.Value);
-            }
-        }
 
         public void InitServer(string ip = "any", int port = 6000)
         {
@@ -69,24 +62,34 @@ namespace RSJWYFamework.Runtime.Default.Manager
             tcpsocket.Init(IPAddress.Any, 6000);
         }
 
-       
+        /// <summary>
+        /// 接收发送消息事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgsBase"></param>
         public void SendMsgToClientEvent(object sender, RecordEventArgsBase eventArgsBase)
         {
             if (eventArgsBase is ServerToClientMsgEventArgs args)
                 SendMsgToClient(args.msgBase,args.ClientSocketToken);
         }
-
-        
+        /// <summary>
+        /// 接收广播所有消息事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgsBase"></param>
         public void SendMsgToClientAllEvent(object sender, RecordEventArgsBase eventArgsBase)
         {
             if (eventArgsBase is not ServerToClientMsgAllEventArgs args) return;
-            foreach (var token in tcpsocket.ClientDic)
-            {
-                var msg = args.msgBase;
-                SendMsgToClient(msg,token.Value);
-            }
+            SendMsgToClientAll(args.msgBase);
         }
 
+        public void SendMsgToClientAll(MsgBase msgBase)
+        {
+            foreach (var token in tcpsocket.ClientDic)
+            {
+                tcpsocket.SendMessage(msgBase, token.Value);
+            }
+        }
         public void SendMsgToClient(MsgBase msgBase,ClientSocketToken clientSocketToken)
         {
             tcpsocket?.SendMessage(msgBase,clientSocketToken);
@@ -104,9 +107,9 @@ namespace RSJWYFamework.Runtime.Default.Manager
             Main.Main.EventModle.Fire(_event);
         }
 
-        public void ClientReConnectedCallBack(ClientSocketToken clientSocketToken)
+        public void CloseClientReCallBack(ClientSocketToken clientSocketToken)
         {
-            var _event = new ServerClientReConnectedCallBackEventArgs
+            var _event = new ServerCloseClientCallBackEventArgs
             {
                 Sender = this,
                 ClientSocketToken = clientSocketToken,
