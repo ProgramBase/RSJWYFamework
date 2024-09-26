@@ -32,7 +32,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
             Main.Main.EventModle.BindEvent<UDPSendMsg>(UDPSendMsgEvent);
             _udpService?.Close();
         }
-<<<<<<< HEAD
         private void UDPSendMsgEvent(object sender, EventArgsBase e)
         {
             if (e is not UDPSendMsg args) return;
@@ -42,9 +41,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 _udpService.SendUdpMessage(args.ip,args.port,bytes);
             }
         }
-=======
-
->>>>>>> 126d009cc6f0cc08ffb3b6808eae35b8fb3e6c31
         public void InitListen(string ip = "any", int port = 5000)
         {
             string lowerip= ip.ToLower();
@@ -99,16 +95,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
                 Main.Main.EventModle.FireNow(msg);
             }
         }
-
-
-        private void UDPSendMsgEvent(object sender, EventArgsBase e)
-        {
-            if (e is not UDPSendMsg args) return;
-            if (Utility.Utility.SocketTool.MatchPort(args.port) && Utility.Utility.SocketTool.MatchIP(args.ip))
-            {
-                var bytes = Encoding.UTF8.GetBytes(args.command.ToString());
-                _udpService.SendUdpMessage(args.ip, args.port, bytes);
-            }
-        }
+        
     }
 }
