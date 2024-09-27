@@ -6,6 +6,17 @@ namespace RSJWYFamework.Runtime.NetWork.Base
 {
     public interface ISocketUDPController:ModleInterface
     {
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public void Init();
+
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        public void Close();
+        
         /// <summary>
         /// 初始化UDP监听
         /// </summary>
@@ -18,15 +29,5 @@ namespace RSJWYFamework.Runtime.NetWork.Base
         /// </summary>
         /// <param name="bytes">指令</param>
         public void ReceiveMsgCallBack(UDPMsg bytes);
-
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        public void Init();
-
-        /// <summary>
-        /// 关闭
-        /// </summary>
-        public void Close();
     }
 }
