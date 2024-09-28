@@ -372,7 +372,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     {
                         //从缓冲区获取并设置数据
                         readBuff.SetBytes(socketAsyncEA.Buffer,socketAsyncEA.Offset,socketAsyncEA.BytesTransferred);
-                        socketAsyncEA.SetBuffer(0,0);
+                        socketAsyncEA.SetBuffer(0, socketAsyncEA.Buffer.Length);
                         //处理本次接收的数据
                         while (readBuff.Readable>4)
                         {

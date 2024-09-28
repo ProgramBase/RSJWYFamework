@@ -133,6 +133,11 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
             if (!_udpClient.ReceiveFromAsync(_read))
                 Task.Run(() => ProcessReceived(_read));
         }
+        /// <summary>
+        /// 回调
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void IO_Completed(object sender, SocketAsyncEventArgs e)
         {
             // SocketAsyncEventArgs回调处理
@@ -149,7 +154,10 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
                     break;
             }
         }
-
+        /// <summary>
+        /// UDP消息接收
+        /// </summary>
+        /// <param name="e"></param>
         private void ProcessReceived(SocketAsyncEventArgs e)
         {
             try
@@ -167,12 +175,12 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
                 }
                 else
                 {
-                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkUDP, $"UDP ProcessReceivedData error: {e.SocketError}");
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkUDP, $"UDP ProcessReceived error: {e.SocketError}");
                 }
             }
             catch (Exception exception)
             {
-                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkUDP, $"UDP ProcessReceivedData exception: {exception}");
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkUDP, $"UDP ProcessReceived exception: {exception}");
             }
             finally
             {
@@ -208,6 +216,10 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
             // 发送数据
             _SendMsgQueue.Enqueue(sendMsg);
         }
+        /// <summary>
+        /// 消息发送完成回调
+        /// </summary>
+        /// <param name="e"></param>
         private void ProcessSend(SocketAsyncEventArgs e)
         {
             try
@@ -217,7 +229,7 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
                     _SendMsgQueue.TryDequeue(out var _msg);
                     if (_msg.Bytes.Length!= e.BytesTransferred)
                     {
-                        RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkUDP, $"UDP消息发送错误！！！已发送长度和消息本体长度不同");
+                        RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkUDP, $"ProcessSend UDP消息发送错误！！！已发送长度和消息本体长度不同");
                     }
                     //本条消息发送完成，激活线程
                     lock (_msgSendThreadLock)
@@ -227,13 +239,13 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
                 }
                 else
                 {
-                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkUDP, $"UDP消息发送错误！！！SocketError：{e.SocketError}");
+                    RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkUDP, $" ProcessSend UDP消息发送错误！！！SocketError：{e.SocketError}");
                 }
             }
             catch (Exception ex)
             {
 
-                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkUDP,$"UDP消息发送发生异常！：{ex}");
+                RSJWYLogger.Error(RSJWYFameworkEnum.NetworkUDP,$" ProcessSend UDP消息发送发生异常！：{ex}");
             }
         }
         /// <summary>
@@ -266,6 +278,7 @@ namespace RSJWYFamework.Runtime.NetWork.UDP
                 }
                 catch (Exception e)
                 {
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkUDP,$"SendMsgThread 线程处理异常！！：{e}");
                     // 重启线程
                     Thread.Sleep(1000); // 等待一段时间再重启，避免立即重启可能导致的问题
                     if (_cts.IsCancellationRequested)

@@ -352,8 +352,8 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                         _readBuff.ReSize(_readBuff.WriteIndex + socketAsyncEventArgs.BytesTransferred);
                     lock (_readBuff)
                     {
-                        _readBuff.SetBytes(socketAsyncEventArgs.Buffer, socketAsyncEventArgs.Offset,
-                            socketAsyncEventArgs.BytesTransferred);
+                        _readBuff.SetBytes(socketAsyncEventArgs.Buffer, socketAsyncEventArgs.Offset,socketAsyncEventArgs.BytesTransferred);
+                        socketAsyncEventArgs.SetBuffer(0, socketAsyncEventArgs.Buffer.Length);
                         while (_readBuff.Readable > 4)
                         {
                             //获取消息长度
