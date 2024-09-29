@@ -66,7 +66,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// <param name="offset">开始读索引</param>
         /// <param name="count">返回存储协议名信息的数组长度（包含协议名长度和协议名体长度）</param>
         /// <returns>返回解析出来的协议</returns>
-        public static MyProtocolEnum DecodeName(byte[] bytes, int offset, out int count)
+        public static string DecodeName(byte[] bytes, int offset, out int count)
         {
             count = 0;//初始0
             //判断存储协议名长度的数组是否存在
@@ -74,7 +74,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             {
                 //存储协议名长度的数组不存在
                 Debug.LogError("解码协议长度出错！！存储协议名长度的数组位不存在，无法获取本条协议名" );
-                return MyProtocolEnum.None;//协议不存在
+                return string.Empty;//协议不存在
             }
             
             int len = (int)Utility.Utility.ByteArrayToUInt(bytes.GetFromByteArrToMemory(offset,4).ToArray());//解码协议名长度
@@ -82,7 +82,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             {
                 //只包含了协议名长度信息，但与之对应存储协议名称的数组不存在
                 Debug.LogError("解码协议名出错！！只包含了协议长度信息，没有包协议名数组!!");
-                return MyProtocolEnum.None;//协议不存在
+                return string.Empty;//协议不存在
             }
             //协议长度和协议名都存在
             //记录存储协议名信息的数组长度，并返回，规避存储协议名长度的位置，以方便解析协议体
@@ -93,14 +93,12 @@ namespace RSJWYFamework.Runtime.NetWork.Public
                 //解密协议名
                 byte[] nameBytes = Utility.Utility.AESTool.AESDecrypt(bytes.GetFromByteArrToMemory(offset+4,len).ToArray(), MsgKey);
                 //确认协议类型
-                string name = System.Text.Encoding.UTF8.GetString(nameBytes);
-                MyProtocolEnum _mpe = (MyProtocolEnum)System.Enum.Parse(typeof(MyProtocolEnum), name);//查找对应的枚举
-                return _mpe;
+                return System.Text.Encoding.UTF8.GetString(nameBytes);
             }
             catch (Exception ex)
             {
                 Debug.LogError($"出现错误，传入的协议不存在,无法从本地枚举信息中找到传入的枚举，错误信息：{ex.ToString()} ");
-                return MyProtocolEnum.None;
+                return string.Empty;
             }
         }
         /// <summary>
@@ -126,12 +124,12 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// <summary>
         /// 消息体反序列化
         /// </summary>
-        /// <param name="protocol">协议名称枚举</param>
+        /// <param name="protocol">协议名称</param>
         /// <param name="bytes">消息数组</param>
         /// <param name="offset">开始读索引</param>
         /// <param name="count">整条消息的长度</param>
         /// <returns>解析后的协议体（即消息）</returns>
-        public static MsgBase DecodeMsgBody(MyProtocolEnum protocol,byte[] bytes ,int offset,int count)
+        public static MsgBase DecodeMsgBody(string protocol,byte[] bytes ,int offset,int count)
         {
             if (count<=0)
             {
@@ -147,7 +145,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
                 //反序列化
                 using (var memory=new MemoryStream(bodyBytes, 0, bodyBytes.Length))
                 {
-                    Type t = System.Type.GetType($"{typeof(MsgBase).Namespace}.{protocol.ToString()}");//转化类
+                    Type t = System.Type.GetType($"{protocol}");//转化类
                     MsgBase _tmp= (MsgBase)Serializer.NonGeneric.Deserialize(t, memory);
                     return _tmp;
                 }
@@ -173,10 +171,10 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             }
             var readIndex = 0;
              //解析完协议名后要从哪开始读下一阶段的数据
-            MyProtocolEnum protocol = DecodeName(byteArray, 0, out var nameCount); //解析协议名
-            if (protocol == MyProtocolEnum.None)
+            var protocol = DecodeName(byteArray, 0, out var nameCount); //解析协议名
+            if (protocol == string.Empty)
             {
-                throw new RSJWYException(RSJWYFameworkEnum.NetworkTool,$"解析协议名出错,协议名不存在！！返回的协议名为: {MyProtocolEnum.None.ToString()}");
+                throw new RSJWYException(RSJWYFameworkEnum.NetworkTool,$"解析协议名出错,协议名不存在！！返回的协议名为: {protocol}");
             }
             //读取没有问题
             readIndex += nameCount; //移动开始读位置，开始解析协议体
@@ -200,7 +198,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
                 MsgBase msgBase = DecodeMsgBody(protocol, byteArray, readIndex, bodyCount);
                 if (msgBase == null)
                 {
-                    throw new RSJWYException(RSJWYFameworkEnum.NetworkTool,$"解析协议名出错！！无法匹配协议基类协议名不存在！！返回的协议名为: {MyProtocolEnum.None.ToString()}");
+                    throw new RSJWYException(RSJWYFameworkEnum.NetworkTool,$"解析协议名出错！！无法匹配协议基类协议名不存在！！返回的协议名为: {protocol}");
                 }
                 return msgBase;
             }

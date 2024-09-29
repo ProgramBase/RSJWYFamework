@@ -46,6 +46,9 @@ namespace RSJWYFamework.Runtime.Config
             "注意，每个开发者SDK和密钥一一绑定,请使用正确的SDK和开发者密钥，否则程序初始化不通过\n请登录 Virbox 开发者中心(https://developer.lm.virbox.com), 获取 API 密码",
             InfoMessageType.Warning)]
         public string developerPW;
+        
+        
+        
 
 
 #if UNITY_EDITOR
