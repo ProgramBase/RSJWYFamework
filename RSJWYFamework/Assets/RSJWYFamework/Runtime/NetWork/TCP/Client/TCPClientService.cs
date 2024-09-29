@@ -688,7 +688,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         void RealClose()
         {
             cts?.Cancel();
-            _socket?.Shutdown(SocketShutdown.Both);
             _socket?.Close();
             lock (msgSendThreadLock)
             {

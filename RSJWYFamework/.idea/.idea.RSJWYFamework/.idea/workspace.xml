@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/MessageTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/MessageTool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/ProtobufMsg.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/ProtobufMsg.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TcpServerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TcpServerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.AES.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.AES.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +110,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CodeLensConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
     &quot;附加到 Unity 编辑器.附加到 Unity 编辑器.executor&quot;: &quot;Debug&quot;
   },
@@ -208,7 +209,9 @@
       <workItem from="1727223370791" duration="22065000" />
       <workItem from="1727329748362" duration="8051000" />
       <workItem from="1727407750279" duration="2976000" />
-      <workItem from="1727573804752" duration="703000" />
+      <workItem from="1727573804752" duration="4084000" />
+      <workItem from="1727600411141" duration="217000" />
+      <workItem from="1727600645968" duration="929000" />
     </task>
     <servers />
   </component>

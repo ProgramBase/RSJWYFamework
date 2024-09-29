@@ -569,7 +569,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             {
                 CloseClientSocket(_tmp[i]);
             }
-            ListenSocket.Shutdown(SocketShutdown.Both);
             ListenSocket.Close();
             RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"已关闭所有链接上来的客户端");
             Status = NetServerStatus.Close;

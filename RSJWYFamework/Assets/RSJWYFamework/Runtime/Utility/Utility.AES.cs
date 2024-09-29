@@ -16,14 +16,16 @@ namespace RSJWYFamework.Runtime.Utility
         public static class AESTool
         {
             private static string AESHead = "AESEncrypt";
+
             /// <summary>
             /// 加密初始化向量
             /// </summary>
-            private const string btIV="USDRPueWLTspLozzHXksCg==";
+            private const string btIV = "USDRPueWLTspLozzHXksCg==";
+
             /// <summary>
             /// 加密盐值
             /// </summary>
-            private const string salt="w4PLa847ZtM3oLXuYZhf+g==";
+            private const string salt = "w4PLa847ZtM3oLXuYZhf+g==";
 
 
             /// <summary>
@@ -158,56 +160,39 @@ namespace RSJWYFamework.Runtime.Utility
             /// <param name="EncryptKey">加密密钥</param>
             public static byte[] AESEncrypt(byte[] EncryptByte, string EncryptKey)
             {
-                if (EncryptByte.Length == 0)
+                if (EncryptByte == null || EncryptByte.Length == 0)
                 {
-                    RSJWYLogger.Error(RSJWYFameworkEnum.Utility,"要加密的数据不得为空");
+                    throw new ArgumentException("要加密的数据不得为空", nameof(EncryptByte));
                 }
 
                 if (string.IsNullOrEmpty(EncryptKey))
                 {
-                    RSJWYLogger.Error(RSJWYFameworkEnum.Utility,"秘钥不得为空");
+                    throw new ArgumentException("秘钥不得为空", nameof(EncryptKey));
                 }
 
-                byte[] m_strEncrypt;
                 byte[] m_btIV = Convert.FromBase64String(btIV);
                 byte[] m_salt = Convert.FromBase64String(salt);
-                Rijndael m_AESProvider = Rijndael.Create();
-                try
+                using (Rijndael m_AESProvider = Rijndael.Create())
+                using (MemoryStream m_stream = new MemoryStream())
                 {
-                    MemoryStream m_stream = new MemoryStream();
-                    PasswordDeriveBytes pdb = new PasswordDeriveBytes(EncryptKey, m_salt);
-                    ICryptoTransform transform = m_AESProvider.CreateEncryptor(pdb.GetBytes(32), m_btIV);
-                    CryptoStream m_csstream = new CryptoStream(m_stream, transform, CryptoStreamMode.Write);
-                    m_csstream.Write(EncryptByte, 0, EncryptByte.Length);
-                    m_csstream.FlushFinalBlock();
-                    m_strEncrypt = m_stream.ToArray();
-                    m_stream.Close();
-                    m_stream.Dispose();
-                    m_csstream.Close();
-                    m_csstream.Dispose();
-                }
-                catch (IOException ex)
-                {
-                    throw new RSJWYException(RSJWYFameworkEnum.Utility, ex);
-                }
-                catch (CryptographicException ex)
-                {
-                    throw new RSJWYException(RSJWYFameworkEnum.Utility, ex);
-                }
-                catch (ArgumentException ex)
-                {
-                    throw new RSJWYException(RSJWYFameworkEnum.Utility, ex);
-                }
-                catch (Exception ex)
-                {
-                    throw new RSJWYException(RSJWYFameworkEnum.Utility, ex);
-                }
-                finally
-                {
-                    m_AESProvider.Clear();
-                }
+                    try
+                    {
+                        PasswordDeriveBytes pdb = new PasswordDeriveBytes(EncryptKey, m_salt);
+                        using (ICryptoTransform transform = m_AESProvider.CreateEncryptor(pdb.GetBytes(32), m_btIV))
+                        using (CryptoStream m_csstream = new CryptoStream(m_stream, transform, CryptoStreamMode.Write))
+                        {
+                            m_csstream.Write(EncryptByte, 0, EncryptByte.Length);
+                            m_csstream.FlushFinalBlock();
+                        }
 
-                return m_strEncrypt;
+                        return m_stream.ToArray();
+                    }
+                    catch (Exception ex) when (ex is IOException || ex is CryptographicException ||
+                                               ex is ArgumentException)
+                    {
+                        throw new RSJWYException(RSJWYFameworkEnum.Utility, ex);
+                    }
+                }
             }
 
 
@@ -224,61 +209,55 @@ namespace RSJWYFamework.Runtime.Utility
             /// <summary>
             /// AES 解密(高级加密标准，是下一代的加密算法标准，速度快，安全级别高，目前 AES 标准的一个实现是 Rijndael 算法)
             /// </summary>
-            /// <param name="DecryptString">待解密密文</param>
+            /// <param name="DecryptByte">待解密字节流</param>
             /// <param name="DecryptKey">解密密钥</param>
             public static byte[] AESDecrypt(byte[] DecryptByte, string DecryptKey)
             {
-                if (DecryptByte.Length == 0)
+                if (DecryptByte == null || DecryptByte.Length == 0)
                 {
-                    RSJWYLogger.Error(RSJWYFameworkEnum.Utility,"要解密的数据不得为空");
+                    throw new ArgumentException("要解密的数据不得为空", nameof(DecryptByte));
                 }
 
                 if (string.IsNullOrEmpty(DecryptKey))
                 {
-                    RSJWYLogger.Error(RSJWYFameworkEnum.Utility,"秘钥不得为空");
+                    throw new ArgumentException("秘钥不得为空", nameof(DecryptKey));
                 }
 
                 byte[] m_strDecrypt;
                 byte[] m_btIV = Convert.FromBase64String(btIV);
                 byte[] m_salt = Convert.FromBase64String(salt);
-                Rijndael m_AESProvider = Rijndael.Create();
-                try
+
+                using (Rijndael m_AESProvider = Rijndael.Create())
+                using (MemoryStream m_stream = new MemoryStream())
                 {
-                    MemoryStream m_stream = new MemoryStream();
-                    PasswordDeriveBytes pdb = new PasswordDeriveBytes(DecryptKey, m_salt);
-                    ICryptoTransform transform = m_AESProvider.CreateDecryptor(pdb.GetBytes(32), m_btIV);
-                    CryptoStream m_csstream = new CryptoStream(m_stream, transform, CryptoStreamMode.Write);
-                    m_csstream.Write(DecryptByte, 0, DecryptByte.Length);
-                    m_csstream.FlushFinalBlock();
-                    m_strDecrypt = m_stream.ToArray();
-                    m_stream.Close();
-                    m_stream.Dispose();
-                    m_csstream.Close();
-                    m_csstream.Dispose();
-                }
-                catch (IOException ex)
-                {
-                    throw new RSJWYException(RSJWYFameworkEnum.Utility, ex);
-                }
-                catch (CryptographicException ex)
-                {
-                    throw new RSJWYException(RSJWYFameworkEnum.Utility, ex);
-                }
-                catch (ArgumentException ex)
-                {
-                    throw new RSJWYException(RSJWYFameworkEnum.Utility, ex);
-                }
-                catch (Exception ex)
-                {
-                    throw new RSJWYException(RSJWYFameworkEnum.Utility, ex);
-                }
-                finally
-                {
-                    m_AESProvider.Clear();
+                    try
+                    {
+                        PasswordDeriveBytes pdb = new PasswordDeriveBytes(DecryptKey, m_salt);
+                        using (ICryptoTransform transform = m_AESProvider.CreateDecryptor(pdb.GetBytes(32), m_btIV))
+                        using (CryptoStream m_csstream = new CryptoStream(m_stream, transform, CryptoStreamMode.Write))
+                        {
+                            m_csstream.Write(DecryptByte, 0, DecryptByte.Length);
+                            m_csstream.FlushFinalBlock();
+                            m_strDecrypt = m_stream.ToArray();
+                        }
+                    }
+                    catch (CryptographicException ex)
+                    {
+                        throw new RSJWYException(RSJWYFameworkEnum.Utility, "解密过程中出现加密异常", ex);
+                    }
+                    catch (IOException ex)
+                    {
+                        throw new RSJWYException(RSJWYFameworkEnum.Utility, "解密过程中出现输入输出异常", ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new RSJWYException(RSJWYFameworkEnum.Utility, "解密过程中发生未知错误", ex);
+                    }
                 }
 
                 return m_strDecrypt;
             }
+
         }
     }
 }
