@@ -80,6 +80,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         ///  消息队列发送锁
         /// </summary>
         internal object msgSendThreadLock ;
+        
         /// <summary>
         /// 关闭
         /// </summary>
