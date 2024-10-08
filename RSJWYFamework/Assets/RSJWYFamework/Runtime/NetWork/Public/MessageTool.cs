@@ -8,6 +8,7 @@ using ProtoBuf;
 using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Net.Public;
+using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.Utility;
 using RSJWYFamework.Runtime.Utility.Extensions;
 using UnityEngine;
@@ -103,21 +104,21 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         }
         /// <summary>
         /// 消息体序列化
-        /// </summary>
+        /// </summary> 
         /// <param name="msgBase">协议体（消息）</param>
+        /// <param name="iSocketMsgBodyEncrypt">加密接口</param>
         /// <returns>返回序列化后的消息数组</returns>
-        public static byte[] EncodeMsgBody(MsgBase msgBase)
+        public static byte[] EncodeMsgBody(MsgBase msgBase,ISocketMsgBodyEncrypt iSocketMsgBodyEncrypt)
         {
             using (var mermory = new MemoryStream())
             {
                 //将协议类进行序列化，转换成数组
                 Serializer.Serialize(mermory, msgBase);
                 byte[] bytes = mermory.ToArray();
-
-                //对协议体加密
-                byte[] AESBodyBytes = Utility.Utility.AESTool.AESEncrypt(bytes, MsgKey);
-
-                return AESBodyBytes;
+                //加密消息体
+                return iSocketMsgBodyEncrypt == null
+                   ? Utility.Utility.AESTool.AESEncrypt(bytes, MessageTool.MsgKey) :
+                   iSocketMsgBodyEncrypt.Encrypt(bytes);
             }
         }
         
@@ -126,10 +127,11 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// </summary>
         /// <param name="protocol">协议名称</param>
         /// <param name="bytes">消息数组</param>
-        /// <param name="offset">开始读索引</param>
+        /// <param name="offset">开始读索引</param>  
         /// <param name="count">整条消息的长度</param>
+        /// <param name="iSocketMsgBodyEncrypt">加密接口</param>
         /// <returns>解析后的协议体（即消息）</returns>
-        public static MsgBase DecodeMsgBody(string protocol,byte[] bytes ,int offset,int count)
+        public static MsgBase DecodeMsgBody(string protocol,byte[] bytes ,int offset,int count,ISocketMsgBodyEncrypt iSocketMsgBodyEncrypt)
         {
             if (count<=0)
             {
@@ -139,9 +141,10 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             //协议反序列化
             try
             {
-                byte[] AESBytes = new byte[count];
-                Array.Copy(bytes,offset, AESBytes, 0,count);//拷贝到AESBytes
-                byte[] bodyBytes= Utility.Utility.AESTool.AESDecrypt(AESBytes, MsgKey);//解密协议体
+                // 直接使用 Array.Copy 进行解密而不是先拷贝再解密
+                byte[] bodyBytes = iSocketMsgBodyEncrypt == null
+                    ? Utility.Utility.AESTool.AESDecrypt(bytes.AsSpan(offset, count).ToArray(), MsgKey) // 解密协议体
+                    : iSocketMsgBodyEncrypt.Decrypt(bytes.AsSpan(offset, count).ToArray()); // 解密协议体
                 //反序列化
                 using (var memory=new MemoryStream(bodyBytes, 0, bodyBytes.Length))
                 {
@@ -160,9 +163,9 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// 反序列化本次的消息
         /// </summary>
         /// <param name="byteArray">存储消息的自定义数组</param>
-        /// <param name="msgLength">消息整体长度</param>
+        /// <param name="iSocketMsgBodyEncrypt">解密接口服务</param>
         /// <returns>解码后的消息</returns>
-        internal static MsgBase DecodeMsg(byte[] byteArray)
+        internal static MsgBase DecodeMsg(byte[] byteArray,ISocketMsgBodyEncrypt iSocketMsgBodyEncrypt)
         {
             //确认数据是否有误
             if (byteArray.Length <= 0)
@@ -195,7 +198,7 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             try
             {
                 //解析协议体
-                MsgBase msgBase = DecodeMsgBody(protocol, byteArray, readIndex, bodyCount);
+                MsgBase msgBase = DecodeMsgBody(protocol, byteArray, readIndex, bodyCount, iSocketMsgBodyEncrypt);
                 if (msgBase == null)
                 {
                     throw new RSJWYException(RSJWYFameworkEnum.NetworkTool,$"解析协议名出错！！无法匹配协议基类协议名不存在！！返回的协议名为: {protocol}");
@@ -213,13 +216,14 @@ namespace RSJWYFamework.Runtime.NetWork.Public
         /// <summary>
         /// 将消息进行序列化
         /// </summary>
-        /// <param name="msgBase"></param>
+        /// <param name="msgBase">要处理的消息体</param>
+        /// <param name="iSocketMsgBodyEncrypt">加密接口</param>
         /// <returns>序列化后的消息</returns>
-        internal static ByteArrayMemory EncodeMsg(MsgBase msgBase)
+        internal static ByteArrayMemory EncodeMsg(MsgBase msgBase,ISocketMsgBodyEncrypt iSocketMsgBodyEncrypt)
         {
             // 协议体编码
             Memory<byte> nameBytes = EncodeName(msgBase); // 协议名编码
-            Memory<byte> bodyBytes = EncodeMsgBody(msgBase); // 编码协议体
+            Memory<byte> bodyBytes = EncodeMsgBody(msgBase,iSocketMsgBodyEncrypt); // 编码协议体
 
             // 获取校验码
             uint crc32 = Utility.Utility.CRC32.GetCrc32(bodyBytes.ToArray()); // 获取协议体的CRC32校验码

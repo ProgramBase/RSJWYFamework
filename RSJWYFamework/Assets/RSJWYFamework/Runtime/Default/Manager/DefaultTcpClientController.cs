@@ -6,6 +6,7 @@ using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.Event;
+using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.NetWork.TCP.Client;
 using RSJWYFamework.Runtime.Socket.Base;
 using RSJWYFamework.Runtime.NetWork.TCP.Server;
@@ -20,6 +21,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
     {
         private TcpClientService tcpsocket;
         private bool reLock = false;
+        private ISocketMsgBodyEncrypt m_SocketMsgBodyEncrypt; 
         public void Init()
         {
             reLock = false;

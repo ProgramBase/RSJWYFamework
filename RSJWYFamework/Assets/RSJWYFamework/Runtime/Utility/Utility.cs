@@ -83,24 +83,43 @@ namespace RSJWYFamework.Runtime.Utility
         {
             return JsonConvert.DeserializeObject<T>(JsonTxT);
         }
-        
+
         /// <summary>
         /// 二维数组转一维
         /// </summary>
         /// <param name="jaggedArray"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public static byte[] ConvertJaggedArrayToOneDimensional(byte[][] jaggedArray)
         {
-            List<byte> flatList = new List<byte>();
-            for (int i = 0; i < jaggedArray.Length; i++)
+            if (jaggedArray == null)
             {
-                for (int j = 0; j < jaggedArray[i].Length; j++)
-                {
-                    flatList.Add(jaggedArray[i][j]);
-                }
+                throw new ArgumentNullException(nameof(jaggedArray), "输入的数组不能为空。");
             }
-            return flatList.ToArray();
+
+            int totalLength = 0;
+            foreach (var subArray in jaggedArray)
+            {
+                if (subArray == null)
+                {
+                    throw new ArgumentException("所有子数组都不能为null。", nameof(jaggedArray));
+                }
+
+                totalLength += subArray.Length;
+            }
+
+            byte[] result = new byte[totalLength];
+            int offset = 0;
+            foreach (var subArray in jaggedArray)
+            {
+                Array.Copy(subArray, 0, result, offset, subArray.Length);
+                offset += subArray.Length;
+            }
+
+            return result;
         }
+
         /// <summary>
         /// uint转码为4位字节数组
         /// </summary>

@@ -5,6 +5,7 @@ using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.Base;
 using RSJWYFamework.Runtime.NetWork.Event;
+using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.NetWork.TCP.Server;
 
 namespace RSJWYFamework.Runtime.Default.Manager
@@ -15,6 +16,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
     public class DefaultTcpServerController : ISocketTCPServerController,ILife
     {
         private TcpServerService tcpsocket;
+
+        private ISocketMsgBodyEncrypt m_SocketMsgBodyEncrypt; 
         
         public void Init()
         {

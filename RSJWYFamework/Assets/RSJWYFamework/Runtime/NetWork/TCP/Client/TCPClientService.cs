@@ -9,6 +9,7 @@ using Cysharp.Threading.Tasks;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Net.Public;
+using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.NetWork.Public;
 using RSJWYFamework.Runtime.Socket.Base;
 using RSJWYFamework.Runtime.Utility;
@@ -168,6 +169,8 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         /// 是否已经初始化
         /// </summary>
         bool isInit = false;
+        
+        internal ISocketMsgBodyEncrypt  m_MsgBodyEncrypt;
         
         #endregion
 
@@ -373,7 +376,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                             //移动，规避长度位，从整体消息开始位接收数据
                             _readBuff.ReadIndex += 4; //前四位存储字节流数组长度信息
                             //在消息接收异步线程内同步处理消息，保证当前客户消息顺序性
-                            var _msgBase = MessageTool.DecodeMsg(_readBuff.GetlengthBytes(msgLength));
+                            var _msgBase = MessageTool.DecodeMsg(_readBuff.GetlengthBytes(msgLength),m_MsgBodyEncrypt);
                             //创建消息容器
                             msgQueue.Enqueue(_msgBase);
                             //处理完后移动数据位
@@ -466,7 +469,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             //写入数据
             try
             {
-                ByteArrayMemory sendOldBytes = MessageTool.EncodeMsg(msgBase);
+                ByteArrayMemory sendOldBytes = MessageTool.EncodeMsg(msgBase,m_MsgBodyEncrypt);
                 //写入到队列，向服务器发送消息
                 m_WriteQueue.Enqueue(sendOldBytes);//放入队列
             }
