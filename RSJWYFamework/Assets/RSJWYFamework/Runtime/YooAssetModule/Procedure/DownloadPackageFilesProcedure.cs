@@ -36,6 +36,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             downloader.OnStartDownloadFileCallback = OnStartDownloadFileFunction;
             downloader.BeginDownload();
             await downloader;
+            
 
             // 检测下载结果
             if (downloader.Status != EOperationStatus.Succeed)
