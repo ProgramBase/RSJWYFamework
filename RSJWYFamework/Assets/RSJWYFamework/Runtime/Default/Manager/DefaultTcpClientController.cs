@@ -110,12 +110,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
         {
             if (tcpsocket.Status==NetClientStatus.Close||tcpsocket?.Status==NetClientStatus.Fail&&reLock==false)
             {
-                UniTask.Create(async () =>
-                {
-                    RSJWYLogger.Warning($"检测到服务器链接关闭，3秒后重新连接服务器");
-                    await UniTask.WaitForSeconds(3);
-                    tcpsocket.Connect();
-                });
+                RSJWYLogger.Warning($"检测到服务器链接关闭，重新连接服务器");
+                tcpsocket.Connect();
             }
         }
 

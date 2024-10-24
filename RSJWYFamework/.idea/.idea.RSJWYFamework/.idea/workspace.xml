@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/HotCode/test_client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/HotCode/test_client.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../RSJWYFameworkExceptionLogServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../RSJWYFameworkExceptionLogServer/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +128,7 @@
 }</component>
   <component name="RunManager" selected="附加到 Unity 编辑器.附加到 Unity 编辑器">
     <configuration name="启动 Unity" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="D:\unity\UnnityEditor\2022.3.42f1c1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="D:\unity\UnnityEditor\6000.0.23f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath D:\unity\RSJWYFamework\RSJWYFamework -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\unity\RSJWYFamework\RSJWYFamework" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -146,7 +144,7 @@
       <method v="2" />
     </configuration>
     <configuration name="单元测试(批处理模式)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="D:\unity\UnnityEditor\2022.3.42f1c1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="D:\unity\UnnityEditor\6000.0.23f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath D:\unity\RSJWYFamework\RSJWYFamework -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\unity\RSJWYFamework\RSJWYFamework" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -224,6 +222,7 @@
       <workItem from="1728874006291" duration="211000" />
       <workItem from="1729478516325" duration="5140000" />
       <workItem from="1729736119036" duration="62000" />
+      <workItem from="1729745774959" duration="2716000" />
     </task>
     <servers />
   </component>
