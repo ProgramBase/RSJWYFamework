@@ -2,7 +2,7 @@
 
 using MyFamework.Runtime.Base;
 using RSJWYFamework.Runtime.Event;
-using RSJWYFamework.Runtime.Net.Public;
+using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.NetWork.TCP.Server;
 
 namespace RSJWYFamework.Runtime.NetWork.Base
@@ -32,17 +32,17 @@ namespace RSJWYFamework.Runtime.NetWork.Base
         /// 接收到消息时的回调-多线程下调用
         /// </summary>
         /// <param name="msgBase"></param>
-        void FromClientReceiveMsgCallBack(ClientSocketToken clientSocketToken, MsgBase msgBase);
+        void FromClientReceiveMsgCallBack(ClientSocketToken clientSocketToken, object msgBase);
 
         /// <summary>
         /// 向客户端发消息
         /// </summary>
-        void SendMsgToClient(MsgBase msgBase,ClientSocketToken clientSocketToken);
+        void SendMsgToClient(object msgBase,ClientSocketToken clientSocketToken);
 
         /// <summary>
         /// 向所有已链接上来的客户端发消息
         /// </summary>
-        void SendMsgToClientAll(MsgBase msgBase);
+        void SendMsgToClientAll(object msgBase);
         /// <summary>
         /// 初始化设置
         /// </summary>

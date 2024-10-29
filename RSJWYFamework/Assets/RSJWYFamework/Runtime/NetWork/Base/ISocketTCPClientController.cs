@@ -1,6 +1,6 @@
 ﻿using MyFamework.Runtime.Base;
 using RSJWYFamework.Runtime.Event;
-using RSJWYFamework.Runtime.Net.Public;
+using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.NetWork.TCP.Client;
 
 namespace RSJWYFamework.Runtime.Socket.Base
@@ -19,12 +19,12 @@ namespace RSJWYFamework.Runtime.Socket.Base
         /// 接收到消息时的回调
         /// </summary>
         /// <param name="msgBase"></param>
-        void ReceiveMsgCallBack(MsgBase msgBase);
+        void ReceiveMsgCallBack(object msgBase);
         
         /// <summary>
         /// 向服务器发消息
         /// </summary>
-        void ClientSendToServerMsg(MsgBase msg);
+        void ClientSendToServerMsg(object msg);
         
         /// <summary>
         /// 初始化设置

@@ -40,7 +40,6 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             
             var operation = package.RequestPackageVersionAsync(false);
             await operation.ToUniTask();
-
             if (operation.Status != EOperationStatus.Succeed)
             {
                 RSJWYLogger.Error(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}版本失败！Error：{operation.Error}");

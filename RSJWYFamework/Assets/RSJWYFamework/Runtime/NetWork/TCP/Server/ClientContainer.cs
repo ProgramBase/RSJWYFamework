@@ -3,9 +3,10 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
-using RSJWYFamework.Runtime.Net.Public;
+using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.NetWork.Public;
 using RSJWYFamework.Runtime.ReferencePool;
 
@@ -112,16 +113,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 消息目标服务器
         /// </summary>
-        [Obsolete]
-        internal System.Net.Sockets.Socket msgTargetSocket;
-        /// <summary>
-        /// 消息目标服务器
-        /// </summary>
         internal ClientSocketToken targetToken;
-        /// <summary>
-        /// 消息
-        /// </summary>
-        internal MsgBase msg;
         /// <summary>
         /// 已转换完成的消息数组
         /// </summary>
@@ -145,7 +137,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 消息
         /// </summary>
-        internal MsgBase msg;
+        internal object msg;
 
         public void Release()
         {

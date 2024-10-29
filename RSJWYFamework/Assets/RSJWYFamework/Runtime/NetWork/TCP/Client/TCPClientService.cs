@@ -1,18 +1,15 @@
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
+using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
-using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.NetWork.Public;
 using RSJWYFamework.Runtime.Socket.Base;
-using RSJWYFamework.Runtime.Utility;
 using UnityEngine;
 
 namespace RSJWYFamework.Runtime.NetWork.TCP.Client
@@ -82,6 +79,16 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         /// 绑定的客户端控制器，便于回调
         /// </summary>
         internal ISocketTCPClientController SocketTcpClientController;
+        
+        /// <summary>
+        /// 消息体加解接口
+        /// </summary>
+        internal ISocketMsgBodyEncrypt  m_MsgBodyEncrypt;
+        
+        /// <summary>
+        /// 消息体编解码接口
+        /// </summary>
+        internal ISocketMsgEncode m_SocketMsgEncode;
         /// <summary>
         /// 本机连接的socket
         /// </summary>
@@ -138,12 +145,12 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         /// <summary>
         /// 接收的MsgBase——要处理的消息
         /// </summary>
-        ConcurrentQueue<MsgBase> msgQueue;
+        ConcurrentQueue<object> msgQueue;
 
         /// <summary>
         /// 需要在Unity内处理的信息
         /// </summary>
-        ConcurrentQueue<MsgBase> unityMsgQueue = new ConcurrentQueue<MsgBase>();
+        ConcurrentQueue<object> unityMsgQueue = new ConcurrentQueue<object>();
         
         /// <summary>
         /// 接收数据
@@ -169,8 +176,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         /// 是否已经初始化
         /// </summary>
         bool isInit = false;
-        
-        internal ISocketMsgBodyEncrypt  m_MsgBodyEncrypt;
         
         #endregion
 
@@ -360,7 +365,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                         while (_readBuff.Readable > 4)
                         {
                             //获取消息长度
-                            int msgLength = BitConverter.ToInt32(_readBuff.GetlengthBytes(4));
+                            int msgLength = BitConverter.ToInt32(_readBuff.GetlengthBytes(4).ToArray());
                             //判断是不是分包数据
                             if (_readBuff.Readable < msgLength + 4)
                             {
@@ -376,9 +381,18 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                             //移动，规避长度位，从整体消息开始位接收数据
                             _readBuff.ReadIndex += 4; //前四位存储字节流数组长度信息
                             //在消息接收异步线程内同步处理消息，保证当前客户消息顺序性
-                            var _msgBase = MessageTool.DecodeMsg(_readBuff.GetlengthBytes(msgLength),m_MsgBodyEncrypt);
-                            //创建消息容器
-                            msgQueue.Enqueue(_msgBase);
+                            var _msgBase = MessageTool.DecodeMsg(_readBuff.GetlengthBytes(msgLength),m_MsgBodyEncrypt,m_SocketMsgEncode);
+                            if (_msgBase.IsPingPong)
+                            {
+                                //写心跳信息
+                                //更新接收到的心跳包时间（后台运行）
+                                lastPongTime = Utility.Utility.GetTimeStamp();
+                            }
+                            else
+                            {
+                                //处理消息
+                                msgQueue.Enqueue(_msgBase);
+                            }
                             //处理完后移动数据位
                             _readBuff.ReadIndex += msgLength;
                             //检查是否需要扩容
@@ -459,7 +473,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         /// 发送信息到服务器
         /// </summary>
         /// <param name="msgBase"></param>
-        internal void SendMessage(MsgBase msgBase)
+        internal void SendMessage(object msgBase)
         {
             if (_socket == null || !_socket.Connected)
             {
@@ -469,7 +483,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
             //写入数据
             try
             {
-                ByteArrayMemory sendOldBytes = MessageTool.EncodeMsg(msgBase,m_MsgBodyEncrypt);
+                ByteArrayMemory sendOldBytes = MessageTool.EncodeMsg(msgBase,m_MsgBodyEncrypt,m_SocketMsgEncode);
                 //写入到队列，向服务器发送消息
                 m_WriteQueue.Enqueue(sendOldBytes);//放入队列
             }
@@ -499,7 +513,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                     }
 
                     //有待处理的消息
-                    MsgBase msgBase = null;
+                    object msgBase = null;
                     //取出并移除取出来的数据
                     if (!msgQueue.TryDequeue(out msgBase))
                     {
@@ -510,20 +524,8 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                     //处理取出来的数据
                     if (msgBase != null)
                     {
-                        //如果接收到是心跳包
-                        if (msgBase is MsgPing)
-                        {
-                            MsgPing _ServerMsg = msgBase as MsgPing;
-
-                            //更新接收到的心跳包时间（后台运行）
-                            lastPongTime = Utility.Utility.GetTimeStamp();
-                            Debug.LogFormat("收到服务器返回的心跳包！！时间戳为：{0}，同时更新本地时间戳，时间戳为：{1}", _ServerMsg.timeStamp.ToString(),lastPongTime.ToString());
-                        }
-                        else
-                        {
-                            //其他消息交给unity消息队列处理
-                            unityMsgQueue.Enqueue(msgBase);
-                        }
+                        //其他消息交给unity消息队列处理
+                        unityMsgQueue.Enqueue(msgBase);
                     }
                 }
                 catch (SocketException ex)
@@ -559,10 +561,9 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                     if (timeNow - lastPingTime > m_PingInterval)
                     {
                         //规定时间到，发送心跳包到服务器
-                        MsgPing msgPing = SendMsgMethod.SendMsgPing(timeNow);
-                        lastPingTime = timeNow;
                         RSJWYLogger.Log($"<color=green>向服务器发送心跳包</color>");
-                        SendMessage(msgPing);
+                        lastPingTime = timeNow;
+                        m_WriteQueue.Enqueue(MessageTool.SendPingPong());//放入队列
                     }
                     //如果心跳包过长时间没收到，关闭链接
                     if (timeNow - lastPongTime > m_PingInterval * 12)
@@ -650,7 +651,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                 //取出消息
                 if (unityMsgQueue.Count > 0)
                 {
-                    MsgBase msgBase = null;
+                    object msgBase = null;
                     //取出并移除数据
                     if (unityMsgQueue.TryDequeue(out msgBase))
                     {

@@ -7,10 +7,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
-using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.Base;
 using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.NetWork.Public;
@@ -70,6 +70,14 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// 绑定的服务端控制器
         /// </summary>
         internal ISocketTCPServerController TcpServerController;
+        /// <summary>
+        /// 消息体加密接口
+        /// </summary>
+        internal ISocketMsgBodyEncrypt  m_MsgBodyEncrypt;
+        /// <summary>
+        /// 消息体编码接口
+        /// </summary>
+        internal ISocketMsgEncode m_SocketMsgEncode;
         /// <summary>
         /// 监听端口
         /// </summary>
@@ -132,7 +140,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         private SocketAsyncEventPool RWSocketAsynEA;
         
         
-        internal ISocketMsgBodyEncrypt  m_MsgBodyEncrypt;
         
         #endregion
 
@@ -381,7 +388,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                         while (readBuff.Readable>4)
                         {
                             //获取消息长度
-                            int msgLength = BitConverter.ToInt32(readBuff.GetlengthBytes(4));
+                            int msgLength = BitConverter.ToInt32(readBuff.GetlengthBytes(4).ToArray());
                             //判断是不是分包数据
                             if (readBuff.Readable < msgLength + 4)
                             {
@@ -397,14 +404,28 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                             readBuff.ReadIndex += 4; //前四位存储字节流数组长度信息
                             //在消息接收异步线程内同步处理消息，保证当前客户消息顺序性
                             //var _msgBase= MessageTool.DecodeMsg(readBuff.Bytes, readBuff.ReadIndex, msgLength);
-                            var _msgBase= MessageTool.DecodeMsg(readBuff.GetlengthBytes(msgLength),m_MsgBodyEncrypt);
+                            var _msgBase= MessageTool.DecodeMsg(readBuff.GetlengthBytes(msgLength),m_MsgBodyEncrypt,m_SocketMsgEncode);
                             //创建消息容器
-                            var _msgContainer = new ClientMsgContainer()
+                            if (_msgBase.IsPingPong)
                             {
-                                targetToken= token,
-                                msg= _msgBase,
-                            };
-                            serverMsgQueue.Enqueue(_msgContainer);
+                                token.lastPingTime = Utility.Utility.GetTimeStamp();
+                                RSJWYLogger.Log($"<color=blue>服务器返回心跳包</color>");
+                                ServerToClientMsgContainer _msg = new()
+                                {
+                                    targetToken = token,
+                                    SendBytes = MessageTool.SendPingPong()
+                                };
+                                token.sendQueue.Enqueue(_msg);
+                            }
+                            else
+                            {
+                                var _msgContainer = new ClientMsgContainer()
+                                {
+                                    targetToken= token,
+                                    msg= _msgBase,
+                                }; 
+                                serverMsgQueue.Enqueue(_msgContainer);
+                            }
                             //处理完后移动数据位
                             readBuff.ReadIndex += msgLength;
                             //检查是否需要扩容
@@ -434,7 +455,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <param name="msgBase">消息内容</param>
         /// <param name="targetToken">目标客户端标志</param>
         /// <returns>仅确保数据转换完毕，可以发送，但不确保数据发送成功</returns>
-        internal void SendMessage(MsgBase msgBase,ClientSocketToken targetToken)
+        internal void SendMessage(object msgBase,ClientSocketToken targetToken)
         {
             if (targetToken?.socket is not { Connected: true })
             {
@@ -450,12 +471,11 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     return;//链接不存在或者未建立链接
                 }
                 //编码
-                ByteArrayMemory sendOldBytes = MessageTool.EncodeMsg(msgBase,m_MsgBodyEncrypt);
+                ByteArrayMemory sendOldBytes = MessageTool.EncodeMsg(msgBase,m_MsgBodyEncrypt,m_SocketMsgEncode);
                 //创建容器
                 ServerToClientMsgContainer _msg = new()
                 {
                     targetToken = targetToken,
-                    msg = msgBase,
                     SendBytes = sendOldBytes
                 };
                 targetToken.sendQueue.Enqueue(_msg);
@@ -699,24 +719,10 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     //处理取出来的数据
                     if (_msg != null)
                     {
-                        //如果接收到是心跳包
-                        if (_msg.msg is MsgPing)
-                        {
-                            MsgPing _clientMsgPing = _msg.msg as MsgPing;
-                            //更新接收到的心跳包时间（后台运行）
-                            _msg.targetToken.lastPingTime =  Utility.Utility.GetTimeStamp();
-                            //创建消息并返回
-                            MsgPing msgPong = SendMsgMethod.SendMsgPing(_msg.targetToken.lastPingTime);
-                            RSJWYLogger.Log($"<color=blue>服务器返回心跳包</color>");
-                            SendMessage(msgPong, _msg.targetToken);//返回客户端
-                        }
-                        else
-                        {
-                            //是其他协议，交给unity处理
-                            if (TcpServerController == null)
-                                throw new RSJWYException(RSJWYFameworkEnum.NetworkTool, $"没有绑定控制器，无法发送客户端来的消息");
-                            TcpServerController.FromClientReceiveMsgCallBack(_msg.targetToken,_msg.msg);
-                        }
+                        //是其他协议，交给unity处理
+                        if (TcpServerController == null)
+                            throw new RSJWYException(RSJWYFameworkEnum.NetworkTool, $"没有绑定控制器，无法发送客户端来的消息");
+                        TcpServerController.FromClientReceiveMsgCallBack(_msg.targetToken,_msg.msg);
                     }
                 }
                 catch (Exception ex)

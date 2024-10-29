@@ -5,9 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/ProtobufMsg.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/ProtobufMsg.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Default.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/IMsgBodyEncrypt.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/IMsgBodyEncrypt.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/ISocketMsgEncode.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/ISocketMsgEncode.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpServerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpServerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketTCPClientController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketTCPClientController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketTCPServerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Base/ISocketTCPServerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Event/SocketEventArgs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Event/SocketEventArgs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/ByteArray.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/ByteArray.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/ISocketMsgBodyEncrypt.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/ISocketMsgBodyEncrypt.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/MessageTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/MessageTool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/ProtobufMsg.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/ProtobufMsg.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/SendMsgMethod.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/SendMsgMethod.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/ClientContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/ClientContainer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TcpServerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Server/TcpServerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.SocketTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Utility/Utility.SocketTool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/packages.config" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +54,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0a2e1cdc28c740eda1958d8128c28373827200/77/49fc49f9/AnimatorStateMachine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0a2e1cdc28c740eda1958d8128c28373827200/f5/3488578a/PlayerSettings.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/139c2424719c42c290d4b5921dc9d89d35f370/03/3f18be5a/ConcurrentBag`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/14134df795bc4f72a23f56ba18c85feb44600/48/da91ebaa/Serializer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/448a66bf9b31494bbd3f742f998b818b284000/34/a8633317/Stopwatch.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/44bf6cac841340ac9cb70f5448ebceba958200/38/b070ec07/EditorWindow.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/51fded79cd284d4d911c5949aff4cb2146ac00/a6/f01a0fe1/String.cs" root0="SKIP_HIGHLIGHTING" />
@@ -151,10 +174,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="19772">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="19772" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -223,6 +246,7 @@
       <workItem from="1729478516325" duration="5140000" />
       <workItem from="1729736119036" duration="62000" />
       <workItem from="1729745774959" duration="2716000" />
+      <workItem from="1730163375899" duration="14061000" />
     </task>
     <servers />
   </component>
@@ -251,6 +275,25 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Network/Public/MessageTool.cs</url>
+          <line>108</line>
+          <properties documentPath="D:\unity\RSJWYFamework\RSJWYFamework\Assets\RSJWYFamework\Runtime\Network\Public\MessageTool.cs" containingFunctionPresentation="方法 'DecodeMsg'">
+            <startOffsets>
+              <option value="4052" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4082" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

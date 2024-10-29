@@ -4,7 +4,6 @@ using RSJWYFamework.Runtime.Default.EventsLibrary;
 using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Module;
-using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.Event;
 using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.NetWork.TCP.Client;
@@ -29,6 +28,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
             Main.Main.AddLife(this);
             tcpsocket = new();
             tcpsocket.SocketTcpClientController = this;
+            tcpsocket.m_SocketMsgEncode = new ProtobufSocketMsgEncode();
+            tcpsocket.m_MsgBodyEncrypt = new ProtobufSocketMsgBodyEncrypt();
         }
 
         public void Close()
@@ -74,9 +75,9 @@ namespace RSJWYFamework.Runtime.Default.Manager
             if (eventArgsBase is ClientSendToServerEventArgs args)
                 ClientSendToServerMsg(args.msgBase);
         }
-        public void ClientSendToServerMsg(MsgBase msg)
+        public void ClientSendToServerMsg(object msg)
         {
-            tcpsocket?.SendMessage(msg);
+            tcpsocket?.SendMessage(msg as MsgBase);
         }
 
        
@@ -91,12 +92,12 @@ namespace RSJWYFamework.Runtime.Default.Manager
             
         }
 
-        public void ReceiveMsgCallBack(MsgBase msgBase)
+        public void ReceiveMsgCallBack(object msgBase)
         {
             var _event= new ClientReceivesMSGFromServer
             {
                 Sender = null,
-                msgBase = msgBase
+                msgBase = msgBase as MsgBase
             };
             Main.Main.EventModle.Fire(_event);
         }

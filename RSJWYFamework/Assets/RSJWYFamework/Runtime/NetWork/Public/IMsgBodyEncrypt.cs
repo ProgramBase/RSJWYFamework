@@ -1,4 +1,6 @@
-﻿namespace RSJWYFamework.Runtime.Network.Public
+﻿using System;
+
+namespace RSJWYFamework.Runtime.Network.Public
 {
     /// <summary>
     /// 消息体加解密服务
@@ -8,14 +10,14 @@
         /// <summary>
         /// 加密消息体
         /// </summary>
-        /// <param name="data">待加密数据</param>
+        /// <param name="data">待加密数据-内存切片</param>
         /// <returns>加密后的数据</returns>
-        byte[] Encrypt(byte[] data);
+        byte[] Encrypt(Memory<byte> data);
         /// <summary>
         /// 解密消息体
         /// </summary>
-        /// <param name="data">待解密数据</param>
+        /// <param name="data">待解密数据-内存切片</param>
         /// <returns>解密后的数据</returns>
-        byte[] Decrypt(byte[] data);
+        byte[] Decrypt(Memory<byte> data);
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Net;
 using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Module;
-using RSJWYFamework.Runtime.Net.Public;
 using RSJWYFamework.Runtime.NetWork.Base;
 using RSJWYFamework.Runtime.NetWork.Event;
 using RSJWYFamework.Runtime.Network.Public;
@@ -27,6 +26,8 @@ namespace RSJWYFamework.Runtime.Default.Manager
             //检查是不是监听全部IP
             tcpsocket = new();
             tcpsocket.TcpServerController = this;
+            tcpsocket.m_SocketMsgEncode = new ProtobufSocketMsgEncode();
+            tcpsocket.m_MsgBodyEncrypt = new ProtobufSocketMsgBodyEncrypt();
         }
 
         public void Close()
@@ -86,16 +87,16 @@ namespace RSJWYFamework.Runtime.Default.Manager
             SendMsgToClientAll(args.msgBase);
         }
 
-        public void SendMsgToClientAll(MsgBase msgBase)
+        public void SendMsgToClientAll(object msgBase)
         {
             foreach (var token in tcpsocket.ClientDic)
             {
-                tcpsocket.SendMessage(msgBase, token.Value);
+                tcpsocket.SendMessage(msgBase as MsgBase, token.Value);
             }
         }
-        public void SendMsgToClient(MsgBase msgBase,ClientSocketToken clientSocketToken)
+        public void SendMsgToClient(object msgBase,ClientSocketToken clientSocketToken)
         {
-            tcpsocket?.SendMessage(msgBase,clientSocketToken);
+            tcpsocket?.SendMessage(msgBase as MsgBase,clientSocketToken);
         }
 
 
@@ -131,13 +132,13 @@ namespace RSJWYFamework.Runtime.Default.Manager
             Main.Main.EventModle.Fire( _event);
         }
 
-        public void FromClientReceiveMsgCallBack(ClientSocketToken clientSocketToken, MsgBase msgBase)
+        public void FromClientReceiveMsgCallBack(ClientSocketToken clientSocketToken, object msgBase)
         {
             var _event= new FromClientReceiveMsgCallBackEventArgs
             {
                 Sender = this,
                 ClientSocketToken = clientSocketToken,
-                msgBase = msgBase
+                msgBase = msgBase  as MsgBase
             };
             Main.Main.EventModle.Fire(_event);
         }
