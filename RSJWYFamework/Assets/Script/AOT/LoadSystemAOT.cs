@@ -14,7 +14,7 @@ namespace Script.AOT
     /// <summary>
     /// 框架的管理器，unity挂载
     /// </summary>
-    public class LoadServer_AOT:SingletonBaseMono<LoadServer_AOT>
+    public class LoadSystemAOT:SingletonBaseMono<LoadSystemAOT>
     {
         protected override void Awake()
         {
@@ -30,9 +30,11 @@ namespace Script.AOT
 
         async UniTaskVoid StartApp()
         {
+            RSJWYLogger.Log("加载项目配置文件，并加载到数据管理中···");
             var projectset =  Resources.Load<ProjectConfig>("ProjectConfig");
             Main.DataManagerataManager.AddDataSet(projectset);
-            
+            RSJWYLogger.Log($"日志等级：{projectset.Loglevel}");
+            RSJWYLogger.Loglevel = projectset.Loglevel;
             RSJWYLogger.Log("等待包初始化");
             await Main.YooAssetManager.LoadPackage();
             RSJWYLogger.Log("包初始化完成，加载热更代码");

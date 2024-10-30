@@ -39,7 +39,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         }
 
 
-        public void InitServer(string ip = "any", int port = 6000)
+        public void InitServer(string ip = "any", int port = 6100)
         {
             if (ip != "any")
             {

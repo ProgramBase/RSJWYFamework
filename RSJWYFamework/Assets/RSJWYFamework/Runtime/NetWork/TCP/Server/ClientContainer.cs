@@ -113,7 +113,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 消息目标服务器
         /// </summary>
-        internal ClientSocketToken targetToken;
+        internal ClientSocketToken TargetToken;
         /// <summary>
         /// 已转换完成的消息数组
         /// </summary>
@@ -121,7 +121,8 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
 
         public void Release()
         {
-            
+            TargetToken = null;
+            SendBytes = null;
         }
     }
     /// <summary>
@@ -132,7 +133,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// <summary>
         /// 消息来源
         /// </summary>
-        internal ClientSocketToken targetToken;
+        internal ClientSocketToken TargetToken;
 
         /// <summary>
         /// 消息

@@ -179,7 +179,12 @@ namespace RSJWYFamework.Runtime.NetWork.Public
 
         public void Release()
         {
-            
+            var initialBytes = new byte[default_Size];
+            Bytes = new Memory<byte>(initialBytes);
+            Capacity = default_Size;
+            m_InitSize = default_Size;
+            ReadIndex = 0;
+            WriteIndex = 0;
         }
     }
 }

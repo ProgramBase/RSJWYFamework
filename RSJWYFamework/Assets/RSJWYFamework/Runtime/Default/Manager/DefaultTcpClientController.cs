@@ -41,7 +41,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
         }
 
 
-        public void InitTCPClient(string ip = "127.0.0.1", int port = 6000)
+        public void InitTCPClient(string ip = "127.0.0.1", int port = 6100)
         {
             //客户端的
             if (ip != "127.0.0.1")

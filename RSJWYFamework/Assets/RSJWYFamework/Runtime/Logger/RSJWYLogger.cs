@@ -5,24 +5,20 @@ using Debug = UnityEngine.Debug;
 
 namespace RSJWYFamework.Runtime.Logger
 {
+    /// <summary>
+    /// 日志等级
+    /// </summary>
+    public enum Loglevel
+    {
+        LOG,
+        WARN,
+        ERROR,
+    }
 
     public static class RSJWYLogger
     {
-        /// <summary>
-        /// 日志记录器
-        /// </summary>
-        private static UnityEngine.Logger logger_Unity;
-        
-        /// <summary>
-        /// 日志记录器
-        /// </summary>
-        private static UnityEngine.Logger logger_rf;
 
-        static RSJWYLogger()
-        {
-            
-           
-        }
+        public static Loglevel Loglevel;
         /// <summary>
         /// 日志
         /// </summary>
@@ -42,7 +38,8 @@ namespace RSJWYFamework.Runtime.Logger
         {
             //logger_rf.Debug($"{@enum}:{info}");
             
-            UnityEngine.Debug.Log($"{@enum}:{info}");
+            StackTrace stackTrace = new StackTrace(1, true);
+            Debug.Log($"{@enum}:{info}");
             /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
                     .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Log);*/
@@ -54,8 +51,8 @@ namespace RSJWYFamework.Runtime.Logger
         public static void Warning(string info)
         {
            // logger_rf.Warn(info);
-            
-            UnityEngine.Debug.LogWarning(info);
+           StackTrace stackTrace = new StackTrace(1, true); 
+           Debug.LogWarning(info);
             /*if (!Debugger.IsLogging())
             {
                 // 获取堆栈跟踪信息
@@ -71,7 +68,8 @@ namespace RSJWYFamework.Runtime.Logger
         {
             //logger_rf.Warn($"{@enum}:{info}");
             
-            UnityEngine.Debug.LogWarning($"{@enum}:{info}");;
+            StackTrace stackTrace = new StackTrace(1, true);
+            Debug.LogWarning($"{@enum}:{info}");;
             /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
                     .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Warning);*/
@@ -84,7 +82,8 @@ namespace RSJWYFamework.Runtime.Logger
         {
            // logger_rf.Error(info);
             
-            UnityEngine.Debug.LogError(info);
+           StackTrace stackTrace = new StackTrace(1, true);
+            Debug.LogError(info);
             /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
                     .UnityLogMessageReceivedThreadedEvent(info, null, LogType.Error);*/
@@ -96,7 +95,8 @@ namespace RSJWYFamework.Runtime.Logger
         {
             //logger_rf.Error($"{@enum}:{info}");
             
-            UnityEngine.Debug.LogError($"{@enum}:{info}");;
+            StackTrace stackTrace = new StackTrace(1, true);
+            Debug.LogError($"{@enum}:{info}");;
             /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
                     .UnityLogMessageReceivedThreadedEvent($"{@enum}:\n{info}", null, LogType.Error);*/
@@ -109,7 +109,8 @@ namespace RSJWYFamework.Runtime.Logger
         {
            // logger_rf.Fatal(exception);
             
-            UnityEngine.Debug.LogException(exception);
+           StackTrace stackTrace = new StackTrace(1, true);
+           Debug.LogException(exception);
             /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
                     .UnityLogMessageReceivedThreadedEvent(exception.Message, exception.StackTrace, LogType.Exception);*//**/
@@ -121,7 +122,8 @@ namespace RSJWYFamework.Runtime.Logger
         {
            // logger_rf.Fatal($"{@enum}:{exception.Message}");
             
-            UnityEngine.Debug.LogException(exception);
+           StackTrace stackTrace = new StackTrace(1, true);
+           Debug.LogException(exception);
             /*if (!Debugger.IsLogging())
                 Main.Main.ExceptionLogManager
                     .UnityLogMessageReceivedThreadedEvent($"{@enum}:{exception.Message}", exception.StackTrace, LogType.Exception);*/
