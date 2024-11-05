@@ -4,7 +4,6 @@ using RSJWYFamework.Runtime.Default.EventsLibrary;
 using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Module;
-using RSJWYFamework.Runtime.NetWork.Event;
 using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.NetWork.TCP.Client;
 using RSJWYFamework.Runtime.Socket.Base;

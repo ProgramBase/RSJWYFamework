@@ -1,14 +1,14 @@
 using System;
 using System.Net;
 using System.Text;
+using RSJWYFamework.Runtime.Default.EventsLibrary;
 using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.NetWork.Base;
-using RSJWYFamework.Runtime.NetWork.Event;
 using RSJWYFamework.Runtime.NetWork.Public;
 using RSJWYFamework.Runtime.NetWork.UDP;
 using RSJWYFamework.Runtime.Utility;
-using UDPSendMsg = RSJWYFamework.Runtime.NetWork.Event.UDPSendMsg;
+using UDPSendMsg = RSJWYFamework.Runtime.Default.EventsLibrary.UDPSendMsg;
 
 namespace RSJWYFamework.Runtime.Default.Manager
 {

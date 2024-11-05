@@ -1,9 +1,9 @@
 using System;
 using System.Net;
+using RSJWYFamework.Runtime.Default.EventsLibrary;
 using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.NetWork.Base;
-using RSJWYFamework.Runtime.NetWork.Event;
 using RSJWYFamework.Runtime.Network.Public;
 using RSJWYFamework.Runtime.NetWork.TCP.Server;
 
@@ -138,7 +138,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
             {
                 Sender = this,
                 ClientSocketToken = clientSocketToken,
-                msgBase = msgBase  as MsgBase
+                msgBase = msgBase as MsgBase
             };
             Main.Main.EventModle.Fire(_event);
         }

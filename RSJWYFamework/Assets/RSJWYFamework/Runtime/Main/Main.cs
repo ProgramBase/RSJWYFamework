@@ -16,7 +16,7 @@ using UnityEngine;
 
 namespace RSJWYFamework.Runtime.Main
 {
-    public static partial class Main
+    public static  partial class Main
     {
         public static bool IsInitialize { get; private set; } = false;
         /// <summary>
@@ -48,8 +48,6 @@ namespace RSJWYFamework.Runtime.Main
         /// 热更新管理器
         /// </summary>
         public static DefaultHybirdClrManager HybridClrManager { get; private set; }
-        
-        public static DefaultExceptionLogManager ExceptionLogManager { get; private set; }
         /// <summary>
         /// 异步系统
         /// </summary>
@@ -236,7 +234,7 @@ namespace RSJWYFamework.Runtime.Main
             }
         }
         
-        internal static void LateUpddate()
+        internal static void LateUpdate()
         {
             if (IsInitialize)
             {

@@ -552,7 +552,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                     Thread.Sleep(1000); //本线程可以每秒检测一次
                     if (Status!=NetClientStatus.Connect)
                     {
-                        Thread.Sleep(100);
                         //正在重连，结束或者跳过？？
                         continue;
                     }
