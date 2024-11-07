@@ -78,7 +78,6 @@ namespace RSJWYFamework.Editor.Windows.HybridCLR
                 SettingData =
                     AssetDatabase.LoadAssetAtPath<HCLRToolSetting>("Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset");
             }
-
             //加载热更dll列表
             UpdateHotDLLJson();
         }

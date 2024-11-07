@@ -18,7 +18,7 @@ namespace RSJWYFamework.Editor.Tool
         [MenuItem("RSJWYFamework/Config/创建Yoo资源管理参数")]
         public static void CreateYooAssetModuleSettingData()
         {
-            UtilityEditor.UtilityEditor.CreateScriptableObject<YooAssetModuleSettingData>(
+            UtilityEditor.UtilityEditor.CreateScriptableObject<YooAssetPackages>(
                 "Assets/RSJWYFamework/Resources/YooAssetModuleSetting.asset");
         }
 

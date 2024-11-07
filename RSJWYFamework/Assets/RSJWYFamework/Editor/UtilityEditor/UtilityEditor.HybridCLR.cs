@@ -43,10 +43,6 @@ namespace RSJWYFamework.Editor.UtilityEditor
                             $"添加AOT补充元数据dll:{srcDllPath} 时发生错误,文件不存在。裁剪后的AOT dll在BuildPlayer时才能生成，因此需要你先运行一次ALL后再打包。");
                     }
                     string dllBytesPath = $"{BuildMetadataForAOTAssembliesDllPatch}/{aotDll}.dll.bytes";
-                    //File.Copy(srcDllPath, dllBytesPath, true);
-                    // byte[] _rawByte=File.ReadAllBytes(srcDllPath);
-                    // byte[] _aesByte= MyTool_AOT.AESEncrypt(_rawByte,MyTool_AOT.AESkey);
-                    // File.WriteAllBytes(dllBytesPath,_aesByte);
                     File.Copy(srcDllPath, dllBytesPath, true);
                     Debug.Log($"[拷贝补充元数据到热更包] 拷贝 {srcDllPath} -> 到{dllBytesPath}");
                 });

@@ -5,7 +5,7 @@ using YooAsset.Editor;
 
 namespace RSJWYFamework.Editor.Windows.YooAsset
 {
-    [CustomEditor(typeof(YooAssetModuleSettingData))]
+    [CustomEditor(typeof(YooAssetPackages))]
     public class EditorYooAssetModuleSettingData : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
@@ -17,7 +17,7 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
             if (GUILayout.Button("从YooAsset加载包信息【自行配置管线相关信息】"))
             {
                 // 执行按钮点击后的操作
-                var settingData = target as YooAssetModuleSettingData;
+                var settingData = target as YooAssetPackages;
                 if (settingData)
                 {
                     settingData.packages.Clear();

@@ -16,7 +16,7 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
     {
         [InlineEditor(InlineEditorModes.FullEditor)]
         [LabelText("配置文件")]
-        public YooAssetModuleSettingData SettingData;
+        public YooAssetPackages SettingData;
         
         [LabelText("构建目标")]
         public BuildTarget buildTarget = BuildTarget.StandaloneWindows64;
@@ -105,7 +105,7 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
             base.OnEnable();
             if (SettingData == null)
             {
-                SettingData = AssetDatabase.LoadAssetAtPath<YooAssetModuleSettingData>("Assets/Resources/YooAssetModuleSetting.asset");
+                SettingData = AssetDatabase.LoadAssetAtPath<YooAssetPackages>("Assets/Resources/YooAssetModuleSetting.asset");
             }
             buildoutputRoot = AssetBundleBuilderHelper.GetDefaultBuildOutputRoot();
             streamingAssetsRoot = AssetBundleBuilderHelper.GetStreamingAssetsRoot();
