@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using HybridCLR.Editor;
 using HybridCLR.Editor.Commands;
 using HybridCLR.Editor.Settings;
@@ -33,26 +34,22 @@ namespace RSJWYFamework.Editor.UtilityEditor
                 //获取构建DLL的路径
                 var aotAssembliesSrcDir = SettingsUtil.GetAssembliesPostIl2CppStripDir(buildTarget);
                 Utility.FileAndFoder.CheckDirectoryExistsAndCreate(BuildMetadataForAOTAssembliesDllPatch);
-                //迭代资源目录
-                foreach (var dll in SettingsUtil.AOTAssemblyNames)
+                Parallel.ForEach(SettingsUtil.AOTAssemblyNames, aotDll =>
                 {
-                    string srcDllPath = $"{aotAssembliesSrcDir}/{dll}.dll";
+                    string srcDllPath = $"{aotAssembliesSrcDir}/{aotDll}.dll";
                     if (!File.Exists(srcDllPath))
                     {
                         Debug.LogError(
                             $"添加AOT补充元数据dll:{srcDllPath} 时发生错误,文件不存在。裁剪后的AOT dll在BuildPlayer时才能生成，因此需要你先运行一次ALL后再打包。");
-                        continue;
                     }
-
-                    string dllBytesPath = $"{BuildMetadataForAOTAssembliesDllPatch}/{dll}.dll.bytes";
+                    string dllBytesPath = $"{BuildMetadataForAOTAssembliesDllPatch}/{aotDll}.dll.bytes";
                     //File.Copy(srcDllPath, dllBytesPath, true);
                     // byte[] _rawByte=File.ReadAllBytes(srcDllPath);
                     // byte[] _aesByte= MyTool_AOT.AESEncrypt(_rawByte,MyTool_AOT.AESkey);
                     // File.WriteAllBytes(dllBytesPath,_aesByte);
                     File.Copy(srcDllPath, dllBytesPath, true);
                     Debug.Log($"[拷贝补充元数据到热更包] 拷贝 {srcDllPath} -> 到{dllBytesPath}");
-                }
-
+                });
                 AssetDatabase.Refresh();
             }
 
@@ -75,21 +72,23 @@ namespace RSJWYFamework.Editor.UtilityEditor
                 //获取构建DLL的路径
                 var hotfixDllSrcDir = SettingsUtil.GetHotUpdateDllsOutputDirByTarget(buildTarget);
                 Utility.FileAndFoder.CheckDirectoryExistsAndCreate(BuildHotCodeDllPatch);
-                //拷贝到资源
-                foreach (var dll in SettingsUtil.HotUpdateAssemblyNamesExcludePreserved)
+                //拷贝到资源-并行拷贝
+                Parallel.ForEach(SettingsUtil.HotUpdateAssemblyNamesExcludePreserved, hotDll =>
                 {
                     //拷贝热更代码
-                    string dllPath = $"{hotfixDllSrcDir}/{dll}.dll";
-                    string dllBytesPath = $"{BuildHotCodeDllPatch}/{dll}.bytes";//File.Copy(srcDllPath, dllBytesPath, true);
-                    File.Copy(dllPath, dllBytesPath, true);
-                    Debug.Log($"[拷贝热更代码到热更包] 拷贝 {dllPath} -> 到{dllBytesPath}");
+                    string startDllPath = $"{hotfixDllSrcDir}/{hotDll}.dll";
+                    string endDllBytePath = $"{BuildHotCodeDllPatch}/{hotDll}.dll.bytes";
+                    File.Copy(startDllPath, endDllBytePath, true);
+                    Debug.Log($"[拷贝热更代码到热更包] 拷贝 {startDllPath} -> 到{endDllBytePath}");
+                });
+                Parallel.ForEach(SettingsUtil.HotUpdateAssemblyNamesExcludePreserved, hotDll =>
+                {
                     //拷贝PDB
-                    string newdlll = Path.ChangeExtension(dll, ".pdb");
-                    string pdbpath= $"{hotfixDllSrcDir}/{newdlll}";
-                    string pdbBytesPath = $"{BuildHotCodeDllPatch}/{newdlll}.bytes";//File.Copy(srcDllPath, dllBytesPath, true);
-                    File.Copy(pdbpath, pdbBytesPath, true);
-                    Debug.Log($"[拷贝热更代码PDB到热更包] 拷贝 {pdbpath} -> 到{pdbBytesPath}");
-                }
+                    string startPdbPath = $"{hotfixDllSrcDir}/{hotDll}.pdb";
+                    string endPdbBytePath = $"{BuildHotCodeDllPatch}/{hotDll}.pdb.bytes"; 
+                    File.Copy(startPdbPath, endPdbBytePath, true);
+                    Debug.Log($"[拷贝热更代码PDB到热更包] 拷贝 {startPdbPath} -> 到{endPdbBytePath}");
+                });
                 AssetDatabase.Refresh();
             }
             

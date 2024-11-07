@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Config.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/EditorYooAssetModuleSettingData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/EditorYooAssetModuleSettingData.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/YooAssetToolWindows.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/YooAssetToolWindows.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/圆角UI.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/圆角UI.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/圆角UI/UIRoundConor_RawImageEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/圆角UI/UIRoundConor_RawImageEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/圆角UI/UIRoundConor_RawImageEditor.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/圆角UI/UIRoundConor_RawImageEditor.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/MessageTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/MessageTool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/RSJWYFamework.Runtime.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/RSJWYFamework.Runtime.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotUpdateCode/HotCode/HotCode.bytes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotUpdateCode/HotCode/HotCode.bytes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotUpdateCode/HotCode/HotCode.pdb.bytes" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/HotUpdateCode/HotCode/HotCode.pdb.bytes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Setting/HCLRToolSetting.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.HybridCLR.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/UtilityEditor/UtilityEditor.HybridCLR.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/Build Profiles/New Windows Profile.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/Build Profiles/New Windows Profile.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,8 +35,14 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/139c2424719c42c290d4b5921dc9d89d35f370/db/3a961298/SocketError.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/321eb2db7c6d43ea8fc39b54eaca345246ae00/01/94a0d5a8/Path.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/321eb2db7c6d43ea8fc39b54eaca345246ae00/3b/329ae75f/Parallel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/57122b35ba4a46e4b13b3c579403b46119c00/0c/30e92149/InlineEditorModes.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/57122b35ba4a46e4b13b3c579403b46119c00/33/736942f4/ButtonSizes.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/57122b35ba4a46e4b13b3c579403b46119c00/7b/7c320e5a/ReadOnlyAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9c6570448e70440ea7a2f0f4a152540d305400/79/23e74d14/OdinEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9e3a60dbcacc4e77a9c6e1c14064183a9b6200/43/29d50692/BuildTarget.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9e3a60dbcacc4e77a9c6e1c14064183a9b6200/93/017aa196/EditorUserBuildSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9e3a60dbcacc4e77a9c6e1c14064183a9b6200/b7/f8797897/CustomEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/AsyncOperation/LoadHotCodeOperation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/IProcedureController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -50,6 +52,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Editor/AssetBundleCollector/AssetBundleCollectorSetting.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Editor/HomePage.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Editor/SettingLoader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Runtime/InitializeParameters.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -101,10 +104,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="17792">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="17792" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -184,7 +187,7 @@
       <workItem from="1730713032636" duration="1004000" />
       <workItem from="1730768409285" duration="14593000" />
       <workItem from="1730878032323" duration="5520000" />
-      <workItem from="1730945734138" duration="2000" />
+      <workItem from="1730945725530" duration="8615000" />
     </task>
     <servers />
   </component>
