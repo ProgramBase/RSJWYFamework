@@ -76,11 +76,17 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// </summary>
         internal Thread msgSendThread;
         
+        /// <summary>
+        /// 消息发送线程
+        /// </summary>
+        internal Thread PingPongThread;
         
         /// <summary>
         ///  消息队列发送锁
         /// </summary>
         internal object msgSendThreadLock ;
+
+        internal TcpServerService ServerService;
         
         /// <summary>
         /// 关闭
@@ -104,6 +110,35 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer, $"客户端关闭时发生错误！{e}");
             }
         }
+        /// <summary>
+        /// 心跳包检测
+        /// </summary>
+        public void PongThread()
+        {
+            while (!cts.Token.IsCancellationRequested)
+            {
+                try
+                {
+                    Thread.Sleep(1000);//本线程可以每秒检测一次
+                    //检测心跳包是否超时的计算
+                    //获取当前时间
+                    long timeNow =  Utility.Utility.GetTimeStamp();
+                    if (timeNow-lastPingTime>TcpServerService.pingInterval*4)
+                    {
+                        ServerService.CloseClientSocket(this);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer, $"检测心跳包时发生错误：{ex.Message}");
+                    if (cts.Token.IsCancellationRequested)
+                    {
+                        RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer, $"请求取消任务");
+                        break;
+                    }
+                }
+            }
+        }
     }
     /// <summary>
     ///消息发送数据容器
@@ -125,6 +160,9 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             SendBytes = null;
         }
     }
+    
+    
+    
     /// <summary>
     /// 接收到的客户端消息容器
     /// </summary>

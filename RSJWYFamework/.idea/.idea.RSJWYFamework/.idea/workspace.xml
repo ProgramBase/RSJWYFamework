@@ -5,77 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/EventsLibrary/SocketEventArgs.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/EventsLibrary/SocketEventArgs.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Config.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/EditorYooAssetModuleSettingData.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/EditorYooAssetModuleSettingData.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HybridCLRGenerate/link.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HybridCLRGenerate/link.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Google.Protobuf.3.28.3.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Google.Protobuf.3.28.3/.signature.p7s" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Google.Protobuf.3.28.3/Google.Protobuf.nuspec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Google.Protobuf.3.28.3/Google.Protobuf.nuspec.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Google.Protobuf.3.28.3/lib.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Google.Protobuf.3.28.3/lib/netstandard2.0.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Google.Protobuf.3.28.3/lib/netstandard2.0/Google.Protobuf.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Google.Protobuf.3.28.3/lib/netstandard2.0/Google.Protobuf.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Google.Protobuf.3.28.3/lib/netstandard2.0/Google.Protobuf.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/Google.Protobuf.3.28.3/lib/netstandard2.0/Google.Protobuf.xml.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/System.Collections.Immutable.7.0.0/Icon.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/System.Collections.Immutable.7.0.0/Icon.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/System.Collections.Immutable.7.0.0/lib/netstandard2.0/System.Collections.Immutable.dll.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/System.Collections.Immutable.7.0.0/lib/netstandard2.0/System.Collections.Immutable.dll.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30/.signature.p7s" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30/lib.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30/lib/netstandard2.1.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30/lib/netstandard2.1/protobuf-net.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30/lib/netstandard2.1/protobuf-net.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30/lib/netstandard2.1/protobuf-net.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30/lib/netstandard2.1/protobuf-net.xml.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30/protobuf-net.nuspec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30/protobuf-net.nuspec.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30/protobuf-net.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.3.2.30/protobuf-net.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30/.signature.p7s" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30/lib.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30/lib/netstandard2.1.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30/lib/netstandard2.1/protobuf-net.Core.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30/lib/netstandard2.1/protobuf-net.Core.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30/lib/netstandard2.1/protobuf-net.Core.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30/lib/netstandard2.1/protobuf-net.Core.xml.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30/protobuf-net.Core.nuspec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30/protobuf-net.Core.nuspec.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30/protobuf-net.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/protobuf-net.Core.3.2.30/protobuf-net.png.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/YooAssetToolWindows.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Windows/YooAsset/YooAssetToolWindows.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/ProjectConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/ProjectConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpClientController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpServerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultTcpServerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultUDPController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/DefaultUDPController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Driver/RSJWYFameworkDriverService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Driver/RSJWYFameworkDriverService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Event/IEventManage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Event/IEventManage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Main/Main.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Main/Main.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Default.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Event.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Event/SocketEventArgs.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Event/SocketEventArgs.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/圆角UI.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/圆角UI.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/圆角UI/UIRoundConor_RawImageEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/圆角UI/UIRoundConor_RawImageEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/圆角UI/UIRoundConor_RawImageEditor.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/圆角UI/UIRoundConor_RawImageEditor.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Config/YooAssetModuleSettingData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/MessageTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/Public/MessageTool.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/NetWork/TCP/Client/TCPClientService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportantData/PrefabPackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportantData/PrefabPackage/BuildinCatalog.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportantData/PrefabPackage/BuildinCatalog.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ImportantData/RawFilePackage/BuildinCatalog.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ImportantData/RawFilePackage/BuildinCatalog.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/Test.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/packages.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/SceneTemplateSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/SceneTemplateSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/RSJWYFamework.Runtime.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/RSJWYFamework.Runtime.asmdef" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DpaMonitoringSettings">
+    <option name="autoShow" value="false" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -89,78 +38,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/5535e31a712343a63f5d7d796cd874e563e5ac14/src/libraries/Microsoft.Extensions.Configuration/src/ConfigurationBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/09af50eda9a647268d2c4fcdf7fac506284600/4b/9b9b6b0d/SocketAsyncEventArgs.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/09af50eda9a647268d2c4fcdf7fac506284600/a5/db614002/Socket.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0a2e1cdc28c740eda1958d8128c28373827200/77/49fc49f9/AnimatorStateMachine.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/0a2e1cdc28c740eda1958d8128c28373827200/f5/3488578a/PlayerSettings.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/139c2424719c42c290d4b5921dc9d89d35f370/03/3f18be5a/ConcurrentBag`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/14134df795bc4f72a23f56ba18c85feb44600/48/da91ebaa/Serializer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/321eb2db7c6d43ea8fc39b54eaca345246ae00/29/dc496600/Memory`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/448a66bf9b31494bbd3f742f998b818b284000/34/a8633317/Stopwatch.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/44bf6cac841340ac9cb70f5448ebceba958200/38/b070ec07/EditorWindow.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/51fded79cd284d4d911c5949aff4cb2146ac00/a6/f01a0fe1/String.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/57122b35ba4a46e4b13b3c579403b46119c00/bd/40868bbe/ShowIfAttribute.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/57122b35ba4a46e4b13b3c579403b46119c00/c3/3061125d/FolderPathAttribute.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6ec928732f674d1fa6d6decc98cecdae77400/24/2dc7214d/SocketAsyncEventArgs.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e05db41a20b45108859fa03b97088d446ac00/04/3fdf111b/TaskCompletionSource`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e05db41a20b45108859fa03b97088d446ac00/21/81135072/CollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e05db41a20b45108859fa03b97088d446ac00/74/77a7f25d/List`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7e05db41a20b45108859fa03b97088d446ac00/e3/ee1fe09c/IEnumerator.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7ff4597333a544bc9923788716880fcc572e20/6c/108abbc1/Dictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7ff4597333a544bc9923788716880fcc572e20/84/d15b8aec/IEnumerator.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/81426fb2f082419eb14e96c5244705f02aa00/52/907e70c1/ShortcutExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/83c38a410631422cb9ff71f779fb5969175e00/1a/ac91ca0d/LogType.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/83c38a410631422cb9ff71f779fb5969175e00/52/90847c1c/IObjectPool`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/83c38a410631422cb9ff71f779fb5969175e00/ae/fb336218/PooledObject`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/83c38a410631422cb9ff71f779fb5969175e00/e4/05e70987/ObjectPool`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/19/03b4d7f7/String.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/34/3e6fef33/SystemException.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/3b/29a6564a/NullReferenceException.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/43/d72860be/ConcurrentDictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/7c/e3edc154/Task.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/ab/f4ed9c96/Exception.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ce0bd04a7a04b4b9395538239d3fdd846ac00/f2/d7b6438d/Dictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9c6570448e70440ea7a2f0f4a152540d305400/9d/30db211c/OdinEditorWindow.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9c6570448e70440ea7a2f0f4a152540d305400/a8/3ac13fa7/OdinMenuTreeExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5bf0c891ea345fe93688f835df32fdc1dda00/3f/67bd1eae/ILogger.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5bf0c891ea345fe93688f835df32fdc1dda00/86/6f926dde/Debug.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b9f607e27b8644e0bf609b59dfb1c8525735b0/f0/ae4231f0/Task.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bd10720ce6684a79834ed84aaf34d496176200/54/fc71b5b4/Component.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bd10720ce6684a79834ed84aaf34d496176200/6e/0ae00f6e/Debug.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bd10720ce6684a79834ed84aaf34d496176200/ee/d289a029/Transform.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/15/52c2cad1/ResourcesAPI.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/65/5a6f51ed/Time.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/9c/874fb8d0/AsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/bc/e5b6bc52/ResourcesAPIInternal.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c9216db4db8d4c60be39fde5e389342b15b400/fd/a5fa7e76/Resources.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d248f12cb1984690921c0baddbc784026200/b2/2a9482fd/AssetBundleCreateRequest.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d248f12cb1984690921c0baddbc784026200/c3/4776eddc/AssetBundle.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d493b05aea3341789b433174d05949e235f448/24/e3470a58/SocketError.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d493b05aea3341789b433174d05949e235f448/40/5be0d179/SocketAsyncEventArgs.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d493b05aea3341789b433174d05949e235f448/5f/3b8c3d8d/Socket.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d493b05aea3341789b433174d05949e235f448/66/5e5da77d/Semaphore.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d493b05aea3341789b433174d05949e235f448/f8/53618de1/SocketAsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4b6a1e0ce4440e6851e7faab96fbc1de7200/c9/d1d623ad/LogManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de80aed0bd3646409e8bfb15c101f005e2000/00/3c3d19b5/Memory`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de80aed0bd3646409e8bfb15c101f005e2000/34/777db593/ArrayPool`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de80aed0bd3646409e8bfb15c101f005e2000/d1/0dc487e3/MemoryExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/15/ef9f54e7/FileStream.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/1b/3618e058/CancellationToken.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/36/cb6635bc/File.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/3a/da827192/UnmanagedType.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/3b/bb4d949b/Stream.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/7f/fd66fb16/ObsoleteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/d8/5134ebc8/ConcurrentQueue`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e585f5e2b21741c8a3a65b4f9abfa5e8572e20/e0/36d67866/BitConverter.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5a83f26a7bb1cfdddba86fba3e3a9df693c5327962694fdeeb76548f26299323/Logger-generated.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/714a62ca061ca7296a83270e66b1ce9afa958fa3966434e5c6becb472e2b/Logger-V1Compat.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8af5ddcdc55c744519ab894985d326cac92c1ab57f53e39c7d523617ef570/XmlLoggingConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ea2e73128b10bf3ca6855e32bf854c2cc0b57281d3829163691cda2e73288d32/LogFactory.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/139c2424719c42c290d4b5921dc9d89d35f370/db/3a961298/SocketError.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/57122b35ba4a46e4b13b3c579403b46119c00/33/736942f4/ButtonSizes.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9c6570448e70440ea7a2f0f4a152540d305400/79/23e74d14/OdinEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9e3a60dbcacc4e77a9c6e1c14064183a9b6200/b7/f8797897/CustomEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/AsyncOperation/LoadHotCodeOperation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/IProcedureController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/LoadPackagesOperation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/HotCode/test_client.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Editor/AssetBundleCollector/AssetBundleCollectorPackage.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Editor/AssetBundleCollector/AssetBundleCollectorSetting.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Editor/HomePage.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Editor/SettingLoader.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -293,7 +182,9 @@
       <workItem from="1730695880680" duration="550000" />
       <workItem from="1730696472368" duration="10425000" />
       <workItem from="1730713032636" duration="1004000" />
-      <workItem from="1730768409285" duration="2144000" />
+      <workItem from="1730768409285" duration="14593000" />
+      <workItem from="1730878032323" duration="5520000" />
+      <workItem from="1730945734138" duration="2000" />
     </task>
     <servers />
   </component>
@@ -322,6 +213,13 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#RSJWYFamework.Runtime.NetWork.Public.ByteArrayMemory" memberName="Bytes" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

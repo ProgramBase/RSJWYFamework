@@ -387,6 +387,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
                                 //写心跳信息
                                 //更新接收到的心跳包时间（后台运行）
                                 lastPongTime = Utility.Utility.GetTimeStamp();
+                                RSJWYLogger.Log($"<color=blue>接收到服务器心跳包</color>");
                             }
                             else
                             {

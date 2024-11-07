@@ -4,12 +4,12 @@ using Cysharp.Threading.Tasks;
 using RSJWYFamework.Runtime.HybridCLR.AsyncOperation;
 using RSJWYFamework.Runtime.Module;
 
-namespace RSJWYFamework.Runtime.HybridCLR
+namespace RSJWYFamework.Runtime.Default.Manager
 {
     /// <summary>
     /// 热更管理器
     /// </summary>
-    public class DefaultHybirdClrManager:IModule
+    public class DefaultHybirdCLRManager:IModule
     {
         /// <summary>
         /// 加载到的程序集

@@ -225,11 +225,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 msgThread = new Thread(() => MsgThread(cts.Token));
                 msgThread.IsBackground = true;//后台运行
                 msgThread.Start();
-                //心跳包监测处理线程-后台处理
-                pingThread = new Thread(() =>PingThread(cts.Token));
-                pingThread.IsBackground = true;
-                pingThread.Start();
-                isInit = true;
                 StartAccept(null);
             }
             catch (Exception e)
@@ -310,15 +305,20 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                     IPAddress = ((IPEndPoint)(socketAsyncEArgs.AcceptSocket.RemoteEndPoint)).Address,
                     sendQueue = new(),
                     cts = new(),
-                    msgSendThreadLock = new()
+                    msgSendThreadLock = new(),
+                    ServerService=this
                 };
                 //绑定线程
                 //消息发送线程
                 clientToken.msgSendThread = new Thread(
-                    () => MsgSendListenThread(clientToken.cts.Token, clientToken.sendQueue,
-                        clientToken.msgSendThreadLock));
+                    () => MsgSendListenThread(clientToken));
                 clientToken.msgSendThread.IsBackground = true;
                 clientToken.msgSendThread.Start();
+                //心跳监控线程
+                clientToken.PingPongThread = new Thread(
+                    () => clientToken.PongThread());
+                clientToken.PingPongThread.IsBackground = true;
+                clientToken.PingPongThread.Start();
 
                 //添加和绑定
                 ClientDic.TryAdd(clientToken.socket, clientToken);
@@ -444,13 +444,13 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 else
                 {
                     RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"读取客户端：{token.TokenID}-{token.Remote}发来的消息出错！！错误信息： {socketAsyncEA.SocketError}，将关闭本链接" );
-                    CloseClientSocket(token.socket);
+                    CloseClientSocket(token);
                 }
             }
             catch (Exception ex)
             {
                 RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer,$"读取客户端：{token.TokenID}-{token.Remote}发来的消息出错！！错误信息： {ex.ToString()}，将关闭本链接" );
-                CloseClientSocket(token.socket);
+                CloseClientSocket(token);
             }
         }
         
@@ -544,13 +544,13 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 else
                 {
                     RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpClient,$"向服务器发送消息失败 ProcessSend Error:不满足回调进入条件；{socketAsyncEA.SocketError }");
-                    CloseClientSocket(clientToken.socket);
+                    CloseClientSocket(clientToken);
                 }
 
             }
             catch (Exception exception)
             { 
-                CloseClientSocket(clientToken.socket);
+                CloseClientSocket(clientToken);
                 RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer,$"向客户端发送消息失败 SendCallBack Error:{exception}" );
             }
         }  
@@ -561,20 +561,18 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// 关闭客户端
         /// </summary>
         /// <param name="targetSocket"></param>
-        private void CloseClientSocket(System.Net.Sockets.Socket targetSocket)
-        {  
-            if (!ClientDic.TryRemove(targetSocket, out var clientToken))
-            {
-                return;
-            }
+        public void CloseClientSocket(ClientSocketToken ClientToken)
+        {
+            ClientDic.TryRemove(ClientToken.socket, out var _);
+                
             Interlocked.Decrement(ref m_clientCount);
-            TcpServerController.CloseClientReCallBack(clientToken);
-            clientToken.Close();
+            TcpServerController.CloseClientReCallBack(ClientToken);
+            ClientToken.Close();
             // 释放SocketAsyncEventArgs,并放回池子中
-            if (clientToken.readSocketAsyncEA!=null)
-                RWSocketAsynEA.Release(clientToken.readSocketAsyncEA);
-            if (clientToken.writeSocketAsyncEA != null)
-                RWSocketAsynEA.Release(clientToken.writeSocketAsyncEA);
+            if (ClientToken.readSocketAsyncEA!=null)
+                RWSocketAsynEA.Release(ClientToken.readSocketAsyncEA);
+            if (ClientToken.writeSocketAsyncEA != null)
+                RWSocketAsynEA.Release(ClientToken.writeSocketAsyncEA);
             RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"一个客户端断开连接，当前连接总数：{m_clientCount}");
         }
         /// <summary>
@@ -589,8 +587,8 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
             Status = NetServerStatus.CloseListening;
             cts.Cancel();
             //关闭所有已经链接上来的socket
-            List<System.Net.Sockets.Socket> _tmp = ClientDic
-                .Select(x=>x.Value.socket)
+            List<ClientSocketToken> _tmp = ClientDic
+                .Select(x=>x.Value)
                 .ToList();
             // lock ((clientList as ICollection).SyncRoot)
             // {
@@ -616,36 +614,36 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
         /// 消息队列发送监控线程
         /// 分配到每一个的客户端容器内
         /// </summary>
-        void MsgSendListenThread(CancellationToken token,ConcurrentQueue<ServerToClientMsgContainer> sendQueue,object threadLock)
+        void MsgSendListenThread(ClientSocketToken clientSocketToken)
         {
-            while (!token.IsCancellationRequested)
+            while (!clientSocketToken.cts.Token.IsCancellationRequested)
             {
                 try
                 {
-                    if (sendQueue.Count <= 0)
+                    if (clientSocketToken.sendQueue.Count <= 0)
                     {
                         Thread.Sleep(10);
                         continue;
                     }
 
                     //取出消息队列内的消息，但不移除队列，以获取目标客户端
-                    sendQueue.TryPeek(out var _msgbase);
+                    clientSocketToken.sendQueue.TryPeek(out var _msgbase);
                     //_msgbase.targetToken.writeSocketAsyncEA.SetBuffer(_msgbase.SendOldBytes.Bytes, _msgbase.SendOldBytes.ReadIndex,_msgbase.SendOldBytes.length);
                     var data = _msgbase.SendBytes.GetRemainingSlices();
                     _msgbase.TargetToken.writeSocketAsyncEA.SetBuffer(data);
                     //当前线程执行休眠，等待消息发送完成后继续
-                    lock (threadLock)
+                    lock (clientSocketToken.msgSendThreadLock)
                     {
                         if (!_msgbase.TargetToken.socket.SendAsync( _msgbase.TargetToken.writeSocketAsyncEA))
                             Task.Run(()=>ProcessSend(_msgbase.TargetToken.writeSocketAsyncEA));
                         //等待SendCallBack完成回调释放本锁再继续执行，超时10秒
-                        Monitor.Wait(threadLock);
+                        Monitor.Wait(clientSocketToken.msgSendThreadLock);
                     }
                 }
                 catch (Exception ex)
                 {
                     RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer, $"消息发送时发生错误：{ex.Message}");
-                    if (token.IsCancellationRequested)
+                    if (clientSocketToken.cts.Token.IsCancellationRequested)
                     {
                         RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer, $"请求取消任务");
                         break;
@@ -653,56 +651,6 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 }
             }
         }
-
-        /// <summary>
-        /// 心跳包监测线程
-        /// </summary>
-        void PingThread(CancellationToken token)
-        {
-            List<ClientSocketToken> _tmpClose = new List<ClientSocketToken>();//存储需要断开来的客户端
-            while (!token.IsCancellationRequested)
-            {
-                try
-                {
-                    Thread.Sleep(1000);//本线程可以每秒检测一次
-                    if (ClientDic.Count <= 0)
-                    {
-                        continue;
-                    }
-                    //检测心跳包是否超时的计算
-                    //获取当前时间
-                    long timeNow =  Utility.Utility.GetTimeStamp();
-                    //遍历取出所有客户端
-                    foreach (ClientSocketToken serverClientSocket in ClientDic.Values)
-                    {
-                        //超时，断开
-                        if (timeNow - serverClientSocket.lastPingTime > pingInterval * 4)
-                        {
-                            //记录要断开链接的客户端
-                            //防止在遍历过程中对dic操作（操作过程中，dic会被锁死）
-                            _tmpClose.Add(serverClientSocket);
-                        }
-                    }
-                    //逐一取出执行断开操作
-                    foreach (ClientSocketToken clientSocket in _tmpClose)
-                    {
-                        RSJWYLogger.Log(RSJWYFameworkEnum.NetworkTcpServer,$"{clientSocket.socket.RemoteEndPoint.ToString()}在允许时间{pingInterval * 4}秒内发送心跳包超时，连接关闭！！");
-                        CloseClientSocket(clientSocket.socket);
-                    }
-                    _tmpClose.Clear();//操作完成后清除客户端
-                }
-                catch (Exception ex)
-                {
-                    RSJWYLogger.Error(RSJWYFameworkEnum.NetworkTcpServer, $"检测心跳包时发生错误：{ex.Message}");
-                    if (token.IsCancellationRequested)
-                    {
-                        RSJWYLogger.Warning(RSJWYFameworkEnum.NetworkTcpServer, $"请求取消任务");
-                        break;
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// 消息处理线程，分发消息
         /// </summary>

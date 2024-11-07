@@ -156,12 +156,11 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             Memory<byte> bodyCrc32Bytes = Utility.Utility.UIntToByteArray(crc32); // 获取协议体的CRC32校验码数组
 
             // 总长度计算
-            int totalLength = bodyBytes.Length + bodyCrc32Bytes.Length + sizeof(int); // 加上头部长度的大小
+            uint totalLength = (uint)bodyBytes.Length + (uint)bodyCrc32Bytes.Length + sizeof(uint); // 加上头部长度的大小
 
             // 创建足够大小的数组来存储整个消息
             Memory<byte> sendBytes = new byte[totalLength];
-
-
+            
             // 组装字节流数据
             // //编码记录长度（头部长度不包括头部本身的长度），并复制到memory开始位
             BitConverter.GetBytes(totalLength - sizeof(int)).AsSpan().CopyTo(sendBytes.Span); 
@@ -184,15 +183,15 @@ namespace RSJWYFamework.Runtime.NetWork.Public
             uint crc32 = Utility.Utility.CRC32.GetCrc32(bodyBytes.ToArray()); // 获取协议体的CRC32校验码
             Memory<byte> bodyCrc32Bytes = Utility.Utility.UIntToByteArray(crc32); // 获取协议体的CRC32校验码数组
             // 总长度计算
-            int totalLength = bodyBytes.Length + bodyCrc32Bytes.Length + sizeof(int); // 加上头部长度的大小
+            uint totalLength = (uint)bodyBytes.Length + (uint)bodyCrc32Bytes.Length + sizeof(uint); // 加上头部长度的大小
             // 创建足够大小的数组来存储整个消息
             Memory<byte> sendBytes = new byte[totalLength];
             // 组装字节流数据
             // //编码记录长度（头部长度不包括头部本身的长度），并复制到memory开始位
             BitConverter.GetBytes(totalLength - sizeof(int)).AsSpan().CopyTo(sendBytes.Span); 
             //复制数据到memory（从指定位置开始）
-            bodyBytes.CopyTo(sendBytes.Slice(sizeof(int)));
-            bodyCrc32Bytes.CopyTo(sendBytes.Slice(sizeof(int) + bodyBytes.Length));
+            bodyBytes.CopyTo(sendBytes.Slice(sizeof(uint)));
+            bodyCrc32Bytes.CopyTo(sendBytes.Slice(sizeof(uint) + bodyBytes.Length));
 
             // 将拼接好的信息用自定义的消息数组保存
             ByteArrayMemory ba = new ByteArrayMemory(sendBytes);

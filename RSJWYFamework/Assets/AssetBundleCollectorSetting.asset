@@ -16,43 +16,6 @@ MonoBehaviour:
   ShowEditorAlias: 1
   UniqueBundleName: 1
   Packages:
-  - PackageName: RawFilePackage
-    PackageDesc: "\u70ED\u66F4\u4EE3\u7801"
-    EnableAddressable: 1
-    LocationToLower: 0
-    IncludeAssetGUID: 1
-    AutoCollectShaders: 1
-    IgnoreRuleName: NormalIgnoreRule
-    Groups:
-    - GroupName: HotUpdateCode
-      GroupDesc: "\u70ED\u66F4\u4EE3\u7801"
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/HotCode
-        CollectorGUID: 72bb78504a138914582cb7d70e5c039b
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackRawFile
-        FilterRuleName: HotCodeFilterRule
-        AssetTags: 
-        UserData: 
-      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/List
-        CollectorGUID: e3d575cf570fe094185c8efbb2ee9fc8
-        CollectorType: 0
-        AddressRuleName: AddressByGroupAndFileName
-        PackRuleName: PackRawFile
-        FilterRuleName: CollectAll
-        AssetTags: 
-        UserData: 
-      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/MetadataForAOTAssemblies
-        CollectorGUID: 883c203fc8ee7dc40b14d18edac8519e
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackRawFile
-        FilterRuleName: HotCodeFilterRule
-        AssetTags: 
-        UserData: 
   - PackageName: PrefabPackage
     PackageDesc: "\u9884\u5236\u4F53"
     EnableAddressable: 1
@@ -98,5 +61,42 @@ MonoBehaviour:
         AddressRuleName: AddressByGroupAndFileName
         PackRuleName: PackCollector
         FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 
+  - PackageName: RawFilePackage
+    PackageDesc: "\u70ED\u66F4\u4EE3\u7801"
+    EnableAddressable: 1
+    LocationToLower: 0
+    IncludeAssetGUID: 1
+    AutoCollectShaders: 1
+    IgnoreRuleName: NormalIgnoreRule
+    Groups:
+    - GroupName: HotUpdateCode
+      GroupDesc: "\u70ED\u66F4\u4EE3\u7801"
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/HotCode
+        CollectorGUID: 72bb78504a138914582cb7d70e5c039b
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackRawFile
+        FilterRuleName: HotCodeFilterRule
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/List
+        CollectorGUID: e3d575cf570fe094185c8efbb2ee9fc8
+        CollectorType: 0
+        AddressRuleName: AddressByGroupAndFileName
+        PackRuleName: PackRawFile
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/MetadataForAOTAssemblies
+        CollectorGUID: 883c203fc8ee7dc40b14d18edac8519e
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackRawFile
+        FilterRuleName: HotCodeFilterRule
         AssetTags: 
         UserData: 

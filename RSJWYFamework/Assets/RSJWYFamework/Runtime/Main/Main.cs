@@ -47,7 +47,7 @@ namespace RSJWYFamework.Runtime.Main
         /// <summary>
         /// 热更新管理器
         /// </summary>
-        public static DefaultHybirdClrManager HybridClrManager { get; private set; }
+        public static DefaultHybirdCLRManager HybridClrManager { get; private set; }
         /// <summary>
         /// 异步系统
         /// </summary>
@@ -79,7 +79,7 @@ namespace RSJWYFamework.Runtime.Main
                 EventModle = (EvenManager)AddModule<EvenManager>();
                 DataManagerataManager = (DataManager)AddModule<DataManager>();
                 YooAssetManager = (DefaultYooAssetManager)AddModule<DefaultYooAssetManager>();
-                HybridClrManager = (DefaultHybirdClrManager)AddModule<DefaultHybirdClrManager>();
+                HybridClrManager = (DefaultHybirdCLRManager)AddModule<DefaultHybirdCLRManager>();
                 RAsyncOperationSystem = (RAsyncOperationSystem)AddModule<RAsyncOperationSystem>();
                 ReferencePoolManager = (ReferencePoolManager)AddModule<ReferencePoolManager>();
             }

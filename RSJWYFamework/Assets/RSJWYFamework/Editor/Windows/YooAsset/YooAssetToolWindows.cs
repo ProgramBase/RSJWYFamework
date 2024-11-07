@@ -1,5 +1,6 @@
 ﻿using System;
 using RSJWYFamework.Editor.Windows.Config;
+using RSJWYFamework.Runtime.Config;
 using RSJWYFamework.Runtime.YooAssetModule;
 using RSJWYFamework.Runtime.YooAssetModule.Tool;
 using Sirenix.OdinInspector;
@@ -14,7 +15,7 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
     public class YooAssetBuildWindow : OdinEditorWindow
     {
         [InlineEditor(InlineEditorModes.FullEditor)]
-        [LabelText("配置文件")][ReadOnly]
+        [LabelText("配置文件")]
         public YooAssetModuleSettingData SettingData;
         
         [LabelText("构建目标")]
@@ -43,23 +44,13 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
         [LabelText("压缩选项")]
         public ECompressOption CompressOption = ECompressOption.LZ4;
         
-        [Button("构建Prefab包",ButtonSizes.Gigantic)]
-        [ButtonGroup("构建按钮")]
-        void BuildPrefabPackage()
-        {
-            Build(SettingData.PrefabP.PackageName,SettingData.PrefabP.BuildPipeline);
-        }
-        [Button("构建RawFile包",ButtonSizes.Gigantic)]
-        [ButtonGroup("构建按钮")]
-        void BuildRawFilePackage()
-        {
-            Build(SettingData.RawFileP.PackageName,SettingData.PrefabP.BuildPipeline);
-        }
         [Button("构建所有包",ButtonSizes.Gigantic)]
         void BuildAllPackage()
         {
-            Build(SettingData.RawFileP.PackageName,SettingData.PrefabP.BuildPipeline);
-            Build(SettingData.PrefabP.PackageName,SettingData.PrefabP.BuildPipeline);
+            foreach (var package in SettingData.packages)
+            {
+                Build(PackageName: package.PackageName,BuildPipeline: package.BuildPipeline);
+            }
         }
         
         

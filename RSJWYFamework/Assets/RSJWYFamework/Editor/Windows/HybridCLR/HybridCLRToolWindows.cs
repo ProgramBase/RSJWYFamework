@@ -21,8 +21,7 @@ namespace RSJWYFamework.Editor.Windows.HybridCLR
         [ReadOnly] public HotCodeDLL HotUpdateDll;
 
 
-        [Button("构建所有")]
-        [ButtonGroup("构建按钮")]
+        [Button("构建所有",ButtonSizes.Gigantic)]
         private void BuildAllDLL()
         {
             BuildMetadataForAOTAssemblies();
@@ -30,26 +29,26 @@ namespace RSJWYFamework.Editor.Windows.HybridCLR
             BuildHotUpdateDllJson();
         }
 
-        [Button("构建补充元数据")]
+        [Button("构建补充元数据",ButtonSizes.Gigantic)]
         [ButtonGroup("构建按钮")]
         private void BuildMetadataForAOTAssemblies()
         {
             Utility.FileAndFoder.ClearDirectory($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildMetadataForAOTAssembliesDllPatch}");
             AssetDatabase.Refresh();
             UtilityEditor.UtilityEditor.HybrildCLR.AddMetadataForAOTAssembliesToHCLRSetArr();
-            UtilityEditor.UtilityEditor.HybrildCLR.BuildMetadataForAOTAssemblies($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildMetadataForAOTAssembliesDllPatch}");
+            UtilityEditor.UtilityEditor.HybrildCLR.BuildMetadataForAOTAssemblies($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildMetadataForAOTAssembliesDllPatch}",SettingData.BuildTarget);
         }
 
-        [Button("构建热更代码")]
+        [Button("构建热更代码",ButtonSizes.Gigantic)]
         [ButtonGroup("构建按钮")]
         private void BuildHotCode()
         {
             Utility.FileAndFoder.ClearDirectory($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildHotCodeDllPatch}");
             AssetDatabase.Refresh();
-            UtilityEditor.UtilityEditor.HybrildCLR.BuildHotCode($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildHotCodeDllPatch}");
+            UtilityEditor.UtilityEditor.HybrildCLR.BuildHotCode($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildHotCodeDllPatch}",SettingData.BuildTarget);
         }
 
-        [Button("获取补充元数据列表（手动执行两次）")]
+        [Button("获取补充元数据列表（手动执行两次）",ButtonSizes.Gigantic)]
         [ButtonGroup("获取信息")]
         private void CompileAndGenerateAOTGenericReference()
         {
@@ -58,7 +57,7 @@ namespace RSJWYFamework.Editor.Windows.HybridCLR
             AssetDatabase.Refresh();
             UtilityEditor.UtilityEditor.HybrildCLR.AddMetadataForAOTAssembliesToHCLRSetArr();
         }
-        [Button("创建热更dll列表")]
+        [Button("创建热更dll列表",ButtonSizes.Gigantic)]
         [ButtonGroup("获取信息")]
         private void BuildHotUpdateDllJson()
         {

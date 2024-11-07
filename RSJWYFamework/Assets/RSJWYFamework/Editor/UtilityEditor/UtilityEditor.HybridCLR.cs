@@ -22,10 +22,9 @@ namespace RSJWYFamework.Editor.UtilityEditor
             /// <summary>
             /// 构建补充元数据到资源文件夹
             /// </summary>
-            /// <param name="BuildMetadataForAOTAssembliesDllPatch"></param>
-            public static void BuildMetadataForAOTAssemblies(string BuildMetadataForAOTAssembliesDllPatch)
+            /// <param name="BuildMetadataForAOTAssembliesDllPatch">AOTDLL构建目标目录</param>
+            public static void BuildMetadataForAOTAssemblies(string BuildMetadataForAOTAssembliesDllPatch,BuildTarget buildTarget)
             {
-                var buildTarget = EditorUserBuildSettings.activeBuildTarget;
                 Debug.Log($"构建生成补充元数据程序集DLL，目标平台：{buildTarget}");
                 //构建补充元数据
                 StripAOTDllCommand.GenerateStripedAOTDlls();
@@ -61,27 +60,26 @@ namespace RSJWYFamework.Editor.UtilityEditor
             /// 构建热更代码
             /// </summary>
             /// <param name="BuildHotCodeDllPatch">构建后DLL路径</param>
-            public static void BuildHotCode(string BuildHotCodeDllPatch)
+            public static void BuildHotCode(string BuildHotCodeDllPatch,BuildTarget buildTarget)
             {
                 if (!AutoSaveScence())
                 {
                     RSJWYLogger.Error("场景保存失败");
                     return;
                 }
-                BuildTarget target = EditorUserBuildSettings.activeBuildTarget;
-                Debug.Log($"构建生成热更新程序集DLL，目标平台：{target}");
+                Debug.Log($"构建生成热更新程序集DLL，目标平台：{buildTarget}");
                 //构建热更新代码
-                CompileDllCommand.CompileDll(target);
+                CompileDllCommand.CompileDll(buildTarget);
                 //拷贝到资源包
-                Debug.Log($"拷贝热更新代码到资源包，构建模式为{target.ToString()}");
+                Debug.Log($"拷贝热更新代码到资源包，构建模式为{buildTarget.ToString()}");
                 //获取构建DLL的路径
-                var hotfixDllSrcDir = SettingsUtil.GetHotUpdateDllsOutputDirByTarget(target);
+                var hotfixDllSrcDir = SettingsUtil.GetHotUpdateDllsOutputDirByTarget(buildTarget);
                 Utility.FileAndFoder.CheckDirectoryExistsAndCreate(BuildHotCodeDllPatch);
                 //拷贝到资源
                 foreach (var dll in SettingsUtil.HotUpdateAssemblyNamesExcludePreserved)
                 {
                     //拷贝热更代码
-                    string dllPath = $"{hotfixDllSrcDir}/{dll}";
+                    string dllPath = $"{hotfixDllSrcDir}/{dll}.dll";
                     string dllBytesPath = $"{BuildHotCodeDllPatch}/{dll}.bytes";//File.Copy(srcDllPath, dllBytesPath, true);
                     File.Copy(dllPath, dllBytesPath, true);
                     Debug.Log($"[拷贝热更代码到热更包] 拷贝 {dllPath} -> 到{dllBytesPath}");
@@ -112,17 +110,6 @@ namespace RSJWYFamework.Editor.UtilityEditor
                 //保存处理的数据
                 HybridCLRSettings.Instance.patchAOTAssemblies = temp.ToArray();
                 HybridCLRSettings.Save();
-                AssetDatabase.Refresh();
-                //输出结果方便复制
-                /*StringBuilder listStr = new();
-                listStr.Append($"\n");
-                foreach (string str in aotdlls)
-                {
-                    listStr.Append($"\n{str}..hotcode");
-                }
-                listStr.Append($"\n");
-                AssetDatabase.Refresh();
-                Debug.Log($"补充元数据表如下{listStr.ToString()}");*/
                 AssetDatabase.Refresh();
             }
             
