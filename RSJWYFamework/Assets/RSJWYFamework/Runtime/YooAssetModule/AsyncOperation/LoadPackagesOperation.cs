@@ -10,7 +10,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
     /// <summary>
     /// 加载资源包
     /// </summary>
-    public class LoadPackages:GameRAsyncOperation,IProcedureException
+    public class LoadPackages:GameRAsyncOperation,IProcedureUser
     {
         enum RSteps
         {

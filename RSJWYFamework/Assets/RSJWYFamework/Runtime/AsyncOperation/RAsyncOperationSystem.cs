@@ -165,5 +165,10 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         public void LateUpdate()
         {
         }
+
+        public uint Priority()
+        {
+            return 0;
+        }
     }
 }

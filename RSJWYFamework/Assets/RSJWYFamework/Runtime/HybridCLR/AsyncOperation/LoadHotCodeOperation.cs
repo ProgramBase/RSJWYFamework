@@ -11,7 +11,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
     /// <summary>
     /// 加载热更代码
     /// </summary>
-    public class LoadHotCodeOperation:GameRAsyncOperation,IProcedureException
+    public class LoadHotCodeOperation:GameRAsyncOperation,IProcedureUser
     {
         enum RSteps
         {

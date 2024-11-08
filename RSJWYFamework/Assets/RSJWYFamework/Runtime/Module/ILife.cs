@@ -29,5 +29,10 @@
         /// 每帧结束后调用
         /// </summary>
         void LateUpdate();
+
+        /// <summary>
+        /// 优先级
+        /// </summary>
+        public uint Priority();
     }
 }

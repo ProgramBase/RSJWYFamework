@@ -42,7 +42,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             if (downloader.Status != EOperationStatus.Succeed)
             {
                 //新清单文件新版本数据，不全无法正常启动
-                pc.modle.Exception(new ProcedureException($"包{packageName}下载失败：{downloader.Error}"));
+                pc.User.Exception(new ProcedureException($"包{packageName}下载失败：{downloader.Error}"));
             }
             else
             {

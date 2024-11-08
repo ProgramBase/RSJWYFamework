@@ -159,5 +159,10 @@ namespace RSJWYFamework.Runtime.Default.Manager
         public void LateUpdate()
         {
         }
+
+        public uint Priority()
+        {
+            return 0;
+        }
     }
 }

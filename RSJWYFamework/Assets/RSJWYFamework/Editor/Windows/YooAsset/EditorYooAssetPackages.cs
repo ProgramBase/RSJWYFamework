@@ -6,7 +6,7 @@ using YooAsset.Editor;
 namespace RSJWYFamework.Editor.Windows.YooAsset
 {
     [CustomEditor(typeof(YooAssetPackages))]
-    public class EditorYooAssetModuleSettingData : UnityEditor.Editor
+    public class EditorYooAssetPackages : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

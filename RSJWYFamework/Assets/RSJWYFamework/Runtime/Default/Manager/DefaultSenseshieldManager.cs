@@ -103,6 +103,11 @@ namespace RSJWYFamework.Runtime.Default
         public void LateUpdate()
         {
         }
+
+        public uint Priority()
+        {
+            return 0;
+        }
     }
        /*
         //main方法，测试主程序

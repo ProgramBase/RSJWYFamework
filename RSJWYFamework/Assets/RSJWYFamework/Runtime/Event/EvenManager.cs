@@ -193,6 +193,11 @@ namespace RSJWYFamework.Runtime.Event
         public void LateUpdate()
         {
         }
+
+        public uint Priority()
+        {
+            return 0;
+        }
     }
     
     

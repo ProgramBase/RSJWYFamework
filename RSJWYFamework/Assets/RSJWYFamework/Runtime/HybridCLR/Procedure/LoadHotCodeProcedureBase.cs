@@ -58,7 +58,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                 }
                 catch (System.Exception ex)
                 {
-                    pc.modle.Exception(new ProcedureException($"热更加载DLL流程，加载补充元：{_str_err_name} 时发生异常，{ex}"));
+                    pc.User.Exception(new ProcedureException($"热更加载DLL流程，加载补充元：{_str_err_name} 时发生异常，{ex}"));
                 }
 
                 //加载热更代码，注意加载顺序
@@ -87,7 +87,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                 }
                 catch (System.Exception ex)
                 {
-                    pc.modle.Exception(new ProcedureException($"热更加载DLL流程，加载热更：{_str_err_name} 时发生异常，{ex}"));
+                    pc.User.Exception(new ProcedureException($"热更加载DLL流程，加载热更：{_str_err_name} 时发生异常，{ex}"));
                 }
                 _DllDic.Clear();
                 await UniTask.SwitchToMainThread();

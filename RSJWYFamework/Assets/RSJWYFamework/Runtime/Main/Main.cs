@@ -172,6 +172,17 @@ namespace RSJWYFamework.Runtime.Main
             }
             else
             {
+                // 获取新添加实例的优先级
+                uint newLifePriority = life.Priority();
+
+                // 找到新实例应该插入的位置
+                int insertIndex = 0;
+                while (insertIndex < _life.Count && _life[insertIndex].Priority() < newLifePriority)
+                {
+                    insertIndex++;
+                }
+                // 在找到的位置插入新实例
+                _life.Insert(insertIndex, life);
                 _life.Add(life);
                 RSJWYLogger.Log(RSJWYFameworkEnum.Main,$"AddLife 添加{life}完成");
             }

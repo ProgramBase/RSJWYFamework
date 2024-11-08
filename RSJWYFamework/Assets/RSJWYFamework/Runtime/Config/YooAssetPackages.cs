@@ -6,6 +6,7 @@ using YooAsset;
 
 namespace RSJWYFamework.Runtime.Config
 {
+    [Serializable]
     public class  YooAssetPackages:DataBaseSB
     {
         public List<YooAssetModulePackageData> packages;
