@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using RSJWYFamework.Runtime.AsyncOperation;
 using RSJWYFamework.Runtime.Data;
 using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Driver;
 using RSJWYFamework.Runtime.Event;
-using RSJWYFamework.Runtime.ExceptionLogUp;
-using RSJWYFamework.Runtime.HybridCLR;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.ReferencePool;
-using RSJWYFamework.Runtime.YooAssetModule;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RSJWYFamework.Runtime.Main
 {
-    public static  partial class Main
+    public  class Main:MonoBehaviour
     {
+        
         public static bool IsInitialize { get; private set; } = false;
         /// <summary>
         /// 实例化的控制器
@@ -39,7 +37,7 @@ namespace RSJWYFamework.Runtime.Main
         /// <summary>
         /// 资源管理器
         /// </summary>
-        public static DefaultYooAssetManager YooAssetManager{get; private set; }
+        public static YooAssetManager YooAssetManager{get; private set; }
         /// <summary>
         /// 数据管理器
         /// </summary>
@@ -47,7 +45,7 @@ namespace RSJWYFamework.Runtime.Main
         /// <summary>
         /// 热更新管理器
         /// </summary>
-        public static DefaultHybirdCLRManager HybridClrManager { get; private set; }
+        public static HybirdCLRManager HybridClrManager { get; private set; }
         /// <summary>
         /// 异步系统
         /// </summary>
@@ -56,34 +54,28 @@ namespace RSJWYFamework.Runtime.Main
         /// 引用池
         /// </summary>
         public static ReferencePoolManager ReferencePoolManager {get; private set; }
-        
-        /// <summary>
-        /// 初始化框架服务
-        /// </summary>
-        public static void Initialize()
+
+        [SerializeField]
+        RSJWYFameworkDriverService service;
+        public void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             if (IsInitialize)
             {
                 UnityEngine.Debug.LogWarning($"{nameof(Main)} is initialized !");
-                return;
             }
             else
             {
-                // 创建驱动器
-                _driver = new GameObject($"[RSJWYFameworkServiceDriver]");
-                _driver.AddComponent<RSJWYFameworkDriverService>();
-                UnityEngine.Object.DontDestroyOnLoad(_driver);
-                IsInitialize = true;
-                RSJWYLogger.Log(RSJWYFameworkEnum.Main,"初始化完成");
                 //添加基础的模块
                 EventModle = (EvenManager)AddModule<EvenManager>();
                 DataManagerataManager = (DataManager)AddModule<DataManager>();
-                YooAssetManager = (DefaultYooAssetManager)AddModule<DefaultYooAssetManager>();
-                HybridClrManager = (DefaultHybirdCLRManager)AddModule<DefaultHybirdCLRManager>();
+                YooAssetManager = (YooAssetManager)AddModule<YooAssetManager>();
+                HybridClrManager = (HybirdCLRManager)AddModule<HybirdCLRManager>();
                 RAsyncOperationSystem = (RAsyncOperationSystem)AddModule<RAsyncOperationSystem>();
                 ReferencePoolManager = (ReferencePoolManager)AddModule<ReferencePoolManager>();
+                IsInitialize = true;
+                RSJWYLogger.Log(RSJWYFameworkEnum.Main,"初始化完成");
             }
-            
         }
 
         #region 模块

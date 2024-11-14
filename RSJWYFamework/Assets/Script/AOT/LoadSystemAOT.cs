@@ -1,12 +1,10 @@
 using Cysharp.Threading.Tasks;
-using MyFamework.Runtime.Base;
 using RSJWYFamework.Runtime.Base;
 using RSJWYFamework.Runtime.Config;
-using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
-using RSJWYFamework.Runtime.YooAssetModule;
 using UnityEngine;
+using RSJWYFamework.Runtime.Driver;
 
 
 namespace Script.AOT
@@ -20,7 +18,6 @@ namespace Script.AOT
         {
             base.Awake();
             DontDestroyOnLoad(this);
-            Main.Initialize();
         }
 
         private async void Start()
@@ -41,7 +38,8 @@ namespace Script.AOT
             await Main.HybridClrManager.LoadHotCodeDLL();
             
             RSJWYLogger.Log("加载入口");
-            var prefab = Main.YooAssetManager.PrefabPackage.LoadAssetAsync("Prefab_GameObject");
+            Main.YooAssetManager.GetPackage("PrefabPackage",out var package);
+            var prefab = package.LoadAssetAsync("Prefab_GameObject");
             await prefab.ToUniTask();
             var Io = prefab.InstantiateAsync();
             await Io.ToUniTask();

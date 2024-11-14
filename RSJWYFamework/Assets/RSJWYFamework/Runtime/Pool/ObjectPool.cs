@@ -8,7 +8,7 @@ using RSJWYFamework.Runtime.Main;
 namespace RSJWYFamework.Runtime.Pool
 {
     /// <summary>
-    /// 引用池
+    /// 对象池
     /// </summary>
     public class ObjectPool<T>where T:class,new()
     {

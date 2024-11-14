@@ -74,13 +74,17 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         internal virtual void InternalOnAbort()
         {
         }
-
+        /// <summary>
+        /// 设置开始
+        /// </summary>
         internal void SetStart()
         {
             Status = RAsyncOperationStatus.Processing;
             InternalOnStart();
         }
-
+        /// <summary>
+        /// 设置结束
+        /// </summary>
         internal void SetFinish()
         {
             IsFinish = true;

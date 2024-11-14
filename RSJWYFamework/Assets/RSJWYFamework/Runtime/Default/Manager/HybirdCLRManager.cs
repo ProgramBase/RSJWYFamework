@@ -9,7 +9,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
     /// <summary>
     /// 热更管理器
     /// </summary>
-    public class DefaultHybirdCLRManager:IModule
+    public class HybirdCLRManager:IModule
     {
         /// <summary>
         /// 加载到的程序集

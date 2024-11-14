@@ -15,6 +15,8 @@ namespace RSJWYFamework.Runtime.Driver
         private static int LastestUpdateFrame = 0;
         private float timer = 0f;
         private float interval = 1f;
+
+       
         void Update()
         {
             Main.Main.Update(Time.time,Time.deltaTime);
@@ -47,12 +49,10 @@ namespace RSJWYFamework.Runtime.Driver
         }
 
 
-#if UNITY_EDITOR
         void OnApplicationQuit()
         {
             
         }
-#endif
 
         [Conditional("DEBUG")]
         private void DebugCheckDuplicateDriver()

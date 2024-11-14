@@ -125,7 +125,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
 
         public uint Priority()
         {
-            return 0;
+            return 50;
         }
     }
 }

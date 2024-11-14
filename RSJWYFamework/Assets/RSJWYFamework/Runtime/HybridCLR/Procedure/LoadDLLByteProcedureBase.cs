@@ -6,6 +6,7 @@ using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using RSJWYFamework.Runtime.Procedure;
+using YooAsset;
 
 namespace RSJWYFamework.Runtime.HybridCLR.Procedure
 {
@@ -27,14 +28,15 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
             RSJWYLogger.Log(RSJWYFameworkEnum.HybridCLR,$"加载热更代码数据");
             UniTask.Create(async () =>
             {
-                if (!Main.Main.YooAssetManager.RawPackage.CheckLocationValid("HotUpdateCode_HotList"))
+                Main.Main.YooAssetManager.GetPackage("RawFilePackage", out var package);
+                if (!package.CheckLocationValid("HotUpdateCode_HotList"))
                 {
                     RSJWYLogger.Error("无法加载列表文件");
                     return;
                 }
                     
                 //获取列表
-                var MFALisRFH = Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync("HotUpdateCode_HotList");
+                var MFALisRFH = package.LoadRawFileAsync("HotUpdateCode_HotList");
                 await MFALisRFH.ToUniTask();
                 var loadLis = JsonConvert.DeserializeObject<HotCodeDLL>(MFALisRFH.GetRawFileText());
                 var hotCodeBytesMap = new Dictionary<string, HotCodeBytes>();
@@ -46,17 +48,17 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                     string _pdbname = $"{asset}.pdb";
                     //Debug.Log($"加载资产:{_n}");
                     //资源地址是否有效
-                    if (Main.Main.YooAssetManager.RawPackage.CheckLocationValid(_dllname))
+                    if (package.CheckLocationValid(_dllname))
                     {
                         var hotcode = new HotCodeBytes();
                         //执行加载
-                        var _rfh = Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync(_dllname);
+                        var _rfh = package.LoadRawFileAsync(_dllname);
                         await _rfh.ToUniTask();
                         //转byte数组
                         hotcode.dllBytes = _rfh.GetRawFileData();
-                        if (Main.Main.YooAssetManager.RawPackage.CheckLocationValid(_pdbname))
+                        if (package.CheckLocationValid(_pdbname))
                         {
-                            var _rfhPDB = Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync(_pdbname);
+                            var _rfhPDB = package.LoadRawFileAsync(_pdbname);
                             await _rfhPDB.ToUniTask();
                             //转byte数组
                             hotcode.pdbBytes = _rfhPDB.GetRawFileData();
@@ -83,10 +85,10 @@ namespace RSJWYFamework.Runtime.HybridCLR.Procedure
                     string _dllname = $"{asset}.dll";
                     //Debug.Log($"加载资产:{_n}");
                     //资源地址是否有效
-                    if (Main.Main.YooAssetManager.RawPackage.CheckLocationValid(_dllname))
+                    if (package.CheckLocationValid(_dllname))
                     {
                         //执行加载
-                        var _rfh = Main.Main.YooAssetManager.RawPackage.LoadRawFileAsync(_dllname);
+                        var _rfh = package.LoadRawFileAsync(_dllname);
                         await _rfh.ToUniTask();
                         //转byte数组
                         var MFAOT = _rfh.GetRawFileData();

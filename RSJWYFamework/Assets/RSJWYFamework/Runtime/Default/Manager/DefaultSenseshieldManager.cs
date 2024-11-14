@@ -106,7 +106,7 @@ namespace RSJWYFamework.Runtime.Default
 
         public uint Priority()
         {
-            return 0;
+            return 100;
         }
     }
        /*
