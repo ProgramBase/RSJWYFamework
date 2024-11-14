@@ -28,9 +28,9 @@ namespace RSJWYFamework.Runtime.Main
         private static Dictionary<Type, IModule> _modules = new();
         
         /// <summary>
-        /// 生命周期通知
+        /// 生命周期
         /// </summary>
-        private static List<ILife> _life = new();
+        public static List<ILife> _life = new();
         /// <summary>
         /// 事件管理器
         /// </summary>

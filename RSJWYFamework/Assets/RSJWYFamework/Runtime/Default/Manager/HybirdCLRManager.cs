@@ -23,7 +23,6 @@ namespace RSJWYFamework.Runtime.Default.Manager
         public async UniTask LoadHotCodeDLL()
         {
             var op = new LoadHotCodeOperation();
-            Main.Main.RAsyncOperationSystem.StartOperation(string.Empty,op);
             await op.UniTask;
             HotCode = op.HotCode;
         }

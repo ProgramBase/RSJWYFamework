@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using RSJWYFamework.Runtime.AsyncOperation;
 using RSJWYFamework.Runtime.Logger;
 using UnityEngine;
-using RSJWYFamework.Runtime.Main;
+using RSJWYFamework.Runtime.Module;
+using Sirenix.OdinInspector;
 
 namespace RSJWYFamework.Runtime.Driver
 {
@@ -16,7 +17,11 @@ namespace RSJWYFamework.Runtime.Driver
         private float timer = 0f;
         private float interval = 1f;
 
-       
+        /// <summary>
+        /// 生命周期
+        /// </summary>
+        internal List<ILife> _life = new();
+
         void Update()
         {
             Main.Main.Update(Time.time,Time.deltaTime);

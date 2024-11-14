@@ -24,17 +24,30 @@ MonoBehaviour:
     AutoCollectShaders: 1
     IgnoreRuleName: NormalIgnoreRule
     Groups:
-    - GroupName: Reference
-      GroupDesc: "\u5F15\u7528"
+    - GroupName: Scenes
+      GroupDesc: "\u573A\u666F"
       AssetTags: 
-      ActiveRuleName: DisableGroup
+      ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/HotUpdateAssets/Reference
-        CollectorGUID: 24c3e8ddc0fdb524090743553a7c2335
-        CollectorType: 1
-        AddressRuleName: AddressByFileName
+      - CollectPath: Assets/HotUpdateAssets/Scenes
+        CollectorGUID: 3c5b4df755ac46149b337bbc80349f72
+        CollectorType: 0
+        AddressRuleName: AddressByGroupAndFileName
         PackRuleName: PackGroup
-        FilterRuleName: CollectAll
+        FilterRuleName: CollectScene
+        AssetTags: 
+        UserData: 
+    - GroupName: Prefab
+      GroupDesc: "\u9884\u5236\u4F53"
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/HotUpdateAssets/Prefab
+        CollectorGUID: 4582e539a56fa1e4e9ce4492665f0718
+        CollectorType: 0
+        AddressRuleName: AddressByGroupAndFileName
+        PackRuleName: PackCollector
+        FilterRuleName: CollectPrefab
         AssetTags: 
         UserData: 
     - GroupName: Shader
@@ -50,17 +63,17 @@ MonoBehaviour:
         FilterRuleName: CollectShader
         AssetTags: 
         UserData: 
-    - GroupName: Prefab
-      GroupDesc: "\u9884\u5236\u4F53"
+    - GroupName: Reference
+      GroupDesc: "\u5F15\u7528"
       AssetTags: 
-      ActiveRuleName: EnableGroup
+      ActiveRuleName: DisableGroup
       Collectors:
-      - CollectPath: Assets/HotUpdateAssets/Prefab
-        CollectorGUID: 4582e539a56fa1e4e9ce4492665f0718
-        CollectorType: 0
-        AddressRuleName: AddressByGroupAndFileName
-        PackRuleName: PackCollector
-        FilterRuleName: CollectPrefab
+      - CollectPath: Assets/HotUpdateAssets/Reference
+        CollectorGUID: 24c3e8ddc0fdb524090743553a7c2335
+        CollectorType: 1
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackGroup
+        FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
   - PackageName: RawFilePackage

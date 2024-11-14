@@ -1,6 +1,6 @@
 ﻿using RSJWYFamework.Runtime.AsyncOperation;
-using RSJWYFamework.Runtime.AsyncOperation.Procedure;
 using RSJWYFamework.Runtime.Default.Manager;
+using RSJWYFamework.Runtime.Procedure;
 using RSJWYFamework.Runtime.YooAssetModule.Procedure;
 using YooAsset;
 
@@ -39,6 +39,8 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
             pc.SetBlackboardValue("PlayMode",playMode);
             pc.SetBlackboardValue("PackageName",packageName);
             pc.SetBlackboardValue("BuildPipeline",buildPipeline);
+            //开始异步任务
+            Main.Main.RAsyncOperationSystem.StartOperation(typeof(LoadPackages).FullName, this);
         }
 
         protected override void OnStart()

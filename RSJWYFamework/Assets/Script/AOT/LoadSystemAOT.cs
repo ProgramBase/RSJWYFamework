@@ -12,11 +12,10 @@ namespace Script.AOT
     /// <summary>
     /// 框架的管理器，unity挂载
     /// </summary>
-    public class LoadSystemAOT:SingletonBaseMono<LoadSystemAOT>
+    public class LoadSystemAOT:MonoBehaviour
     {
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             DontDestroyOnLoad(this);
         }
 
@@ -37,16 +36,10 @@ namespace Script.AOT
             RSJWYLogger.Log("包初始化完成，加载热更代码");
             await Main.HybridClrManager.LoadHotCodeDLL();
             
-            RSJWYLogger.Log("加载入口");
+            RSJWYLogger.Log("加载入口场景");
             Main.YooAssetManager.GetPackage("PrefabPackage",out var package);
-            var prefab = package.LoadAssetAsync("Prefab_GameObject");
-            await prefab.ToUniTask();
-            var Io = prefab.InstantiateAsync();
-            await Io.ToUniTask();
-        }
-        protected void OnApplicationQuit()
-        {
-            
+            var scene = package.LoadSceneAsync("Scenes_Enter");
+            await scene.ToUniTask();
         }
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using RSJWYFamework.Runtime.AsyncOperation;
-using RSJWYFamework.Runtime.AsyncOperation.Procedure;
 using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.HybridCLR.Procedure;
+using RSJWYFamework.Runtime.Procedure;
 
 namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
 {
@@ -33,6 +33,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
             pc.AddProcedure(new LoadDLLByteProcedureBase());
             pc.AddProcedure(new LoadHotCodeProcedureBase());
             pc.AddProcedure(new LoadHotCodeDone());
+            Main.Main.RAsyncOperationSystem.StartOperation(typeof(LoadHotCodeOperation).FullName,this);
         }
 
         protected override void OnStart()
