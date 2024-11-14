@@ -8,6 +8,7 @@ using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.ReferencePool;
+using RSJWYFamework.Runtime.YooAssetModule;
 using UnityEngine;
 using UnityEngine.Serialization;
 

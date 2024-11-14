@@ -10,8 +10,6 @@ namespace RSJWYFamework.Runtime.AsyncOperation
     /// </summary>
     public abstract class RAsyncOperationBase : IUniTaskSource, IPlayerLoopItem, IComparable<RAsyncOperationBase>
     {
-       
-        
         /// <summary>
         /// 异步操作名称
         /// </summary>
@@ -66,14 +64,12 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         /// 内部秒刷新
         /// </summary>
         internal abstract void InternalOnUpdatePerSecond(float time);
-
-
+        
         /// <summary>
         /// 内部中止
         /// </summary>
-        internal virtual void InternalOnAbort()
-        {
-        }
+        internal abstract void InternalOnAbort();
+        
         /// <summary>
         /// 设置开始
         /// </summary>

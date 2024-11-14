@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using RSJWYFamework.Runtime.AsyncOperation;
+using RSJWYFamework.Runtime.AsyncOperation.Procedure;
 using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.HybridCLR.Procedure;
-using RSJWYFamework.Runtime.Procedure;
 
 namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
 {
@@ -34,7 +34,14 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
             pc.AddProcedure(new LoadHotCodeProcedureBase());
             pc.AddProcedure(new LoadHotCodeDone());
         }
-        internal override void InternalOnUpdate(float time, float deltaTime)
+
+        protected override void OnStart()
+        {
+            _steps = RSteps.Update;
+            pc.StartProcedure(typeof(LoadDLLByteProcedureBase));
+        }
+
+        protected override void OnUpdate(float time, float deltaTime)
         {
             if (_steps == RSteps.None || _steps == RSteps.Done)
                 return;
@@ -50,23 +57,12 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
             }
         }
 
-        protected override void OnStart()
-        {
-            _steps = RSteps.Update;
-            pc.StartProcedure(typeof(LoadDLLByteProcedureBase));
-        }
-
-        protected override void OnUpdate(float time, float deltaTime)
-        {
-           
-        }
-
-        protected override void OnAbort()
+        protected override void OnUpdatePerSecond(float time)
         {
             
         }
 
-        internal override void InternalOnUpdatePerSecond(float time)
+        protected override void OnAbort()
         {
             
         }

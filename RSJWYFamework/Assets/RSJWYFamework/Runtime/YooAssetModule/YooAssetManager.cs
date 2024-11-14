@@ -9,7 +9,7 @@ using RSJWYFamework.Runtime.YooAssetModule.AsyncOperation;
 using RSJWYFamework.Runtime.YooAssetModule.Tool;
 using YooAsset;
 
-namespace RSJWYFamework.Runtime.Default.Manager
+namespace RSJWYFamework.Runtime.YooAssetModule
 {
     public class YooAssetManager :  IModule
     {

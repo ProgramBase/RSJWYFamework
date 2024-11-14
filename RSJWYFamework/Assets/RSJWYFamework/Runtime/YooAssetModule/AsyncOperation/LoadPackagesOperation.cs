@@ -1,6 +1,6 @@
 ﻿using RSJWYFamework.Runtime.AsyncOperation;
+using RSJWYFamework.Runtime.AsyncOperation.Procedure;
 using RSJWYFamework.Runtime.Default.Manager;
-using RSJWYFamework.Runtime.Procedure;
 using RSJWYFamework.Runtime.YooAssetModule.Procedure;
 using YooAsset;
 
@@ -41,7 +41,13 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
             pc.SetBlackboardValue("BuildPipeline",buildPipeline);
         }
 
-        internal override void InternalOnUpdate(float time, float deltaTime)
+        protected override void OnStart()
+        {
+            _steps = RSteps.Update;
+            pc.StartProcedure(typeof(InitPackageProcedure));
+        }
+
+        protected override void OnUpdate(float time, float deltaTime)
         {
             if (_steps == RSteps.None || _steps == RSteps.Done)
                 return;
@@ -57,18 +63,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
             }
         }
 
-        internal override void InternalOnUpdatePerSecond(float time)
-        {
-            
-        }
-
-        protected override void OnStart()
-        {
-            _steps = RSteps.Update;
-            pc.StartProcedure(typeof(InitPackageProcedure));
-        }
-
-        protected override void OnUpdate(float time, float deltaTime)
+        protected override void OnUpdatePerSecond(float time)
         {
             
         }

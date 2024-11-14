@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RSJWYFamework.Runtime.Procedure
+namespace RSJWYFamework.Runtime.AsyncOperation.Procedure
 {
     /// <summary>
     /// 流程使用者接口
