@@ -11,6 +11,7 @@ namespace RSJWYFamework.Runtime.Procedure
     /// </summary>
     public class ProcedureController
     {
+        public string Name;
         /// <summary>
         /// 所属使用者
         /// </summary>
@@ -43,9 +44,10 @@ namespace RSJWYFamework.Runtime.Procedure
 
        
 
-        public ProcedureController(IProcedureUser module)
+        public ProcedureController(IProcedureUser module,string name)
         {
             this.User = module;
+            this.Name = name;
         }
         
         /// <summary>
@@ -158,7 +160,8 @@ namespace RSJWYFamework.Runtime.Procedure
             }
         }
         /// <summary>
-        /// 切换到下一流程
+        /// 切换到下一流程，
+        /// 如果当前是最后一个流程，则切换到第一个流程
         /// </summary>
         public void SwitchNextProcedure()
         {
@@ -179,6 +182,14 @@ namespace RSJWYFamework.Runtime.Procedure
         public void StartProcedure(Type type)
         {
             SwitchProcedure(type);
+        }
+        /// <summary>
+        /// 开始流程，从指定的开始源开始
+        /// </summary>
+        /// <typeparam name="TProcedureBase"></typeparam>
+        public void StartProcedure<TProcedureBase>()
+        {
+            SwitchProcedure(typeof(TProcedureBase));
         }
         /// <summary>
         /// 开始流程，从第一个开始
@@ -226,10 +237,12 @@ namespace RSJWYFamework.Runtime.Procedure
         }
         /// <summary>
         /// 添加一个流程
+        /// 使用本方法必须传递的是一个包含无参构造函数的流程类，否则会抛出异常
+        /// 否则请使用AddProcedure(ProcedureBase procedureBase)传递实例化好的
         /// </summary>
         /// <param name="procedureBase"></param>
         /// <exception cref="RSJWYException"></exception>
-        public void AddProcedure<TProcedureBase>() where TProcedureBase : ProcedureBase
+        public void AddProcedure<TProcedureBase>() where TProcedureBase : ProcedureBase,new()
         {
             var type = typeof(TProcedureBase);
             var procedure = Activator.CreateInstance<TProcedureBase>();

@@ -5,46 +5,419 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55f907f-06fc-4b72-bb63-6c06d2cdc485" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/CustomEditor.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SceneProcedure.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SceneProcedure.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SwitchOperation.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SwitchOperation.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/ProcedureControllerManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/ProcedureControllerManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SceneTransition.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SceneTransition.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SwitchSceneOperation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RSJWYFamework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AssetBundleCollectorSetting.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HotUpdateAssets/Prefab/GameObject.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/圆角UI.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/CustomEditor/圆角UI.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/圆角UI/UIRoundConor_RawImageEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/CustomEditor/圆角UI/UIRoundConor_RawImageEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/Tool/圆角UI/UIRoundConor_RawImageEditor.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Editor/CustomEditor/圆角UI/UIRoundConor_RawImageEditor.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/Procedure.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/Procedure/IProcedureUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/IProcedureUser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/Procedure/IProcedureUser.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/IProcedureUser.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/Procedure/ProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/ProcedureBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/Procedure/ProcedureBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/ProcedureBase.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/Procedure/ProcedureController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/ProcedureController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/AsyncOperation/Procedure/ProcedureController.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/ProcedureController.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/HybirdCLRManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Default/Manager/HybirdCLRManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Driver/RSJWYFameworkDriverService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Driver/RSJWYFameworkDriverService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Android/DebugLogLogcatListener.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Android/DebugLogLogcatListener.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Android/IngameDebugConsole.aar.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Android/IngameDebugConsole.aar.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Editor/DebugLogManagerEditor.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Editor/DebugLogManagerEditor.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Editor/IngameDebugConsole.Editor.asmdef.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Editor/IngameDebugConsole.Editor.asmdef.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/IngameDebugConsole.Runtime.asmdef.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/IngameDebugConsole.Runtime.asmdef.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/IngameDebugConsole.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/IngameDebugConsole.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/IngameDebugConsole.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/IngameDebugConsole.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Prefabs/CommandSuggestion.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Prefabs/CommandSuggestion.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Prefabs/DebugLogItem.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Prefabs/DebugLogItem.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/README.txt.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/README.txt.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/CircularBuffer.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/CircularBuffer.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/Commands/PlayerPrefsCommands.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/Commands/PlayerPrefsCommands.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/Commands/SceneCommands.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/Commands/SceneCommands.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/Commands/TimeCommands.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/Commands/TimeCommands.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/ConsoleMethodAttribute.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/ConsoleMethodAttribute.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogConsole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogConsole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogConsole.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogConsole.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogEntry.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogEntry.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogItem.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogItem.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogItemCopyWebGL.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogItemCopyWebGL.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogManager.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogPopup.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogPopup.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogRecycledListView.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogRecycledListView.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogResizeListener.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugLogResizeListener.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugsOnScrollListener.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/DebugsOnScrollListener.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/EventSystemHandler.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/EventSystemHandler.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/InputFieldWarningsFixer.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Scripts/InputFieldWarningsFixer.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconClear.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconClear.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconCollapse.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconCollapse.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconError.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconError.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconHide.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconHide.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconInfo.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconInfo.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconResizeAllDirections.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconResizeAllDirections.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconResizeVertialOnly.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconResizeVertialOnly.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconSnapToBottom.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconSnapToBottom.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconSnapToBottomBg.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconSnapToBottomBg.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconWarning.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IconWarning.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IngameDebugConsoleSpriteAtlas.spriteatlas.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/IngameDebugConsoleSpriteAtlas.spriteatlas.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/SearchIcon.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/SearchIcon.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/SlicedBackground.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/SlicedBackground.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/SlicedBackground2.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/SlicedBackground2.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/SlicedBackground3.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/SlicedBackground3.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/Unused/IconErrorHighRes.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/Unused/IconErrorHighRes.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/Unused/IconInfoHighRes.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/Unused/IconInfoHighRes.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/Unused/IconWarningHighRes.psd.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/Sprites/Unused/IconWarningHighRes.psd.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/WebGL/IngameDebugConsole.jslib.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/WebGL/IngameDebugConsole.jslib.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/iOS/IngameDebugConsole.mm.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/IngameDebugConsole/iOS/IngameDebugConsole.mm.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Editor/SplitterGUILayout.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Editor/SplitterGUILayout.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Editor/UniTask.Editor.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Editor/UniTask.Editor.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Editor/UniTaskTrackerTreeView.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Editor/UniTaskTrackerTreeView.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Editor/UniTaskTrackerWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Editor/UniTaskTrackerWindow.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/AsyncLazy.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/AsyncLazy.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/AsyncReactiveProperty.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/AsyncReactiveProperty.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/AsyncUnit.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/AsyncUnit.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CancellationTokenEqualityComparer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CancellationTokenEqualityComparer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CancellationTokenExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CancellationTokenExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CancellationTokenSourceExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CancellationTokenSourceExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Channel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Channel.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CompilerServices.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CompilerServices/AsyncMethodBuilderAttribute.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CompilerServices/AsyncMethodBuilderAttribute.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CompilerServices/AsyncUniTaskMethodBuilder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CompilerServices/AsyncUniTaskMethodBuilder.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CompilerServices/AsyncUniTaskVoidMethodBuilder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CompilerServices/AsyncUniTaskVoidMethodBuilder.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CompilerServices/StateMachineRunner.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/CompilerServices/StateMachineRunner.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/EnumerableAsyncExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/EnumerableAsyncExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/EnumeratorAsyncExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/EnumeratorAsyncExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/ExceptionExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/ExceptionExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/Addressables.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/Addressables/AddressablesAsyncExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/Addressables/AddressablesAsyncExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/Addressables/UniTask.Addressables.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/Addressables/UniTask.Addressables.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/DOTween.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/DOTween/DOTweenAsyncExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/DOTween/DOTweenAsyncExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/DOTween/UniTask.DOTween.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/DOTween/UniTask.DOTween.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/RSJWYFamework.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/RSJWYFamework/RAsyncOperationExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/RSJWYFamework/RAsyncOperationExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/RSJWYFamework/UniTask.RSJWYFamewoooork.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/RSJWYFamework/UniTask.RSJWYFamewoooork.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/TextMeshPro.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/TextMeshPro/TextMeshProAsyncExtensions.InputField.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/TextMeshPro/TextMeshProAsyncExtensions.InputField.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/TextMeshPro/TextMeshProAsyncExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/TextMeshPro/TextMeshProAsyncExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/TextMeshPro/UniTask.TextMeshPro.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/TextMeshPro/UniTask.TextMeshPro.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/YooAsset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/YooAsset/AsyncOperationBaseExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/YooAsset/AsyncOperationBaseExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/YooAsset/OperationHandleBaseExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/YooAsset/OperationHandleBaseExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/YooAsset/UniTask.YooAsset.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/External/YooAsset/UniTask.YooAsset.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/IUniTaskAsyncEnumerable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/IUniTaskAsyncEnumerable.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/IUniTaskSource.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/IUniTaskSource.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/ArrayPool.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/ArrayPool.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/ArrayPoolUtil.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/ArrayPoolUtil.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/ArrayUtil.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/ArrayUtil.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/ContinuationQueue.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/ContinuationQueue.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/DiagnosticsExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/DiagnosticsExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/Error.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/Error.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/MinimumQueue.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/MinimumQueue.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/PlayerLoopRunner.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/PlayerLoopRunner.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/PooledDelegate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/PooledDelegate.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/RuntimeHelpersAbstraction.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/RuntimeHelpersAbstraction.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/StatePool.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/StatePool.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/TaskTracker.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/TaskTracker.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/UnityEqualityComparer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/UnityEqualityComparer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/UnityWebRequestExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/UnityWebRequestExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/ValueStopwatch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/ValueStopwatch.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/WeakDictionary.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Internal/WeakDictionary.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Aggregate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Aggregate.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/All.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/All.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Any.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Any.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/AppendPrepend.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/AppendPrepend.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/AsUniTaskAsyncEnumerable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/AsUniTaskAsyncEnumerable.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/AsyncEnumeratorBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/AsyncEnumeratorBase.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Average.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Average.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Buffer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Buffer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Cast.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Cast.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/CombineLatest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/CombineLatest.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Concat.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Concat.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Contains.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Contains.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Count.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Count.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Create.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Create.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/DefaultIfEmpty.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/DefaultIfEmpty.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Distinct.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Distinct.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/DistinctUntilChanged.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/DistinctUntilChanged.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Do.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Do.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ElementAt.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ElementAt.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Empty.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Empty.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Except.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Except.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/First.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/First.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ForEach.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ForEach.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/GroupBy.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/GroupBy.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/GroupJoin.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/GroupJoin.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Intersect.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Intersect.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Join.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Join.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Last.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Last.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/LongCount.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/LongCount.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Max.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Max.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Merge.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Merge.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Min.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Min.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/MinMax.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/MinMax.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Never.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Never.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/OfType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/OfType.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/OrderBy.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/OrderBy.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Pairwise.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Pairwise.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Publish.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Publish.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Queue.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Queue.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Range.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Range.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Repeat.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Repeat.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Return.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Return.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Reverse.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Reverse.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Select.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Select.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SelectMany.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SelectMany.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SequenceEqual.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SequenceEqual.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Single.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Single.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Skip.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Skip.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SkipLast.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SkipLast.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SkipUntil.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SkipUntil.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SkipUntilCanceled.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SkipUntilCanceled.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SkipWhile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/SkipWhile.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Subscribe.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Subscribe.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Sum.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Sum.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Take.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Take.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/TakeLast.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/TakeLast.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/TakeUntil.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/TakeUntil.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/TakeUntilCanceled.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/TakeUntilCanceled.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/TakeWhile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/TakeWhile.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Throw.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Throw.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToArray.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToArray.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToDictionary.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToDictionary.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToHashSet.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToHashSet.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToList.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToList.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToLookup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToLookup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToObservable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToObservable.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToUniTaskAsyncEnumerable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/ToUniTaskAsyncEnumerable.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/UniTask.Linq.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/UniTask.Linq.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Union.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Union.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/UnityExtensions.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/UnityExtensions/EveryUpdate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/UnityExtensions/EveryUpdate.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/UnityExtensions/EveryValueChanged.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/UnityExtensions/EveryValueChanged.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/UnityExtensions/Timer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/UnityExtensions/Timer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Where.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Where.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Zip.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Linq/Zip.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/MoveNextSource.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/MoveNextSource.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/PlayerLoopHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/PlayerLoopHelper.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/PlayerLoopTimer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/PlayerLoopTimer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Progress.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Progress.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/TaskPool.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/TaskPool.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/TimeoutController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/TimeoutController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/TriggerEvent.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/TriggerEvent.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/AsyncAwakeTrigger.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/AsyncAwakeTrigger.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/AsyncDestroyTrigger.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/AsyncDestroyTrigger.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/AsyncStartTrigger.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/AsyncStartTrigger.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/AsyncTriggerBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/AsyncTriggerBase.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/AsyncTriggerExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/AsyncTriggerExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/MonoBehaviourMessagesTriggers.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/Triggers/MonoBehaviourMessagesTriggers.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.AsValueTask.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.AsValueTask.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.Bridge.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.Bridge.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.Delay.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.Delay.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.Factory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.Factory.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.Run.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.Run.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.Threading.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.Threading.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.WaitUntil.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.WaitUntil.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.WhenAll.Generated.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.WhenAll.Generated.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.WhenAll.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.WhenAll.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.WhenAny.Generated.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.WhenAny.Generated.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.WhenAny.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.WhenAny.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTask.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskCompletionSource.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskCompletionSource.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskExtensions.Shorthand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskExtensions.Shorthand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskObservableExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskObservableExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskScheduler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskScheduler.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskSynchronizationContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskSynchronizationContext.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskVoid.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UniTaskVoid.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.AssetBundleRequestAllAssets.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.AssetBundleRequestAllAssets.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.AsyncGPUReadback.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.AsyncGPUReadback.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.Jobs.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.Jobs.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.MonoBehaviour.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.MonoBehaviour.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.uGUI.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAsyncExtensions.uGUI.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAwaitableExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityAwaitableExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityBindingExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityBindingExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityWebRequestException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/UnityWebRequestException.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/_InternalVisibleTo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/Runtime/_InternalVisibleTo.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/UniTask/package.json.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/AsyncOperation/LoadHotCodeOperation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/AsyncOperation/LoadHotCodeOperation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadDLLByteProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadDLLByteProcedureBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadHotCodeDone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadHotCodeDone.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadHotCodeProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/HybridCLR/Procedure/LoadHotCodeProcedureBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Main/Main.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Main/Main.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/ProcedureBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/ProcedureBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/ProcedureController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Procedure/ProcedureController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SceneProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SceneProcedureBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SceneProcedure.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SceneProcedureBase.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SwitchOperation.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SwitchOperation.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/Scene/SwitchSceneOperation.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/LoadPackagesOperation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/AsyncOperation/LoadPackagesOperation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/ClearPackageCacheProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/ClearPackageCacheProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/CreatePackageDownloaderProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/CreatePackageDownloaderProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageFilesProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageFilesProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageOverProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/DownloadPackageOverProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/InitPackageProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/InitPackageProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageManifestProcedur.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageManifestProcedur.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdatePackageVersionProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdaterDoneProcedure.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/Procedure/UpdaterDoneProcedure.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSJWYFamework/Runtime/YooAssetModule/YooAssetManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/AOT/LoadSystemAOT.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/AOT/LoadSystemAOT.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SwitchScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SwitchScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -77,6 +450,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9e3a60dbcacc4e77a9c6e1c14064183a9b6200/43/29d50692/BuildTarget.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9e3a60dbcacc4e77a9c6e1c14064183a9b6200/93/017aa196/EditorUserBuildSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9e3a60dbcacc4e77a9c6e1c14064183a9b6200/b7/f8797897/CustomEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5bf0c891ea345fe93688f835df32fdc1dda00/87/8790d52b/LoadSceneMode.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5bf0c891ea345fe93688f835df32fdc1dda00/b6/a1a3d097/ScriptableObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b9f607e27b8644e0bf609b59dfb1c8525735b0/1a/97e3e6d7/UInt32.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b9f607e27b8644e0bf609b59dfb1c8525735b0/e6/5fe060a4/List`1.cs" root0="SKIP_HIGHLIGHTING" />
@@ -92,14 +466,20 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Runtime/OperationSystem/AsyncOperationBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Runtime/OperationSystem/EOperationStatus.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Runtime/OperationSystem/GameAsyncOperation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Runtime/ResourceManager/Handle/HandleBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Runtime/ResourceManager/Handle/SceneHandle.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Runtime/ResourceManager/Operation/InstantiateOperation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Runtime/ResourceManager/Provider/ProviderOperation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Runtime/ResourceManager/ResourceManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Runtime/ResourcePackage/ResourcePackage.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Runtime/YooAssets.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Samples~/Space Shooter/GameScript/Runtime/Behaviour/BackgroundScroller.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Samples~/Space Shooter/GameScript/Runtime/EventDefine/SceneEventDefine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Samples~/Space Shooter/GameScript/Runtime/PatchLogic/PatchOperation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Samples~/Space Shooter/GameScript/Runtime/WindowLogic/UILoadingWindow.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Samples~/Space Shooter/ThirdParty/UniFramework/UniMachine/Runtime/IStateNode.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.tuyoogame.yooasset/Samples~/Space Shooter/ThirdParty/UniFramework/UniMachine/Runtime/StateMachine.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui/Editor/UGUI/UI/GraphicEditor.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -115,7 +495,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.20187393&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/场景切换流程&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -239,7 +619,9 @@
       <workItem from="1731296184454" duration="797000" />
       <workItem from="1731374018402" duration="4466000" />
       <workItem from="1731378695875" duration="4116000" />
-      <workItem from="1731550287305" duration="17234000" />
+      <workItem from="1731550287305" duration="17594000" />
+      <workItem from="1731632425715" duration="7549000" />
+      <workItem from="1731641418758" duration="16827000" />
     </task>
     <servers />
   </component>

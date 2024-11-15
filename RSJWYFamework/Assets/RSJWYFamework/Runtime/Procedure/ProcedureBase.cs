@@ -20,7 +20,7 @@ namespace RSJWYFamework.Runtime.Procedure
         /// 流程关闭
         /// 移除流程时调用
         /// </summary>
-        public abstract  void OnClose();
+        public abstract void OnClose();
         
         /// <summary>
         /// 进入当前流程

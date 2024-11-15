@@ -28,7 +28,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
         
         public LoadHotCodeOperation()
         {
-            pc = new ProcedureController(this);
+            pc = new ProcedureController(this,"加载热更代码");
             //创建流程
             pc.AddProcedure(new LoadDLLByteProcedureBase());
             pc.AddProcedure(new LoadHotCodeProcedureBase());
