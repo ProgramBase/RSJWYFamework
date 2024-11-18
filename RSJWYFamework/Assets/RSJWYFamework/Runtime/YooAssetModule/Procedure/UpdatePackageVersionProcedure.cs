@@ -36,7 +36,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             var modle = (EPlayMode)pc.GetBlackboardValue("PlayMode");
             var package = YooAssets.GetPackage(packageName);
             
-            RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}版本");
+            RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"包{packageName}本地版本：{package.GetPackageVersion()}，更新版本");
             
             var operation = package.RequestPackageVersionAsync(false);
             await operation.ToUniTask();
