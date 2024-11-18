@@ -117,7 +117,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
                 pc.User.Exception(
                     new ProcedureException($"InitPackageProcedure：初始化包：{packageName}失败！Error：{initializationOperation.Error}"));
             }
-            pc.SwitchProcedure(typeof(UpdatePackageVersionProcedure));
+            pc.SwitchProcedure<UpdatePackageVersionProcedure>();
         }
 
         public override void OnClose()

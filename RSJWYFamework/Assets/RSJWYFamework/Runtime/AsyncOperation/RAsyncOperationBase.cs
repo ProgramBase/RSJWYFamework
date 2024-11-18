@@ -101,15 +101,19 @@ namespace RSJWYFamework.Runtime.AsyncOperation
             Status = RAsyncOperationStatus.Failed;
             tcs.TrySetException(exception);
         }
-
-        internal void SetAbort()
+        /// <summary>
+        /// 设置中止
+        /// </summary>
+        /// <param name="reason">终止错误信息</param>
+        internal void SetAbort(string reason)
         {
             if (IsDone == false)
             {
                 Status = RAsyncOperationStatus.Failed;
-                Error = "user abort";
-                RSJWYLogger.Warning($"Async operaiton {this.GetType().Name} has been abort !");
+                Error = $"user abort: {reason}";
+                RSJWYLogger.Warning($"Async operaiton {this.GetType().Name} has been abort !, error: {reason}");
                 InternalOnAbort();
+                tcs.TrySetCanceled();
             }
         }
         

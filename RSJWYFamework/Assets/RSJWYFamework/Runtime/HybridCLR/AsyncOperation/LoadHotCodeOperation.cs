@@ -72,5 +72,10 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
         {
             SetException(exception);
         }
+
+        public void Abort(string reason)
+        {
+            SetAbort(reason);
+        }
     }
 }

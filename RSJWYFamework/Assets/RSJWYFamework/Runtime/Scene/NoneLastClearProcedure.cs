@@ -30,7 +30,6 @@ namespace RSJWYFamework.Runtime.Scene
 
         protected override async UniTask Clear(ProcedureBase lastProcedureBase)
         {
-            await UniTask.Yield(PlayerLoopTiming.Update);
         }
     }
     /// <summary>
@@ -60,7 +59,6 @@ namespace RSJWYFamework.Runtime.Scene
 
         protected override async UniTask PreLoad(ProcedureBase lastProcedureBase)
         {
-            await UniTask.Yield(PlayerLoopTiming.Update);
         }
     }
     /// <summary>
@@ -90,7 +88,6 @@ namespace RSJWYFamework.Runtime.Scene
 
         protected override async UniTask SceneInit(ProcedureBase lastProcedureBase)
         {
-            await UniTask.Yield(PlayerLoopTiming.Update);
         }
     }
 }

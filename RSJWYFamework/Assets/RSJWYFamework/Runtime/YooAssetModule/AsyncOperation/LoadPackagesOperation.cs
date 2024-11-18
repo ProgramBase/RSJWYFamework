@@ -35,6 +35,9 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
             pc.AddProcedure(new DownloadPackageOverProcedure());
             pc.AddProcedure(new ClearPackageCacheProcedureBase());
             pc.AddProcedure(new UpdaterDoneProcedure());
+            //弱联网
+            pc.AddProcedure(new CheckResourceIntegrityProcedureBase());
+            pc.AddProcedure(new CheckUpdatePackageManifestProcedur());
             //写入数据
             pc.SetBlackboardValue("PlayMode",playMode);
             pc.SetBlackboardValue("PackageName",packageName);
@@ -83,7 +86,12 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
 
         public void Exception(ProcedureException exception)
         {
-            
+            SetException(exception);
+        }
+
+        public void Abort(string reason)
+        {
+            SetAbort(reason);
         }
     }
 }

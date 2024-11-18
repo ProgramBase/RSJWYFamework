@@ -11,7 +11,14 @@ namespace RSJWYFamework.Runtime.Procedure
     /// </summary>
     public class ProcedureController
     {
-        public string Name;
+        /// <summary>
+        /// 流程控制器名称
+        /// </summary>
+        public string Name{get;private set;}
+        /// <summary>
+        /// 其他信息
+        /// </summary>
+        public string OtherInfo{get;private set;}
         /// <summary>
         /// 所属使用者
         /// </summary>
@@ -44,10 +51,11 @@ namespace RSJWYFamework.Runtime.Procedure
 
        
 
-        public ProcedureController(IProcedureUser module,string name)
+        public ProcedureController(IProcedureUser module,string name,string otherInfo="")
         {
             this.User = module;
             this.Name = name;
+            this.OtherInfo = otherInfo;
         }
         
         /// <summary>

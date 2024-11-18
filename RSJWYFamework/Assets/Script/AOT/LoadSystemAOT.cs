@@ -38,8 +38,8 @@ namespace Script.AOT
             RSJWYLogger.Log("包初始化完成，加载热更代码");
             await Main.HybridClrManager.LoadHotCodeDLL();
             
-            RSJWYLogger.Log("加载入口场景");
-            var _= new SwitchSceneOperation(new LoadHotScene());
+            var toScecne= new SwitchSceneOperation(new LoadHotScene(),"加载热更入口场景",false);
+            toScecne.StartProcedure();
         }
     }
 
@@ -68,7 +68,7 @@ namespace Script.AOT
 
         protected override async UniTask LoadNextScene(ProcedureBase lastProcedureBase)
         {
-            
+            RSJWYLogger.Log("加载入口场景");
             Main.YooAssetManager.GetPackage("PrefabPackage",out var package);
             var scene = package.LoadSceneAsync("Scenes_Enter");
             await scene.ToUniTask();

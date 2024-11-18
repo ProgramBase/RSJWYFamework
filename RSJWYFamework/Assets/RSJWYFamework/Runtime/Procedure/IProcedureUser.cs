@@ -12,6 +12,10 @@ namespace RSJWYFamework.Runtime.Procedure
         /// </summary>
         /// <param name="exception"></param>
         void Exception( ProcedureException exception);
+        /// <summary>
+        /// 终止
+        /// </summary>
+        void Abort(string reason);
     }
 
     public class ProcedureException : Exception

@@ -24,7 +24,7 @@ namespace RSJWYFamework.Runtime.Scene
         {
             UniTask.Create(async () =>
             {
-                RSJWYLogger.Log("切换到中转场景");
+                RSJWYLogger.Log($"{pc.OtherInfo}--切换到中转场景");
                 //初始化并打开过度遮罩
                 var transition = SceneTransition.Instance();
                 pc.SetBlackboardValue("SceneTransition",transition);
@@ -61,9 +61,8 @@ namespace RSJWYFamework.Runtime.Scene
         {
             UniTask.Create(async () =>
             {
-                RSJWYLogger.Log("清理不需要的资源");
+                RSJWYLogger.Log($"{pc.OtherInfo}--清理不需要的资源");
                 await Clear(lastProcedureBase);
-                pc.SwitchNextProcedure();
                 var nextType= (Type)pc.GetBlackboardValue("PreLoadType");
                 pc.SwitchProcedure(nextType);
             });
@@ -83,7 +82,7 @@ namespace RSJWYFamework.Runtime.Scene
         {
             UniTask.Create(async () =>
             {
-                RSJWYLogger.Log("预加载下一场景需要的资源");
+                RSJWYLogger.Log($"{pc.OtherInfo}--预加载下一场景需要的资源");
                 await PreLoad(lastProcedureBase);
                 var nextType= (Type)pc.GetBlackboardValue("LoadNextSceneType");
                 pc.SwitchProcedure(nextType);
@@ -103,7 +102,7 @@ namespace RSJWYFamework.Runtime.Scene
         {
             UniTask.Create(async () =>
             {
-                RSJWYLogger.Log("加载并切换下一个场景");
+                RSJWYLogger.Log($"{pc.OtherInfo}--加载并切换下一个场景");
                 await LoadNextScene(lastProcedureBase);
                 var nextType= (Type)pc.GetBlackboardValue("NextSceneInitType");
                 pc.SwitchProcedure(nextType);
@@ -121,8 +120,9 @@ namespace RSJWYFamework.Runtime.Scene
         {
             UniTask.Create(async () =>
             {
-                RSJWYLogger.Log("正在初始化下一个场景");
+                RSJWYLogger.Log($"{pc.OtherInfo}--正在初始化下一个场景");
                 await SceneInit(lastProcedureBase);
+                pc.SwitchProcedure<SwitchSceneDoneProcedure>();
             });
         }
         protected abstract UniTask SceneInit(ProcedureBase lastProcedureBase);
@@ -144,7 +144,7 @@ namespace RSJWYFamework.Runtime.Scene
 
         public override void OnEnter(ProcedureBase lastProcedureBase)
         {
-            RSJWYLogger.Log("流程结束");
+            RSJWYLogger.Log($"{pc.OtherInfo}--加载场景流程结束");
         }
 
         public override void OnLeave(ProcedureBase nextProcedureBase)
