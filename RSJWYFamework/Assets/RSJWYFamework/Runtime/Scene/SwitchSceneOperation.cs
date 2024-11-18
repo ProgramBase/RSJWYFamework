@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using RSJWYFamework.Runtime.AsyncOperation;
+using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Procedure;
 
 namespace RSJWYFamework.Runtime.Scene
@@ -21,23 +22,30 @@ namespace RSJWYFamework.Runtime.Scene
         /// <summary>
         /// 初始化场景切换流程
         /// </summary>
-        /// <param name="lastClearProcedure">清理上一个场景资源</param>
-        /// <param name="preLoadProcedure">预加载下一个场景资源</param>
-        /// <param name="loadNextSceneProcedure">加载下一个场景</param>
-        /// <param name="nextSceneInitProcedure">下一个场景初始化操作</param>
+        /// <param name="lastClearProcedure">清理上一个场景资源-可为null</param>
+        /// <param name="preLoadProcedure">预加载下一个场景资源-可为null</param>
+        /// <param name="loadNextSceneProcedure">加载下一个场景-必须实现，直接跳转</param>
+        /// <param name="nextSceneInitProcedure">下一个场景初始化操作-可为null</param>
         /// <param name="blackboardKeyValue">设置黑板数据</param>
-        public SwitchSceneOperation(LastClearProcedure lastClearProcedure, PreLoadProcedure preLoadProcedure, LoadNextSceneProcedure loadNextSceneProcedure,NextSceneInitProcedure nextSceneInitProcedure,Dictionary<string,object>blackboardKeyValue)
+        public SwitchSceneOperation(LoadNextSceneProcedure loadNextSceneProcedure,LastClearProcedure lastClearProcedure=null, PreLoadProcedure preLoadProcedure=null, NextSceneInitProcedure nextSceneInitProcedure=null,Dictionary<string,object>blackboardKeyValue=null)
         {
             pc = new ProcedureController(this,"场景切换");
             pc.ProcedureSwitchEvent += SwitchSceneOperationEvent;
             
             pc.AddProcedure<SwitchToTransferProcedure>();
+            lastClearProcedure ??= new NoneLastClearProcedure();
             pc.AddProcedure(lastClearProcedure);
             _lastClearType = lastClearProcedure.GetType();
+            preLoadProcedure??= new NonePreLoadProcedure();
             pc.AddProcedure(preLoadProcedure);
             _loadNextSceneType = preLoadProcedure.GetType();
+            if (_loadNextSceneType==null)
+            {
+                throw new RSJWYException("请确保加载下一个场景流程不为空");
+            }
             pc.AddProcedure(loadNextSceneProcedure);
             _preLoadType = loadNextSceneProcedure.GetType();
+            nextSceneInitProcedure??= new NoneNextSceneInitProcedure();
             pc.AddProcedure(nextSceneInitProcedure);
             _NextSceneInitType= nextSceneInitProcedure.GetType();
             pc.AddProcedure<SwitchSceneDoneProcedure>();

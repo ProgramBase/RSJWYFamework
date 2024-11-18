@@ -5,6 +5,8 @@ using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using UnityEngine;
 using RSJWYFamework.Runtime.Driver;
+using RSJWYFamework.Runtime.Procedure;
+using RSJWYFamework.Runtime.Scene;
 
 
 namespace Script.AOT
@@ -37,6 +39,36 @@ namespace Script.AOT
             await Main.HybridClrManager.LoadHotCodeDLL();
             
             RSJWYLogger.Log("加载入口场景");
+            var _= new SwitchSceneOperation(new LoadHotScene());
+        }
+    }
+
+    internal sealed class LoadHotScene : LoadNextSceneProcedure
+    {
+        public override void OnInit()
+        {
+            
+        }
+
+        public override void OnClose()
+        {
+        }
+
+        public override void OnLeave(ProcedureBase nextProcedureBase)
+        {
+        }
+
+        public override void OnUpdate()
+        {
+        }
+
+        public override void OnUpdateSecond()
+        {
+        }
+
+        protected override async UniTask LoadNextScene(ProcedureBase lastProcedureBase)
+        {
+            
             Main.YooAssetManager.GetPackage("PrefabPackage",out var package);
             var scene = package.LoadSceneAsync("Scenes_Enter");
             await scene.ToUniTask();
