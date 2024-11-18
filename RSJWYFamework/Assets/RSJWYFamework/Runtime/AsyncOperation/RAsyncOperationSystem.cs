@@ -60,7 +60,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
             {
                 if (operation._AsyncOperationName == AsyncOperationName)
                 {
-                    operation.SetAbort();
+                    operation.SetAbort("clear");
                 }
             }
 
@@ -69,7 +69,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
             {
                 if (operation._AsyncOperationName == AsyncOperationName)
                 {
-                    operation.SetAbort();
+                    operation.SetAbort("clear");
                 }
             }
         }

@@ -22,11 +22,6 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
 
         public override void OnEnter(ProcedureBase lastProcedureBase)
         {
-            CreateDownloader().Forget();
-        }
-        async UniTask CreateDownloader()
-        {
-            await UniTask.WaitForSeconds(0.5f);
             var packageName = (string)pc.GetBlackboardValue("PackageName");
             var package = YooAssets.GetPackage(packageName);
             int downloadingMaxNum = 10;
@@ -37,15 +32,15 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
             if (downloader.TotalDownloadCount == 0)
             {
                 RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"包{packageName}没找到任何下载文件！");
-                pc.SwitchProcedure(typeof(UpdaterDoneProcedure));
+                pc.SwitchProcedure<UpdaterDoneProcedure>();
             }
             else
             {
                 // 发现新更新文件后，挂起流程系统
                 // 注意：开发者需要在下载前检测磁盘空间不足
                 RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"包{packageName}发现新文件！下载的文件总量：{downloader.TotalDownloadCount}，总大小：{downloader.TotalDownloadBytes}");
-                pc.SwitchProcedure(typeof(DownloadPackageFilesProcedure));
-            }
+                pc.SwitchProcedure<DownloadPackageFilesProcedure>();
+            }  
         }
 
         public  override void OnLeave(ProcedureBase nextProcedureBase)

@@ -27,23 +27,21 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Procedure
         }
         private async UniTask UpdateManifest() 
         {
-            await UniTask.WaitForSeconds(0.5f);
             var packageName = (string)pc.GetBlackboardValue("PackageName");
             var packageVersion = (string)pc.GetBlackboardValue("PackageVersion");
             var package = YooAssets.GetPackage(packageName);
-            
             RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}资源清单");
             var operation = package.UpdatePackageManifestAsync(packageVersion);
             await operation.ToUniTask();
 
             if (operation.Status != EOperationStatus.Succeed)
             {
-                RSJWYLogger.Error(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}清单失败！Error：{operation.Error}");
+                pc.User.Exception(new ProcedureException($"更新包{packageName}清单失败！Error：{operation.Error}，请检查资源是否存在，或者网络是否正常"));
             }
             else
             {
                 RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"更新包{packageName}清单成功");
-                pc.SwitchProcedure(typeof(CreatePackageDownloaderProcedure));
+                pc.SwitchProcedure<CreatePackageDownloaderProcedure>();
             }
         }
 
