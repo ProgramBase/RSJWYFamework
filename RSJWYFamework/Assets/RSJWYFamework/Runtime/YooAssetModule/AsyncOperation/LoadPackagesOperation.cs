@@ -1,6 +1,6 @@
 ﻿using RSJWYFamework.Runtime.AsyncOperation;
-using RSJWYFamework.Runtime.AsyncOperation.Procedure;
 using RSJWYFamework.Runtime.Default.Manager;
+using RSJWYFamework.Runtime.Procedure;
 using RSJWYFamework.Runtime.YooAssetModule.Procedure;
 using YooAsset;
 
@@ -24,7 +24,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
         
         public LoadPackages(string packageName, string buildPipeline, EPlayMode playMode)
         {
-            pc = new ProcedureController(this);
+            pc = new ProcedureController(this,"初始化资源管理");
             // 创建状态机
             //2.2.1版本 offlinePlayMode EditorSimulateMode 需要依次调用init, request version, update manifest 三部曲
             pc.AddProcedure(new InitPackageProcedure());
@@ -39,6 +39,8 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
             pc.SetBlackboardValue("PlayMode",playMode);
             pc.SetBlackboardValue("PackageName",packageName);
             pc.SetBlackboardValue("BuildPipeline",buildPipeline);
+            //开始异步任务
+            Main.Main.RAsyncOperationSystem.StartOperation(typeof(LoadPackages).FullName, this);
         }
 
         protected override void OnStart()
@@ -49,16 +51,21 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
 
         protected override void OnUpdate(float time, float deltaTime)
         {
-            if (_steps == RSteps.None || _steps == RSteps.Done)
-                return;
-
-            if(_steps == RSteps.Update)
+            switch (_steps)
             {
-                pc.OnUpdate(time,deltaTime);
-                if(pc.GetNowProcedure() == typeof(UpdaterDoneProcedure))
+                case RSteps.None:
+                case RSteps.Done:
+                    return;
+                case RSteps.Update:
                 {
-                    Status = RAsyncOperationStatus.Succeed;
-                    _steps = RSteps.Done;
+                    pc.OnUpdate(time,deltaTime);
+                    if(pc.GetNowProcedure() == typeof(UpdaterDoneProcedure))
+                    {
+                        Status = RAsyncOperationStatus.Succeed;
+                        _steps = RSteps.Done;
+                    }
+
+                    break;
                 }
             }
         }

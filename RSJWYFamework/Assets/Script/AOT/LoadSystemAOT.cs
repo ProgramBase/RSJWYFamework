@@ -5,6 +5,8 @@ using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using UnityEngine;
 using RSJWYFamework.Runtime.Driver;
+using RSJWYFamework.Runtime.Procedure;
+using RSJWYFamework.Runtime.Scene;
 
 
 namespace Script.AOT
@@ -12,11 +14,10 @@ namespace Script.AOT
     /// <summary>
     /// 框架的管理器，unity挂载
     /// </summary>
-    public class LoadSystemAOT:SingletonBaseMono<LoadSystemAOT>
+    public class LoadSystemAOT:MonoBehaviour
     {
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
             DontDestroyOnLoad(this);
         }
 
@@ -37,16 +38,40 @@ namespace Script.AOT
             RSJWYLogger.Log("包初始化完成，加载热更代码");
             await Main.HybridClrManager.LoadHotCodeDLL();
             
-            RSJWYLogger.Log("加载入口");
-            Main.YooAssetManager.GetPackage("PrefabPackage",out var package);
-            var prefab = package.LoadAssetAsync("Prefab_GameObject");
-            await prefab.ToUniTask();
-            var Io = prefab.InstantiateAsync();
-            await Io.ToUniTask();
+            RSJWYLogger.Log("加载入口场景");
+            var _= new SwitchSceneOperation(new LoadHotScene());
         }
-        protected void OnApplicationQuit()
+    }
+
+    internal sealed class LoadHotScene : LoadNextSceneProcedure
+    {
+        public override void OnInit()
         {
             
+        }
+
+        public override void OnClose()
+        {
+        }
+
+        public override void OnLeave(ProcedureBase nextProcedureBase)
+        {
+        }
+
+        public override void OnUpdate()
+        {
+        }
+
+        public override void OnUpdateSecond()
+        {
+        }
+
+        protected override async UniTask LoadNextScene(ProcedureBase lastProcedureBase)
+        {
+            
+            Main.YooAssetManager.GetPackage("PrefabPackage",out var package);
+            var scene = package.LoadSceneAsync("Scenes_Enter");
+            await scene.ToUniTask();
         }
     }
 }

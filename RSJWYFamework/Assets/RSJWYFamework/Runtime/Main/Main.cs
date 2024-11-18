@@ -7,6 +7,7 @@ using RSJWYFamework.Runtime.Driver;
 using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Module;
+using RSJWYFamework.Runtime.Procedure;
 using RSJWYFamework.Runtime.ReferencePool;
 using RSJWYFamework.Runtime.YooAssetModule;
 using UnityEngine;
@@ -28,9 +29,9 @@ namespace RSJWYFamework.Runtime.Main
         private static Dictionary<Type, IModule> _modules = new();
         
         /// <summary>
-        /// 生命周期通知
+        /// 生命周期
         /// </summary>
-        private static List<ILife> _life = new();
+        public static List<ILife> _life = new();
         /// <summary>
         /// 事件管理器
         /// </summary>
@@ -55,6 +56,10 @@ namespace RSJWYFamework.Runtime.Main
         /// 引用池
         /// </summary>
         public static ReferencePoolManager ReferencePoolManager {get; private set; }
+        /// <summary>
+        /// 流程管理器
+        /// </summary>
+        public static ProcedureControllerManager ProcedureControllerManager { get; private set; }
 
         [SerializeField]
         RSJWYFameworkDriverService service;
@@ -74,6 +79,7 @@ namespace RSJWYFamework.Runtime.Main
                 HybridClrManager = (HybirdCLRManager)AddModule<HybirdCLRManager>();
                 RAsyncOperationSystem = (RAsyncOperationSystem)AddModule<RAsyncOperationSystem>();
                 ReferencePoolManager = (ReferencePoolManager)AddModule<ReferencePoolManager>();
+                ProcedureControllerManager= (ProcedureControllerManager)AddModule<ProcedureControllerManager>();
                 IsInitialize = true;
                 RSJWYLogger.Log(RSJWYFameworkEnum.Main,"初始化完成");
             }
@@ -244,7 +250,7 @@ namespace RSJWYFamework.Runtime.Main
             {
                 foreach (var life in _life)
                 {
-                    life.FixedUpdate();
+                    life.LateUpdate();
                 }
             }
         }

@@ -51,8 +51,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule
             {
                 //配置异步任务
                 LoadPackages operationR = new LoadPackages(projectConfig.YooAssets.packages[i].PackageName, projectConfig.YooAssets.packages[i].BuildPipeline.ToString(), projectConfig.PlayMode);
-                //开始异步任务
-                Main.Main.RAsyncOperationSystem.StartOperation(string.Empty, operationR);
+                
                 taskArr[i]=operationR.UniTask;
             }
             //等待完成
