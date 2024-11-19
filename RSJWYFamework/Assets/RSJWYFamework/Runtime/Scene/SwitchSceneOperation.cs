@@ -17,6 +17,7 @@ namespace RSJWYFamework.Runtime.Scene
         private bool run=false;
         
         public string SceneName { get; private set; }
+        Type _preDepartureProcessingType;
         Type _lastClearType; 
         Type _preLoadType;
         Type _loadNextSceneType;
@@ -28,33 +29,46 @@ namespace RSJWYFamework.Runtime.Scene
         /// </summary>
         /// <param name="sceneName">场景名称-便于调试</param>
         /// <param name="isAuto">是否直接添加到执行队列执行</param>
+        /// <param name="preDepartureProcessingStateNodeBase">离开当前场景时的处理-可为null</param>
         /// <param name="lastClearStateNode">清理上一个场景资源-可为null</param>
         /// <param name="preLoadStateNode">预加载下一个场景资源-可为null</param>
         /// <param name="loadNextSceneStateNode">加载下一个场景-必须实现，直接跳转</param>
         /// <param name="nextSceneInitStateNode">下一个场景初始化操作-可为null</param>
         /// <param name="blackboardKeyValue">设置黑板数据</param>
-        public SwitchSceneOperation(LoadNextSceneStateNode loadNextSceneStateNode,string sceneName,bool isAuto=true,LastClearStateNode lastClearStateNode=null, PreLoadStateNode preLoadStateNode=null, NextSceneInitStateNode nextSceneInitStateNode=null,Dictionary<string,object>blackboardKeyValue=null)
+        public SwitchSceneOperation(LoadNextSceneStateNode loadNextSceneStateNode,string sceneName,
+            bool isAuto=true,PreDepartureProcessingStateNodeBase preDepartureProcessingStateNodeBase=null,LastClearStateNode lastClearStateNode=null, 
+            PreLoadStateNode preLoadStateNode=null, NextSceneInitStateNode nextSceneInitStateNode=null,Dictionary<string,object>blackboardKeyValue=null)
         {
             pc = new StateMachineController(this,"场景切换",$"{sceneName}");
             pc.ProcedureSwitchEvent += SwitchSceneOperationEvent;
             
+            preDepartureProcessingStateNodeBase??= new NonePreDepartureProcessingStateNode();
+            pc.AddProcedure(preDepartureProcessingStateNodeBase);
+            _preDepartureProcessingType=preDepartureProcessingStateNodeBase.GetType();
+            
             pc.AddProcedure<SwitchToTransferStateNode>();
+            
             lastClearStateNode ??= new NoneLastClearStateNode();
             pc.AddProcedure(lastClearStateNode);
             _lastClearType = lastClearStateNode.GetType();
+            
             preLoadStateNode??= new NonePreLoadStateNode();
             pc.AddProcedure(preLoadStateNode);
             _loadNextSceneType = preLoadStateNode.GetType();
+            
             if (_loadNextSceneType==null)
             {
                 throw new RSJWYException("请确保加载下一个场景流程不为空");
             }
+            
             pc.AddProcedure(loadNextSceneStateNode);
             _preLoadType = loadNextSceneStateNode.GetType();
             nextSceneInitStateNode??= new NoneNextSceneInitStateNode();
+            
             pc.AddProcedure(nextSceneInitStateNode);
             _NextSceneInitType= nextSceneInitStateNode.GetType();
             pc.AddProcedure<SwitchSceneDoneStateNode>();
+            
             if (blackboardKeyValue!= null)
             {
                 foreach (var blackboard in blackboardKeyValue)
@@ -66,6 +80,7 @@ namespace RSJWYFamework.Runtime.Scene
             pc.SetBlackboardValue("PreLoadType",_preLoadType);
             pc.SetBlackboardValue("LoadNextSceneType",_loadNextSceneType);
             pc.SetBlackboardValue("NextSceneInitType",_NextSceneInitType);
+            pc.SetBlackboardValue("PreDepartureProcessingType",_preDepartureProcessingType);
             //添加到管理器并启动
             if (isAuto)
             {
@@ -83,7 +98,7 @@ namespace RSJWYFamework.Runtime.Scene
                 return;
             run = true;
             Main.Main.StateMachineControllerExecuteQueue.AddProcedure(pc.Name,pc);
-            pc.StartProcedure<SwitchToTransferStateNode>();
+            pc.StartProcedure(_preDepartureProcessingType);
         }
         /// <summary>
         /// 流程切换回调

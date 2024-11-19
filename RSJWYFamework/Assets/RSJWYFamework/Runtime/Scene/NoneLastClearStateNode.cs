@@ -4,6 +4,37 @@ using RSJWYFamework.Runtime.StateMachine;
 namespace RSJWYFamework.Runtime.Scene
 {
     /// <summary>
+    /// 不需要离开当前场景前处理
+    /// </summary>
+    public sealed class NonePreDepartureProcessingStateNode : PreDepartureProcessingStateNodeBase
+    {
+        public override void OnInit()
+        {
+            
+        }
+
+        public override void OnClose()
+        {
+        }
+
+        public override void OnLeave(StateNodeBase nextStateNodeBase)
+        {
+        }
+
+        public override void OnUpdate()
+        {
+        }
+
+        public override void OnUpdateSecond()
+        {
+        }
+
+        protected override async UniTask PreDepartureProcessing(StateNodeBase lastStateNodeBase)
+        {
+            await UniTask.CompletedTask;
+        }
+    }
+    /// <summary>
     /// 不需要清理上一个场景数据
     /// </summary>
     public sealed class NoneLastClearStateNode : LastClearStateNode

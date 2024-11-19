@@ -1,4 +1,6 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -6,45 +8,73 @@ namespace RSJWYFamework.Runtime.Scene
 {
     internal class SceneTransition : MonoBehaviour
     {
-        private static GameObject m_canvas;
+        [SerializeField]
+        CanvasGroup canvasGroup;
 
-        private GameObject m_overlay;
+        [SerializeField]
+        Transform loadingBar;
+        
+        [SerializeField]
+        Text info;
+
+        [SerializeField]
+        Text progressText;
+
+        int progress = 0;
+        
+        int Progress
+        {
+            get
+            {
+                return progress;
+            }
+            set
+            {
+                if (value>=100)
+                {
+                    progress = 100;
+                }
+                else if (value<=0)
+                {
+                    progress = 0;
+                }
+                else
+                {
+                    progress = value;
+                }
+
+            }
+        }
 
         private void Awake()
         {
-            // Create a new, ad-hoc canvas that is not destroyed after loading the new scene
-            // to more easily handle the fading code.
-            m_canvas = new GameObject("TransitionCanvas");
-            var canvas = m_canvas.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            DontDestroyOnLoad(m_canvas);
+            gameObject.SetActive(false);
         }
-        /// <summary>
-        /// 获取实例对象
-        /// </summary>
-        /// <returns></returns>
-        public static SceneTransition Instance()
-        {
-            var fade = new GameObject("Transition");
-            fade.AddComponent<SceneTransition>();
-            fade.transform.SetParent(m_canvas.transform, false);
-            fade.transform.SetAsLastSibling();
-            return fade.GetComponent<SceneTransition>();
-        }
-        
+
         /// <summary>
         /// 切换到中转
         /// </summary>
-        public async UniTask ToTransferScene()
+        public async UniTask ToTransferScene(float time=0.15f)
         {
-            await UniTask.CompletedTask;
+            canvasGroup.alpha = 0;
+            gameObject.SetActive(true);
+            await DOTween.To(
+                () => canvasGroup.alpha, x => canvasGroup.alpha = x, 1, time)
+                .AsyncWaitForCompletion();
+            canvasGroup.alpha = 1;
         }
         /// <summary>
         /// 切换到下一场景
         /// </summary>
-        public async UniTask ToNextScene()
+        public async UniTask ToNextScene(float time=0.15f)
         {
-            await UniTask.CompletedTask;
+            canvasGroup.alpha = 1;
+            gameObject.SetActive(true);
+            await DOTween.To(
+                    () => canvasGroup.alpha, x => canvasGroup.alpha = x, 0, time)
+                .AsyncWaitForCompletion();
+            canvasGroup.alpha = 0;
+            gameObject.SetActive(false);
         }
     }
 }

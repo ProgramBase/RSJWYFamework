@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using RSJWYFamework.Runtime.AsyncOperation;
+using RSJWYFamework.Runtime.Base;
 using RSJWYFamework.Runtime.Data;
 using RSJWYFamework.Runtime.Default.Manager;
 using RSJWYFamework.Runtime.Driver;
@@ -8,6 +9,7 @@ using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Module;
 using RSJWYFamework.Runtime.ReferencePool;
+using RSJWYFamework.Runtime.Scene;
 using RSJWYFamework.Runtime.StateMachine;
 using RSJWYFamework.Runtime.YooAssetModule;
 using UnityEngine;
@@ -15,7 +17,7 @@ using UnityEngine.Serialization;
 
 namespace RSJWYFamework.Runtime.Main
 {
-    public  class Main:MonoBehaviour
+    public  class Main:SingletonBaseMono<Main>
     {
         
         public static bool IsInitialize { get; private set; } = false;
@@ -57,8 +59,18 @@ namespace RSJWYFamework.Runtime.Main
         /// </summary>
         public static StateMachineControllerExecuteQueue StateMachineControllerExecuteQueue { get; private set; }
 
+        /// <summary>
+        /// 相关服务函数
+        /// </summary>
         [SerializeField]
         RSJWYFameworkDriverService service;
+        /// <summary>
+        /// 场景转换
+        /// </summary>
+        [SerializeField]
+        SceneTransition sceneTransition;
+        
+        internal static SceneTransition SceneTransition => Instance.sceneTransition;
         public void Awake()
         {
             DontDestroyOnLoad(gameObject);

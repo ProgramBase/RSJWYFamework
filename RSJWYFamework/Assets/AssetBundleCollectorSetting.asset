@@ -29,7 +29,7 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/HotUpdateAssets/Scenes
+      - CollectPath: Assets/Assets/Scenes
         CollectorGUID: 3c5b4df755ac46149b337bbc80349f72
         CollectorType: 0
         AddressRuleName: AddressByGroupAndFileName
@@ -42,7 +42,7 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/HotUpdateAssets/Prefab
+      - CollectPath: Assets/Assets/Prefab
         CollectorGUID: 4582e539a56fa1e4e9ce4492665f0718
         CollectorType: 0
         AddressRuleName: AddressByGroupAndFileName
@@ -55,7 +55,7 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/HotUpdateAssets/Shader
+      - CollectPath: Assets/Assets/Shader
         CollectorGUID: ad6af784dbb3236408abf9882b9432e1
         CollectorType: 1
         AddressRuleName: AddressByFileName
@@ -68,7 +68,7 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: DisableGroup
       Collectors:
-      - CollectPath: Assets/HotUpdateAssets/Reference
+      - CollectPath: Assets/Assets/Reference
         CollectorGUID: 24c3e8ddc0fdb524090743553a7c2335
         CollectorType: 1
         AddressRuleName: AddressByFileName
@@ -89,7 +89,7 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/HotCode
+      - CollectPath: Assets/Assets/HotUpdateCode/HotCode
         CollectorGUID: 72bb78504a138914582cb7d70e5c039b
         CollectorType: 0
         AddressRuleName: AddressByFileName
@@ -97,15 +97,15 @@ MonoBehaviour:
         FilterRuleName: HotCodeFilterRule
         AssetTags: 
         UserData: 
-      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/List
-        CollectorGUID: e3d575cf570fe094185c8efbb2ee9fc8
+      - CollectPath: Assets/Assets/HotUpdateCode/List/HotList.json
+        CollectorGUID: 90e99bb1165bc4d4894f38c412fdb712
         CollectorType: 0
         AddressRuleName: AddressByGroupAndFileName
         PackRuleName: PackRawFile
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-      - CollectPath: Assets/HotUpdateAssets/HotUpdateCode/MetadataForAOTAssemblies
+      - CollectPath: Assets/Assets/HotUpdateCode/MetadataForAOTAssemblies
         CollectorGUID: 883c203fc8ee7dc40b14d18edac8519e
         CollectorType: 0
         AddressRuleName: AddressByFileName
