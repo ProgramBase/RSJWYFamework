@@ -1,7 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using RSJWYFamework.Runtime.Logger;
-using RSJWYFamework.Runtime.Procedure;
+using RSJWYFamework.Runtime.StateMachine;
 using UnityEngine.SceneManagement;
 using YooAsset;
 
@@ -10,7 +10,7 @@ namespace RSJWYFamework.Runtime.Scene
     /// <summary>
     /// 切换到中转场景
     /// </summary>
-    public sealed class SwitchToTransferProcedure:ProcedureBase
+    public sealed class SwitchToTransferStateNode:StateNodeBase
     {
         public override void OnInit()
         {
@@ -20,7 +20,7 @@ namespace RSJWYFamework.Runtime.Scene
         {
         }
 
-        public override void OnEnter(ProcedureBase lastProcedureBase)
+        public override void OnEnter(StateNodeBase lastStateNodeBase)
         {
             UniTask.Create(async () =>
             {
@@ -40,7 +40,7 @@ namespace RSJWYFamework.Runtime.Scene
             });
         }
 
-        public override void OnLeave(ProcedureBase nextProcedureBase)
+        public override void OnLeave(StateNodeBase nextStateNodeBase)
         {
         }
 
@@ -55,14 +55,14 @@ namespace RSJWYFamework.Runtime.Scene
     /// <summary>
     /// 清理资源-在中转场景内调用
     /// </summary>
-    public abstract class LastClearProcedure:ProcedureBase
+    public abstract class LastClearStateNode:StateNodeBase
     {
-        public override void OnEnter(ProcedureBase lastProcedureBase)
+        public override void OnEnter(StateNodeBase lastStateNodeBase)
         {
             UniTask.Create(async () =>
             {
                 RSJWYLogger.Log($"{pc.OtherInfo}--清理不需要的资源");
-                await Clear(lastProcedureBase);
+                await Clear(lastStateNodeBase);
                 var nextType= (Type)pc.GetBlackboardValue("PreLoadType");
                 pc.SwitchProcedure(nextType);
             });
@@ -71,19 +71,19 @@ namespace RSJWYFamework.Runtime.Scene
         /// <summary>
         /// 清理上一个场景相关资源
         /// </summary>
-        protected abstract UniTask Clear(ProcedureBase lastProcedureBase);
+        protected abstract UniTask Clear(StateNodeBase lastStateNodeBase);
     }
     /// <summary>
     /// 加载下一个场景资源
     /// </summary>
-    public abstract class PreLoadProcedure:ProcedureBase
+    public abstract class PreLoadStateNode:StateNodeBase
     {
-        public override void OnEnter(ProcedureBase lastProcedureBase)
+        public override void OnEnter(StateNodeBase lastStateNodeBase)
         {
             UniTask.Create(async () =>
             {
                 RSJWYLogger.Log($"{pc.OtherInfo}--预加载下一场景需要的资源");
-                await PreLoad(lastProcedureBase);
+                await PreLoad(lastStateNodeBase);
                 var nextType= (Type)pc.GetBlackboardValue("LoadNextSceneType");
                 pc.SwitchProcedure(nextType);
             });
@@ -91,46 +91,46 @@ namespace RSJWYFamework.Runtime.Scene
         /// <summary>
         /// 预加载下一个场景资源
         /// </summary>
-        protected abstract UniTask PreLoad(ProcedureBase lastProcedureBase);
+        protected abstract UniTask PreLoad(StateNodeBase lastStateNodeBase);
     }
     /// <summary>
     /// 加载并切换下一个场景
     /// </summary>
-    public abstract class LoadNextSceneProcedure:ProcedureBase
+    public abstract class LoadNextSceneStateNode:StateNodeBase
     {
-        public override void OnEnter(ProcedureBase lastProcedureBase)
+        public override void OnEnter(StateNodeBase lastStateNodeBase)
         {
             UniTask.Create(async () =>
             {
                 RSJWYLogger.Log($"{pc.OtherInfo}--加载并切换下一个场景");
-                await LoadNextScene(lastProcedureBase);
+                await LoadNextScene(lastStateNodeBase);
                 var nextType= (Type)pc.GetBlackboardValue("NextSceneInitType");
                 pc.SwitchProcedure(nextType);
             });
         }
-        protected abstract UniTask LoadNextScene(ProcedureBase lastProcedureBase);
+        protected abstract UniTask LoadNextScene(StateNodeBase lastStateNodeBase);
     }
 
     /// <summary>
     /// 下一个场景初始化流程
     /// </summary>
-    public abstract class NextSceneInitProcedure : ProcedureBase
+    public abstract class NextSceneInitStateNode : StateNodeBase
     {
-        public override void OnEnter(ProcedureBase lastProcedureBase)
+        public override void OnEnter(StateNodeBase lastStateNodeBase)
         {
             UniTask.Create(async () =>
             {
                 RSJWYLogger.Log($"{pc.OtherInfo}--正在初始化下一个场景");
-                await SceneInit(lastProcedureBase);
-                pc.SwitchProcedure<SwitchSceneDoneProcedure>();
+                await SceneInit(lastStateNodeBase);
+                pc.SwitchProcedure<SwitchSceneDoneStateNode>();
             });
         }
-        protected abstract UniTask SceneInit(ProcedureBase lastProcedureBase);
+        protected abstract UniTask SceneInit(StateNodeBase lastStateNodeBase);
     }
     /// <summary>
     /// 流程执行结束
     /// </summary>
-    public sealed class SwitchSceneDoneProcedure:ProcedureBase
+    public sealed class SwitchSceneDoneStateNode:StateNodeBase
     {
         public override void OnInit()
         {
@@ -142,12 +142,12 @@ namespace RSJWYFamework.Runtime.Scene
             
         }
 
-        public override void OnEnter(ProcedureBase lastProcedureBase)
+        public override void OnEnter(StateNodeBase lastStateNodeBase)
         {
             RSJWYLogger.Log($"{pc.OtherInfo}--加载场景流程结束");
         }
 
-        public override void OnLeave(ProcedureBase nextProcedureBase)
+        public override void OnLeave(StateNodeBase nextStateNodeBase)
         {
             
         }

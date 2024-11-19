@@ -92,7 +92,7 @@ namespace RSJWYFamework.Runtime.Senseshield
         /// <param name="buffer"></param>
         public static void SLMFree(IntPtr buffer)
         {
-            uint ret = 0;
+            //uint ret = 0;
             SlmRuntime.slm_free(buffer);
         }
         

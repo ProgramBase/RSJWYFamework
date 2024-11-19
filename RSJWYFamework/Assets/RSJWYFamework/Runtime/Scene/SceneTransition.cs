@@ -37,14 +37,14 @@ namespace RSJWYFamework.Runtime.Scene
         /// </summary>
         public async UniTask ToTransferScene()
         {
-            
+            await UniTask.CompletedTask;
         }
         /// <summary>
         /// 切换到下一场景
         /// </summary>
         public async UniTask ToNextScene()
         {
-            
+            await UniTask.CompletedTask;
         }
     }
 }

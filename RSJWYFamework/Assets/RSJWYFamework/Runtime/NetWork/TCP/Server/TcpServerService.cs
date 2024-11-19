@@ -226,6 +226,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Server
                 msgThread.IsBackground = true;//后台运行
                 msgThread.Start();
                 StartAccept(null);
+                isInit = true;
             }
             catch (Exception e)
             {

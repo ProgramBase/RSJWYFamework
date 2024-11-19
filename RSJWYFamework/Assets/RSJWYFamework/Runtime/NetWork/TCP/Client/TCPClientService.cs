@@ -165,7 +165,7 @@ namespace RSJWYFamework.Runtime.NetWork.TCP.Client
         /// <summary>
         /// 记录当前网络
         /// </summary>
-        NetworkReachability m_CurNetWork = NetworkReachability.NotReachable;
+        //NetworkReachability m_CurNetWork = NetworkReachability.NotReachable;
         
         /// <summary>
         /// 通知多线程自己跳出

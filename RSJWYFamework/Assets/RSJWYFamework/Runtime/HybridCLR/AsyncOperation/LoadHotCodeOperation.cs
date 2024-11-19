@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Reflection;
 using RSJWYFamework.Runtime.AsyncOperation;
-using RSJWYFamework.Runtime.Default.Manager;
-using RSJWYFamework.Runtime.HybridCLR.Procedure;
-using RSJWYFamework.Runtime.Procedure;
+using RSJWYFamework.Runtime.HybridCLR.StateNode;
+using RSJWYFamework.Runtime.StateMachine;
 
 namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
 {
     /// <summary>
     /// 加载热更代码
     /// </summary>
-    public class LoadHotCodeOperation:GameRAsyncOperation,IProcedureUser
+    public class LoadHotCodeOperation:GameRAsyncOperation,IStateMachineUser
     {
         enum RSteps
         {
@@ -23,15 +22,15 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
         /// 加载到的程序集
         /// </summary>
         public Dictionary<string, Assembly> HotCode { get; private set; } = new();
-        private readonly ProcedureController pc;
+        private readonly StateMachineController pc;
         private RSteps _steps = RSteps.None;
         
         public LoadHotCodeOperation()
         {
-            pc = new ProcedureController(this,"加载热更代码");
+            pc = new StateMachineController(this,"加载热更代码");
             //创建流程
-            pc.AddProcedure(new LoadDLLByteProcedureBase());
-            pc.AddProcedure(new LoadHotCodeProcedureBase());
+            pc.AddProcedure(new LoadDLLByteStateNodeBase());
+            pc.AddProcedure(new LoadHotCodeStateNodeBase());
             pc.AddProcedure(new LoadHotCodeDone());
             Main.Main.RAsyncOperationSystem.StartOperation(typeof(LoadHotCodeOperation).FullName,this);
         }
@@ -39,7 +38,7 @@ namespace RSJWYFamework.Runtime.HybridCLR.AsyncOperation
         protected override void OnStart()
         {
             _steps = RSteps.Update;
-            pc.StartProcedure(typeof(LoadDLLByteProcedureBase));
+            pc.StartProcedure(typeof(LoadDLLByteStateNodeBase));
         }
 
         protected override void OnUpdate(float time, float deltaTime)

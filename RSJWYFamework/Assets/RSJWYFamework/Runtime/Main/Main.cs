@@ -7,8 +7,8 @@ using RSJWYFamework.Runtime.Driver;
 using RSJWYFamework.Runtime.Event;
 using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Module;
-using RSJWYFamework.Runtime.Procedure;
 using RSJWYFamework.Runtime.ReferencePool;
+using RSJWYFamework.Runtime.StateMachine;
 using RSJWYFamework.Runtime.YooAssetModule;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -19,10 +19,6 @@ namespace RSJWYFamework.Runtime.Main
     {
         
         public static bool IsInitialize { get; private set; } = false;
-        /// <summary>
-        /// 实例化的控制器
-        /// </summary>
-        private static GameObject _driver = null;
         /// <summary>
         /// 模块字典
         /// </summary>
@@ -59,7 +55,7 @@ namespace RSJWYFamework.Runtime.Main
         /// <summary>
         /// 流程管理器
         /// </summary>
-        public static ProcedureControllerManager ProcedureControllerManager { get; private set; }
+        public static StateMachineControllerExecuteQueue StateMachineControllerExecuteQueue { get; private set; }
 
         [SerializeField]
         RSJWYFameworkDriverService service;
@@ -79,7 +75,7 @@ namespace RSJWYFamework.Runtime.Main
                 HybridClrManager = (HybirdCLRManager)AddModule<HybirdCLRManager>();
                 RAsyncOperationSystem = (RAsyncOperationSystem)AddModule<RAsyncOperationSystem>();
                 ReferencePoolManager = (ReferencePoolManager)AddModule<ReferencePoolManager>();
-                ProcedureControllerManager= (ProcedureControllerManager)AddModule<ProcedureControllerManager>();
+                StateMachineControllerExecuteQueue= (StateMachineControllerExecuteQueue)AddModule<StateMachineControllerExecuteQueue>();
                 IsInitialize = true;
                 RSJWYLogger.Log(RSJWYFameworkEnum.Main,"初始化完成");
             }

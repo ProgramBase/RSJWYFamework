@@ -5,8 +5,8 @@ using RSJWYFamework.Runtime.Logger;
 using RSJWYFamework.Runtime.Main;
 using UnityEngine;
 using RSJWYFamework.Runtime.Driver;
-using RSJWYFamework.Runtime.Procedure;
 using RSJWYFamework.Runtime.Scene;
+using RSJWYFamework.Runtime.StateMachine;
 
 
 namespace Script.AOT
@@ -21,7 +21,7 @@ namespace Script.AOT
             DontDestroyOnLoad(this);
         }
 
-        private async void Start()
+        private void Start()
         {
             StartApp().Forget();
         }
@@ -43,7 +43,7 @@ namespace Script.AOT
         }
     }
 
-    internal sealed class LoadHotScene : LoadNextSceneProcedure
+    internal sealed class LoadHotScene : LoadNextSceneStateNode
     {
         public override void OnInit()
         {
@@ -54,7 +54,7 @@ namespace Script.AOT
         {
         }
 
-        public override void OnLeave(ProcedureBase nextProcedureBase)
+        public override void OnLeave(StateNodeBase nextStateNodeBase)
         {
         }
 
@@ -66,7 +66,7 @@ namespace Script.AOT
         {
         }
 
-        protected override async UniTask LoadNextScene(ProcedureBase lastProcedureBase)
+        protected override async UniTask LoadNextScene(StateNodeBase lastStateNodeBase)
         {
             RSJWYLogger.Log("加载入口场景");
             Main.YooAssetManager.GetPackage("PrefabPackage",out var package);
