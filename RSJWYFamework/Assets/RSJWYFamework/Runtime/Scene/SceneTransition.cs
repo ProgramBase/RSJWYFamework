@@ -41,14 +41,11 @@ namespace RSJWYFamework.Runtime.Scene
                 else
                 {
                     progress = value;
+                    progressText.text = $"{value}%";
+                    loadingBar.localScale = new Vector3((float)value / 100, 1, 1);
                 }
 
             }
-        }
-
-        private void Awake()
-        {
-            gameObject.SetActive(false);
         }
 
         /// <summary>
@@ -57,11 +54,12 @@ namespace RSJWYFamework.Runtime.Scene
         public async UniTask ToTransferScene(float time=0.15f)
         {
             canvasGroup.alpha = 0;
+            Progress = 0;
             gameObject.SetActive(true);
-            await DOTween.To(
-                () => canvasGroup.alpha, x => canvasGroup.alpha = x, 1, time)
-                .AsyncWaitForCompletion();
+            //await DOTween.To(() => canvasGroup.alpha, x => canvasGroup.alpha = x, 1, time).AsyncWaitForCompletion();
             canvasGroup.alpha = 1;
+
+            await UniTask.Yield(PlayerLoopTiming.Update);
         }
         /// <summary>
         /// 切换到下一场景
@@ -69,12 +67,22 @@ namespace RSJWYFamework.Runtime.Scene
         public async UniTask ToNextScene(float time=0.15f)
         {
             canvasGroup.alpha = 1;
-            gameObject.SetActive(true);
-            await DOTween.To(
-                    () => canvasGroup.alpha, x => canvasGroup.alpha = x, 0, time)
-                .AsyncWaitForCompletion();
-            canvasGroup.alpha = 0;
+            //await DOTween.To(() => canvasGroup.alpha, x => canvasGroup.alpha = x, 0, time).AsyncWaitForCompletion();
             gameObject.SetActive(false);
+            
+            await UniTask.Yield(PlayerLoopTiming.Update);
+            canvasGroup.alpha = 0;
+            Progress = 0;
+        }
+        /// <summary>
+        /// 更新进度条
+        /// </summary>
+        /// <param name="progress">进度</param>
+        /// <param name="info">进度信息</param>
+        public void UpdateProgress(int progress, string info)
+        {
+            Progress=progress;
+            this.info.text = info;
         }
     }
 }

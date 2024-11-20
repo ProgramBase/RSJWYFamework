@@ -17,7 +17,7 @@ using UnityEngine.Serialization;
 
 namespace RSJWYFamework.Runtime.Main
 {
-    public  class Main:SingletonBaseMono<Main>
+    public partial class Main:SingletonBaseMono<Main>
     {
         
         public static bool IsInitialize { get; private set; } = false;
@@ -65,6 +65,11 @@ namespace RSJWYFamework.Runtime.Main
         [SerializeField]
         RSJWYFameworkDriverService service;
         /// <summary>
+        /// canvas
+        /// </summary>
+        [SerializeField]
+        GameObject canvas;
+        /// <summary>
         /// 场景转换
         /// </summary>
         [SerializeField]
@@ -89,6 +94,7 @@ namespace RSJWYFamework.Runtime.Main
                 ReferencePoolManager = (ReferencePoolManager)AddModule<ReferencePoolManager>();
                 StateMachineControllerExecuteQueue= (StateMachineControllerExecuteQueue)AddModule<StateMachineControllerExecuteQueue>();
                 IsInitialize = true;
+                Init();
                 RSJWYLogger.Log(RSJWYFameworkEnum.Main,"初始化完成");
             }
         }
