@@ -488,6 +488,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
+--- !u!1 &319865604 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3645381551577276213, guid: 10bca9a8f36033f44aefba2ba9a50547, type: 3}
+  m_PrefabInstance: {fileID: 986538824622107052}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1218171899
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,6 +637,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RFWManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6974042737321845779, guid: 10bca9a8f36033f44aefba2ba9a50547, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 319865604}
     - target: {fileID: 7329695460278524636, guid: 10bca9a8f36033f44aefba2ba9a50547, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -646,6 +655,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7329695460278524636, guid: 10bca9a8f36033f44aefba2ba9a50547, type: 3}
       propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483734093147497857, guid: 10bca9a8f36033f44aefba2ba9a50547, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8570195734504568789, guid: 10bca9a8f36033f44aefba2ba9a50547, type: 3}

@@ -16,9 +16,12 @@ MonoBehaviour:
   APPName: "\u6D4B\u8BD5\u8F6F\u4EF6"
   Version: v1.0
   YooAssets: {fileID: 11400000, guid: de273a62c6500cc4d95d98eb7220c371, type: 2}
+  PlayMode: 1
+  hostServerIP: http://127.0.0.1
+  licenseID: 0
+  developerPW: AAA
+  Loglevel: 0
   AESKey: 'Fxu^ph~f6YjTZU0p0Q SC_PY@ed$dTLzzRZX^ t$fQgu)8xqSir*uoMs2 NmS&LzLXcPQ4vD#dd
     ^O8TVQULDElLi^iUrK V1N5UdJUDF6jUz$yOo() M2#7E#ODjF^#8QOGUj !@DO!33*4yJjUxMM lZWVVmBHFNm(Ap)&oWA_
     $nE+CYsp78@@@lHYFe& CJRS1kFFp71ptOB78 +Ky~WEJw1q7BLALq pVaK)d3bJLiDGpJQL cD3aoQ7bSoAk8u1(J
     QgQ*5NMM&&8wz_!yt '
-  licenseID: 0
-  developerPW: AAA

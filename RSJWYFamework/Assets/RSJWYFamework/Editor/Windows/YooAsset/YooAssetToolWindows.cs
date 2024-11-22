@@ -105,7 +105,7 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
             base.OnEnable();
             if (SettingData == null)
             {
-                SettingData = AssetDatabase.LoadAssetAtPath<YooAssetPackages>("Assets/Resources/YooAssetModuleSetting.asset");
+                SettingData = AssetDatabase.LoadAssetAtPath<YooAssetPackages>("Assets/Resources/YooAssetPackages.asset");
             }
             buildoutputRoot = AssetBundleBuilderHelper.GetDefaultBuildOutputRoot();
             streamingAssetsRoot = AssetBundleBuilderHelper.GetStreamingAssetsRoot();

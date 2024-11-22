@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BuildinCatalog
   m_EditorClassIdentifier: 
   PackageName: RawFilePackage
-  PackageVersion: 2024-10-25-884
+  PackageVersion: 2024-11-22-1006
   Wrappers:
-  - BundleGUID: 64e7eaf79305fab656ff9a26428bbfc1
-    FileName: 64e7eaf79305fab656ff9a26428bbfc1.rawfile
-  - BundleGUID: 8f891be33cd503847ca44e91876e6554
-    FileName: 8f891be33cd503847ca44e91876e6554.rawfile
-  - BundleGUID: a09e306de6bcc64bf085dce41833b883
-    FileName: a09e306de6bcc64bf085dce41833b883.bundle
+  - BundleGUID: 37fdfd9f9f41f00b18373948a51b96f1
+    FileName: rawfilepackage_assets_assets_hotupdatecode_hotcode_hotcode_dll_bytes_37fdfd9f9f41f00b18373948a51b96f1.rawfile
+  - BundleGUID: 13127fcc238727261f0cf6b5345732cf
+    FileName: rawfilepackage_assets_assets_hotupdatecode_hotcode_hotcode_pdb_bytes_13127fcc238727261f0cf6b5345732cf.rawfile
+  - BundleGUID: 01e0a934e4f185a38e63e30ae52d0f68
+    FileName: rawfilepackage_assets_assets_hotupdatecode_list_hotlist_json_01e0a934e4f185a38e63e30ae52d0f68.rawfile

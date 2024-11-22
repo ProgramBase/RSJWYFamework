@@ -27,7 +27,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.StateNode
             var packageVersion = (string)pc.GetBlackboardValue("PackageVersion");
             var playMode = (EPlayMode)pc.GetBlackboardValue("PlayMode");
             RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets,$"完成包{packageName}更新流程，版本：{packageVersion}");
-            if (playMode == EPlayMode.OfflinePlayMode)
+            if (playMode == EPlayMode.HostPlayMode)
             {
                 //弱联网环境配置
                 // 注意：下载完成之后再保存本地版本

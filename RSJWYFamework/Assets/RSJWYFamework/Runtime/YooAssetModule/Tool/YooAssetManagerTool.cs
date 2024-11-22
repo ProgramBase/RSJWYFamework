@@ -113,9 +113,10 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
             /// </summary>
             public byte[] ReadFileData(DecryptFileInfo fileInfo)
             {
-                RSJWYLogger.Log($"解密文件{fileInfo.BundleName}");
+                RSJWYLogger.Log($"解密文件{fileInfo.BundleName}，路径：{fileInfo.FileLoadPath}");
                 byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-                return Utility.Utility.AESTool.AESEncrypt(fileData,Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>().AESKey);
+                return Utility.Utility.AESTool.AESDecrypt(fileData,Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>().AESKey);
+                
             }
             /// <summary>
             /// 获取加密过的Text
@@ -123,7 +124,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
             public string ReadFileText(DecryptFileInfo fileInfo)
             {
                 byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-                var DData= Utility.Utility.AESTool.AESEncrypt(fileData,Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>().AESKey);
+                var DData= Utility.Utility.AESTool.AESDecrypt(fileData,Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>().AESKey);
                 return Encoding.UTF8.GetString(DData);
             }
         }
@@ -140,26 +141,28 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
             }
             public EncryptResult Encrypt(EncryptFileInfo fileInfo)
             {
-                // 注意：针对特定规则加密
+                /*// 注意：针对特定规则加密
                 if (fileInfo.BundleName.Contains("_HoteCodeEncryptionUse"))
                 {
-                    RSJWYLogger.Log($"加密文件{fileInfo.BundleName}");
-                    byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-                    var edata = Utility.Utility.AESTool.AESEncrypt(fileData,aeskey);
-                    EncryptResult result = new EncryptResult
-                    {
-                        Encrypted = true,
-                        EncryptedData = edata
-                    };
-                    return result;
+                  
                 }
                 else
                 {
                     return new EncryptResult
                     {
                         Encrypted = false
+                        
                     };
-                }
+                }*/
+                RSJWYLogger.Log($"加密文件{fileInfo.BundleName}，路径：{fileInfo.FileLoadPath}");
+                byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
+                var edata = Utility.Utility.AESTool.AESEncrypt(fileData,aeskey);
+                EncryptResult result = new EncryptResult
+                {
+                    Encrypted = true,
+                    EncryptedData = edata
+                };
+                return result;
             }
         }
         /// <summary>

@@ -18,4 +18,4 @@ MonoBehaviour:
     BuildPipeline: 0
   - PackageName: RawFilePackage
     PackageTips: "\u70ED\u66F4\u4EE3\u7801"
-    BuildPipeline: 0
+    BuildPipeline: 2
