@@ -1,5 +1,6 @@
 ﻿using System;
 using RSJWYFamework.Editor.Windows.Config;
+using RSJWYFamework.Editor.YooAssetModule;
 using RSJWYFamework.Runtime.Config;
 using RSJWYFamework.Runtime.YooAssetModule;
 using RSJWYFamework.Runtime.YooAssetModule.Tool;
@@ -79,8 +80,8 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
             //加密服务
             buildParameters.EncryptionServices = BuildPipeline switch
             {
-                EDefaultBuildPipeline.BuiltinBuildPipeline => new YooAssetManagerTool.EncryptPF(),
-                EDefaultBuildPipeline.RawFileBuildPipeline => new YooAssetManagerTool.EncryptRF(),
+                EDefaultBuildPipeline.BuiltinBuildPipeline => new EncryptAssets.EncryptPrefabFile(),
+                EDefaultBuildPipeline.RawFileBuildPipeline => new EncryptAssets.EncryptRawFile(),
                 _ => buildParameters.EncryptionServices
             };
 

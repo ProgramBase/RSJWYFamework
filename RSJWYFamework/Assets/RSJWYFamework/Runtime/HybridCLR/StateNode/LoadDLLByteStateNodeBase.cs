@@ -38,7 +38,8 @@ namespace RSJWYFamework.Runtime.HybridCLR.StateNode
                 //获取列表
                 var MFALisRFH = package.LoadRawFileAsync("HotUpdateCode_HotList");
                 await MFALisRFH.ToUniTask();
-                var loadLis = JsonConvert.DeserializeObject<HotCodeDLL>(MFALisRFH.GetRawFileText());
+                var a = MFALisRFH.GetRawFileText();
+                var loadLis = JsonConvert.DeserializeObject<HotCodeDLL>(a);
                 var hotCodeBytesMap = new Dictionary<string, HotCodeBytes>();
                 //加载热更代码和pdb
                 foreach (var asset in loadLis.HotCode)

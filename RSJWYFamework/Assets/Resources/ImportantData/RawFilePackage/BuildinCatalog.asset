@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BuildinCatalog
   m_EditorClassIdentifier: 
   PackageName: RawFilePackage
-  PackageVersion: 2024-11-22-1006
+  PackageVersion: 2024-11-25-995
   Wrappers:
-  - BundleGUID: 37fdfd9f9f41f00b18373948a51b96f1
-    FileName: rawfilepackage_assets_assets_hotupdatecode_hotcode_hotcode_dll_bytes_37fdfd9f9f41f00b18373948a51b96f1.rawfile
-  - BundleGUID: 13127fcc238727261f0cf6b5345732cf
-    FileName: rawfilepackage_assets_assets_hotupdatecode_hotcode_hotcode_pdb_bytes_13127fcc238727261f0cf6b5345732cf.rawfile
-  - BundleGUID: 01e0a934e4f185a38e63e30ae52d0f68
-    FileName: rawfilepackage_assets_assets_hotupdatecode_list_hotlist_json_01e0a934e4f185a38e63e30ae52d0f68.rawfile
+  - BundleGUID: 2b84e43e7542d296e64a2ff3878ea3c1
+    FileName: rawfilepackage_hotcode_dll_bytes_hotcodeencrypt_2b84e43e7542d296e64a2ff3878ea3c1.hotcode
+  - BundleGUID: 852572bf5411236233c62b002f4c4fb7
+    FileName: rawfilepackage_hotcode_pdb_bytes_hotcodeencrypt_852572bf5411236233c62b002f4c4fb7.hotcode
+  - BundleGUID: a09e306de6bcc64bf085dce41833b883
+    FileName: rawfilepackage_hotupdatecode_a09e306de6bcc64bf085dce41833b883.bundle

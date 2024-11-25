@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: BuildinCatalog
   m_EditorClassIdentifier: 
   PackageName: PrefabPackage
-  PackageVersion: test
+  PackageVersion: 2024-11-25-995
   Wrappers:
-  - BundleGUID: 1974570a32a633e9a482b86eaa51254b
-    FileName: prefabpackage_assets_assets_prefab_1974570a32a633e9a482b86eaa51254b.bundle
-  - BundleGUID: d654d64a4231b55e5e220495d1631ca9
-    FileName: prefabpackage_scenes_d654d64a4231b55e5e220495d1631ca9.bundle
-  - BundleGUID: 6e06c5e0e0e72925bf46bfd9fa550615
-    FileName: prefabpackage_share_packages_com_unity_ugui_editor_resources_gizmos_6e06c5e0e0e72925bf46bfd9fa550615.bundle
-  - BundleGUID: 5916a1d08bdaa2f6a93fd89a70e1d728
-    FileName: prefabpackage_unityshaders_5916a1d08bdaa2f6a93fd89a70e1d728.bundle
+  - BundleGUID: 1852cd0588fd39d9153baa3054a27653
+    FileName: 1852cd0588fd39d9153baa3054a27653.bundle
+  - BundleGUID: 1f70c664df87a38ecf9726c97b0ff46d
+    FileName: 1f70c664df87a38ecf9726c97b0ff46d.bundle
+  - BundleGUID: bd71a88eed0d91884dd3f001f7081953
+    FileName: bd71a88eed0d91884dd3f001f7081953.bundle
+  - BundleGUID: f86eba16e86feacf9e1d1572285e928a
+    FileName: f86eba16e86feacf9e1d1572285e928a.bundle

@@ -116,7 +116,6 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
                 RSJWYLogger.Log($"解密文件{fileInfo.BundleName}，路径：{fileInfo.FileLoadPath}");
                 byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
                 return Utility.Utility.AESTool.AESDecrypt(fileData,Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>().AESKey);
-                
             }
             /// <summary>
             /// 获取加密过的Text
@@ -128,69 +127,5 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
                 return Encoding.UTF8.GetString(DData);
             }
         }
-#if UNITY_EDITOR
-        /// <summary>
-        /// 加密资源包-原生资源
-        /// </summary>
-        public class EncryptRF : IEncryptionServices
-        {
-            private string aeskey;
-            public EncryptRF() : base()
-            {
-                aeskey =  Resources.Load<ProjectConfig>("ProjectConfig").AESKey;
-            }
-            public EncryptResult Encrypt(EncryptFileInfo fileInfo)
-            {
-                /*// 注意：针对特定规则加密
-                if (fileInfo.BundleName.Contains("_HoteCodeEncryptionUse"))
-                {
-                  
-                }
-                else
-                {
-                    return new EncryptResult
-                    {
-                        Encrypted = false
-                        
-                    };
-                }*/
-                RSJWYLogger.Log($"加密文件{fileInfo.BundleName}，路径：{fileInfo.FileLoadPath}");
-                byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-                var edata = Utility.Utility.AESTool.AESEncrypt(fileData,aeskey);
-                EncryptResult result = new EncryptResult
-                {
-                    Encrypted = true,
-                    EncryptedData = edata
-                };
-                return result;
-            }
-        }
-        /// <summary>
-        /// 加密资源包-资源文件
-        /// </summary>
-        public class EncryptPF : IEncryptionServices
-        {
-            private string aeskey;
-            public EncryptPF() : base()
-            {
-                aeskey =  Resources.Load<ProjectConfig>("ProjectConfig").AESKey;
-            }
-
-            public EncryptResult Encrypt(EncryptFileInfo fileInfo)
-            {
-                // 注意：针对特定规则加密
-                RSJWYLogger.Log($"加密文件{fileInfo.BundleName}");
-                byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-                
-                var edata = Utility.Utility.AESTool.AESEncrypt(fileData,aeskey);
-                    
-                return new EncryptResult
-                {
-                    Encrypted = true,
-                    EncryptedData = edata
-                };
-            }
-        }
-#endif
     }
 }

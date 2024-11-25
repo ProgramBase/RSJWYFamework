@@ -17,7 +17,9 @@ namespace RSJWYFamework.Editor.YooAssetModule
     {
         public PackRuleResult GetPackRuleResult(PackRuleData data)
         {
-            return new PackRuleResult($"{data.AssetPath}_HoteCodeEncryptionUse", "hotupdatecode");
+            //提取文件名，增加标记
+            var filename=Path.GetFileName(data.AssetPath);
+            return new PackRuleResult($"{filename}_HotCodeEncrypt", "hotcode");
         }
     }
 }

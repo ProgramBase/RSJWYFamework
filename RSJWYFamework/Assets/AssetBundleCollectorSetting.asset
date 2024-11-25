@@ -93,7 +93,7 @@ MonoBehaviour:
         CollectorGUID: 72bb78504a138914582cb7d70e5c039b
         CollectorType: 0
         AddressRuleName: AddressByFileName
-        PackRuleName: PackRawFile
+        PackRuleName: HotCodePackRule
         FilterRuleName: HotCodeFilterRule
         AssetTags: 
         UserData: 
@@ -101,7 +101,7 @@ MonoBehaviour:
         CollectorGUID: 90e99bb1165bc4d4894f38c412fdb712
         CollectorType: 0
         AddressRuleName: AddressByGroupAndFileName
-        PackRuleName: PackRawFile
+        PackRuleName: PackGroup
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
@@ -109,7 +109,7 @@ MonoBehaviour:
         CollectorGUID: 883c203fc8ee7dc40b14d18edac8519e
         CollectorType: 0
         AddressRuleName: AddressByFileName
-        PackRuleName: PackRawFile
+        PackRuleName: HotCodePackRule
         FilterRuleName: HotCodeFilterRule
         AssetTags: 
         UserData: 
