@@ -8,23 +8,20 @@ using YooAsset.Editor;
 
 namespace RSJWYFamework.Editor.YooAssetModule
 {
-    public class EncryptAssets
+    public class EncryptAssets:IEncryptionServices
     {
-         /// <summary>
-        /// 加密资源包-原生资源
-        /// </summary>
-        public class EncryptRawFile : IEncryptionServices
+        private string aeskey;
+        public EncryptAssets()
         {
-            private string aeskey;
-            public EncryptRawFile() : base()
+            aeskey =  Resources.Load<ProjectConfig>("ProjectConfig").AESKey;
+        }
+        public EncryptResult Encrypt(EncryptFileInfo fileInfo)
+        {
+            // 注意：针对特定规则加密
+            var extension = Path.GetExtension(fileInfo.FileLoadPath);
+            switch (extension)
             {
-                aeskey =  Resources.Load<ProjectConfig>("ProjectConfig").AESKey;
-            }
-            public EncryptResult Encrypt(EncryptFileInfo fileInfo)
-            {
-                // 注意：针对特定规则加密
-                var extension = Path.GetExtension(fileInfo.FileLoadPath);
-                if (extension==".hotcode")
+                case ".hotcode":
                 {
                     RSJWYLogger.Log($"加密文件{fileInfo.BundleName}");
                     byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
@@ -35,39 +32,23 @@ namespace RSJWYFamework.Editor.YooAssetModule
                         EncryptedData = edata
                     };
                 }
-                else
+                case ".bundle":
                 {
+                    RSJWYLogger.Log($"加密bundle文件{fileInfo.BundleName}");
+                    byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
+                    var edata = Utility.AESTool.AESEncrypt(fileData,aeskey);
+                    return new EncryptResult
+                    {
+                        Encrypted = true,
+                        EncryptedData = edata
+                    };
+                }
+                default:
+                    RSJWYLogger.Log($"不满足和加密后缀要求，不进行加密：{fileInfo.BundleName}");
                     return new EncryptResult
                     {
                         Encrypted = false,
                     };
-                }
-                
-            }
-           
-        }
-        /// <summary>
-        /// 加密资源包-资源文件
-        /// </summary>
-        public class EncryptPrefabFile : IEncryptionServices
-        {
-            private string aeskey;
-            public EncryptPrefabFile() : base()
-            {
-                aeskey =  Resources.Load<ProjectConfig>("ProjectConfig").AESKey;
-            }
-
-            public EncryptResult Encrypt(EncryptFileInfo fileInfo)
-            {
-                RSJWYLogger.Log($"加密文件{fileInfo.BundleName}，路径：{fileInfo.FileLoadPath}");
-                byte[] fileData = File.ReadAllBytes(fileInfo.FileLoadPath);
-                var edata = Utility.AESTool.AESEncrypt(fileData,aeskey);
-                EncryptResult result = new EncryptResult
-                {
-                    Encrypted = true,
-                    EncryptedData = edata
-                };
-                return result;
             }
         }
     }

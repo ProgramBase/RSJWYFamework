@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using RSJWYFamework.Runtime.Logger;
+using RSJWYFamework.Runtime.Main;
 
 namespace RSJWYFamework.Runtime.AsyncOperation
 {
@@ -111,7 +112,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
             {
                 Status = RAsyncOperationStatus.Failed;
                 Error = $"user abort: {reason}";
-                RSJWYLogger.Warning($"Async operaiton {this.GetType().Name} has been abort !, error: {reason}");
+                RSJWYLogger.Warning(RSJWYFameworkEnum.RAsyncOperationSystem,$"Async operaiton {this.GetType().Name} has been abort !, error: {reason}");
                 InternalOnAbort();
                 tcs.TrySetCanceled();
             }

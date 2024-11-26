@@ -78,12 +78,7 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
             buildParameters.BuildinFileCopyParams = string.Empty;
             buildParameters.CompressOption = CompressOption;
             //加密服务
-            buildParameters.EncryptionServices = BuildPipeline switch
-            {
-                EDefaultBuildPipeline.BuiltinBuildPipeline => new EncryptAssets.EncryptPrefabFile(),
-                EDefaultBuildPipeline.RawFileBuildPipeline => new EncryptAssets.EncryptRawFile(),
-                _ => buildParameters.EncryptionServices
-            };
+            buildParameters.EncryptionServices = new EncryptAssets();
 
             // 执行构建
             BuiltinBuildPipeline pipeline = new BuiltinBuildPipeline();
