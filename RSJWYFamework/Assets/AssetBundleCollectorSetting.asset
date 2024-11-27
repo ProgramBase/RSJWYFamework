@@ -22,7 +22,7 @@ MonoBehaviour:
     LocationToLower: 0
     IncludeAssetGUID: 1
     AutoCollectShaders: 1
-    IgnoreRuleName: NormalIgnoreRule
+    IgnoreRuleName: PrefabIgnoreRule
     Groups:
     - GroupName: Scenes
       GroupDesc: "\u573A\u666F"
@@ -82,7 +82,7 @@ MonoBehaviour:
     LocationToLower: 0
     IncludeAssetGUID: 1
     AutoCollectShaders: 1
-    IgnoreRuleName: NormalIgnoreRule
+    IgnoreRuleName: RawFileIgnoreRule
     Groups:
     - GroupName: HotUpdateCode
       GroupDesc: "\u70ED\u66F4\u4EE3\u7801"
