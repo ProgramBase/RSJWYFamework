@@ -305,5 +305,6 @@ namespace RSJWYFamework.Runtime.Main
         Event,
         RAsyncOperationSystem,
         Pool,
+        Entry
     }
 }

@@ -33,7 +33,7 @@ namespace RSJWYFamework.Editor.Windows.HybridCLR
         [ButtonGroup("构建按钮")]
         private void BuildMetadataForAOTAssemblies()
         {
-            Utility.FileAndFoder.ClearDirectory($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildMetadataForAOTAssembliesDllPatch}");
+            Utility.FileAndFolder.ClearDirectory($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildMetadataForAOTAssembliesDllPatch}");
             AssetDatabase.Refresh();
             UtilityEditor.UtilityEditor.HybrildCLR.AddMetadataForAOTAssembliesToHCLRSetArr();
             UtilityEditor.UtilityEditor.HybrildCLR.BuildMetadataForAOTAssemblies($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildMetadataForAOTAssembliesDllPatch}",SettingData.BuildTarget);
@@ -43,7 +43,7 @@ namespace RSJWYFamework.Editor.Windows.HybridCLR
         [ButtonGroup("构建按钮")]
         private void BuildHotCode()
         {
-            Utility.FileAndFoder.ClearDirectory($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildHotCodeDllPatch}");
+            Utility.FileAndFolder.ClearDirectory($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildHotCodeDllPatch}");
             AssetDatabase.Refresh();
             UtilityEditor.UtilityEditor.HybrildCLR.BuildHotCode($"{UtilityEditor.UtilityEditor.GetProjectPath()}{SettingData.BuildHotCodeDllPatch}",SettingData.BuildTarget);
         }
