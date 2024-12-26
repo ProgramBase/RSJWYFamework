@@ -15,7 +15,7 @@ MonoBehaviour:
   packages:
   - PackageName: PrefabPackage
     PackageTips: "\u9884\u5236\u4F53"
-    BuildPipeline: 1
+    BuildPipeline: 2
   - PackageName: RawFilePackage
     PackageTips: "\u70ED\u66F4\u4EE3\u7801"
-    BuildPipeline: 2
+    BuildPipeline: 3

@@ -22,7 +22,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
         private RSteps _steps = RSteps.None;
         
         
-        public LoadPackages(string packageName, string buildPipeline, EPlayMode playMode)
+        public LoadPackages(string packageName, EPlayMode playMode)
         {
             pc = new StateMachineController(this,"初始化资源管理");
             // 创建状态机
@@ -41,7 +41,6 @@ namespace RSJWYFamework.Runtime.YooAssetModule.AsyncOperation
             //写入数据
             pc.SetBlackboardValue("PlayMode",playMode);
             pc.SetBlackboardValue("PackageName",packageName);
-            pc.SetBlackboardValue("BuildPipeline",buildPipeline);
             //开始异步任务
             Main.Main.RAsyncOperationSystem.StartOperation(typeof(LoadPackages).FullName, this);
         }

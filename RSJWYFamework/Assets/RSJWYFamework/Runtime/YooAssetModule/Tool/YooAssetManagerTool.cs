@@ -83,31 +83,32 @@ namespace RSJWYFamework.Runtime.YooAssetModule.Tool
         /// </summary>
         public class FileDecryption : IDecryptionServices
         {
-            /// <summary>
-            /// 同步方式获取解密的资源包对象
-            /// 注意：加载流对象在资源包对象释放的时候会自动释放
-            /// </summary>
-            AssetBundle IDecryptionServices.LoadAssetBundle(DecryptFileInfo fileInfo, out Stream managedStream)
+            public DecryptResult LoadAssetBundle(DecryptFileInfo fileInfo)
             {
                 RSJWYLogger.Log($"解密文件：{fileInfo.BundleName}");
-                managedStream = null;
                 byte[] AESFileData = File.ReadAllBytes(fileInfo.FileLoadPath);
                 byte[] fileData = Utility.Utility.AESTool.AESDecrypt(AESFileData, Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>().AESKey);
-                return AssetBundle.LoadFromMemory(fileData);
+                
+                DecryptResult decryptResult = new DecryptResult();
+                Stream bundleStream = new MemoryStream(fileData);
+                decryptResult.ManagedStream = bundleStream;
+                decryptResult.Result = AssetBundle.LoadFromStream(bundleStream, fileInfo.FileLoadCRC);
+                return decryptResult;
             }
 
-            /// <summary>
-            /// 异步方式获取解密的资源包对象
-            /// 注意：加载流对象在资源包对象释放的时候会自动释放
-            /// </summary>
-            AssetBundleCreateRequest IDecryptionServices.LoadAssetBundleAsync(DecryptFileInfo fileInfo, out Stream managedStream)
+            public DecryptResult LoadAssetBundleAsync(DecryptFileInfo fileInfo)
             {
                 RSJWYLogger.Log($"解密文件：{fileInfo.BundleName}");
-                managedStream = null;
                 byte[] AESFileData = File.ReadAllBytes(fileInfo.FileLoadPath);
                 byte[] fileData = Utility.Utility.AESTool.AESDecrypt(AESFileData, Main.Main.DataManagerataManager.GetDataSetSB<ProjectConfig>().AESKey);
-                return AssetBundle.LoadFromMemoryAsync(fileData);
+                
+                DecryptResult decryptResult = new DecryptResult();
+                Stream bundleStream = new MemoryStream(fileData);
+                decryptResult.ManagedStream = bundleStream;
+                decryptResult.CreateRequest = AssetBundle.LoadFromStreamAsync(bundleStream, fileInfo.FileLoadCRC);
+                return decryptResult;
             }
+
             /// <summary>
             /// 获取加密过的Data
             /// </summary>

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b05c83971e3dca94f9fa460d396385e5, type: 3}
+  m_Name: BuildinCatalog
+  m_EditorClassIdentifier: 
+  PackageName: PrefabPackage
+  PackageVersion: test
+  Wrappers:
+  - BundleGUID: 707fe66da8c77fadd36d7f36d5a96cc2
+    FileName: prefabpackage_assets_assets_prefab_707fe66da8c77fadd36d7f36d5a96cc2.bundle
+  - BundleGUID: 972d91b0724e530641398ca48e019cf7
+    FileName: prefabpackage_scenes_972d91b0724e530641398ca48e019cf7.bundle
+  - BundleGUID: 4cba5ad49bd82b22560d96cc82f6042a
+    FileName: prefabpackage_unityshaders_4cba5ad49bd82b22560d96cc82f6042a.bundle

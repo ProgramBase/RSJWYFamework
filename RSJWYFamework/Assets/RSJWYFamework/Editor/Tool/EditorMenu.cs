@@ -52,7 +52,7 @@ namespace RSJWYFamework.Editor.Tool
         }
         [MenuItem("RSJWYFamework/打开YooAsset资源构建工具")]
         public static void OpenYooAssetBuildWindowsA()
-        {
+        { 
             var _windows = OdinEditorWindow.GetWindow<YooAssetBuildWindow>();
             _windows.titleContent = new GUIContent("YooAsset资源构建工具");
             _windows.Show();

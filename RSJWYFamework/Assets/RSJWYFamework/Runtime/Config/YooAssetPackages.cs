@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using RSJWYFamework.Runtime.Data;
 using Sirenix.OdinInspector;
-using YooAsset;
 
 namespace RSJWYFamework.Runtime.Config
 {
@@ -24,10 +23,36 @@ namespace RSJWYFamework.Runtime.Config
         public string PackageName;
         [LabelText("包说明")]
         public string PackageTips;
+        
         [LabelText("构建管线")]
-        [Required("必须选择构建管线，程序不做检测")] 
-        public EDefaultBuildPipeline BuildPipeline;
+        [Required("必须输入构建管线，程序不做检测--仅构建包时使用")]
+        public EBuildPipeline BuildPipeline;
     }
     
+    /// <summary>
+    /// 构建管线类型
+    /// </summary>
+    public enum EBuildPipeline
+    {
+        /// <summary>
+        /// 编辑器下的模拟构建管线（ESBP）
+        /// </summary>
+        EditorSimulateBuildPipeline,
+
+        /// <summary>
+        /// 传统内置构建管线 (BBP)
+        /// </summary>
+        BuiltinBuildPipeline,
+
+        /// <summary>
+        /// 可编程构建管线 (SBP)
+        /// </summary>
+        ScriptableBuildPipeline,
+
+        /// <summary>
+        /// 原生文件构建管线 (RFBP)
+        /// </summary>
+        RawFileBuildPipeline,
+    }
 }
 

@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using RSJWYFamework.Editor.Windows.Config;
+﻿using System.Collections.Generic;
 using RSJWYFamework.Editor.YooAssetModule;
 using RSJWYFamework.Runtime.Config;
 using RSJWYFamework.Runtime.ExceptionLogManager;
 using RSJWYFamework.Runtime.Utility;
-using RSJWYFamework.Runtime.YooAssetModule;
-using RSJWYFamework.Runtime.YooAssetModule.Tool;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
-using YooAsset;
 using YooAsset.Editor;
+using EBuildPipeline = RSJWYFamework.Runtime.Config.EBuildPipeline;
+using YooAsset;
 
 namespace RSJWYFamework.Editor.Windows.YooAsset
 {
@@ -56,8 +52,13 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
         {
             Utility.FileAndFolder.ClearDirectory(streamingAssetsRoot);
         }
-        
-        
+
+        [LabelText("是否清理构建缓存文件")]
+        public bool ClearBuildCacheFiles;
+
+        [LabelText("使用资源依赖关系数据库")]
+        public bool UseAssetDependencyDB ;
+            
 
         [LabelText("包版本")] public string PackageVersion = "test";
 
@@ -71,7 +72,7 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
             "RawFileBuildPipeline不会打包为AB包，故不支持压缩",
             InfoMessageType.Warning)]
         public ECompressOption CompressOption = ECompressOption.LZ4;
-
+        [LabelText("整理后的打包信息")]
         public List<YooAssetPackageData> YooAssetPackages = new List<YooAssetPackageData>();
        
        
@@ -89,20 +90,6 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
                     PackageTips = package.PackageTips,
                     BuildPipeline = package.BuildPipeline,
                 };
-                if (package.BuildPipeline==EDefaultBuildPipeline.BuiltinBuildPipeline)
-                {
-                    _packageData.BuildMode = EBuildMode.ForceRebuild.ToString();
-                }
-                else if (package.BuildPipeline==EDefaultBuildPipeline.ScriptableBuildPipeline)
-                {
-                    _packageData.BuildMode = EBuildMode.IncrementalBuild.ToString();
-                }
-                else if (package.BuildPipeline == EDefaultBuildPipeline.RawFileBuildPipeline)
-                {
-                    _packageData.BuildMode = EBuildMode.ForceRebuild.ToString();
-                }
-
-               
                 YooAssetPackages.Add(_packageData);
             }
         }
@@ -115,16 +102,9 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
             {
                 throw new RSJWYException("请先更新构建配置");
             }
-
             foreach (var package in YooAssetPackages)
             {
-                EBuildMode buildMode;
-
-                if (!Enum.TryParse(package.BuildMode, out buildMode))
-                {
-                    throw new RSJWYException($"不支持的构建模式 : {buildMode}");
-                }
-                Build(package.PackageName, package.BuildPipeline, buildMode);
+                Build(package.PackageName, package.BuildPipeline);
             }
         }
 
@@ -142,7 +122,7 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
             UpdateAllPackageSetting();
         }
         
-         private void Build(string packageName, EDefaultBuildPipeline buildPipeline,EBuildMode buildMode)
+         private void Build(string packageName, EBuildPipeline buildPipeline)
         {
             Debug.Log($"开始构建 ，包名：{packageName} ———— 目标平台: {buildTarget} ———— 构建管线：{buildPipeline}");
 
@@ -151,37 +131,39 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
 
             BuildResult buildResult;
             
-            if (buildPipeline == EDefaultBuildPipeline.BuiltinBuildPipeline)
+            if (buildPipeline == EBuildPipeline.BuiltinBuildPipeline)
             {
                 BuiltinBuildParameters buildParameters = new BuiltinBuildParameters();
                 buildParameters.BuildOutputRoot = buildoutputRoot;
                 buildParameters.BuildinFileRoot = streamingAssetsRoot;
                 buildParameters.BuildPipeline = buildPipeline.ToString();
+                buildParameters.BuildBundleType = (int)EBuildBundleType.AssetBundle; //必须指定资源包类型
                 buildParameters.BuildTarget = buildTarget;
-                buildParameters.BuildMode = buildMode; 
                 buildParameters.PackageName = packageName;
                 buildParameters.PackageVersion = PackageVersion;
                 buildParameters.VerifyBuildingResult = true;
                 buildParameters.EnableSharePackRule = false; //启用共享资源构建模式，兼容1.5x版本
                 buildParameters.FileNameStyle = FileNameStyle;
-                buildParameters. BuildinFileCopyOption = BuildinFileCopyOption;
+                buildParameters.BuildinFileCopyOption = BuildinFileCopyOption;
                 buildParameters.BuildinFileCopyParams = string.Empty;
                 buildParameters.CompressOption = CompressOption; 
                 //加密服务
                 buildParameters.EncryptionServices = new EncryptAssets();
+                buildParameters.ClearBuildCacheFiles = ClearBuildCacheFiles; //不清理构建缓存，启用增量构建，可以提高打包速度！
+                buildParameters.UseAssetDependencyDB = UseAssetDependencyDB; //使用资源依赖关系数据库，可以提高打包速度！
 
                 BuiltinBuildPipeline pipeline = new BuiltinBuildPipeline();
                 buildResult = pipeline.Run(buildParameters, false);
             }
-            else if (buildPipeline == EDefaultBuildPipeline.ScriptableBuildPipeline)
+            else if (buildPipeline == EBuildPipeline.ScriptableBuildPipeline)
             {
                 ScriptableBuildParameters buildParameters = new ScriptableBuildParameters();
                 
                 buildParameters.BuildOutputRoot = buildoutputRoot;
                 buildParameters.BuildinFileRoot = streamingAssetsRoot;
                 buildParameters.BuildPipeline = buildPipeline.ToString();
+                buildParameters.BuildBundleType = (int)EBuildBundleType.AssetBundle; //必须指定资源包类型
                 buildParameters.BuildTarget = buildTarget;
-                buildParameters.BuildMode = buildMode;
                 buildParameters.PackageName = packageName;
                 buildParameters.PackageVersion = PackageVersion;
                 buildParameters.VerifyBuildingResult = true;
@@ -190,23 +172,26 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
                 buildParameters.BuildinFileCopyOption = BuildinFileCopyOption;
                 buildParameters.BuildinFileCopyParams = string.Empty;
                 buildParameters.CompressOption = CompressOption;
-                    //加密服务
-                    buildParameters.EncryptionServices = new EncryptAssets();
+                //加密服务
+                buildParameters.EncryptionServices = new EncryptAssets();
+                buildParameters.ClearBuildCacheFiles = ClearBuildCacheFiles; //不清理构建缓存，启用增量构建，可以提高打包速度！
+                buildParameters.UseAssetDependencyDB = UseAssetDependencyDB; //使用资源依赖关系数据库，可以提高打包速度！
                 
-                string packageOutputDirectory = buildParameters.GetPackageOutputDirectory();
-                Utility.FileAndFolder.DeleteDirectory(packageOutputDirectory);
+                //删除旧的包，等待修复这个问题
+                /*string packageOutputDirectory = buildParameters.GetPackageOutputDirectory();
+                Utility.FileAndFolder.DeleteDirectory(packageOutputDirectory);*/
                 
                 ScriptableBuildPipeline pipeline = new ScriptableBuildPipeline();
                 buildResult = pipeline.Run(buildParameters, true);
             }
-            else if (buildPipeline == EDefaultBuildPipeline.RawFileBuildPipeline)
+            else if (buildPipeline == EBuildPipeline.RawFileBuildPipeline)
             {
                 RawFileBuildParameters buildParameters = new RawFileBuildParameters();
                 buildParameters.BuildOutputRoot = buildoutputRoot;
                 buildParameters.BuildinFileRoot = streamingAssetsRoot;
                 buildParameters.BuildPipeline = buildPipeline.ToString();
+                buildParameters.BuildBundleType = (int)EBuildBundleType.RawBundle; //必须指定资源包类型
                 buildParameters.BuildTarget = buildTarget;
-                buildParameters.BuildMode = buildMode;
                 buildParameters.PackageName = packageName;
                 buildParameters.PackageVersion = PackageVersion;
                 buildParameters.VerifyBuildingResult = true;
@@ -214,6 +199,10 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
                 buildParameters.FileNameStyle = FileNameStyle;
                 buildParameters.BuildinFileCopyOption = BuildinFileCopyOption;
                 buildParameters.BuildinFileCopyParams = string.Empty;
+                //加密服务
+                buildParameters.EncryptionServices = new EncryptAssets();
+                buildParameters.ClearBuildCacheFiles = ClearBuildCacheFiles; //不清理构建缓存，启用增量构建，可以提高打包速度！
+                buildParameters.UseAssetDependencyDB = UseAssetDependencyDB; //使用资源依赖关系数据库，可以提高打包速度！
 
                 RawFileBuildPipeline pipeline = new RawFileBuildPipeline();
                 buildResult = pipeline.Run(buildParameters, true);
@@ -247,8 +236,11 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
 
             [LabelText("构建管线")] [Required("必须选择构建管线，程序不做检测")]
             [ReadOnly]
-            public EDefaultBuildPipeline BuildPipeline;
-
+            public EBuildPipeline BuildPipeline;
+            
+            
+            
+            /*2.2.5版本废弃
             [ValueDropdown("BuildModeSelect")] 
             public string BuildMode;
             
@@ -280,7 +272,29 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
                 {
                     throw new RSJWYException("不支持的构建管线");
                 }
-            }
+            }*/
         }
+    }
+    internal enum EBuildBundleType
+    {
+        /// <summary>
+        /// 未知类型
+        /// </summary>
+        Unknown = 0,
+
+        /// <summary>
+        /// 虚拟资源包
+        /// </summary>
+        VirtualBundle = 1,
+
+        /// <summary>
+        /// AssetBundle
+        /// </summary>
+        AssetBundle = 2,
+
+        /// <summary>
+        /// 原生文件
+        /// </summary>
+        RawBundle = 3,
     }
 }

@@ -34,9 +34,8 @@ namespace RSJWYFamework.Runtime.YooAssetModule.StateNode
         {
             var playMode = (EPlayMode)pc.GetBlackboardValue("PlayMode");
             var packageName = (string)pc.GetBlackboardValue("PackageName");
-            var buildPipeline = (string)pc.GetBlackboardValue("BuildPipeline");
 
-            RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets, $"初始化包{packageName} 运行模式{playMode}  构建管线{buildPipeline}");
+            RSJWYLogger.Log(RSJWYFameworkEnum.YooAssets, $"初始化包{packageName} 运行模式{playMode}");
             // 创建资源包裹类
             var package = YooAssets.TryGetPackage(packageName);
             if (package == null)
@@ -46,7 +45,9 @@ namespace RSJWYFamework.Runtime.YooAssetModule.StateNode
             switch (playMode)
             {
                 case EPlayMode.EditorSimulateMode:
-                    var simulateBuildResult = EditorSimulateModeHelper.SimulateBuild(buildPipeline, packageName);
+                    var simulateBuildParam = new EditorSimulateBuildParam();
+                    simulateBuildParam.PackageName = packageName;
+                    var simulateBuildResult = EditorSimulateModeHelper.SimulateBuild(simulateBuildParam);
                     var EcreateParameters = new EditorSimulateModeParameters
                     {
                         EditorFileSystemParameters =
@@ -55,12 +56,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.StateNode
                     initializationOperation = package.InitializeAsync(EcreateParameters);
                     break;
                 case EPlayMode.OfflinePlayMode:
-                    var Ofs = buildPipeline == EDefaultBuildPipeline.RawFileBuildPipeline.ToString()
-                        ? FileSystemParameters.CreateDefaultBuildinRawFileSystemParameters(
-                            new YooAssetManagerTool.FileDecryption())
-                        : FileSystemParameters.CreateDefaultBuildinFileSystemParameters(
-                            new YooAssetManagerTool.FileDecryption());
-
+                    var Ofs = FileSystemParameters.CreateDefaultBuildinFileSystemParameters(new YooAssetManagerTool.FileDecryption());
                     var OcreateParameters = new OfflinePlayModeParameters
                     {
                         BuildinFileSystemParameters = Ofs
@@ -70,32 +66,12 @@ namespace RSJWYFamework.Runtime.YooAssetModule.StateNode
                 case EPlayMode.HostPlayMode:
                     string defaultHostServer = YooAssetManagerTool.GetHostServerURL(packageName);
                     string fallbackHostServer = YooAssetManagerTool.GetHostServerURL(packageName);
-                    IRemoteServices remoteServices =
-                        new YooAssetManagerTool.RemoteServices(defaultHostServer, fallbackHostServer);
+                    IRemoteServices remoteServices = new YooAssetManagerTool.RemoteServices(defaultHostServer, fallbackHostServer);
 
-                    FileSystemParameters bfsp;
-                    FileSystemParameters cfsp;
-                    if (buildPipeline == EDefaultBuildPipeline.RawFileBuildPipeline.ToString())
-                    {
-                        bfsp = FileSystemParameters.CreateDefaultBuildinRawFileSystemParameters(
-                            new YooAssetManagerTool.FileDecryption());
-                        cfsp = FileSystemParameters.CreateDefaultCacheRawFileSystemParameters(remoteServices,
-                            new YooAssetManagerTool.FileDecryption());
-                    }
-                    else
-                    {
-                        bfsp = FileSystemParameters.CreateDefaultBuildinFileSystemParameters(
-                            new YooAssetManagerTool.FileDecryption());
-                        cfsp = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices,
-                            new YooAssetManagerTool.FileDecryption());
-                    }
-
-                    var HcreateParameters = new HostPlayModeParameters
-                    {
-                        BuildinFileSystemParameters = bfsp,
-                        CacheFileSystemParameters = cfsp
-                    };
-                    initializationOperation = package.InitializeAsync(HcreateParameters);
+                    var createParameters = new HostPlayModeParameters();
+                    createParameters.BuildinFileSystemParameters = FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
+                    createParameters.CacheFileSystemParameters = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices);
+                    initializationOperation = package.InitializeAsync(createParameters);
                     break;
                 case EPlayMode.WebPlayMode:
                     /*var createParameters = new WebPlayModeParameters

@@ -50,7 +50,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule
             for (int i = 0; i < projectConfig.YooAssets.packages.Count; i++)
             {
                 //配置异步任务
-                LoadPackages operationR = new LoadPackages(projectConfig.YooAssets.packages[i].PackageName, projectConfig.YooAssets.packages[i].BuildPipeline.ToString(), projectConfig.PlayMode);
+                LoadPackages operationR = new LoadPackages(projectConfig.YooAssets.packages[i].PackageName,  projectConfig.PlayMode);
                 
                 taskArr[i]=operationR.UniTask;
             }
