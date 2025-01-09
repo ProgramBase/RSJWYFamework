@@ -4,6 +4,9 @@ using RSJWYFamework.Runtime.Module;
 
 namespace RSJWYFamework.Runtime.StateMachine
 {
+    /// <summary>
+    ///执行队列
+    /// </summary>
     public class StateMachineControllerExecuteQueue:IModule ,ILife
     {
         Dictionary<string,StateMachineController>Procedures = new(100);

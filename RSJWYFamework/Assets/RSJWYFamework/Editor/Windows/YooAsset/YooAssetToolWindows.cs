@@ -92,6 +92,7 @@ namespace RSJWYFamework.Editor.Windows.YooAsset
                 };
                 YooAssetPackages.Add(_packageData);
             }
+            Debug.Log($"包数量为：{YooAssetPackages.Count}");
         }
 
         [ButtonGroup("构建")]
