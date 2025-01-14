@@ -27,7 +27,7 @@ namespace RSJWYFamework.Runtime.YooAssetModule.StateNode
                 var packageName = (string)pc.GetBlackboardValue("PackageName");
                 var package = YooAssets.GetPackage(packageName);
                 //清理未在使用的文件
-                var operation = package.ClearCacheBundleFilesAsync(EFileClearMode.ClearUnusedBundleFiles);
+                var operation = package.ClearCacheFilesAsync(EFileClearMode.ClearUnusedBundleFiles);
                 operation.Completed += Operation_Completed;
                 await operation.ToUniTask();
                 pc.SwitchProcedure(typeof(UpdaterDoneStateNode));

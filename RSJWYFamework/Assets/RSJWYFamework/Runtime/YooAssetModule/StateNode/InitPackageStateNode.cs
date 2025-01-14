@@ -45,14 +45,11 @@ namespace RSJWYFamework.Runtime.YooAssetModule.StateNode
             switch (playMode)
             {
                 case EPlayMode.EditorSimulateMode:
-                    var simulateBuildParam = new EditorSimulateBuildParam();
-                    simulateBuildParam.PackageName = packageName;
+                    var simulateBuildParam = new EditorSimulateBuildParam(packageName);
                     var simulateBuildResult = EditorSimulateModeHelper.SimulateBuild(simulateBuildParam);
-                    var EcreateParameters = new EditorSimulateModeParameters
-                    {
-                        EditorFileSystemParameters =
-                            FileSystemParameters.CreateDefaultEditorFileSystemParameters(simulateBuildResult)
-                    };
+                    var packageRoot = simulateBuildResult.PackageRootDirectory;
+                    var EcreateParameters = new EditorSimulateModeParameters();
+                    EcreateParameters.EditorFileSystemParameters = FileSystemParameters.CreateDefaultEditorFileSystemParameters(packageRoot);
                     initializationOperation = package.InitializeAsync(EcreateParameters);
                     break;
                 case EPlayMode.OfflinePlayMode:
@@ -68,10 +65,10 @@ namespace RSJWYFamework.Runtime.YooAssetModule.StateNode
                     string fallbackHostServer = YooAssetManagerTool.GetHostServerURL(packageName);
                     IRemoteServices remoteServices = new YooAssetManagerTool.RemoteServices(defaultHostServer, fallbackHostServer);
 
-                    var createParameters = new HostPlayModeParameters();
-                    createParameters.BuildinFileSystemParameters = FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
-                    createParameters.CacheFileSystemParameters = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices);
-                    initializationOperation = package.InitializeAsync(createParameters);
+                    var HcreateParameters = new HostPlayModeParameters();
+                    HcreateParameters.BuildinFileSystemParameters = FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
+                    HcreateParameters.CacheFileSystemParameters = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices);
+                    initializationOperation = package.InitializeAsync(HcreateParameters);
                     break;
                 case EPlayMode.WebPlayMode:
                     /*var createParameters = new WebPlayModeParameters
