@@ -7,6 +7,7 @@ using UnityEngine;
 using RSJWYFamework.Runtime.Driver;
 using RSJWYFamework.Runtime.Scene;
 using RSJWYFamework.Runtime.StateMachine;
+using Script.AOT.PatchWindows;
 
 
 namespace Script.AOT
@@ -28,16 +29,29 @@ namespace Script.AOT
 
         async UniTaskVoid StartApp()
         {
+            await UniTask.WaitForSeconds(0.5f);
+            var pw=Resources.Load<GameObject>("PatchWindow");
+            var p=Instantiate(pw);
+            p.name = "PatchWindow";
+            await UniTask.WaitForSeconds(0.5f);
+            
+            PatchEventDefine.UpdateProgressEvent.SendEventMessage(0,"正在初始化");
+            
             RSJWYLogger.Log("加载项目配置文件，并加载到数据管理中···");
+            PatchEventDefine.UpdateProgressEvent.SendEventMessage(0.05f,"加载项目配置文件，并加载到数据管理中···");
+            
             var projectset =  Resources.Load<ProjectConfig>("ProjectConfig");
             Main.DataManagerataManager.AddDataSet(projectset);
+            
             RSJWYLogger.Log($"日志等级：{projectset.Loglevel}");
             RSJWYLogger.Loglevel = projectset.Loglevel;
             RSJWYLogger.Log("等待包初始化");
+            PatchEventDefine.UpdateProgressEvent.SendEventMessage(0.1f,"等待包初始化");
             await Main.YooAssetManager.LoadPackage();
             RSJWYLogger.Log("包初始化完成，加载热更代码");
+            PatchEventDefine.UpdateProgressEvent.SendEventMessage(0.8f,"加载程序");
             await Main.HybridClrManager.LoadHotCodeDLL();
-            
+            PatchEventDefine.UpdateProgressEvent.SendEventMessage(1f,"初始化完成");
             var toScecne= new SwitchSceneOperation(new LoadHotScene(),"加载热更入口场景",false);
             toScecne.StartProcedure();
         }

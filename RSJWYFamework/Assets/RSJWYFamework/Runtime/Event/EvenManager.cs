@@ -175,10 +175,17 @@ namespace RSJWYFamework.Runtime.Event
 
         public void Update(float time, float deltaTime)
         {
-            if (_callQueue.IsEmpty)
-                return;
-            _callQueue.TryDequeue(out var _call);
-            FireNow(_call);
+            if (!_callQueue.IsEmpty)
+            {
+                _callQueue.TryDequeue(out var _call);
+                FireNow(_call);
+            }
+            if (!_RecordcallQueue.IsEmpty)
+            {
+                _RecordcallQueue.TryDequeue(out var _call);
+                FireNow(_call);
+            }
+           
         }
 
         public void UpdatePerSecond(float time)

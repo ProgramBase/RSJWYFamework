@@ -6,9 +6,9 @@ namespace RSJWYFamework.Runtime.Main
     {
         void Init()
         {
-            var _sceneSwitch= Instantiate(Resources.Load<GameObject>("SceneSwitch"),canvas.transform, false);
+            /*var _sceneSwitch= Instantiate(Resources.Load<GameObject>("SceneSwitch"),canvas.transform, false);
             sceneTransition=_sceneSwitch.transform.GetComponent<SceneTransition>();
-            sceneTransition.UpdateProgress(0,"");
+            sceneTransition.UpdateProgress(0,"");*/
         }
     }
 }

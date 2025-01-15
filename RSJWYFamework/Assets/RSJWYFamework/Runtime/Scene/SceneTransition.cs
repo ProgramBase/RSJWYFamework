@@ -12,7 +12,7 @@ namespace RSJWYFamework.Runtime.Scene
         CanvasGroup canvasGroup;
 
         [SerializeField]
-        Transform loadingBar;
+        Slider loadingBar;
         
         [SerializeField]
         Text info;
@@ -42,7 +42,7 @@ namespace RSJWYFamework.Runtime.Scene
                 {
                     progress = value;
                     progressText.text = $"{value}%";
-                    loadingBar.localScale = new Vector3((float)value / 100, 1, 1);
+                    loadingBar.value = value/100f;
                 }
 
             }

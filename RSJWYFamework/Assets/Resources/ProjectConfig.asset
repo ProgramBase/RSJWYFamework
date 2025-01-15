@@ -16,7 +16,7 @@ MonoBehaviour:
   APPName: "\u6D4B\u8BD5\u8F6F\u4EF6"
   Version: v1.0
   YooAssets: {fileID: 11400000, guid: de273a62c6500cc4d95d98eb7220c371, type: 2}
-  PlayMode: 1
+  PlayMode: 0
   hostServerIP: http://127.0.0.1
   licenseID: 0
   developerPW: AAA
