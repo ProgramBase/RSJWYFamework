@@ -98,7 +98,7 @@ namespace RSJWYFamework.Runtime.AsyncOperation
         /// <summary>
         /// 更新异步操作系统
         /// </summary>
-        public void Update(float time, float deltaTime)
+        public void GameUpdate(float time, float deltaTime)
         {
             _frameTime = _watch.ElapsedMilliseconds;
 

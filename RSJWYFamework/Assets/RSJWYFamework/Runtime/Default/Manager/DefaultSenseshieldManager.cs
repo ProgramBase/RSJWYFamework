@@ -83,7 +83,7 @@ namespace RSJWYFamework.Runtime.Default
             
         }
 
-        public void Update(float time, float deltaTime)
+        public void GameUpdate(float time, float deltaTime)
         {
             
         }

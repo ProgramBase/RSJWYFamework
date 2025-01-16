@@ -173,7 +173,7 @@ namespace RSJWYFamework.Runtime.Event
             _callQueue.Clear();
         }
 
-        public void Update(float time, float deltaTime)
+        public void GameUpdate(float time, float deltaTime)
         {
             if (!_callQueue.IsEmpty)
             {

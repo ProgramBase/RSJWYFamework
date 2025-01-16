@@ -226,7 +226,7 @@ namespace RSJWYFamework.Runtime.Main
             {
                 foreach (var life in _life)
                 {
-                    life.Update(time,deltaTime);
+                    life.GameUpdate(time,deltaTime);
                 }
             }
         }

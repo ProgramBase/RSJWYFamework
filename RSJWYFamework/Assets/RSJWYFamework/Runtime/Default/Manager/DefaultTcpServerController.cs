@@ -143,7 +143,7 @@ namespace RSJWYFamework.Runtime.Default.Manager
             Main.Main.EventModle.Fire(_event);
         }
 
-        public void Update(float time, float deltaTime)
+        public void GameUpdate(float time, float deltaTime)
         {
             
         }

@@ -60,7 +60,7 @@ namespace RSJWYFamework.Runtime.StateMachine
             
         }
 
-        public void Update(float time, float deltaTime)
+        public void GameUpdate(float time, float deltaTime)
         {
             foreach (var procedure in Procedures)
             {

@@ -12,7 +12,7 @@
         /// </summary>
         /// <param name="time">自启动后已经经过的时间</param>
         /// <param name="deltaTime">自上一帧完成以来经过的时间量</param>
-        void Update(float time,float deltaTime);
+        void GameUpdate(float time,float deltaTime);
 
         /// <summary>
         /// 每秒更新时间
