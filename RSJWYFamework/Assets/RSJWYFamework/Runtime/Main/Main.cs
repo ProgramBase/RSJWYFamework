@@ -196,7 +196,7 @@ namespace RSJWYFamework.Runtime.Main
                 }
                 // 在找到的位置插入新实例
                 _life.Insert(insertIndex, life);
-                _life.Add(life);
+                //_life.Add(life);
                 RSJWYLogger.Log(RSJWYFameworkEnum.Main,$"AddLife 添加{life}完成");
             }
         }
