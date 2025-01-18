@@ -85,10 +85,10 @@ namespace RSJWYFamework.Runtime.StateMachine
         /// <param name="value"></param>
         public void SetBlackboardValue(string key, object value)
         {
-            if (blackboard.ContainsKey(key))
-                blackboard.Add(key, value);
-            else
-                blackboard[key] = value;
+            if (blackboard.TryAdd(key, value))
+            {
+                blackboard[key]= value;
+            }
         }
         /// <summary>
         /// 获取黑板数据
